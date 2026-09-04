@@ -1,0 +1,2242 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>علم التوحيد والعقيدة الإسلامية - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="دراسة تأصيلية ميسرة وشاملة لأقسام علم التوحيد الثلاثة: الإلهيات، النبوات، والسمعيات بالأدلة العقلية والنقلية وبسط المباحث الكبرى.">
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة لمنع الوميض -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        :root {
+            --tawheed-primary: #0a4d3c;
+            --tawheed-accent: #0d6b53;
+            --tawheed-gold: #d4af37;
+        }
+
+        /* تخطيط الصفحة: القائمة الجانبية والمحتوى */
+        .tawheed-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            margin-top: 25px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .tawheed-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* اللوحة الجانبية للاختيارات الثلاثة */
+        .tawheed-sidebar-panel {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 18px;
+            position: sticky;
+            top: 85px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="dark"] .tawheed-sidebar-panel {
+            background: #14221d;
+            border-color: #23372f;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .sidebar-heading-box {
+            padding: 0 8px 16px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 18px;
+        }
+        .sidebar-main-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        [data-theme="dark"] .sidebar-main-title {
+            color: #f1f5f9;
+        }
+        .sidebar-main-title i {
+            color: var(--emerald);
+            font-size: 20px;
+        }
+        .sidebar-subtitle {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* أزرار الاختيارات الثلاثة في الجنب */
+        .tawheed-side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .side-nav-btn {
+            background: #f8fafc;
+            border: 1.5px solid transparent;
+            border-radius: 18px;
+            padding: 16px 14px;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            font-family: inherit;
+            width: 100%;
+        }
+        [data-theme="dark"] .side-nav-btn {
+            background: #192a24;
+            color: #e2e8f0;
+        }
+        .side-nav-btn:hover {
+            border-color: var(--emerald);
+            background: var(--light-emerald);
+            transform: translateX(-4px);
+        }
+        [data-theme="dark"] .side-nav-btn:hover {
+            background: #1f372e;
+            border-color: #34d399;
+        }
+
+        .side-nav-btn.active {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--emerald) 100%);
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(10, 77, 60, 0.3);
+            transform: translateX(-6px);
+        }
+        [data-theme="dark"] .side-nav-btn.active {
+            background: linear-gradient(135deg, #0d6b53 0%, #10b981 100%);
+            color: #ffffff !important;
+            box-shadow: 0 8px 22px rgba(16, 185, 129, 0.25);
+        }
+
+        .side-btn-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .side-btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(13, 107, 83, 0.12);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+        [data-theme="dark"] .side-btn-icon {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+        .side-nav-btn.active .side-btn-icon {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+        }
+
+        .side-btn-text h4 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .side-btn-text span {
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+        .side-nav-btn.active .side-btn-text span {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .side-btn-badge {
+            background: rgba(13, 107, 83, 0.1);
+            color: var(--emerald);
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .side-btn-badge {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+        .side-nav-btn.active .side-btn-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        /* بطاقة التقدم في الجنب */
+        .sidebar-progress-box {
+            margin-top: 25px;
+            padding: 16px;
+            border-radius: 18px;
+            background: var(--light-emerald);
+            border: 1px dashed rgba(13, 107, 83, 0.3);
+        }
+        [data-theme="dark"] .sidebar-progress-box {
+            background: rgba(13, 107, 83, 0.12);
+            border-color: rgba(52, 211, 153, 0.25);
+        }
+        .sidebar-progress-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        [data-theme="dark"] .sidebar-progress-title {
+            color: #34d399;
+        }
+        .progress-bar-bg {
+            background: #cbd5e1;
+            height: 7px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .progress-bar-bg {
+            background: #243b32;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--emerald), var(--gold));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* المحتوى الرئيسي للقسم المختار */
+        .tawheed-main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* بنر القسم المختار */
+        .topic-hero-banner {
+            background: linear-gradient(135deg, #093e30 0%, #0d6b53 70%, #15803d 100%);
+            border-radius: 24px;
+            padding: 30px 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(10, 77, 60, 0.2);
+            animation: fadeIn 0.35s ease;
+        }
+        [data-theme="dark"] .topic-hero-banner {
+            background: linear-gradient(135deg, #0d2920 0%, #154536 100%);
+            border: 1px solid #234d3e;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+        .topic-hero-banner.prophets {
+            background: linear-gradient(135deg, #1b3a4b 0%, #006466 70%, #065a60 100%);
+        }
+        .topic-hero-banner.unseen {
+            background: linear-gradient(135deg, #2d1b4e 0%, #4a2373 70%, #6d28d9 100%);
+        }
+
+        .topic-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .topic-hero-title {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .topic-hero-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #e2f4ed;
+            max-width: 850px;
+            margin-bottom: 16px;
+        }
+        .topic-quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-right: 4px solid var(--gold);
+            padding: 12px 18px;
+            border-radius: 0 14px 14px 0;
+            font-family: 'Amiri', serif;
+            font-size: 17.5px;
+            color: #ffeaa7;
+            line-height: 1.7;
+        }
+
+        /* تبويبات التنقل الداخلية للقسم */
+        .sub-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 12px;
+            margin-top: 5px;
+            overflow-x: auto;
+        }
+        .sub-tab-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            color: var(--text-main);
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+        [data-theme="dark"] .sub-tab-btn {
+            background: #16241f;
+            border-color: #24362e;
+            color: #e2e8f0;
+        }
+        .sub-tab-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+        }
+        .sub-tab-btn.active {
+            background: var(--emerald);
+            color: #ffffff;
+            border-color: var(--emerald);
+            box-shadow: 0 4px 12px rgba(13, 107, 83, 0.25);
+        }
+
+        /* شبكة الدروس */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .lesson-card {
+            background: #16241f;
+            border-color: #23362d;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--emerald);
+            box-shadow: 0 14px 28px rgba(10, 77, 60, 0.1);
+        }
+        [data-theme="dark"] .lesson-card:hover {
+            border-color: #34d399;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .lesson-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .lesson-number-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        [data-theme="dark"] .lesson-number-badge {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+        .lesson-status-pill {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #e2e8f0;
+            color: #475569;
+        }
+        .lesson-status-pill.completed {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+            border: 1px solid #10b981;
+        }
+        [data-theme="dark"] .lesson-status-pill {
+            background: #24362e;
+            color: #94a3b8;
+        }
+        [data-theme="dark"] .lesson-status-pill.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .lesson-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        [data-theme="dark"] .lesson-title {
+            color: #f1f5f9;
+        }
+        .lesson-summary {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .lesson-footer-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px dashed var(--card-border);
+        }
+        .lesson-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-open-lesson {
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            border: 1px solid rgba(13, 107, 83, 0.2);
+            padding: 7px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .btn-open-lesson {
+            background: rgba(52, 211, 153, 0.12);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+        .btn-open-lesson:hover {
+            background: var(--emerald);
+            color: #ffffff;
+            border-color: var(--emerald);
+        }
+        [data-theme="dark"] .btn-open-lesson:hover {
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        /* نافذة قراءة الدرس المنبثقة الشاملة والموسعة (Lesson Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.25s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .lesson-modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 920px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            border: 1.5px solid var(--card-border);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+        }
+        [data-theme="dark"] .lesson-modal-content {
+            background: #13201a;
+            border-color: #243a30;
+            color: #f1f5f9;
+        }
+        .modal-header {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 10;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close-btn:hover {
+            background: rgba(0,0,0,0.06);
+            color: #e11d48;
+        }
+        [data-theme="dark"] .modal-close-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* تنسيق محتوى الدرس الموسع والغني */
+        .modal-body {
+            padding: 28px;
+            line-height: 1.9;
+            font-size: 15.5px;
+        }
+        .modal-body h4 {
+            font-size: 19px;
+            font-weight: 800;
+            margin: 24px 0 12px;
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1.5px solid var(--light-emerald);
+            padding-bottom: 8px;
+        }
+        [data-theme="dark"] .modal-body h4 {
+            color: #34d399;
+            border-bottom-color: #233e33;
+        }
+        .modal-body p {
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .modal-body p {
+            color: #d1d5db;
+        }
+        .modal-body ul, .modal-body ol {
+            padding-right: 22px;
+            margin-bottom: 18px;
+        }
+        .modal-body li {
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .modal-body li {
+            color: #cbd5e1;
+        }
+        .modal-body strong {
+            color: var(--emerald);
+        }
+        [data-theme="dark"] .modal-body strong {
+            color: #6ee7b7;
+        }
+
+        .quran-ayah-box {
+            background: #faf6eb;
+            border: 1px solid #e7d8b5;
+            border-radius: 16px;
+            padding: 18px 22px;
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            line-height: 2.3;
+            color: #5c3c0a;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+        }
+        [data-theme="dark"] .quran-ayah-box {
+            background: #232014;
+            border-color: #4a3e1b;
+            color: #fce79f;
+        }
+
+        .scholarly-note-box {
+            background: rgba(13, 107, 83, 0.08);
+            border-right: 4px solid var(--emerald);
+            border-radius: 0 14px 14px 0;
+            padding: 15px 18px;
+            margin: 18px 0;
+            font-size: 14.5px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .scholarly-note-box {
+            background: rgba(16, 185, 129, 0.12);
+            color: #e2e8f0;
+            border-right-color: #34d399;
+        }
+
+        .modal-footer {
+            padding: 18px 28px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: inherit;
+        }
+
+        /* كويز تفاعلي */
+        .quiz-container {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        [data-theme="dark"] .quiz-container {
+            background: #16241f;
+            border-color: #24362e;
+        }
+        .quiz-question-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .quiz-question-title {
+            color: #f1f5f9;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quiz-option-btn {
+            background: #f8fafc;
+            border: 1.5px solid var(--card-border);
+            padding: 14px 18px;
+            border-radius: 14px;
+            text-align: right;
+            font-size: 14.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .quiz-option-btn {
+            background: #1c2e27;
+            border-color: #284136;
+            color: #e2e8f0;
+        }
+        .quiz-option-btn:hover {
+            border-color: var(--emerald);
+            background: var(--light-emerald);
+        }
+        [data-theme="dark"] .quiz-option-btn:hover {
+            background: #243f33;
+        }
+        .quiz-option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .quiz-option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        /* بطاقات سؤال وجواب سريعة */
+        .qa-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .qa-card {
+            background: #16241f;
+            border-color: #23362d;
+        }
+        .qa-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .qa-body {
+            padding: 0 20px 18px;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--card-border);
+            padding-top: 14px;
+            display: none;
+        }
+        .qa-card.open .qa-body {
+            display: block;
+        }
+        .qa-card.open .qa-header i {
+            transform: rotate(180deg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(28px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-28px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* منع التمرير الأفقي الزائد نهائياً */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            width: 100%;
+        }
+
+        /* ========== تحسينات التوافق التام مع شاشات الهواتف والأجهزة الذكية ========== */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 10px 12px;
+            }
+            .logo span {
+                font-size: 13px;
+                max-width: 140px;
+                line-height: 1.25;
+            }
+            .logo-img {
+                height: 36px;
+                width: auto;
+            }
+            .user-nav-actions .btn-card-details {
+                padding: 6px 8px;
+                font-size: 11px;
+                white-space: nowrap;
+            }
+            .user-badge {
+                display: none !important;
+            }
+
+            .section-container {
+                padding: 10px 8px 60px !important;
+                max-width: 100% !important;
+            }
+            .tawheed-layout {
+                grid-template-columns: 100% !important;
+                gap: 12px;
+                margin-top: 5px;
+                max-width: 100% !important;
+            }
+            .tawheed-main-view {
+                max-width: 100% !important;
+                min-width: 0;
+            }
+
+            /* تحويل القائمة الجانبية إلى شريط تبويبات أفقي مدمج وثابت في أعلى شاشة الهاتف */
+            .tawheed-sidebar-panel {
+                position: sticky;
+                top: 58px;
+                z-index: 100;
+                padding: 6px 8px;
+                border-radius: 16px;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                margin-bottom: 4px;
+                max-width: 100%;
+            }
+            [data-theme="dark"] .tawheed-sidebar-panel {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            }
+            .sidebar-heading-box {
+                display: none;
+            }
+            .tawheed-side-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .side-nav-btn {
+                padding: 8px 2px;
+                border-radius: 12px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 2px;
+                transform: none !important;
+            }
+            .side-btn-right {
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+            }
+            .side-btn-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+            .side-btn-text h4 {
+                font-size: 11.5px;
+                margin: 0;
+                font-weight: 800;
+                white-space: nowrap;
+            }
+            .side-btn-text span {
+                display: none;
+            }
+            .side-btn-badge {
+                font-size: 9px;
+                padding: 1px 4px;
+                border-radius: 6px;
+                margin: 0;
+            }
+            .sidebar-progress-box {
+                margin-top: 6px;
+                padding: 6px 8px;
+                border-radius: 8px;
+            }
+            .sidebar-progress-title {
+                font-size: 10.5px;
+                margin-bottom: 3px;
+            }
+            .sidebar-progress-box > div:last-child {
+                display: none;
+            }
+            .tawheed-sidebar-panel > div:last-child {
+                display: none;
+            }
+
+            /* تصغير حجم البنر على الهواتف */
+            .topic-hero-banner {
+                padding: 16px 14px;
+                border-radius: 16px;
+                max-width: 100%;
+            }
+            .topic-badge-top {
+                font-size: 11px;
+                padding: 3px 8px;
+                margin-bottom: 6px;
+            }
+            .topic-hero-title {
+                font-size: 17px;
+                margin-bottom: 6px;
+            }
+            .topic-hero-desc {
+                font-size: 12px;
+                line-height: 1.55;
+                margin-bottom: 10px;
+            }
+            .topic-quote-box {
+                font-size: 14px;
+                padding: 8px 10px;
+                line-height: 1.7;
+            }
+
+            /* تبويبات الدروس والكويز */
+            .sub-nav-tabs {
+                gap: 4px;
+                padding-bottom: 4px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sub-tab-btn {
+                padding: 6px 10px;
+                font-size: 11.5px;
+                flex-shrink: 0;
+            }
+
+            /* شبكة الدروس */
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                max-width: 100%;
+            }
+            .lesson-card {
+                padding: 14px;
+                border-radius: 16px;
+                max-width: 100%;
+            }
+            .lesson-title {
+                font-size: 14.5px;
+            }
+            .lesson-summary {
+                font-size: 12px;
+                line-height: 1.55;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- القائمة الجانبية -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/usul-al-deen.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-right"></i> مسار أصول الدين
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- المحتوى الرئيسي -->
+<div class="section-container" style="max-width: 1280px; padding: 20px 20px 60px;">
+
+    <div class="tawheed-layout">
+
+        <!-- العمود الجانبي: الاختيارات الثلاثة (في الجنب) -->
+        <aside class="tawheed-sidebar-panel">
+            <div class="sidebar-heading-box">
+                <div class="sidebar-main-title">
+                    <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                    <span>أقسام علم التوحيد</span>
+                </div>
+                <div class="sidebar-subtitle">اختر الباب لعرض موضوعاته ودروسه:</div>
+            </div>
+
+            <!-- أزرار الاختيارات الثلاثة -->
+            <div class="tawheed-side-nav">
+                
+                <!-- خيار 1: الإلهيات -->
+                <button class="side-nav-btn active" id="btn-divinity" onclick="selectTawheedBranch('divinity')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <div class="side-btn-text">
+                            <h4>الإلهيات</h4>
+                            <span>الوجود، الصفات، والقدر والتشريع</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 دروس</span>
+                </button>
+
+                <!-- خيار 2: النبوات -->
+                <button class="side-nav-btn" id="btn-prophets" onclick="selectTawheedBranch('prophets')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="side-btn-text">
+                            <h4>النبوات</h4>
+                            <span>العصمة، المعجزات، والكتب والرسل</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 دروس</span>
+                </button>
+
+                <!-- خيار 3: السمعيات -->
+                <button class="side-nav-btn" id="btn-unseen" onclick="selectTawheedBranch('unseen')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-feather"></i></div>
+                        <div class="side-btn-text">
+                            <h4>السمعيات</h4>
+                            <span>الموت، البرزخ، القيامة، والجنة والنار</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 دروس</span>
+                </button>
+
+            </div>
+
+            <!-- بطاقة تقدم الطالب في المسار -->
+            <div class="sidebar-progress-box">
+                <div class="sidebar-progress-title">
+                    <span><i class="fa-solid fa-chart-pie"></i> نسبة الإنجاز في التوحيد</span>
+                    <strong id="tawheedProgressText">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="tawheedProgressBar"></div>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
+                    تم إتمام <span id="completedLessonsCount">0</span> من أصل 30 درساً تأصيلياً
+                </div>
+            </div>
+
+            <!-- توجيه دراسي -->
+            <div style="margin-top: 20px; padding: 14px; border-radius: 14px; background: rgba(0,0,0,0.03); font-size: 12px; line-height: 1.6; color: var(--text-muted);">
+                <i class="fa-solid fa-circle-info" style="color: var(--emerald);"></i>
+                <strong>توجيه منهجي:</strong> تم ترتيب هذه الموضوعات الثلاثين وفق الأصول العلمية المعتمدة لترسيخ العقيدة الإسلامية الصحيحة بالأدلة العقلية والنقلية.
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي المعروض عند اختيار أي من الأبواب الثلاثة -->
+        <main class="tawheed-main-view">
+
+            <!-- بنر ترحيبي يتغير ديناميكياً مع الباب المختار -->
+            <div class="topic-hero-banner" id="topicBanner">
+                <span class="topic-badge-top" id="topicBadge">
+                    <i class="fa-solid fa-star"></i> قسم الإلهيات
+                </span>
+                <h2 class="topic-hero-title" id="topicTitle">قسم الإلهيات — معرفة الله سبحانه ووحدانيته</h2>
+                <p class="topic-hero-desc" id="topicDescription">
+                    يبحث هذا الباب في إثبات وجود الله عز وجل ووحدانيته، ومعرفة ما يجب وما يستحيل وما يجوز في حقه سبحانه، وتفصيل توحيد الألوهية والربوبية والأسماء والصفات، وخلق الأفعال والتشريع.
+                </p>
+                <div class="topic-quote-box" id="topicQuote">
+                    «شَهِدَ اللَّهُ أَنَّهُ لَا إِلَٰهَ إِلَّا هُوَ وَالْمَلَائِكَةُ وَأُولُو الْعِلْمِ قَائِمًا بِالْقِسْطِ ۚ لَا إِلَٰهَ إِلَّا هُوَ الْعَزِيزُ الْحَكِيمُ» [آل عمران: 18]
+                </div>
+            </div>
+
+            <!-- تبويبات التصفح داخل القسم -->
+            <div class="sub-nav-tabs">
+                <button class="sub-tab-btn active" onclick="switchTopicView('lessons', this)">
+                    <i class="fa-solid fa-book-open"></i> الدروس والموضوعات (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('qa', this)">
+                    <i class="fa-solid fa-circle-question"></i> أسئلة وأجوبة مركزة (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('quiz', this)">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم التفاعلي (10)
+                </button>
+            </div>
+
+            <!-- العرض 1: شبكة الدروس -->
+            <div id="viewLessons" class="lessons-grid">
+                <!-- سيتم ملؤها ديناميكياً بواسطة JavaScript بناءً على الباب المختار -->
+            </div>
+
+            <!-- العرض 2: بنك الأسئلة والأجوبة -->
+            <div id="viewQA" style="display: none;">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+
+            <!-- العرض 3: اختبار الفهم -->
+            <div id="viewQuiz" style="display: none;">
+                <div class="quiz-container" id="quizBox">
+                    <!-- أسئلة الاختبار التفاعلي -->
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+<!-- نافذة عرض وقراءة محتوى الدرس الموسعة والغنية (Lesson Modal) -->
+<div class="modal-overlay" id="lessonModal" onclick="closeLessonModal(event)">
+    <div class="lesson-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="lesson-status-pill" id="modalTopicBadge" style="margin-bottom: 4px; display: inline-block;">الإلهيات</span>
+                <h3 id="modalLessonTitle" style="font-size: 20px; font-weight: 800; margin: 0; color: var(--emerald);">عنوان الدرس</h3>
+            </div>
+            <button class="modal-close-btn" onclick="closeLessonModal()" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalLessonBody">
+            <!-- محتوى الدرس التفصيلي الكامل -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn-card-details" onclick="closeLessonModal()" style="font-size: 13.5px; padding: 8px 18px;">
+                إغلاق النافذة
+            </button>
+            <button class="btn-enter-branch" id="btnMarkComplete" onclick="toggleCompleteCurrentLesson()" style="width: auto; padding: 8px 22px; font-size: 14px;">
+                <i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // قاعدة بيانات موضوعات ودروس التوحيد الثلاثين بالتفصيل الموسع والشامل
+    var tawheedData = {
+        divinity: {
+            title: "قسم الإلهيات — معرفة الله ووحدانيته وأسماؤه وصفاته والقدر",
+            badge: "قسم الإلهيات",
+            bannerClass: "",
+            desc: "دراسة تأصيلية موسعة تشمل إثبات وجود الله، توحيد الربوبية والألوهية، الصفات الإلهية الواجبة والمستحيلة والجائزة، الأسماء الحسنى، خلق الأفعال، مسألة القرآن، الرؤية، والحاكمية والتعليل.",
+            quote: "«شَهِدَ اللَّهُ أَنَّهُ لَا إِلَٰهَ إِلَّا هُوَ وَالْمَلَائِكَةُ وَأُولُو الْعِلْمِ قَائِمًا بِالْقِسْطِ ۚ لَا إِلَٰهَ إِلَّا هُوَ الْعَزِيزُ الْحَكِيمُ» [آل عمران: 18]",
+            lessons: [
+                {
+                    id: "div-1",
+                    num: 1,
+                    title: "إثبات وجود الله تعالى والأدلة عليه",
+                    summary: "دراسة البراهين العقلية والفطرية والنقلية: دليل الإتقان والخلق، دليل الحدوث، دليل الإمكان، وبرهان الفطرة، ودحض المادية والإلحاد.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-open"></i> 1. مدخل وتأصيل المسألة</h4>
+                        <p>إن الإيمان بوجود الله تعالى هو الأصل الأعظم الذي تنبني عليه سائر أصول العقائد والشرائع. وقد دلّت على وجوده سبحانه ووحدانيته صرائح العقول، وبدائه الفطر، وقواطع النقول، وشواهد الآفاق والأنفس.</p>
+                        
+                        <div class="quran-ayah-box">
+                            «أَمْ خُلِقُوا مِنْ غَيْرِ شَيْءٍ أَمْ هُمُ الْخَالِقُونَ * أَمْ خَلَقُوا السَّمَاوَاتِ وَالْأَرْضَ ۚ بَل لَّا يُوقِنُونَ» [الطور: 35-36]
+                        </div>
+
+                        <h4><i class="fa-solid fa-layer-group"></i> 2. البراهين العقلية والفطرية الكبرى</h4>
+                        <ul>
+                            <li><strong>أولاً: برهان الفطرة السليمة:</strong> هو الشعور الداخلي العميق بالحاجة إلى خالق عظيم، وهو إقرار مغروس في جبلة النفس البشرية يظهر جلياً عند الشدائد والكوارث وحين تنقطع الأسباب المادية (فِطْرَتَ اللَّهِ الَّتِي فَطَرَ النَّاسَ عَلَيْهَا).</li>
+                            <li><strong>ثانياً: برهان الحدوث والسببية:</strong> العالم بكل ما فيه من أفلاك وذرات حادث (أي لم يكن موجوداً ثم وُجد)، وكل حادث لا بد له بالضرورة العقلية القطعية من مُحدِث وموجِد؛ إذ يستحيل ترجح الوجود على العدم بلا مرجح، ويستحيل عقلاً التسلسل اللانهائي للعلل أو الدور المنطقي.</li>
+                            <li><strong>ثالثاً: برهان الإمكان:</strong> كل ما في الكون ممكن الوجود (يقبل عقلاً أن يوجد وأن يعدم)، والممكن لا يستند إلا إلى واجب الوجود لذاته وهو الله تعالى الذي لا ابتداء لوجوده ولا فناء لذاته.</li>
+                            <li><strong>رابعاً: برهان الإتقان والنظام الكوني (دليل العناية والغائية):</strong> التناسق المذهل في قوانين الفيزياء، والضبط الدقيق للثوابت الكونية، وتشريح الكائنات الحية، يدل دلالة عقلية لا تحتمل الشك على إرادة إلهية حكيمة وقصد مدبر.</li>
+                        </ul>
+
+                        <div class="scholarly-note-box">
+                            <strong>فائدة منهجية:</strong> براهين القرآن تجمع بين الدقة العقلية الصارمة والخطاب الفطري الوجداني المؤثر، فتخاطب العقل بالحجة وتوقظ القلب بالتدبر في ملكوت السماوات والأرض.
+                        </div>
+                    `
+                },
+                {
+                    id: "div-2",
+                    num: 2,
+                    title: "توحيد الربوبية وأفعال الله تعالى",
+                    summary: "إفراد الله بالخلق، الرزق، الملك، والتدبير، والإحياء والإماتة، وأنه الفاعل المطلق وموجد الكائنات ومصرفها بلا شريك.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-crown"></i> 1. حقيقة توحيد الربوبية</h4>
+                        <p>توحيد الربوبية هو الاعتقاد الجازم بأن الله سبحانه وتعالى هو وحده الخالق الرازق المالك المدبر لجميع الأمور، لا شريك له في خلقه ولا منازع له في ملكه ولا معقب لحكمه.</p>
+
+                        <div class="quran-ayah-box">
+                            «قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَن تَشَاءُ وَتَنزِعُ الْمُلْكَ مِمَّن تَشَاءُ... بِيَدِكَ الْخَيْرُ ۖ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ» [آل عمران: 26]
+                        </div>
+
+                        <h4><i class="fa-solid fa-list-check"></i> 2. أفعال الله تعالى ومقتضيات الربوبية</h4>
+                        <ul>
+                            <li><strong>انفراد الله بالإيجاد والخلق:</strong> هو الموجد لجميع الذوات والأعراض من العدم المحض، وكل ما سواه مخلوق مربوب فقير إليه.</li>
+                            <li><strong>انفراد الله بالرزق والتدبير:</strong> ما من دابة في الأرض إلا على الله رزقها، وهو الذي يسير السحاب ويحيي الموتى ويقلب الليل والنهار.</li>
+                            <li><strong>استحالة الشريك (برهان التمانع):</strong> لو كان في الكون إلهان مدبران لتنازعا وأراد كل واحد منهما مراداً يخالف الآخر، فإن نفذ مرادهما معاً كان تناقضاً، وإن عجز أحدهما كان عاجزاً لا يصلح للإلهية (لَوْ كَانَ فِيهِمَا آلِهَةٌ إِلَّا اللَّهُ لَفَسَدَتَا).</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-3",
+                    num: 3,
+                    title: "توحيد الألوهية والعبادة ونواقضه",
+                    summary: "إفراد الله بالعبادات الظاهرة والباطنة (الدعاء، النذر، الذبح، الخوف، التوكل)، وتحديد مفهوم الشرك الأكبر والأصغر ومفسدات التوحيد.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-hand-holding-heart"></i> 1. حقيقة توحيد الألوهية ومكانته</h4>
+                        <p>توحيد الألوهية (توحيد العبادة) هو إفراد الله سبحانه بأفعال العباد التعبدية؛ بحيث لا يُصرف أي نوع من أنواع العبادة إلا له وحده لا شريك له. وهذا التوحيد هو ميثاق الرسل والغاية التي خلق الله لأجلها الثقلين.</p>
+
+                        <div class="quran-ayah-box">
+                            «وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ» [الذاريات: 56]
+                        </div>
+
+                        <h4><i class="fa-solid fa-shield-halved"></i> 2. أنواع العبادات ومفسدات التوحيد</h4>
+                        <ul>
+                            <li><strong>العبادات الظاهرة:</strong> كالصلاة، الركوع، السجود، الذبح، النذر، والاستغاثة في غير مقدور المخلوق.</li>
+                            <li><strong>العبادات الباطنة:</strong> كالمحبة التامة، الخوف والخشية، الرجاء، الإنابة، والتوكل المطلق.</li>
+                            <li><strong>الشرك الأكبر:</strong> صرف حق الله التعبدي لغيره (كالدعاء والاستغاثة بالأموات والأصنام)، وهو محبط لجميع الأعمال وموجب للخلود في النار لمن مات عليه بلا توبة.</li>
+                            <li><strong>الشرك الأصغر:</strong> كل وسيلة أو لفظ يوهم الشرك لكن لا يخرج صاحبه من الملة، كالرياء الخفي في العبادات، والحلف بغير الله من غير تعظيم المخلوق كتعظيم الخالق.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-4",
+                    num: 4,
+                    title: "الصفات الواجبة لله (النفسية والسلبية والمعاني)",
+                    summary: "دراسة الصفات الواجبة لله تعالى: الصفة النفسية (الوجود)، الصفات السلبية التنزيهية الخمس، وصفات المعاني السبع وأدلتها.",
+                    duration: "30 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-star"></i> 1. تقسيم الصفات الواجبة لله تعالى عقلاً ونقلاً</h4>
+                        <p>قسم علماء العقيدة وأهل التحقيق الصفات الواجبة في حق الله عز وجل تقسيماً تعليمياً دقيقاً مستنبطاً من نصوص الوحي والأدلة العقلية القاطعة إلى ثلاثة أقسام كبرى:</p>
+
+                        <h4><i class="fa-solid fa-check-double"></i> 2. تفصيل أقسام الصفات</h4>
+                        <ul>
+                            <li><strong>أولاً: الصفة النفسية (وهي صفة واحدة):</strong>
+                                <br><strong>الوجود:</strong> وهو ثبوت الذات الإلهية المقدسة، فوجوده تعالى ذاتي واجب لا يقبل العدم أزلاً ولا أبداً.
+                            </li>
+                            <li><strong>ثانياً: الصفات السلبية (التنزيهية الخمس):</strong> وتسلب عن الله تعالى ما لا يليق به من النقائص:
+                                <ul>
+                                    <li><strong>1. القِدَم (الأزلية):</strong> عدم ابتداء وجوده سبحانه (هُوَ الْأَوَّلُ).</li>
+                                    <li><strong>2. البقاء (الأبدية):</strong> عدم انتهاء وجوده ولا يلحقه فناء (وَيَبْقَىٰ وَجْهُ رَبِّكَ).</li>
+                                    <li><strong>3. مخالفة الحوادث:</strong> تنزيهه المطلق عن مماثلة المخلوقات في الذات والصفات والأفعال (لَيْسَ كَمِثْلِهِ شَيْءٌ).</li>
+                                    <li><strong>4. القيام بالنفس (الغنى المطلق):</strong> عدم احتياجه تعالى إلى موجِد يوجده ولا إلى محل يقوم به، بل كل الكائنات مفتقرة إليه (يَا أَيُّهَا النَّاسُ أَنتُمُ الْفُقَرَاءُ إِلَى اللَّهِ).</li>
+                                    <li><strong>5. الوحدانية:</strong> نفي التعدد في ذاته ونفي الشريك في صفاته وأفعاله (قُلْ هُوَ اللَّهُ أَحَدٌ).</li>
+                                </ul>
+                            </li>
+                            <li><strong>ثالثاً: صفات المعاني السبع:</strong> وهي صفات كمال قديمة قائمة بذاته المقدسة:
+                                <ul>
+                                    <li><strong>1. القدرة:</strong> صفة أزلية يتأتى بها إيجاد كل ممكن وإعدامه على وفق الإرادة.</li>
+                                    <li><strong>2. الإرادة:</strong> صفة أزلية تخصص الممكن ببعض ما يجوز عليه من الوجود والزمان والمكان والصفات.</li>
+                                    <li><strong>3. العلم:</strong> صفة أزلية ينكشف بها كل موجود ومعدوم وواجب وجائز ومستحيل كشفاً تاماً محيطاً بلا سبق جهل.</li>
+                                    <li><strong>4. الحياة:</strong> صفة أزلية تصحح لمن قامت به أن يتصف بالعلم والقدرة والإرادة، وهو الحي القيوم.</li>
+                                    <li><strong>5. السمع:</strong> صفة أزلية تتعلق بجميع المسموعات بلا جارحة ولا أذن.</li>
+                                    <li><strong>6. البصر:</strong> صفة أزلية تنكشف بها جميع المبصرات بلا حدقة ولا مقابلة.</li>
+                                    <li><strong>7. الكلام:</strong> صفة أزلية قديمة قائمة بذاته تعالى منزهة عن الصوت والحرف والتقديم والتأخير.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-5",
+                    num: 5,
+                    title: "توحيد الأسماء والصفات وقواعد فهمها",
+                    summary: "دراسة أسماء الله الحسنى ودلالاتها، وضوابط الإثبات والتنزيه، وتجنب التعطيل والتمثيل والتحريف والتكييف وفق منهج أهل السنة والجماعة.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-gem"></i> 1. ضوابط باب الأسماء والصفات</h4>
+                        <p>باب أسماء الله وصفاته مبناه على التوقيف والتسليم للنصوص المعصومة، مع الجمع بين تعظيم الإثبات وكمال التنزيه.</p>
+
+                        <div class="quran-ayah-box">
+                            «وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا ۖ وَذَرُوا الَّذِينَ يُلْحِدُونَ فِي أَسْمَائِهِ» [الأعراف: 180]
+                        </div>
+
+                        <h4><i class="fa-solid fa-triangle-exclamation"></i> 2. المحاذير الأربعة في باب الصفات</h4>
+                        <ul>
+                            <li><strong>1. التحريف:</strong> تغيير ألفاظ النصوص أو صرف معانيها الظاهرة إلى معان باطلة بلا دليل شرعي أو عقلي معتبر.</li>
+                            <li><strong>2. التعطيل:</strong> نفي الصفات الإلهية أو نفي بعضها وإنكار قيامها بذات الله بدعوى التنزيه المتكلف.</li>
+                            <li><strong>3. التكييف:</strong> الخوض في تعيين كنه وحقيقة وكيفية الصفات، فالكيف مجهول للبشر وعقولنا قاصرة عن إحاطة حقيقة ذات الباري.</li>
+                            <li><strong>4. التمثيل والتشبيه:</strong> اعتقاد أن صفات الخالق تماثل صفات المخلوقين أو تقاس عليها.</li>
+                        </ul>
+                        <div class="scholarly-note-box">
+                            <strong>القاعدة الذهبية:</strong> إثباتٌ بلا تمثيل، وتنزيهٌ بلا تعطيل؛ (ليس كمثله شيء) رد على المشبهة، (وهو السميع البصير) رد على المعطلة.
+                        </div>
+                    `
+                },
+                {
+                    id: "div-6",
+                    num: 6,
+                    title: "مبحث مسألة خلق الأفعال، القضاء والقدر",
+                    summary: "علاقة إرادة الله وقدرته بأفعال العباد، التخيير والتسيير، ومسألة 'الكسب' والعدل الإلهي في الثواب والعقاب والرد على الجبرية والقدرية.",
+                    duration: "28 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scale-balanced"></i> 1. تحرير محل النزاع في أفعال العباد</h4>
+                        <p>من أدق مباحث العقيدة الإسلامية التوفيق بين عموم قدرة الله وخلقه لكل شيء وبين مسؤولية الإنسان واختياره وحكمته تعالى في الثواب والعقاب.</p>
+
+                        <div class="quran-ayah-box">
+                            «وَاللَّهُ خَلَقَكُمْ وَمَا تَعْمَلُونَ» [الصافات: 96]
+                        </div>
+
+                        <h4><i class="fa-solid fa-code-compare"></i> 2. المذاهب في أفعال العباد وموقف أهل الحق</h4>
+                        <ul>
+                            <li><strong>الجبرية (المجبرة):</strong> زعموا أن الإنسان مجبر مسلوب الإرادة تماماً كالريشة في مهب الريح، وهذا باطل يناقض التكليف والعدل الإلهي.</li>
+                            <li><strong>القدرية (المعتزلة):</strong> زعموا أن العبد هو الخالق المستقل لأفعاله الاختيارية دون قدرة الله وخلقه، وهذا باطل ينسب العجز لله ويثبت خالقين معه.</li>
+                            <li><strong>أهل السنة والجماعة (منهج الكسب والاختيار):</strong> الله تعالى هو الخالق الموجد لكل حركة وسكون وفعل، وللعبد قدرة حادثة وإرادة حرة يكتسب بها الفعل ويختاره، وبموجب هذا الاختيار والكسب يكون الثواب والعقاب عدلاً وفضلاً.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-7",
+                    num: 7,
+                    title: "مبحث كلام الله ومسألة القرآن الكريم",
+                    summary: "بيان أزلية كلام الله، الفرق بين الكلام النفسي واللفظي بين المذاهب العقدية، ومسألة خلق القرآن التاريخية وثبات الإمام أحمد وأهل السنة.",
+                    duration: "24 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> 1. إثبات صفة الكلام لله تعالى</h4>
+                        <p>كلام الله تعالى صفة كمال أزلية قديمة قائمة بذاته المقدسة، كلم بها موسى تكليماً، وتجلى بها على ملائكته ورسله، وأعظم ما نزل منه القرآن العظيم.</p>
+
+                        <div class="quran-ayah-box">
+                            «وَإِنْ أَحَدٌ مِّنَ الْمُشْرِكِينَ اسْتَجَارَكَ فَأَجِرْهُ حَتَّىٰ يَسْمَعَ كَلَامَ اللَّهِ» [التوبة: 6]
+                        </div>
+
+                        <h4><i class="fa-solid fa-landmark"></i> 2. مسألة خلق القرآن وموقف أهل السنة</h4>
+                        <ul>
+                            <li><strong>عقيدة أهل السنة والجماعة:</strong> القرآن كلام الله تعالى منزل غير مخلوق، منه بدأ وإليه يعود، تكلم الله به حقيقة، مقروء بالألسنة، محفوظ في الصدور، مكتوب في المصاحف.</li>
+                            <li><strong>بدعة خلق القرآن:</strong> ادعت المعتزلة أن القرآن مخلوق كبقية المخلوقات، فوقف الإمام أحمد بن حنبل وأئمة الإسلام سداً منيعاً وثبتوا في المحنة لحفظ قدسية كتاب الله وعصمته من التبديل.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-8",
+                    num: 8,
+                    title: "مسألة رؤية الله تعالى في الآخرة",
+                    summary: "حكم جواز رؤية المؤمنين لربهم يوم القيامة عقلاً وثبوتها نقلاً، وأدلة المذاهب وضوابط الرؤية بلا كيف ولا جهة ولا انحصار.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-eye"></i> 1. إثبات رؤية المؤمنين لربهم في الجنة</h4>
+                        <p>اتفق أهل السنة والجماعة وسلف الأمة على أن أعظم نعيم يمن الله به على أهل الجنة هو رؤية وجهه الكريم عياناً بلا حجاب ولا كيف.</p>
+
+                        <div class="quran-ayah-box">
+                            «وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ * إِلَىٰ رَبِّهَا نَاظِرَةٌ» [القيامة: 22-23]
+                        </div>
+
+                        <h4><i class="fa-solid fa-shield-cat"></i> 2. الأدلة والضوابط العقدية للرؤية</h4>
+                        <ul>
+                            <li><strong>الدليل النبوي المتواتر:</strong> قوله ﷺ: «إنكم سترون ربكم عياناً كما ترون هذا القمر لا تضامون في رؤيته» (متفق عليه).</li>
+                            <li><strong>الجواز العقلي:</strong> كل موجود يصح عقلاً أن يُرى، والله تعالى موجود واجب الوجود، فيصح أن يمنح عباده قوة يدركون بها رؤيته.</li>
+                            <li><strong>ضوابط التنزيه:</strong> الرؤية ثابتة حقاً ولكنها منزهة عن الكيفيات الحادثة؛ فليست في جهة مكانية تحصره، ولا بمقابلة فيزيائية، ولا بانعكاس أشعة، ولا بإحاطة (لَّا تُدْرِكُهُ الْأَبْصَارُ وَهُوَ يُدْرِكُ الْأَبْصَارَ).</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-9",
+                    num: 9,
+                    title: "ما يستحيل على الله تعالى وما يجوز في حقه",
+                    summary: "المستحيل: كل نقص وشبيه بالخلق (كالجهل، العجز، الشريك، التركيب، التحيز). الجائز: خلق الممكنات أو تركها، وإرسال الرسل وإثابة المطيع.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-ban"></i> 1. ما يستحيل على الله تعالى قطعا</h4>
+                        <p>يستحيل في حق الله تعالى عقلاً ونقلاً كل ما ينافي صفات كماله وجلاله، وكل ما هو نقص في حق الإلهية:</p>
+                        <ul>
+                            <li><strong>أضداد الصفات الواجبة:</strong> يستحيل عليه العدم، الحدوث، الفناء، مماثلة المخلوقات، العجز، الجهل، الموت، الصمم، والخرس.</li>
+                            <li><strong>الشريك والتركيب والولد:</strong> يستحيل أن يكون له شريك في الملك أو ولد أو زوجة أو أن تكون ذاته المقدسة مركبة من أجزاء وأبعاض.</li>
+                            <li><strong>الظلم والعبث:</strong> منزه سبحانه عن الظلم والجور وعن فعل ما لا حكمة فيه؛ لأن أفعاله كلها دائرة بين الفضل والعدل.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-circle-check"></i> 2. ما يجوز في حق الله تعالى</h4>
+                        <ul>
+                            <li><strong>فعل كل ممكن أو تركه:</strong> كإيجاد الخلق ورزقهم وإماتتهم وإحيائهم.</li>
+                            <li><strong>إرسال الرسل وإنزال الكتب:</strong> جائز عقلاً بمقتضى الإمكان والفضل الإلهي، وواقع نقلاً برحمته.</li>
+                            <li><strong>إثابة الطائعين وعقاب العاصين:</strong> إثابة الطائع فضل وكرم منه سبحانه، وعقاب العاصي عدل وحكمة منه.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "div-10",
+                    num: 10,
+                    title: "الحاكمية والتشريع والحكمة والتعليل",
+                    summary: "انفراد الله بالتشريع والتحليل والتحريم، ومسألة تعليل أفعال الله بالحكمة والمصالح، وحقيقة اللطف الإلهي ورعاية الأصلح.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-gavel"></i> 1. الحاكمية وحق التشريع</h4>
+                        <p>الله تعالى هو الحاكم المطلق والمشرع الأوحد، والتحليل والتحريم حق خالص له سبحانه أظهره في وحيه المعصوم.</p>
+
+                        <div class="quran-ayah-box">
+                            «إِنِ الْحُكْمُ إِلَّا لِلَّهِ ۚ أَمَرَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ ۚ ذَٰلِكَ الدِّينُ الْقَيِّمُ» [يوسف: 40]
+                        </div>
+
+                        <h4><i class="fa-solid fa-seedling"></i> 2. الحكمة والتعليل في أفعال الله</h4>
+                        <ul>
+                            <li><strong>الحكمة التامة:</strong> أفعال الله تعالى وشرائعه معللة بالحكم والمصالح الرحيمة لخلقه، منزهة عن العبث واللهو؛ فهو الحكيم العليم الذي يضع الأمور في مواضعها اللائقة بها.</li>
+                            <li><strong>اللطف الإلهي:</strong> يفيض الله على عباده بألطاف خفية ويدبر لهم ما يصلح دينهم ودنياهم بحكمته التي قد تقصر عقولنا عن إدراك تفاصيلها في الحال.</li>
+                        </ul>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هو الدليل العقلي على استحقاق الله وحده للعبادة واستحالة وجود إلهين؟", a: "برهان التمانع؛ إذ لو وُجد إلهان لفرِض إما اتفاقهما وإما اختلافهما، فإن اختلفا وأراد أحدهما حركة والآخر سكوناً فإما أن ينفذ مرادهما معاً وهو تناقض مستحيل، وإما ألا ينفذ وهو عجز، وإن نفذ مراد أحدهما دون الآخر فالذي لم ينفذ مراده عاجز، والعاجز لا يكون إلهاً قط." },
+                { q: "2. ما هي الصفة النفسية وما معناها ودليلها؟", a: "الصفة النفسية هي صفة «الوجود»، وتسمى نفسية لأنها تدل على نفس الذات الإلهية دون زيادة معنى عليها، ودليلها حدوث العالم وافتقاره إلى موجد حكيم قديم أوجده من العدم." },
+                { q: "3. ما هي الصفات السلبية الخمس وما معناها؟", a: "هي صفات تنفي عن الله كل نقص، وهي: القدم (الأزلية)، البقاء (الأبدية)، مخالفة الحوادث (عدم مماثلة المخلوقات)، القيام بالنفس (الغنى المطلق عن المحل والمخصص)، والوحدانية (نفي الشريك في الذات والصفات والأفعال)." },
+                { q: "4. ما هي صفات المعاني السبع الواجبة لله تعالى؟", a: "هي صفات وجودية قائمة بذاته تعالى تليق بجلاله: القدرة (الإيجاد والإعدام)، الإرادة (التخصيص بالممكنات)، العلم (الإحاطة بكل شيء)، الحياة، السمع، البصر، والكلام (القديم الأزلي المنزه عن الحروف والأصوات الحادثة)." },
+                { q: "5. ما هو مذهب أهل السنة والجماعة في مسألة خلق أفعال العباد؟", a: "الله تعالى خالق لكل شيء بما فيه قدرة العبد وأفعاله، وللعبد إرادة حرة ومشيئة واختيار يكتسب به أفعاله، وبمقتضى هذا الكسب والاختيار يستحق الثواب فضلاً من الله أو العقاب عدلاً، رداً على الجبرية والقدرية." },
+                { q: "6. ما هو الدليل على ثبوت رؤية المؤمنين لربهم يوم القيامة في الجنة؟", a: "ثابتة بالنصوص المتواترة كقوله تعالى: (وُجُوجٌ يَوْمَئِذٍ نَّاضِرَةٌ * إِلَىٰ رَبِّهَا نَاظِرَةٌ)، وقول النبي ﷺ: (إنكم سترون ربكم كما ترون القمر ليلة البدر لا تضامون في رؤيته)، وهي رؤية حقيقية بلا كيف ولا جهة ولا انحصار." },
+                { q: "7. ما هو مذهب أهل السنة في كلام الله ومسألة القرآن الكريم؟", a: "القرآن كلام الله تعالى المنزل على نبيه محمد ﷺ، غير مخلوق، منه بدأ وإليه يعود، وكلام الله صفة أزلية قائمة بذاته سبحانه." },
+                { q: "8. ما الفرق الدقيق بين توحيد الربوبية وتوحيد الألوهية؟", a: "توحيد الربوبية: إفراد الله بأفعاله هو سبحانه (كالخلق والرزق والإحياء والإماتة والتدبير)، وتوحيد الألوهية: إفراد الله بأفعال العباد التعبدية (كالدعاء والصلاة والذبح والنذر والتوكل)." },
+                { q: "9. ما هي القواعد الكبرى في فهم أسماء الله الحسنى وصفاته العلا؟", a: "قاعدتان عظيمتان: الإثبات المفصل بلا تمثيل، والتنزيه المجمل بلا تعطيل، عملاً بقاعدته المحكمة: (لَيْسَ كَمِثْلِهِ شَيْءٌ ۖ وَهُوَ السَّمِيعُ الْبَصِيرُ)." },
+                { q: "10. ما معنى الحاكمية وما الجائز والمستحيل في حق الله تعالى؟", a: "الحاكمية هي انفراد الله بالتشريع والتحليل والتحريم. والمستحيل عليه سبحانه كل نقص كالموت والعجز والجهل والظلم، والجائز في حقه فعل كل ممكن أو تركه بمحض إرادته وعدله وفضله." }
+            ],
+            quizList: [
+                { q: "1. الصفة النفسية الوحيدة الواجبة لله تعالى هي:", opts: ["الوجود", "القدرة", "الوحدانية"], a: 0 },
+                { q: "2. البرهان الذي يستند إلى دقة القوانين الكونية وتناسق حركة الأفلاك يسمى:", opts: ["برهان الإتقان والعناية", "برهان الحدوث فقط", "برهان التمني"], a: 0 },
+                { q: "3. حكم رؤية المؤمنين لربهم يوم القيامة في الجنة هو:", opts: ["جائز عقلاً وثابت نقلاً بالنصوص المتواترة", "مستحيل عقلاً وشرعاً", "خاص بالأنبياء فقط دون سائر المؤمنين"], a: 0 },
+                { q: "4. صفة «القدم» من الصفات السلبية ومعناها الحق هو:", opts: ["أزلية الوجود وعدم افتتاح وجوده بعدم", "طول الزمان", "القدم بالمعنى الزمني المادي"], a: 0 },
+                { q: "5. مذهب أهل السنة والجماعة في مسألة أفعال العباد هو:", opts: ["أفعال العباد مخلوقة لله ومكتسبة للعبد باختياره", "العبد مجبر مسلوب الإرادة تماماً", "العبد يخلق فعل نفسه مستقلاً عن الله"], a: 0 },
+                { q: "6. صفة «مخالفة الحوادث» تعني:", opts: ["تنزيه الله تعالى عن مماثلة سائر المخلوقات في الذات والصفات", "مخالفة القوانين الطبيعية فقط", "حدوث الصفات بعد العدم"], a: 0 },
+                { q: "7. توحيد الألوهية يعني اصطلاحاً:", opts: ["إفراد الله سبحانه بجميع أنواع العبادة والافتقار", "الاعتراف بأن الله هو الخالق فقط", "معرفة أسماء الله الـ 99 حفظاً"], a: 0 },
+                { q: "8. القرآن الكريم عند أهل السنة والجماعة هو:", opts: ["كلام الله تعالى المنزل غير مخلوق", "مخلوق خلقه الله في اللوح المحفوظ", "عبارة مجازية عن المعنى القائم"], a: 0 },
+                { q: "9. برهان التمانع يُستدل به عقلاً على:", opts: ["استحالة تعدد الآلهة ووجوب وحدانية الخالق", "إثبات البعث بعد الموت", "حدوث العالم الطبيعي"], a: 0 },
+                { q: "10. ما يستحيل في حق الله تعالى قطعاً وإجماعاً هو:", opts: ["كل صفة نقص كالجهل والعجز والشريك والظلم والصاحبة والولد", "إرسال الرسل والكتب", "مغفرة الذنوب للعباد"], a: 0 }
+            ]
+        },
+
+        prophets: {
+            title: "قسم النبوات — مفهوم النبوة، العصمة، المعجزات، والرسالة المحمدية والكتب",
+            badge: "قسم النبوات",
+            bannerClass: "prophets",
+            desc: "دراسة شاملة لحاجة البشرية للرسل، الصفات الواجبة والمستحيلة والجائزة، حدود العصمة، المعجزات والكرامات، خصائص نبوة نبينا محمد ﷺ وخاتميتها، وأولو العزم، والإيمان بالكتب المنزلة.",
+            quote: "«وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ» [الأنبياء: 107]",
+            lessons: [
+                {
+                    id: "prop-1",
+                    num: 1,
+                    title: "مفهوم النبوة والرسالة والفرق بينهما",
+                    summary: "تعريف النبي والرسول لغة واصطلاحاً، بيان الفروق الدقيقة بينهما، وحقيقة الوحي ومراتبه الإلهية وكيفية اتصاله بالبشر.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> 1. التعريف اللغوي والاصطلاحي</h4>
+                        <p><strong>النبي:</strong> لغةً مشتق إما من (النَّبَأ) وهو الخبر العظيم لأن الله أنبأه بالوحي، أو من (النَّبْوة) وهي المكان المرتفع لشرف منزلته. واصطلاحاً: إنسان ذكر حر أوحي إليه بشرع.</p>
+                        <p><strong>الرسول:</strong> لغةً مأخوذ من الإرسال وهو التوجيه والانبعاث. واصطلاحاً: إنسان ذكر حر أوحي إليه بشرع جديد وأُمر بتبليغه لأمة أو قوم.</p>
+
+                        <h4><i class="fa-solid fa-arrows-split-up-and-left"></i> 2. الفروق الجوهرية بين النبي والرسول</h4>
+                        <ul>
+                            <li>كل رسول نبي، وليس كل نبي رسولاً (الرسالة أخص والنبوة أعم).</li>
+                            <li>الرسول يبعث عادة بشرع جديد أو كتاب أو إلى قوم مخالفين، بينما النبي قد يُبعث لتقرير وتجديد شريعة رسول سابق (كالأنبياء الذين بعثوا بعد موسى يحكمون بالتوراة).</li>
+                            <li><strong>مراتب الوحي:</strong> الرؤيا الصادقة في المنام، نفث الروح القدس في القلب، الإلهام، التكليم من وراء حجاب (كموسى ونبينا محمد ﷺ في المعراج)، أو نزول الملك جبريل في صورته الملكية أو البشرية.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-2",
+                    num: 2,
+                    title: "حاجة البشرية إلى الرسل وحكم إرسالهم",
+                    summary: "إثبات قصور العقل البشري عن إدراك تفاصيل التكليف والغيب، وبيان أن إرسال الرسل جائز عقلاً وواجب إحساناً وفضلاً لحفظ النظام وتزكية النفوس.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-compass"></i> 1. قصور العقل وضرورة الهداية النبوية</h4>
+                        <p>العقل البشري موهبة كبرى، لكنه محدود الطاقات؛ فهو يستطيع إدراك وجود الخالق إجمالاً، لكنه يعجز تماماً عن استقلال معرفة كيفية عبادته، وما يحبه ويرضاه، وتفاصيل الحلال والحرام، وأحوال الموت وعالم البرزخ واليوم الآخر.</p>
+
+                        <div class="quran-ayah-box">
+                            «رُّسُلًا مُّبَشِّرِينَ وَمُنذِرِينَ لِئَلَّا يَكُونَ لِلنَّاسِ عَلَى اللَّهِ حُجَّةٌ بَعْدَ الرُّسُلِ ۚ وَكَانَ اللَّهُ عَزِيزًا حَكِيمًا» [النساء: 165]
+                        </div>
+
+                        <h4><i class="fa-solid fa-scale-balanced"></i> 2. حكم إرسال الرسل عند المحققين</h4>
+                        <ul>
+                            <li><strong>جائز عقلاً:</strong> لا يجب على الله شيء إيجاب إلزام؛ لأن الله فاعل مختار لا يسأله أحد عما يفعل.</li>
+                            <li><strong>واجب فضلاً وإحساناً:</strong> أوجبه الله على نفسه بمقتضى كرمه وحكمته ورحمته بالخلق لإقامة الحجة وهداية البشرية من الظلمات إلى النور.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-3",
+                    num: 3,
+                    title: "الصفات الواجبة في حق الأنبياء والرسل",
+                    summary: "الصدق، الأمانة (العصمة)، التبليغ التام، والفطانة والذكاء الخارق لإقامة الحجة ودحض الشبهات.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-award"></i> الصفات الأربع الواجبة قطعا في حق الأنبياء</h4>
+                        <ul>
+                            <li><strong>1. الصدق:</strong> مطابقة خبرهم للواقع قطعاً، فيستحيل عليهم الكذب في الوحي والتبليغ وفي شؤون حياتهم؛ إذ لو جاز عليهم الكذب لجاز الكذب في خبر الله، وذلك باطل بالإجماع.</li>
+                            <li><strong>2. الأمانة (العصمة):</strong> حفظ الله لظواهرهم وبواطنهم من التلبس بالمعاصي أو الخيانة في أداء أمانة الدين والخلق.</li>
+                            <li><strong>3. التبليغ:</strong> أداء الرسالة كاملة كما أنزلها الله دون زيادة أو نقصان أو كتمان شيء منها لخوف أو مصلحة دنيوية.</li>
+                            <li><strong>4. الفطانة والذكاء:</strong> رجاحة العقل والفصاحة والقدرة على محاجة الخصوم وإلزامهم بالحجة والبرهان السديد (وَتِلْكَ حُجَّتُنَا آتَيْنَاهَا إِبْرَاهِيمَ عَلَىٰ قَوْمِهِ).</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-4",
+                    num: 4,
+                    title: "عصمة الأنبياء وحدودها وتوجيه الآيات",
+                    summary: "حقيقة العصمة قبل البعثة وبعدها، موقف أهل السنة من صغائر الهفوات غير المقصودة، وكيفية توجيه آيات العتاب الواردة في حقهم.",
+                    duration: "28 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-shield-halved"></i> 1. درجات العصمة النبوية</h4>
+                        <ul>
+                            <li><strong>العصمة في تلقي الوحي وتبليغه:</strong> معصومون إجماعاً من أي خطأ أو سهو يمس التشريع والرسالة (وَمَا يَنطِقُ عَنِ الْهَوَىٰ).</li>
+                            <li><strong>العصمة من الكبائر:</strong> معصومون إجماعاً من الشرك وكبائر الذنوب وكل خلق دنيء قبل النبوة وبعدها.</li>
+                            <li><strong>الصغائر والهفوات:</strong> معصومون من الصغائر التي تخل بالمروءة والشرف كالتطفيف والسرقة، وما وقع منهم من هفوات يسيرة ناتجة عن اجتهاد تم تنبيههم وتداركهم فوراً من الله.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-circle-question"></i> 2. توجيه آيات العتاب</h4>
+                        <p>عتاب الله لأنبيائه (كعتاب آدم في الأكل من الشجرة، أو عتاب نبينا ﷺ في سورة عبس) هو دليل قاطع على صدق نبوتهم وأمانتهم؛ إذ لو كان القرآن من عند أنفسهم لما أثبتوا فيه عتاباً موجهاً إليهم، وهو أيضاً تعليم للأمة وترقية لمقامهم في أعلى درجات الإخبات والعبودية لله.</p>
+                    `
+                },
+                {
+                    id: "prop-5",
+                    num: 5,
+                    title: "ما يجوز وما يستحيل في حق الأنبياء",
+                    summary: "الجائز: الأعراض البشرية التي لا تنقص من قدرهم (المرض، الأكل، النكاح، الموت). المستحيل: أضداد الواجبات، والأمراض المنفرة، والعيوب المخلة بمكانتهم.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-user-check"></i> 1. ما يجوز في حق الأنبياء والرسل</h4>
+                        <p>يجوز في حقهم جميع الأعراض والصفات البشرية التي لا تؤدي إلى نقص في مراتبهم العلية ولا تسقط مهابتهم في النفوس:</p>
+                        <ul>
+                            <li>كالأكل والشرب واللباس والنوم والنكاح والبيع والشراء في الأسواق.</li>
+                            <li>الأمراض العارضة والآلام الجسدية (كالحمى والصداع والجهد البدني)؛ لمضاعفة أجورهم وتسلية المبتلين وإثبات بشريتهم.</li>
+                            <li>الموت بمقتضى الأجل الإلهي العام المكتوب على البشر (إِنَّكَ مَيِّتٌ وَإِنَّهُم مَّيِّتُونَ).</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-ban"></i> 2. ما يستحيل في حقهم</h4>
+                        <ul>
+                            <li>يستحيل عليهم أضداد الصفات الواجبة: كالكذب، الخيانة، كتمان الوحي، والبلادة.</li>
+                            <li>تستحيل عليهم الأمراض المنفرة المزمنة كالجذام أو خروج الدود من الجسد كما زعم بعض القصاص الإسرائيليين؛ لأن ذلك ينفر الناس من مجالستهم وينافي الحكمة من بعثتهم.</li>
+                            <li>تستحيل عليهم خوارم المروءة ودناءة النسب أو العيوب الخلقية المشينة.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-6",
+                    num: 6,
+                    title: "المعجزات وخوارق العادات وضوابطها",
+                    summary: "تعريف المعجزة وشروطها، والفرق الدقيق بين المعجزة، والكرامة، والمعونة، والاستدراج، والإهانة، والسحر والشعوذة.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-wand-magic-sparkles"></i> 1. تعريف المعجزة وشروطها الخمسة</h4>
+                        <p><strong>المعجزة:</strong> أمر خارق للعادة يجريه الله على يد مدعي النبوة عند التحدي، سالماً من المعارضة بالمثل تأييداً لصدقه.</p>
+                        <ul>
+                            <li>1. أن تكون فعلاً أو أمراً خارقاً للسنن الكونية المعتادة.</li>
+                            <li>2. أن تصدر على يد مدعي النبوة والرسالة.</li>
+                            <li>3. أن تكون موافقة لدعواه ومطلوبه.</li>
+                            <li>4. أن تقترن بالتحدي للخصوم والمنكرين.</li>
+                            <li>5. أن يعجز المعارضون تماماً عن الإتيان بمثلها.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-table-list"></i> 2. الفروق بين أنواع خوارق العادات</h4>
+                        <ul>
+                            <li><strong>المعجزة:</strong> خاصة بالأنبياء مقرونة بالتحدي لتقرير الرسالة.</li>
+                            <li><strong>الكرامة:</strong> أمر خارق يظهره الله على يد ولي صالح تقي تابع لنبي، غير مقرونة بالتحدي.</li>
+                            <li><strong>المعونة:</strong> أمر خارق يجريه الله لإنقاذ شخص عادي من شدة أو كرب.</li>
+                            <li><strong>الاستدراج:</strong> خوارق تظهر على يد الفاسق أو الكافر وفق مراده مكراً به واستدراجاً لزيادة طغيانه.</li>
+                            <li><strong>الإهانة:</strong> أمر خارق يقع على الضد من رغبة الكذاب المدعي لإهانته وفضحه (كمسيلمة الكذاب حين تفل في عين أعور لتبصر فعميت السليمة).</li>
+                            <li><strong>السحر:</strong> تخييل وشعوذة مستندة إلى الشياطين وتنقضها الرقى وقوانين الشرع.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-7",
+                    num: 7,
+                    title: "إثبات نبوة سيدنا محمد ﷺ وخصائصها",
+                    summary: "براهين نبوته: القرآن الكريم المعجزة الخالدة، المعجزات الحسية، دلائل النبوة في أخلاقه وإخباره بالمغيبات، وعموم رسالته للثقلين.",
+                    duration: "30 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-kaaba"></i> 1. دلائل النبوة المحمدية القاطعة</h4>
+                        <ul>
+                            <li><strong>أولاً: المعجزة العقلية الخالدة (القرآن الكريم):</strong> أعظم معجزات الرسل على الإطلاق؛ لأنه معجزة بيانية وتشريعية وعلمية باقية متجددة إلى يوم القيامة، تحدى به فصحاء العرب والعالم فعجزوا عن معارضة أقصر سورة منه.</li>
+                            <li><strong>ثانياً: المعجزات الحسية المشهودة:</strong> كانشقاق القمر، نبع الماء من بين أصابعه الشريفة، تكثير الطعام القليل، حنين الجذع إليه عند ترك المنبر، وتسبيح الحصى في كفه.</li>
+                            <li><strong>ثالثاً: الإخبار بالمغيبات الصادقة:</strong> إخباره بفتح بلاد فارس والروم، فتح القسطنطينية، زوال ملك كسرى وقيصر، وظهور الفتن وتفاصيل أحداث آخر الزمان التي وقعت كما أخبر بدقة.</li>
+                            <li><strong>رابعاً: كمال خلقه وشريعته:</strong> سيرته الشريفة، صدقه المشهود قبل البعثة، وتأسيسه لأعظم حضارة وأكمل شريعة غيرت التاريخ.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-globe"></i> 2. عموم رسالته ﷺ للثقلين</h4>
+                        <div class="quran-ayah-box">
+                            «وَمَا أَرْسَلْنَاكَ إِلَّا كَافَّةً لِّلنَّاسِ بَشِيرًا وَنَذِيرًا» [سبأ: 28]
+                        </div>
+                        <p>بعث النبي ﷺ إلى كافة البشر والجن إلى قيام الساعة، بينما كان كل نبي قبله يبعث إلى قومه خاصة.</p>
+                    `
+                },
+                {
+                    id: "prop-8",
+                    num: 8,
+                    title: "ختم النبوة وانقطاع الرسالة والرد على المنحرفين",
+                    summary: "الأدلة النقلية والعقلية على أن محمداً ﷺ هو خاتم النبيين، ودحض الفرق والادعاءات المنحرفة التي تدعي استمرار النبوة بعده.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-lock"></i> 1. الأدلة القاطعة على ختم النبوة</h4>
+                        <div class="quran-ayah-box">
+                            «مَّا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِّن رِّجَالِكُمْ وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ» [الأحزاب: 40]
+                        </div>
+                        <p>قال رسول الله ﷺ: «أنا خاتم النبيين لا نبي بعدي» (حديث متواتر مجمع عليه). وأجمعت الأمة على أن من ادعى النبوة بعده أو صدق من يدعيها فهو كافر خارج من الملة لتكذيبه صريح القرآن والسنة المتواترة.</p>
+
+                        <h4><i class="fa-solid fa-shield"></i> 2. الرد على الفرق المنحرفة</h4>
+                        <p>دحض دعاوى القاديانية (الأحمدية)، والبهائية، والمدعين للدجل؛ فشريعته ﷺ محفوظة بحفظ القرآن (إنا نحن نزلنا الذكر وإنا له لحافظون)، ولا حاجة لبعثة رسول جديد بعد اكتمال الدين (اليوم أكملت لكم دينكم).</p>
+                    `
+                },
+                {
+                    id: "prop-9",
+                    num: 9,
+                    title: "تفضيل الأنبياء وأولو العزم من الرسل",
+                    summary: "مراتب الأنبياء وتفاضلهم، أولو العزم الخمسة (نوح، إبراهيم، موسى، عيسى، ومحمد عليهم السلام)، وسيادة النبي محمد ﷺ على ولد آدم.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-crown"></i> 1. تفاضل الأنبياء في الدرجات</h4>
+                        <div class="quran-ayah-box">
+                            «تِلْكَ الرُّسُلُ فَضَّلْنَا بَعْضَهُمْ عَلَىٰ بَعْضٍ ۘ مِّنْهُم مَّن كَلَّمَ اللَّهُ ۖ وَرَفَعَ بَعْضَهُمْ دَرَجَاتٍ» [البقرة: 253]
+                        </div>
+
+                        <h4><i class="fa-solid fa-users"></i> 2. أولو العزم من الرسل</h4>
+                        <p>هم أكابر الرسل صبراً وثباتاً في تبليغ دين الله وجهاد أقوامهم، وهم خمسة مذكورون في قوله تعالى (وَإِذْ أَخَذْنَا مِنَ النَّبِيِّينَ مِيثَاقَهُمْ وَمِنكَ وَمِن نُّوحٍ وَإِبْرَاهِيمَ وَمُوسَىٰ وَعِيسَى ابْنِ مَرْيَمَ):</p>
+                        <ul>
+                            <li>1. نوح عليه السلام (شيخ المرسلين).</li>
+                            <li>2. إبراهيم عليه السلام (خليل الرحمن).</li>
+                            <li>3. موسى عليه السلام (كليم الله).</li>
+                            <li>4. عيسى عليه السلام (روح الله وكلمته).</li>
+                            <li>5. سيدنا محمد ﷺ (إمام المرسلين وخاتم النبيين وأفضل ولد آدم أجمعين وصاحب الشفاعة العظمى والمقام المحمود).</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "prop-10",
+                    num: 10,
+                    title: "الكتب السماوية والإيمان بها ومهيمنية القرآن",
+                    summary: "حقيقة الكتب المنزلة (صحف إبراهيم، التوراة، الزبور، الإنجيل، والقرآن)، الإيمان بها إجمالاً وتفصيلاً، ونسخ القرآن للشرائع السابقة وحفظه التام.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> 1. الإيمان بالكتب المنزلة</h4>
+                        <p>الركن الثالث من أركان الإيمان هو الإيمان بالكتب التي أنزلها الله على رسله لهداية البشر، ونؤمن بها إجمالاً، وتفصيلاً بما سمى الله منها:</p>
+                        <ul>
+                            <li><strong>صحف إبراهيم وموسى.</strong></li>
+                            <li><strong>الزبور:</strong> المنزل على داود عليه السلام.</li>
+                            <li><strong>التوراة:</strong> المنزلة على موسى عليه السلام.</li>
+                            <li><strong>الإنجيل:</strong> المنزل على عيسى عليه السلام.</li>
+                            <li><strong>القرآن العظيم:</strong> خاتم الكتب ومهيمنها المنزل على نبينا محمد ﷺ.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-check"></i> 2. خصائص القرآن ومهيمنيته</h4>
+                        <div class="quran-ayah-box">
+                            «وَأَنزَلْنَا إِلَيْكَ الْكِتَابَ بِالْحَقِّ مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ مِنَ الْكِتَابِ وَمُهَيْمِنًا عَلَيْهِ» [المائدة: 48]
+                        </div>
+                        <p>القرآن ناسخ لجميع ما قبله من الشرائع والكتب السابقة، وهو الكتاب الوحيد الذي تكفل الله تعالى بحفظه بنفسه حرفاً بحرف من كل تحريف أو تبديل.</p>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هو الفرق الدقيق بين المعجزة والكرامة؟", a: "المعجزة تظهر على يد نبي وتكون مقرونة بدعوى النبوة والتحدي لتقرير الرسالة، بينما الكرامة تظهر على يد ولي صالح تقي تابع لنبي ولا تقترن بدعوى نبوة أو تحدٍ." },
+                { q: "2. ما هي الصفات الأربع الواجبة قطعاً في حق الأنبياء والرسل؟", a: "الصدق (مطابقة الخبر للواقع)، الأمانة (العصمة التامة من المعاصي والكبائر)، التبليغ (إيصال الوحي كاملاً بلا كتمان)، والفطانة (الذكاء وقوة الحجة ودحض الشبهات)." },
+                { q: "3. ما هي حدود عصمة الأنبياء عليهم السلام؟", a: "معصومون إجماعاً من الشرك والكبائر والصغائر التي تحط من قدرهم قبل النبوة وبعدها، ومعصومون قطعاً في تبليغ الوحي والأحكام الشرعية من الخطأ والنسيان." },
+                { q: "4. من هم أولو العزم الخمسة من الرسل بالترتيب؟", a: "نوح، إبراهيم، موسى، عيسى، ومحمد ﷺ (وهم أفضل الرسل، وسيدهم وأفضلهم جميعاً هو نبينا محمد ﷺ)." },
+                { q: "5. ما الدليل القاطع على خاتمية نبوة سيدنا محمد ﷺ؟", a: "قوله تعالى: (مَّا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِّن رِّجَالِكُمْ وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ) وقوله ﷺ: (أنا خاتم النبيين لا نبي بعدي) وإجماع الأمة القطعي." },
+                { q: "6. ما حكم إرسال الرسل بالنسبة لله تعالى عقلاً وشرعاً؟", a: "جائز عقلاً لأن الله فاعل مختار لا يوجب عليه أحد شيئاً، وواجب فضلاً ورحمة وإحساناً أوجبه الله على نفسه لإقامة الحجة وهداية العباد." },
+                { q: "7. ما هي الكتب السماوية المنزلة المذكورة بأسمائها في القرآن؟", a: "صحف إبراهيم وموسى، الزبور (لداود)، التوراة (لموسى)، الإنجيل (لعيسى)، والقرآن الكريم (لمحمد ﷺ)." },
+                { q: "8. ما الفرق الجوهري بين النبي والرسول؟", a: "كل رسول نبي وليس كل نبي رسولاً؛ الرسول إنسان أوحي إليه بشرع جديد وأمر بتبليغه، والنبي إنسان أوحي إليه بشرع (سواء أكان جديداً أو تقريراً لشرع رسول سابق)." },
+                { q: "9. ما الذي يجوز في حق الأنبياء والرسل من الأعراض البشرية؟", a: "يجوز في حقهم كل عرض بشري لا يؤدي إلى نقص في مراتبهم العلية ولا ينفر الناس عنهم، كالأكل والشرب والبيع والشراء والنكاح والمرض غير المنفر." },
+                { q: "10. ما معنى مهيمنية القرآن الكريم على الكتب السماوية السابقة؟", a: "معناه أنه حاكم عليها وشاهد بصحيحها وناسخ لأحكامها الشرعية ومبين لما طرأ على بعضها من تحريف وتبديل بشري." }
+            ],
+            quizList: [
+                { q: "1. الصفات الأربع الواجبة قطعاً في حق جميع الأنبياء والرسل هي:", opts: ["الصدق، الأمانة، التبليغ، والفطانة", "الغنى، الشهرة، القوة البدنية، والحكم", "الخلود، النسيان، التجارة، والزهد المطلق"], a: 0 },
+                { q: "2. الأمر الخارق للعادة الذي يقع على يد الكذاب على الضد من مطلوبه لفضحه يسمى:", opts: ["الإهانة", "المعجزة", "الكرامة"], a: 0 },
+                { q: "3. حكم الإيمان بأن القرآن الكريم ناسخ لجميع الكتب السماوية السابقة هو:", opts: ["واجب وفرض عقدياً بالإجماع", "مستحب للمتعلم فقط", "خاص بأهل المدينة المنورة"], a: 0 },
+                { q: "4. أول أولي العزم من الرسل بعد آدم وشيث وإدريس عليهم السلام هو:", opts: ["نوح عليه السلام", "إبراهيم عليه السلام", "موسى عليه السلام"], a: 0 },
+                { q: "5. معجزة نبينا محمد ﷺ الكبرى الباقية والخالدة عبر الأجيال هي:", opts: ["القرآن الكريم المعجز بلفظه ومعناه", "انشقاق القمر في وقته فقط", "حنين الجذع في المسجد"], a: 0 },
+                { q: "6. من الأعراض البشرية الجائزة في حق الأنبياء والمرسلين:", opts: ["الأكل والنوم والنكاح والمرض غير المنفر كالحمى", "الجنون وفقدان العقل التام", "الجبن والخوف المخل بالرسالة"], a: 0 },
+                { q: "7. كتاب «الزبور» أنزله الله تبارك وتعالى على النبي:", opts: ["داود عليه السلام", "سليمان عليه السلام", "يوسف عليه السلام"], a: 0 },
+                { q: "8. عصمة الأنبياء في تبليغ الوحي والرسالة الإلهية حكمها:", opts: ["واجبة ومعصومون فيها قطعاً بالاتفاق", "جائزة فقط", "خاصة بالنبي محمد ﷺ وحده"], a: 0 },
+                { q: "9. معنى قوله تعالى «وخاتم النبيين» في سورة الأحزاب هو:", opts: ["أنه لا نبي ولا رسول يوحى إليه بعد محمد ﷺ إلى قيام الساعة", "أنه زين الأنبياء فقط مع جواز غيره", "أنه نبي العرب فقط"], a: 0 },
+                { q: "10. الأمر الخارق للعادة الذي يظهره الله على يد عبد صالح تقي تابع لنبي يسمى:", opts: ["الكرامة", "المعجزة", "السحر والشعبذة"], a: 0 }
+            ]
+        },
+
+        unseen: {
+            title: "قسم السمعيات (الغيبيات) — أشراط الساعة، الموت، البرزخ، الحساب، الصراط، والجنة والنار",
+            badge: "قسم السمعيات",
+            bannerClass: "unseen",
+            desc: "دراسة شاملة لجميع مسائل الغيب السمعية: أشراط الساعة الصغرى والكبرى، الموت والروح، فتنة القبر ونعيمه وعذابه، النفخ في الصور، أرض المحشر، الحساب وتطاير الصحف، الميزان والصراط، الشفاعة، وأبدية الجنة والنار.",
+            quote: "«الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ» [البقرة: 3]",
+            lessons: [
+                {
+                    id: "uns-1",
+                    num: 1,
+                    title: "أشراط الساعة الصغرى والكبرى",
+                    summary: "علامات القيامة الصغرى (كالبعثة وضياع الأمانة)، والعلامات العشر الكبرى بالترتيب والتحليل المنهجي.",
+                    duration: "30 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-hourglass-half"></i> 1. مفهوم أشراط الساعة وأقسامها</h4>
+                        <p>أشراط الساعة هي العلامات والدلائل التي تسبق قيام القيامة وتدل على قُرب وقوعها، وتقسم إلى علامات صغرى وكبرى:</p>
+
+                        <h4><i class="fa-solid fa-list-ol"></i> 2. العلامات الصغرى</h4>
+                        <ul>
+                            <li>بعثة النبي ﷺ ووفاته (بُعثت أنا والساعة كهاتين).</li>
+                            <li>فتح بيت المقدس، وظهور الفتن وتفرق الأمة.</li>
+                            <li>ضياع الأمانة وإسناد الأمر إلى غير أهله.</li>
+                            <li>تطاول رعاء الشاء والحفاة العالة في البنيان، وكثرة القتل والتجارة وقطيعة الرحم.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-triangle-exclamation"></i> 3. العلامات العشر الكبرى المتتابعة</h4>
+                        <ul>
+                            <li><strong>1. خروج المهدي:</strong> رجل صالح من آل بيت النبي يملأ الأرض قسطاً وعدلاً.</li>
+                            <li><strong>2. خروج المسيح الدجال:</strong> أعظم فتنة على وجه الأرض منذ خلق آدم بما معه من الخوارق والفتن.</li>
+                            <li><strong>3. نزول عيسى بن مريم عليه السلام:</strong> ينزل عند المنارة البيضاء بدمشق، فيكسر الصليب ويقتل الخنزير ويقتل الدجال ويحكم بشريعة الإسلام.</li>
+                            <li><strong>4. خروج يأجوج ومأجوج:</strong> قوم مفسدون يخرجون من كل حدب ينسلون فيدعو عيسى عليهم فيموتون بنغف في رقابهم.</li>
+                            <li><strong>5-7. الخسوفات الثلاثة الكبرى:</strong> خسف بالمشرق، وخسف بالمغرب، وخسف بجزيرة العرب.</li>
+                            <li><strong>8. الدخان العظيم:</strong> يغشى الناس.</li>
+                            <li><strong>9. طلوع الشمس من مغربها:</strong> وحينها يُغلق باب التوبة فلا ينفع نفساً إيمانها لم تكن آمنت من قبل.</li>
+                            <li><strong>10. خروج دابة الأرض، ونار الحشر:</strong> نار تخرج من قعر عدن تسوق الناس إلى أرض محشرهم في الشام.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "uns-2",
+                    num: 2,
+                    title: "حقيقة الموت، الأجل، والروح",
+                    summary: "الإيمان بأن لكل إنسان أجلاً واحداً مكتوباً لا يتغير، وما ورد في القرآن والسنة حول حقيقة الروح وخروجها وقبض ملك الموت لها.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-skull"></i> 1. حقيقة الموت والأجل المحتوم</h4>
+                        <div class="quran-ayah-box">
+                            «كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۖ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ الْقِيَامَةِ» [آل عمران: 185]
+                        </div>
+                        <p>عقيدة أهل السنة أن لكل إنسان أجلاً واحداً محدداً في علم الله لا يتقدم عنه لحظة ولا يتأخر، سواء مات حتف أنفه على فراشه أو قُتل بسيف أو مات غرقاً أو حرقاً؛ فالمقتول مات بأجله المقدر له.</p>
+
+                        <h4><i class="fa-solid fa-feather"></i> 2. حقيقة الروح وخروجها</h4>
+                        <p>الروح سر إلهي لطيف استأثر الله بعلم كنهه (وَيَسْأَلُونَكَ عَنِ الرُّوحِ ۖ قُلِ الرُّوحُ مِنْ أَمْرِ رَبِّي). وتخرج روح المؤمن بسلاسة كقطرة الماء من السقاء تتلقاها ملائكة الرحمة، بينما تنزع روح الفاجر بشدة وتتلقاها ملائكة العذاب.</p>
+                    `
+                },
+                {
+                    id: "uns-3",
+                    num: 3,
+                    title: "فتنة القبر وسؤال الملكين (منكر ونكير)",
+                    summary: "إثبات سؤال الملكين للعبد في قبره عن ربه ودينه ونبيه، وتثبيت المؤمنين بالقول الثابت وحيرة المرتابين والمنافقين.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-person-circle-question"></i> 1. الامتحان الأول في القبر</h4>
+                        <p>إذا وُضع الميت في قبره وتولى عنه أصحابه أتاه ملكان أسودان أزرقان يقال لأحدهما المنكر وللآخر النكير، فيقعدانه ويسألانه ثلاثة أسئلة مصيرية:</p>
+                        <ul>
+                            <li><strong>1. مَن ربك؟</strong></li>
+                            <li><strong>2. ما دينك؟</strong></li>
+                            <li><strong>3. مَن نبيك وما تقول في هذا الرجل الذي بُعث فيكم؟</strong></li>
+                        </ul>
+
+                        <div class="quran-ayah-box">
+                            «يُثَبِّتُ اللَّهُ الَّذِينَ آمَنُوا بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ ۖ وَيُضِلُّ اللَّهُ الظَّالِمِينَ» [إبراهيم: 27]
+                        </div>
+                        <p>فيجيب المؤمن بيقين وثبات: (ربي الله، وديني الإسلام، ونبيي محمد ﷺ)، بينما يتلعثم المنافق والمرتاب ويقول: (هاه هاه لا أدري، سمعت الناس يقولون شيئاً فقلته) فيُضرب بمطرقة من حديد.</p>
+                    `
+                },
+                {
+                    id: "uns-4",
+                    num: 4,
+                    title: "عذاب القبر ونعيمه (عالم البرزخ)",
+                    summary: "حياة البرزخ الفاصلة بين الدنيا والآخرة، ثبوت أدلة النعيم والعذاب على الروح والجسد معاً بنصوص الوحي، والرد على منكري عذاب القبر.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-bed"></i> 1. حقيقة البرزخ والنعيم والعذاب</h4>
+                        <p>البرزخ هو المرحلة الفاصلة بين الحياة الدنيا ويوم البعث والنشور. وعذاب القبر ونعيمه حق ثابت بالقرآن الكريم وصحيح السنة المتواترة وإجماع سلف الأمة.</p>
+
+                        <div class="quran-ayah-box">
+                            «النَّارُ يُعْرَضُونَ عَلَيْهَا غُدُوًّا وَعَشِيًّا ۖ وَيَوْمَ تَقُومُ السَّاعَةُ أَدْخِلُوا آلَ فِرْعَوْنَ أَشَدَّ الْعَذَابِ» [غافر: 46]
+                        </div>
+
+                        <h4><i class="fa-solid fa-shield"></i> 2. الرد على المنكرين</h4>
+                        <p>أدلة السنة متواترة في الاستعاذة من عذاب القبر في دبر كل صلاة. وعذاب القبر ونعيمه يقع على الروح والجسد معاً باتصال برزخي لا تقاس قوانينه بحواس الدنيا الظاهرة، فالمؤمن يُفتح له باب إلى الجنة ويُفسح له في قبره مد بصره، والفاجر يضيق عليه قبره حتى تختلف أضلاعه ويُفتح له باب إلى النار.</p>
+                    `
+                },
+                {
+                    id: "uns-5",
+                    num: 5,
+                    title: "البعث والنشور والنفخ في الصور",
+                    summary: "النفخة الأولى (الصعق والموت العام) والنفخة الثانية (البعث والقيام)، إعادة خلق الأجساد من عجب الذنب وجمع الأرواح إليها.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-bullhorn"></i> 1. النفخ في الصور</h4>
+                        <p>الصور بوق عظيم وكّل الله به إسرافيل عليه السلام، وفيه نفختان عظيمتان:</p>
+                        <ul>
+                            <li><strong>النفخة الأولى (نفخة الصعق):</strong> يموت بها كل من في السماوات والأرض إلا من شاء الله، وينتهي بها نظام هذا العالم المشهود.</li>
+                            <li><strong>النفخة الثانية (نفخة البعث والنشور):</strong> ينفخ فيه فإذا هم قيام ينظرون، فترجع الأرواح إلى أجسادها وتقوم الخلائق لرب العالمين.</li>
+                        </ul>
+
+                        <div class="quran-ayah-box">
+                            «وَنُفِخَ فِي الصُّورِ فَصَعِقَ مَن فِي السَّمَاوَاتِ وَمَن فِي الْأَرْضِ إِلَّا مَن شَاءَ اللَّهُ ۖ ثُمَّ نُفِخَ فِيهِ أُخْرَىٰ فَإِذَا هُمْ قِيَامٌ يَنظُرُونَ» [الزمر: 68]
+                        </div>
+                    `
+                },
+                {
+                    id: "uns-6",
+                    num: 6,
+                    title: "أرض المحشر وأهوال الموقف وحوض النبي ﷺ",
+                    summary: "حشر الخلائق حفاة عراة، طول الموقف وشدة الكرب وتداني الشمس، السبعة الذين يظلهم الله في ظله، ومواصفات حوض النبي ﷺ والورود عليه.",
+                    duration: "26 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-users-viewfinder"></i> 1. أرض المحشر وشدة الموقف</h4>
+                        <p>تُبدل الأرض غير الأرض والسماوات، وتكون أرض المحشر بيضاء نقية كقرصة النقي ليس فيها مَعْلم لأحد، ويُحشر الناس حفاة عراة غُرلاً (غير مختونين) شاخصة أبصارهم من هول المطلع، وتدنو الشمس من رؤوس الخلائق حتى تلجمهم العرق على قدر أعمالهم.</p>
+
+                        <h4><i class="fa-solid fa-umbrella"></i> 2. ظل عرش الرحمن وحوض النبي ﷺ</h4>
+                        <ul>
+                            <li><strong>ظل العرش:</strong> يظل الله في ظله سبعة أصناف يوم لا ظل إلا ظله: الإمام العادل، شاب نشأ في عبادة ربه، رجل قلبه معلق بالمساجد، ورجلان تحابا في الله، ورجل دعته امرأة ذات منصب وجمال فقال إني أخاف الله، ورجل تصدق بصدقة فأخفاها، ورجل ذكر الله خالياً ففاضت عيناه.</li>
+                            <li><strong>حوض الكوثر المورود:</strong> حوض عظيم لنبينا ﷺ ماؤه أشد بياضاً من اللبن وأحلى من العسل وأطيب من المسك، كيزانه كنجوم السماء، من شرب منه شربة لا يظمأ بعدها أبداً، ويُذاد عنه المبدلون والمرتدون.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "uns-7",
+                    num: 7,
+                    title: "الحساب وعرض الأعمال وتطاير الصحف",
+                    summary: "كيفية محاسبة الله للعباد (الحساب اليسير والمناقشة)، أخذ الكتب باليمين أو الشمال أو من وراء الظهر، وشهادة الجوارح والأرض على أعمال الإنسان.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-file-invoice"></i> 1. عرض الأعمال وتطاير الصحف</h4>
+                        <div class="quran-ayah-box">
+                            «فَأَمَّا مَنْ أُوتِيَ كِتَابَهُ بِيَمِينِهِ فَيَقُولُ هَاؤُمُ اقْرَءُوا كِتَابِيَهْ * إِنِّي ظَنَنتُ أَنِّي مُلَاقٍ حِسَابِيَهْ» [الحاقة: 19-20]
+                        </div>
+                        <p>تتطاير صحف الأعمال التي سجلتها الملائكة الحفظة (كراماً كاتبين يعلمون ما تفعلون):</p>
+                        <ul>
+                            <li>المؤمن السعيد يأخذ كتابه بيمينه ويُحاسب حساباً يسيراً بالعرض والستر الإلهي.</li>
+                            <li>الكافر والمنافق يأخذ كتابه بشماله ومن وراء ظهره ويُناقش الحساب مناقشة تفضي إلى الهلاك.</li>
+                        </ul>
+
+                        <h4><i class="fa-solid fa-hand"></i> 2. شهادة الجوارح والأشهاد</h4>
+                        <p>تختم الأفواه وتتكلم الأيدي وتشهد الأرجل والجلود بما كان العبد يعمل في خلواته وسره؛ تحقيقاً للعدل المطلق وسداً لكل عذر.</p>
+                    `
+                },
+                {
+                    id: "uns-8",
+                    num: 8,
+                    title: "الميزان والصراط المنصوب على متن جهنم",
+                    summary: "إثبات الميزان الحقيقي ذي الكفتين لوزن الأعمال، والصراط وصفته وسرعة مرور المؤمنين وسقوط العصاة في النار.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scale-unbalanced"></i> 1. الميزان العادل</h4>
+                        <div class="quran-ayah-box">
+                            «وَنَضَعُ الْمَوَازِينَ الْقِسْطَ لِيَوْمِ الْقِيَامَةِ فَلَا تُظْلَمُ نَفْسٌ شَيْئًا» [الأنبياء: 47]
+                        </div>
+                        <p>ميزان حقيقي ذو كفتين ولسان تُوزن به صحائف الأعمال أو الأعمال نفسها أو الأشخاص، فمن ثقلت موازينه بالحسنات فهو في عيشة راضية، ومن خفت موازينه فأمه هاوية.</p>
+
+                        <h4><i class="fa-solid fa-bridge"></i> 2. الصراط المستقيم فوق متن جهنم</h4>
+                        <p>جسر مضروب على ظهر جهنم يمر عليه جميع الأولين والآخرين:</p>
+                        <ul>
+                            <li>صفته: أدق من الشعرة وأحد من السيف، دحض مزلة، عليه كلاليب وحسك تخطف الناس بأعمالهم.</li>
+                            <li>مرور المؤمنين: يمرون على قدر نورهم وأعمالهم، فمنهم من يمر كالبرق الخاطف، وكالريح، وكأجاويد الخيل، ومنهم من يسعى ويزحف، والنبي ﷺ قائم على الصراط يقول: «يا رب سلّم سلّم».</li>
+                            <li>مصير الكفار: يكبون على وجوههم في نار جهنم.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "uns-9",
+                    num: 9,
+                    title: "الشفاعة وأقسامها والمقام المحمود",
+                    summary: "الشفاعة العظمى الخاصة بالنبي ﷺ لفصل القضاء، شفاعات دخول الجنة، وشفاعة الأنبياء والصالحين والشهداء وحملة القرآن لإخراج أهل الكبائر من النار.",
+                    duration: "24 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-hand-holding-heart"></i> 1. الشفاعة العظمى (المقام المحمود)</h4>
+                        <p>أعظم كرامة يخص الله بها نبينا محمداً ﷺ يوم القيامة حين يشتد الكرب بالخلائق في المحشر فيعتذر عنها أولو العزم (آدم، نوح، إبراهيم، موسى، عيسى)، فيأتون النبي ﷺ فيقول: «أنا لها»، فيسجد تحت العرش ويفتح الله عليه بمحامد لم يفتح بها على أحد قبله، فيقال له: «يا محمد ارفع رأسك، وسل تُعطه، واشفع تُشفَّع»؛ لفصل القضاء بين العباد.</p>
+
+                        <h4><i class="fa-solid fa-list-check"></i> 2. الأقسام الأخرى للشفاعة</h4>
+                        <ul>
+                            <li><strong>شفاعته ﷺ في فتح أبواب الجنة:</strong> ليدخلها المؤمنون وهو أول من يقرع بابها.</li>
+                            <li><strong>شفاعته في تخفيف عذاب عمه أبي طالب.</strong></li>
+                            <li><strong>الشفاعة في عصاة الموحدين:</strong> لمن استحق النار ألا يدخلها، ولمن دخلها من أهل الكبائر أن يخرج منها، ويشترك معه فيها الأنبياء والملائكة والشهداء والعلماء والصالحون وحَفَظة القرآن.</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: "uns-10",
+                    num: 10,
+                    title: "الجنة والنار (النعيم الأبدي والعذاب السرمدي)",
+                    summary: "خلق الجنة والنار حالياً وأبديتهما، أوصاف نعيم الجنة ورؤية وجه الله الكريم، أصناف عذاب جهنم، والخلود الأبدي لأهل كل دار.",
+                    duration: "28 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-tree"></i> 1. الجنة دار النعيم المقيم</h4>
+                        <div class="quran-ayah-box">
+                            «فَلَا تَعْلَمُ نَفْسٌ مَّا أُخْفِيَ لَهُم مِّن قُرَّةِ أَعْيُنٍ جَزَاءً بِمَا كَانُوا يَعْمَلُونَ» [السجدة: 17]
+                        </div>
+                        <p>الجنة مخلوقة حالياً ومعدة للمتقين، فيها ما لا عين رأت، ولا أذن سمعت، ولا خطر على قلب بشر: أشجارها، قصورها، أنهارها من ماء ولبن وخمر وعسل مصفى، حورها العين، وتمام النعيم فيها هو الخلود الدائم، ورضوان الله الأكبر، ورؤية وجهه الكريم بلا حجاب.</p>
+
+                        <h4><i class="fa-solid fa-fire-flame-curved"></i> 2. النار دار الخزي والعذاب</h4>
+                        <p>النار مخلوقة حالياً ومعدة للكافرين والمنافقين، وقودها الناس والحجارة، طعامهم فيها الزقوم والضريع، وشرابهم الحميم والغساق، وثيابهم من قطران، لا يُقضى عليهم فيموتوا ولا يُخفف عنهم من عذابها.</p>
+
+                        <h4><i class="fa-solid fa-infinity"></i> 3. الخلود والأبدية</h4>
+                        <p>عقيدة أهل السنة والجماعة أن الجنة والنار باقيتان لا تفنيان أبداً، ويؤتى بالموت على صورة كبش أملح فيُذبح بين الجنة والنار، ويقال: «يا أهل الجنة خلود فلا موت، ويا أهل النار خلود فلا موت».</p>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هي علامات الساعة الكبرى العشر بالترتيب الإجمالي؟", a: "خروج المهدي، المسيح الدجال، نزول عيسى بن مريم عليه السلام، خروج يأجوج ومأجوج، الخسوفات الثلاثة (بالمشرق والمغرب وجزيرة العرب)، الدخان، طلوع الشمس من مغربها، دابة الأرض، ونار الحشر التي تسوق الناس إلى محشرهم." },
+                { q: "2. ما هي الأسئلة الثلاثة في فتنة وسؤال القبر ومن الملكان الموكلان؟", a: "الملكان هما: «منكر ونكير»، والأسئلة الثلاثة هي: (من ربك؟ ما دينك؟ وما هذا الرجل الذي بعث فيكم؟) فيثبت الله المؤمن بالقول الثابت ويضل الله الظالمين." },
+                { q: "3. ما هو عالم البرزخ وما دليله الشرعي من القرآن والسنة؟", a: "البرزخ هو المرحلة الفاصلة بين الموت ويوم البعث والنشور، ودليله قوله تعالى: (وَمِن وَرَائِهِم بَرْزَخٌ إِلَىٰ يَوْمِ يُبْعَثُونَ)، وفيه النعيم أو العذاب للروح والجسد." },
+                { q: "4. ما هو الميزان الحقيقي وما الذي يُوزن فيه يوم القيامة؟", a: "ميزان حقيقي ذو كفتين ولسان تُوزن به صحائف الأعمال، أو الأعمال نفسها المتجسدة، أو العباد أنفسهم؛ لبيان رجحان الحسنات على السيئات بدقة متناهية لا تظلم فيها نفس شيئاً." },
+                { q: "5. ما هو الصراط وما صفته وحال المارين عليه من المسلمين؟", a: "جسر دقيق مضروب على متن جهنم، أدق من الشعرة وأحد من السيف، يمر عليه الناس بحسب أعمالهم وأنوارهم؛ فمنهم كالبرق، وكالريح، وكأجاويد الخيل، ومنهم من يزحف ويسقط في النار." },
+                { q: "6. ما هي الشفاعة العظمى ومن صاحب هذا المقام المحمود؟", a: "هي المقام المحمود الخاص بسيدنا محمد ﷺ يوم القيامة حين يشتد الكرب بالخلائق في المحشر فيشفع عند الله لبدء الحساب وفصل القضاء بعد اعتذار أولي العزم." },
+                { q: "7. ما هو حوض النبي ﷺ وما صفته ومن يُسقى منه؟", a: "حوض عظيم ممتد في أرض المحشر، ماؤه أشد بياضاً من اللبن وأحلى من العسل، آنيته كنجوم السماء، يرده أتباع سنته الصادقون ويُذاد عنه أهل البدع والإحداث." },
+                { q: "8. ما هي نفخات الصور ومن الملك الموكل بها؟", a: "الملك الموكل هو إسرافيل عليه السلام، وينفخ نفختين: الأولى «نفخة الصعق» فيموت كل حي، والثانية «نفخة البعث والنشور» فيقوم الناس جميعاً لرب العالمين." },
+                { q: "9. هل الجنة والنار مخلوقتان الآن وهل تفنيان؟", a: "نعم، الجنة والنار مخلوقتان الآن وموجودتان بالفعل بنصوص القرآن والسنة، وهما باقيتان أبديتان لا تفنيان ولا تبيدان ولا يفنى نعيمهما ولا عذابهما أبداً." },
+                { q: "10. ما هو أعلى وأعظم نعيم يناله أهل الجنة في دار السلام؟", a: "أعلى وأشرف نعيم هو النظر إلى وجه الله الكريم سبحانه وتعالى بلا حجاب ورضوانه الأكبر الذي لا يسخط بعده أبداً، لقوله: (لِّلَّذِينَ أَحْسَنُوا الْحُسْنَىٰ وَزِيَادَةٌ)." }
+            ],
+            quizList: [
+                { q: "1. الملكان الموكلان بسؤال الميت في القبر هما:", opts: ["منكر ونكير", "هاروت وماروت", "رقيب وعتيد"], a: 0 },
+                { q: "2. ما هو الصراط المنصوب يوم القيامة؟", opts: ["جسر حقيقي دقيق منصوب على متن جهنم يمر عليه الناس على قدر أعمالهم", "طريق رمزي معنوي", "جسر في الدنيا فقط"], a: 0 },
+                { q: "3. أعظم وأعلى نعيم يناله أهل الجنة في دار السلام هو:", opts: ["النظر إلى وجه الله الكريم ورضوانه الأبدي", "الأنهار والقصور الفاخرة فقط", "الخلود دون لذة"], a: 0 },
+                { q: "4. الملك الموكل بالنفخ في الصور يوم القيامة هو:", opts: ["إسرافيل عليه السلام", "ميكائيل عليه السلام", "جبريل عليه السلام"], a: 0 },
+                { q: "5. الحساب اليسير للمؤمن الصالح يوم القيامة هو:", opts: ["أن تُعرض عليه ذنوبه سراً ويسترها الله ويغفرها له", "مناقشة كل صغيرة وكبيرة بالعدل", "دخول الجنة بلا حساب ولا كتاب"], a: 0 },
+                { q: "6. أول علامة من علامات الساعة الكبرى المؤذنة بتغير نظام العالم العلوي هي:", opts: ["طلوع الشمس من مغربها", "خروج الدابة", "نزول المطر"], a: 0 },
+                { q: "7. الشفاعة العظمى الخاصة بسيدنا محمد ﷺ تكون يوم القيامة من أجل:", opts: ["بدء الحساب وفصل القضاء بين جميع الخلائق في المحشر", "دخول الجنة فقط", "تخفيف الموت"], a: 0 },
+                { q: "8. عقيدة أهل السنة والجماعة في خلود الجنة والنار هي:", opts: ["الجنة والنار باقيتان أبديتان لا تفنيان ولا تبيدان أبداً", "تفنى النار وتبقى الجنة", "يفنيان معاً بعد أحقاب طويلة"], a: 0 },
+                { q: "9. من صفات حوض النبي ﷺ أن من شرب منه شربة ماء مباركة:", opts: ["لا يظمأ بعدها أبداً", "يشفى من مرضه فقط", "يشبع ليوم واحد"], a: 0 },
+                { q: "10. الميزان يوم القيامة ميزان حقيقي دقيق ذو كفتين لوزن:", opts: ["الحسنات والسيئات وصحائف الأعمال بدقة متناهية", "الأجساد فقط دون الأعمال", "الأموال والأنساب الدنيوية"], a: 0 }
+            ]
+        }
+    };
+
+    var currentBranchKey = 'divinity';
+    var activeModalLesson = null;
+    var completedLessons = JSON.parse(localStorage.getItem('completedTawheedLessons') || '[]');
+
+    // اختيار باب من الأبواب الثلاثة (الإلهيات - النبوات - السمعيات)
+    function selectTawheedBranch(branchKey) {
+        currentBranchKey = branchKey;
+
+        // تحديث أزرار القائمة الجانبية
+        document.querySelectorAll('.side-nav-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        var targetBtn = document.getElementById('btn-' + branchKey);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        // تحديث البنر العلوي
+        var data = tawheedData[branchKey];
+        var banner = document.getElementById('topicBanner');
+        banner.className = 'topic-hero-banner ' + (data.bannerClass || '');
+        document.getElementById('topicBadge').innerHTML = '<i class="fa-solid fa-star"></i> ' + data.badge;
+        document.getElementById('topicTitle').innerText = data.title;
+        document.getElementById('topicDescription').innerText = data.desc;
+        document.getElementById('topicQuote').innerText = data.quote;
+
+        // إعادة ضبط التبويبات الداخلية لعرض الدروس
+        var defaultTab = document.querySelector('.sub-tab-btn');
+        if (defaultTab) switchTopicView('lessons', defaultTab);
+
+        renderLessons();
+        renderQA();
+        renderQuiz();
+        updateProgressUI();
+    }
+
+    // رسم كروت الدروس العشرة لكل باب
+    function renderLessons() {
+        var container = document.getElementById('viewLessons');
+        var lessons = tawheedData[currentBranchKey].lessons;
+        container.innerHTML = '';
+
+        lessons.forEach(function(lesson) {
+            var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+            var card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.innerHTML = `
+                <div>
+                    <div class="lesson-card-top">
+                        <div class="lesson-number-badge">${lesson.num}</div>
+                        <span class="lesson-status-pill ${isCompleted ? 'completed' : ''}">
+                            <i class="fa-solid ${isCompleted ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${isCompleted ? 'تمت دراسته' : 'متاح للمدارسة'}
+                        </span>
+                    </div>
+                    <h3 class="lesson-title">${lesson.title}</h3>
+                    <p class="lesson-summary">${lesson.summary}</p>
+                </div>
+                <div class="lesson-footer-row">
+                    <button class="btn-open-lesson" onclick="openLessonModal('${lesson.id}')">
+                        <i class="fa-solid fa-book-open-reader"></i> مطالعة الدرس
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // رسم الأسئلة والأجوبة
+    function renderQA() {
+        var container = document.getElementById('viewQA');
+        var qaList = tawheedData[currentBranchKey].qa;
+        container.innerHTML = '';
+
+        qaList.forEach(function(item, qIdx) {
+            var cleanQ = item.q.replace(/^\d+\.\s*/, '');
+            var card = document.createElement('div');
+            card.className = 'qa-card';
+            card.innerHTML = `
+                <div class="qa-header" onclick="this.parentElement.classList.toggle('open')">
+                    <span><i class="fa-solid fa-circle-question" style="color: var(--emerald); margin-left: 8px;"></i> ${qIdx + 1}. ${cleanQ}</span>
+                    <i class="fa-solid fa-chevron-down" style="transition: transform .25s ease; color: var(--text-muted);"></i>
+                </div>
+                <div class="qa-body">
+                    <strong>الإجابة التأصيلية: </strong> ${item.a}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // رسم الاختبار التفاعلي
+    function renderQuiz() {
+        var container = document.getElementById('quizBox');
+        var quizList = tawheedData[currentBranchKey].quizList;
+        container.innerHTML = `
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--emerald); margin-bottom: 6px;">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم السريع في ${tawheedData[currentBranchKey].badge}
+                </h3>
+                <p style="font-size: 13.5px; color: var(--text-muted);">أجب عن الأسئلة التالية لقياس مدى استيعابك للمفاهيم والأدلة</p>
+            </div>
+        `;
+
+        quizList.forEach(function(qObj, qIdx) {
+            var qBox = document.createElement('div');
+            qBox.style.marginBottom = '25px';
+            var cleanTitle = qObj.q.replace(/^\d+\.\s*/, '');
+            qBox.innerHTML = `<h4 class="quiz-question-title">${qIdx + 1}. ${cleanTitle}</h4>`;
+
+            var optsBox = document.createElement('div');
+            optsBox.className = 'quiz-options';
+
+            qObj.opts.forEach(function(opt, optIdx) {
+                var btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    var siblings = optsBox.querySelectorAll('.quiz-option-btn');
+                    siblings.forEach(function(b) { b.disabled = true; });
+
+                    if (optIdx === qObj.a) {
+                        btn.classList.add('correct');
+                        btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> ' + opt + ' (إجابة صحيحة وموفقة!)';
+                    } else {
+                        btn.classList.add('wrong');
+                        btn.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ' + opt + ' (إجابة غير صحيحة)';
+                        siblings[qObj.a].classList.add('correct');
+                    }
+                };
+                optsBox.appendChild(btn);
+            });
+
+            qBox.appendChild(optsBox);
+            container.appendChild(qBox);
+        });
+    }
+
+    // التبديل بين عروض القسم (دروس / أسئلة / كويز)
+    function switchTopicView(viewType, btn) {
+        document.querySelectorAll('.sub-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+
+        document.getElementById('viewLessons').style.display = (viewType === 'lessons') ? 'grid' : 'none';
+        document.getElementById('viewQA').style.display = (viewType === 'qa') ? 'block' : 'none';
+        document.getElementById('viewQuiz').style.display = (viewType === 'quiz') ? 'block' : 'none';
+    }
+
+    // فتح نافذة قراءة الدرس الموسعة
+    function openLessonModal(lessonId) {
+        var lesson = null;
+        var list = tawheedData[currentBranchKey].lessons;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].id === lessonId) {
+                lesson = list[i];
+                break;
+            }
+        }
+        if (!lesson) return;
+
+        activeModalLesson = lesson;
+        document.getElementById('modalTopicBadge').innerText = tawheedData[currentBranchKey].badge;
+        document.getElementById('modalLessonTitle').innerText = lesson.title;
+        document.getElementById('modalLessonBody').innerHTML = lesson.content;
+
+        var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+        var btnComplete = document.getElementById('btnMarkComplete');
+        if (isCompleted) {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل بالفعل (إلغاء التحديد)';
+            btnComplete.style.background = '#059669';
+        } else {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»';
+            btnComplete.style.background = 'linear-gradient(135deg, var(--primary-green), var(--emerald))';
+        }
+
+        document.getElementById('lessonModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // إغلاق نافذة قراءة الدرس
+    function closeLessonModal(e) {
+        if (e && e.target && e.target.id !== 'lessonModal' && !e.target.closest('.modal-close-btn') && !e.target.closest('.btn-card-details')) {
+            return;
+        }
+        var modal = document.getElementById('lessonModal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+        document.body.style.overflow = 'auto';
+        activeModalLesson = null;
+    }
+
+    function toggleCompleteCurrentLesson() {
+        if (!activeModalLesson) return;
+        var lessonId = activeModalLesson.id;
+        var idx = completedLessons.indexOf(lessonId);
+        if (idx === -1) {
+            completedLessons.push(lessonId);
+        } else {
+            completedLessons.splice(idx, 1);
+        }
+
+        localStorage.setItem('completedTawheedLessons', JSON.stringify(completedLessons));
+        openLessonModal(lessonId);
+        renderLessons();
+        updateProgressUI();
+
+        // حفظ وتحديث التقدم في الباك إند في خانة التوحيد
+        var token = localStorage.getItem('token');
+        if (token) {
+            fetch('/api/usul-progress/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    science: 'tawheed',
+                    lessonId: lessonId
+                })
+            })
+            .then(function(res) { return res.ok ? res.json() : null; })
+            .then(function(data) {
+                if (data && data.tawheed) {
+                    completedLessons = data.tawheed;
+                    localStorage.setItem('completedTawheedLessons', JSON.stringify(completedLessons));
+                    renderLessons();
+                    updateProgressUI();
+                }
+            })
+            .catch(function(err) {
+                console.warn('تعذر الاتصال بالسيرفر، تم الحفظ محلياً:', err);
+            });
+        }
+    }
+
+    function updateProgressUI() {
+        var total = 30;
+        var count = completedLessons.length;
+        var pct = Math.round((count / total) * 100);
+        var pText = document.getElementById('tawheedProgressText');
+        var pBar = document.getElementById('tawheedProgressBar');
+        var cCount = document.getElementById('completedTawheedCount');
+        if (pText) pText.innerText = pct + '%';
+        if (pBar) pBar.style.width = pct + '%';
+        if (cCount) cCount.innerText = count;
+    }
+
+    function loadProgressFromServer() {
+        var token = localStorage.getItem('token');
+        if (!token) {
+            updateProgressUI();
+            return;
+        }
+
+        fetch('/api/usul-progress', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+            if (data && data.tawheed) {
+                completedLessons = data.tawheed;
+                localStorage.setItem('completedTawheedLessons', JSON.stringify(completedLessons));
+                renderLessons();
+                updateProgressUI();
+            }
+        })
+        .catch(function(err) {
+            console.warn('تعذر جلب التقدم من السيرفر:', err);
+        });
+    }
+
+    var branchKeysOrder = ['divinity', 'prophets', 'unseen'];
+    var branchNamesMap = {
+        'divinity': 'الإلهيات',
+        'prophets': 'النبوات',
+        'unseen': 'السمعيات'
+    };
+
+    // التنقل بين الأبواب بالسحب أو الأزرار يميناً ويساراً
+    function navigateBranch(direction) {
+        var currentIdx = branchKeysOrder.indexOf(currentBranchKey);
+        var newIdx = currentIdx + direction;
+        if (newIdx < 0 || newIdx >= branchKeysOrder.length) return;
+
+        var animationClass = (direction > 0) ? 'slide-in-left' : 'slide-in-right';
+        var mainView = document.querySelector('.tawheed-main-view');
+        if (mainView) {
+            mainView.classList.remove('slide-in-left', 'slide-in-right');
+            void mainView.offsetWidth; // إعادة إطلاق الأنيميشن
+            mainView.classList.add(animationClass);
+        }
+
+        selectTawheedBranch(branchKeysOrder[newIdx]);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // استشعار السحب باللمس على شاشات الهواتف (Touch Swipe Left/Right)
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchEndX = 0;
+    var touchEndY = 0;
+
+    function handleGesture() {
+        var diffX = touchEndX - touchStartX;
+        var diffY = touchEndY - touchStartY;
+
+        // التأكد من أن السحب أفقي وليس تمرير رأسي
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+            if (diffX < 0) {
+                navigateBranch(1); // التالي
+            } else {
+                navigateBranch(-1); // السابق
+            }
+        }
+    }
+
+    document.addEventListener('touchstart', function(e) {
+        var modal = document.getElementById('lessonModal');
+        if (modal && modal.classList.contains('active')) return;
+
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e) {
+        var modal = document.getElementById('lessonModal');
+        if (modal && modal.classList.contains('active')) return;
+
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleGesture();
+    }, { passive: true });
+
+    // تفعيل التنقل بالأسهم من لوحة المفاتيح
+    document.addEventListener('keydown', function(e) {
+        var modal = document.getElementById('lessonModal');
+        if (modal && modal.classList.contains('active')) return;
+
+        if (e.key === 'ArrowLeft') {
+            navigateBranch(1);
+        } else if (e.key === 'ArrowRight') {
+            navigateBranch(-1);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        selectTawheedBranch('divinity');
+        loadProgressFromServer();
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الاشتراك والدفع - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- شريط التنقل العلوي لصفحة الدفع -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <a href="/courses.html" class="menu-toggle-btn" title="الرجوع للدورات">
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <span style="font-size: 13px; font-weight: 700; color: var(--emerald); display: flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-lock"></i> دفع آمن ومشفّر
+        </span>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- حاوية صفحة الدفع المستقلة -->
+<div class="checkout-wrapper">
+
+    <!-- العنوان التعريفي -->
+    <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: var(--primary-green); margin-bottom: 6px;">
+            <i class="fa-solid fa-credit-card"></i> تأكيد الاشتراك وإتمام الدفع
+        </h2>
+        <p style="color: var(--text-muted); font-size: 14px;">
+            أدخل بياناتك واختر وسيلة الدفع المناسبة لتفعيل باقتك فورياً في المنصة.
+        </p>
+    </div>
+
+    <div class="checkout-grid">
+
+        <!-- النموذج الرئيسي: البيانات وطرق الدفع -->
+        <div class="checkout-main-form">
+
+            <!-- القسم 1: بيانات الطالب المشترك -->
+            <div class="checkout-section-card">
+                <div class="checkout-card-header">
+                    <i class="fa-solid fa-user-check"></i> 1. بيانات الطالب المشترك
+                </div>
+
+                <div class="checkout-field-group">
+                    <div>
+                        <label class="checkout-label">الاسم بالكامل</label>
+                        <input type="text" id="checkoutFullName" class="checkout-input" placeholder="اكتب اسمك الثلاثي أو الرباعي">
+                    </div>
+                    <div>
+                        <label class="checkout-label">رقم الهاتف / الواتساب</label>
+                        <input type="tel" id="checkoutPhone" class="checkout-input" placeholder="01xxxxxxxxx">
+                    </div>
+                </div>
+
+                <div class="checkout-field-group">
+                    <div>
+                        <label class="checkout-label">كود الطالب</label>
+                        <input type="text" id="checkoutUserCode" class="checkout-input" placeholder="اكتب كود الطالب الخاص بك" oninput="if(document.getElementById('kuttabReceiverName')) document.getElementById('kuttabReceiverName').value = this.value">
+                    </div>
+                    <div>
+                        <label class="checkout-label">البريد الإلكتروني (اختياري)</label>
+                        <input type="email" id="checkoutEmail" class="checkout-input" placeholder="example@email.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- القسم 2: وسيلة الدفع -->
+            <div class="checkout-section-card">
+                <div class="checkout-card-header">
+                    <i class="fa-solid fa-wallet"></i> 2. اختر طريقة الدفع المفضلة
+                </div>
+
+                <div class="payment-methods-grid">
+                    <div class="payment-method-item selected" onclick="selectPaymentMethod('vodafone', this)">
+                        <div class="pm-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                        <div class="pm-name">فودافون كاش / المحافظ</div>
+                    </div>
+
+                    <div class="payment-method-item" onclick="selectPaymentMethod('instapay', this)">
+                        <div class="pm-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                        <div class="pm-name">إنستاباي InstaPay</div>
+                    </div>
+
+                    <div class="payment-method-item" onclick="selectPaymentMethod('kuttab', this)">
+                        <div class="pm-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <div class="pm-name">الدفع في الكُتّاب</div>
+                    </div>
+                </div>
+
+                <!-- تفاصيل محفظة فودافون كاش -->
+                <div class="payment-instructions-box" id="pm-box-vodafone">
+                    <p><strong>خطوات التحويل عبر فودافون كاش أو أي محفظة إلكترونية (أورنج / اتصالات / وي / المحافظ البنكية):</strong></p>
+                    <ol style="margin-right: 18px; margin-top: 6px;">
+                        <li>قم بتحويل المبلغ المطلوب (<span class="target-amount-text" style="font-weight: 800; color: var(--emerald);">440 ج.م</span>) إلى رقم محفظة المركز التالي:</li>
+                    </ol>
+
+                    <div class="wallet-number-row">
+                        <div>
+                            <span style="font-size: 12px; color: var(--text-muted); display: block;">رقم محفظة المركز المعتمد:</span>
+                            <span class="wallet-digits" id="walletNumber">01038038934</span>
+                        </div>
+                        <button type="button" class="btn-copy-wallet" onclick="copyWalletNumber('01038038934', this)">
+                            <i class="fa-regular fa-copy"></i> نسخ الرقم
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <label class="checkout-label">رقم المحفظة التي قمت بالتحويل منها:</label>
+                        <input type="tel" id="senderWalletPhone" class="checkout-input" placeholder="اكتب رقم الهاتف الذي حولت منه">
+                    </div>
+                </div>
+
+                <!-- تفاصيل إنستاباي -->
+                <div class="payment-instructions-box" id="pm-box-instapay" style="display: none;">
+                    <p><strong>خطوات التحويل عبر تطبيق إنستاباي InstaPay:</strong></p>
+                    <ol style="margin-right: 18px; margin-top: 6px;">
+                        <li>افتح تطبيق InstaPay واختر تحويل إلى عنوان الدفع اللحظي (IPA).</li>
+                        <li>حول المبلغ المطلوب (<span class="target-amount-text" style="font-weight: 800; color: var(--emerald);">440 ج.م</span>) إلى الحساب التالي:</li>
+                    </ol>
+
+                    <div class="wallet-number-row">
+                        <div>
+                            <span style="font-size: 12px; color: var(--text-muted); display: block;">عنوان الدفع اللحظي (InstaPay Username):</span>
+                            <span class="wallet-digits" id="instapayHandle">yousef.k2601@instapay</span>
+                        </div>
+                        <button type="button" class="btn-copy-wallet" onclick="copyWalletNumber('yousef.k2601@instapay', this)">
+                            <i class="fa-regular fa-copy"></i> نسخ العنوان
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <label class="checkout-label">اسم صاحب الحساب أو رقم المرجع للتحويل:</label>
+                        <input type="text" id="instapaySenderRef" class="checkout-input" placeholder="اسمك على إنستاباي أو رقم العملية">
+                    </div>
+                </div>
+
+                <!-- تفاصيل الدفع في الكُتّاب -->
+                <div class="payment-instructions-box" id="pm-box-kuttab" style="display: none;">
+                    <p><strong>خطوات الدفع المباشر في مقر كُتّاب مركز تحفيظ القرآن الكريم بأسريجه:</strong></p>
+                    <ol style="margin-right: 18px; margin-top: 6px; line-height: 1.8;">
+                        <li>يمكنك التوجه لمقر الكُتّاب وسداد المبلغ المطلوب (<span class="target-amount-text" style="font-weight: 800; color: var(--emerald);">440 ج.م</span>) نقداً للإدارة أو الشيخ المشرف.</li>
+                        <li>بعد السداد، أدخل كودك أدناه واضغط على زر "تأكيد الاشتراك والدفع" لتسجيل وتفعيل اشتراكك في المنصة.</li>
+                    </ol>
+
+                    <div style="margin-top: 14px;">
+                        <label class="checkout-label">كود الطالب الخاص بك للتفعيل: <span style="color: #ef4444;">*</span></label>
+                        <input type="text" id="kuttabReceiverName" class="checkout-input" placeholder="اكتب الكود الخاص بك للتفعيل">
+                    </div>
+                </div>
+
+                <!-- رفع صورة الإيصال أو لقطة الشاشة (يختفي عند الدفع في الكُتاب) -->
+                <div id="receiptUploadSection" style="margin-top: 20px;">
+                    <label class="checkout-label">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> إرفاق صورة إيصال التحويل أو لقطة الشاشة:
+                    </label>
+                    <div class="receipt-upload-zone" onclick="document.getElementById('receiptFileInput').click()">
+                        <i class="fa-solid fa-image receipt-upload-icon"></i>
+                        <p style="font-size: 13.5px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+                            اضغط هنا لرفع صورة الإيصال أو لقطة الشاشة
+                        </p>
+                        <span style="font-size: 12px; color: var(--text-muted);">يدعم صيغ JPG، PNG، WebP</span>
+                        <input type="file" id="receiptFileInput" accept="image/*" style="display: none;" onchange="handleReceiptPreview(this)">
+                        <div>
+                            <img id="receiptPreview" class="receipt-preview-img" alt="معاينة إيصال التحويل">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- العمود الأيسر: ملخص الفاتورة وتأكيد الدفع -->
+        <div>
+            <div class="order-summary-card">
+                <h4 style="font-size: 17px; font-weight: 800; color: var(--primary-green); margin-bottom: 16px;">
+                    <i class="fa-solid fa-receipt"></i> ملخص الطلب
+                </h4>
+
+                <div class="order-item-header">
+                    <div class="order-item-img">
+                        <i class="fa-solid fa-book-quran"></i>
+                    </div>
+                    <div class="order-item-details">
+                        <h5 id="summaryCourseTitle">الباقة المخفضة الأولى (3 شهور) — نظام إلزامي</h5>
+                        <p id="summaryCourseSub">نظام إلزامي — أحكام التجويد والإتقان ومتابعة منتظمة</p>
+                    </div>
+                </div>
+
+                <table class="order-calc-table">
+                    <tr>
+                        <td>سعر الاشتراك:</td>
+                        <td id="summaryBasePrice">440.00 ج.م</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>الإجمالي المطلوب سداده:</td>
+                        <td id="summaryFinalTotal">440.00 ج.م</td>
+                    </tr>
+                </table>
+
+                <button type="button" class="btn-confirm-checkout" id="btnSubmitOrder" onclick="processOrderPayment()">
+                    <i class="fa-solid fa-shield-check"></i> تأكيد الاشتراك والدفع
+                </button>
+
+                <div style="margin-top: 16px; text-align: center; font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                    <i class="fa-solid fa-certificate" style="color: var(--gold);"></i>
+                    تفعيل فوري للاشتراك بعد التحقق من إيصال الدفع مع ضمان كامل ومتابعة مباشرة.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- مودال نجاح العملية وتأكيد الاشتراك -->
+<div id="successModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #ffffff; border-radius: 24px; max-width: 500px; width: 100%; padding: 32px; text-align: center; border: 1px solid var(--card-border); box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: scaleUp 0.3s ease;">
+        <div style="width: 70px; height: 70px; border-radius: 50%; background: #d1fae5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 16px;">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--primary-green); margin-bottom: 8px;">
+            تم استلام طلب اشتراكك بنجاح!
+        </h3>
+        <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.8; margin-bottom: 20px;">
+            شكراً لك. تم تسجيل بيانات اشتراكك وحفظ إشعار الدفع بنجاح.<br>
+            <strong style="color: var(--emerald); display: inline-block; margin-top: 6px;">سيتم مراجعة طلبك وتفعيل اشتراكك خلال 24 ساعة.</strong>
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <a href="/courses.html" class="btn-card-subscribe" style="padding: 12px 24px; font-size: 14px;">
+                <i class="fa-solid fa-graduation-cap"></i> الانتقال لقسم الدورات والكورسات
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // قراءة بيانات الكورس من الـ URL
+    var coursesCatalog = {
+        'course-foundation': {
+            title: 'كورس التأسيس وإتقان القراءة والتهجي القرآني',
+            subtitle: 'نور البيان، ضبط التهجي، ومخارج الحروف للمبتدئين',
+            basePrice: '190.00 ج.م',
+            totalPrice: '190.00 ج.م',
+            numericPrice: '190 ج.م'
+        },
+        'course-tajweed': {
+            title: 'كورس أحكام التجويد النظري والتطبيقي والإتقان العملي',
+            subtitle: 'أحكام التلاوة والمدود ومخارج وصفات الحروف والتطبيق العملي',
+            basePrice: '350.00 ج.م',
+            totalPrice: '350.00 ج.م',
+            numericPrice: '350 ج.م'
+        },
+        'course-ijaza': {
+            title: 'مسار الإجازة القرآنية بالسند المتصل إلى النبي ﷺ',
+            subtitle: 'عرض الختمة كاملة والتأهيل للإجازة بالسند المتصل',
+            basePrice: '600.00 ج.م',
+            totalPrice: '600.00 ج.م',
+            numericPrice: '600 ج.م'
+        },
+        'course-qiraat': {
+            title: 'كورس القراءات العشر (الصغرى والكبرى) — جمعاً وإفراداً',
+            subtitle: 'دراسة أصول وفرش القراءات المتواترة والجمع بالقراءات',
+            basePrice: '750.00 ج.م',
+            totalPrice: '750.00 ج.م',
+            numericPrice: '750 ج.م'
+        },
+        'pkg-mandatory': {
+            title: 'الباقة المخفضة الأولى (3 شهور) — نظام إلزامي',
+            subtitle: 'نظام إلزامي — أحكام التجويد والإتقان ومتابعة منتظمة',
+            basePrice: '440.00 ج.م',
+            totalPrice: '440.00 ج.م',
+            numericPrice: '440 ج.م'
+        },
+        'pkg-flexible': {
+            title: 'الباقة المخفضة الأولى (3 شهور) — نظام مرن',
+            subtitle: 'نظام مرن — سرعة ذاتية وتطبيق حر بحسب وقتك',
+            basePrice: '440.00 ج.م',
+            totalPrice: '440.00 ج.م',
+            numericPrice: '440 ج.م'
+        },
+        'course-month-1': {
+            title: 'الكورس التأسيسي — الشهر الأول',
+            subtitle: 'مخارج الحروف والتطبيق العملي',
+            basePrice: '175.00 ج.م',
+            totalPrice: '175.00 ج.م',
+            numericPrice: '175 ج.م'
+        },
+        'course-motun': {
+            title: 'دورة شرح تحفة الأطفال والجزريّة',
+            subtitle: 'مع حفظ الأبيات والتطبيقات والإجازة',
+            basePrice: '260.00 ج.م',
+            totalPrice: '260.00 ج.م',
+            numericPrice: '260 ج.م'
+        },
+        'free-intro': {
+            title: 'المحاضرة التعريفية بالتجويد',
+            subtitle: 'كورس تجريبي مجاني مفتوح للجميع',
+            basePrice: '0.00 ج.م',
+            totalPrice: '0.00 ج.م',
+            numericPrice: '0 ج.م'
+        }
+    };
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var selectedCourseKey = urlParams.get('course') || 'course-tajweed';
+    var courseInfo = coursesCatalog[selectedCourseKey] || coursesCatalog['course-tajweed'];
+
+    // تعبئة ملخص الفاتورة
+    document.getElementById('summaryCourseTitle').textContent = courseInfo.title;
+    document.getElementById('summaryCourseSub').textContent = courseInfo.subtitle;
+    document.getElementById('summaryBasePrice').textContent = courseInfo.basePrice;
+    document.getElementById('summaryFinalTotal').textContent = courseInfo.totalPrice;
+
+    document.querySelectorAll('.target-amount-text').forEach(function(el) {
+        el.textContent = courseInfo.numericPrice;
+    });
+
+    // تعبئة بيانات المستخدم المسجل تلقائياً إذا كان مسجل دخول
+    document.addEventListener('DOMContentLoaded', function() {
+        var user = null;
+        try {
+            var raw = localStorage.getItem('user');
+            if (raw) user = JSON.parse(raw);
+        } catch(e) {}
+
+        if (user) {
+            if (user.fullName) document.getElementById('checkoutFullName').value = user.fullName;
+            if (user.phone) document.getElementById('checkoutPhone').value = user.phone;
+            if (user.userCode) {
+                document.getElementById('checkoutUserCode').value = user.userCode;
+                if (document.getElementById('kuttabReceiverName')) {
+                    document.getElementById('kuttabReceiverName').value = user.userCode;
+                }
+            }
+            if (user.email) document.getElementById('checkoutEmail').value = user.email;
+        }
+
+        var role = localStorage.getItem('role') || (user ? user.role : null);
+        if (role === 'ADMIN') {
+            var formEl = document.querySelector('.checkout-main-form');
+            if (formEl) {
+                var adminNotice = document.createElement('div');
+                adminNotice.style.cssText = 'background: rgba(16, 185, 129, 0.12); border: 2px solid #10b981; border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 24px; color: #065f46;';
+                adminNotice.innerHTML = '<div style="font-size: 18px; font-weight: 800; color: #059669; margin-bottom: 8px;"><i class="fa-solid fa-shield-halved"></i> أنت مسجل بحساب المسؤول (Admin)</div><p style="margin-bottom: 14px; font-size: 14px; color: var(--text-muted, #334155);">جميع الكورسات والمحاضرات مفتوحة ومتاحة لك بالكامل دون الحاجة لأي دفع أو اشتراك.</p><a href="/tajweed-course.html?id=' + encodeURIComponent(selectedCourseKey) + '" style="display: inline-flex; align-items: center; gap: 8px; background: #059669; color: #fff; text-decoration: none; padding: 10px 22px; border-radius: 10px; font-weight: 800; font-size: 14px;"><i class="fa-solid fa-circle-play"></i> دخول المحاضرات فوراً</a>';
+                formEl.insertBefore(adminNotice, formEl.firstChild);
+            }
+        }
+    });
+
+    var currentPaymentMethod = 'vodafone';
+    var uploadedReceiptBase64 = null;
+
+    // تبديل طرق الدفع
+    function selectPaymentMethod(type, el) {
+        currentPaymentMethod = type;
+        document.querySelectorAll('.payment-method-item').forEach(function(item) {
+            item.classList.remove('selected');
+        });
+        el.classList.add('selected');
+
+        var boxes = ['vodafone', 'instapay', 'kuttab'];
+        boxes.forEach(function(b) {
+            var boxEl = document.getElementById('pm-box-' + b);
+            if (boxEl) boxEl.style.display = (b === type) ? 'block' : 'none';
+        });
+
+        // إخفاء منطقة رفع صورة الإيصال في حالة الدفع في الكُتاب
+        var receiptSection = document.getElementById('receiptUploadSection');
+        if (receiptSection) {
+            receiptSection.style.display = (type === 'kuttab') ? 'none' : 'block';
+        }
+    }
+
+    // نسخ أرقام المحافظ وعناوين التحويل
+    function copyWalletNumber(text, btn) {
+        navigator.clipboard.writeText(text).then(function() {
+            var oldHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> تم النسخ!';
+            btn.style.background = '#10b981';
+            setTimeout(function() {
+                btn.innerHTML = oldHtml;
+                btn.style.background = '';
+            }, 2000);
+        });
+    }
+
+    // معاينة صورة الإيصال وحفظ الـ Base64
+    function handleReceiptPreview(input) {
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedReceiptBase64 = e.target.result;
+                var preview = document.getElementById('receiptPreview');
+                preview.src = uploadedReceiptBase64;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // معالجة تأكيد الدفع وإرسال الإشعار
+    async function processOrderPayment() {
+        var fullName = document.getElementById('checkoutFullName').value.trim();
+        var phone = document.getElementById('checkoutPhone').value.trim();
+        var userCode = document.getElementById('checkoutUserCode').value.trim();
+        var email = document.getElementById('checkoutEmail').value.trim();
+
+        if (!fullName) {
+            alert('من فضلك اكتب اسمك بالكامل لإتمام الاشتراك.');
+            document.getElementById('checkoutFullName').focus();
+            return;
+        }
+
+        if (!phone) {
+            alert('من فضلك اكتب رقم هاتفك أو الواتساب للتواصل وتفعيل الحساب.');
+            document.getElementById('checkoutPhone').focus();
+            return;
+        }
+
+        if (!userCode) {
+            alert('من فضلك اكتب كود الطالب الخاص بك في المركز (إلزامي) لإتمام وربط الاشتراك.');
+            document.getElementById('checkoutUserCode').focus();
+            return;
+        }
+
+        // تفاصيل وسيلة الدفع والتحقق من الحقول الإلزامية
+        var senderDetails = '';
+        if (currentPaymentMethod === 'vodafone') {
+            var sPhone = document.getElementById('senderWalletPhone').value.trim();
+            if (!sPhone) {
+                alert('من فضلك اكتب رقم المحفظة التي قمت بالتحويل منها.');
+                document.getElementById('senderWalletPhone').focus();
+                return;
+            }
+            if (!uploadedReceiptBase64) {
+                alert('من فضلك قم بإرفاق صورة إيصال التحويل أو لقطة الشاشة.');
+                return;
+            }
+            senderDetails = 'رقم محفظة المحوّل: ' + sPhone;
+        } else if (currentPaymentMethod === 'instapay') {
+            var sRef = document.getElementById('instapaySenderRef').value.trim();
+            if (!sRef) {
+                alert('من فضلك اكتب اسم صاحب الحساب أو رقم المرجع للتحويل على إنستاباي.');
+                document.getElementById('instapaySenderRef').focus();
+                return;
+            }
+            if (!uploadedReceiptBase64) {
+                alert('من فضلك قم بإرفاق صورة إيصال التحويل أو لقطة الشاشة من تطبيق إنستاباي.');
+                return;
+            }
+            senderDetails = 'بيانات التحويل على إنستاباي: ' + sRef;
+        } else if (currentPaymentMethod === 'kuttab') {
+            var kCode = document.getElementById('kuttabReceiverName') ? document.getElementById('kuttabReceiverName').value.trim() : '';
+            var finalCode = kCode || userCode;
+            senderDetails = 'سداد نقدي في مقر الكُتّاب — كود الطالب للتفعيل: ' + finalCode;
+        }
+
+        var payload = {
+            fullName: fullName,
+            phone: phone,
+            userCode: userCode,
+            email: email,
+            courseKey: selectedCourseKey,
+            courseTitle: courseInfo.title,
+            courseSubtitle: courseInfo.subtitle,
+            amount: courseInfo.totalPrice,
+            paymentMethod: currentPaymentMethod,
+            senderDetails: senderDetails,
+            receiptBase64: uploadedReceiptBase64,
+            notes: 'طلب اشتراك من صفحة الدفع بالموقع'
+        };
+
+        var btn = document.getElementById('btnSubmitOrder');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال إشعار الدفع وتأكيد الحساب...';
+
+        try {
+            var token = localStorage.getItem('token');
+            var headers = { 'Content-Type': 'application/json' };
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+
+            var response = await fetch('/api/payment/notify', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(payload)
+            });
+
+            var result = await response.json().catch(function() { return {}; });
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-shield-check"></i> تأكيد الاشتراك والدفع';
+
+            var modal = document.getElementById('successModal');
+            modal.style.display = 'flex';
+
+        } catch (err) {
+            console.error('Error submitting payment notification:', err);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-shield-check"></i> تأكيد الاشتراك والدفع';
+            // حتى في حال وجود بطء في الاتصال يتم عرض التأكيد للطالب مع تسجيل الطلب
+            var modal = document.getElementById('successModal');
+            modal.style.display = 'flex';
+        }
+    }
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

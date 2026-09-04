@@ -1,0 +1,2068 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار التفسير وعلوم القرآن - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="تفسير معاني آيات القرآن الكريم وتدبر قصصه وأحكامه، مع علوم القرآن وقواعد التدبر الإيماني.">
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        /* منع التمرير الأفقي الزائد */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            width: 100%;
+        }
+
+        .tafseer-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            margin-top: 25px;
+            align-items: start;
+        }
+
+        /* اللوحة الجانبية للاختيارات */
+        .tafseer-sidebar-panel {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 18px;
+            position: sticky;
+            top: 85px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="dark"] .tafseer-sidebar-panel {
+            background: #14221d;
+            border-color: #23372f;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .sidebar-heading-box {
+            padding: 0 8px 16px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 18px;
+        }
+        .sidebar-main-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        [data-theme="dark"] .sidebar-main-title { color: #f1f5f9; }
+        .sidebar-main-title i { color: #b45309; font-size: 20px; }
+        .sidebar-subtitle { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
+
+        .tafseer-side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .side-nav-btn {
+            background: #f8fafc;
+            border: 1.5px solid transparent;
+            border-radius: 18px;
+            padding: 16px 14px;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            font-family: inherit;
+            width: 100%;
+        }
+        [data-theme="dark"] .side-nav-btn { background: #192a24; color: #e2e8f0; }
+        .side-nav-btn:hover {
+            border-color: #b45309;
+            background: rgba(180, 83, 9, 0.08);
+            transform: translateX(-4px);
+        }
+        [data-theme="dark"] .side-nav-btn:hover {
+            background: #2b1f14;
+            border-color: #f59e0b;
+        }
+
+        .side-nav-btn.active {
+            background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(180, 83, 9, 0.3);
+            transform: translateX(-6px);
+        }
+        [data-theme="dark"] .side-nav-btn.active {
+            background: linear-gradient(135deg, #92400e 0%, #d97706 100%);
+            color: #ffffff !important;
+        }
+
+        .side-btn-right { display: flex; align-items: center; gap: 12px; }
+        .side-btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(180, 83, 9, 0.12);
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .side-btn-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .side-nav-btn.active .side-btn-icon { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+
+        .side-btn-text h4 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+        .side-btn-text span { font-size: 11.5px; color: var(--text-muted); display: block; }
+        .side-nav-btn.active .side-btn-text span { color: rgba(255, 255, 255, 0.85); }
+
+        .side-btn-badge {
+            background: rgba(180, 83, 9, 0.1);
+            color: #b45309;
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .side-btn-badge { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .side-nav-btn.active .side-btn-badge { background: rgba(255, 255, 255, 0.25); color: #ffffff; }
+
+        /* بطاقة التقدم */
+        .sidebar-progress-box {
+            margin-top: 25px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(180, 83, 9, 0.08);
+            border: 1px dashed rgba(180, 83, 9, 0.3);
+        }
+        [data-theme="dark"] .sidebar-progress-box {
+            background: rgba(180, 83, 9, 0.12);
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+        .sidebar-progress-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #78350f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        [data-theme="dark"] .sidebar-progress-title { color: #fbbf24; }
+        .progress-bar-bg { background: #cbd5e1; height: 7px; border-radius: 10px; overflow: hidden; }
+        [data-theme="dark"] .progress-bar-bg { background: #243b32; }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #b45309, #f59e0b);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* المحتوى الرئيسي */
+        .tafseer-main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            min-width: 0;
+        }
+
+        .topic-hero-banner {
+            background: linear-gradient(135deg, #78350f 0%, #b45309 70%, #d97706 100%);
+            border-radius: 24px;
+            padding: 30px 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(180, 83, 9, 0.2);
+            animation: fadeIn 0.35s ease;
+        }
+        [data-theme="dark"] .topic-hero-banner {
+            background: linear-gradient(135deg, #2b1808 0%, #78350f 100%);
+            border: 1px solid #92400e;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .topic-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .topic-hero-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .topic-hero-desc {
+            font-size: 14px;
+            opacity: 0.92;
+            line-height: 1.7;
+            max-width: 820px;
+            margin-bottom: 16px;
+        }
+        .topic-quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-family: 'Amiri', serif;
+            font-size: 16.5px;
+            line-height: 1.8;
+            border-right: 3px solid #fde68a;
+            display: inline-block;
+        }
+
+        /* تبويبات التنقل الداخلية */
+        .sub-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .sub-tab-btn {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 9px 18px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .sub-tab-btn {
+            background: #192a24;
+            border-color: #23362d;
+            color: #94a3b8;
+        }
+        .sub-tab-btn.active {
+            background: #b45309;
+            color: #ffffff;
+            border-color: #b45309;
+        }
+        [data-theme="dark"] .sub-tab-btn.active {
+            background: #d97706;
+            color: #ffffff;
+        }
+
+        /* شبكة الدروس */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .lesson-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            transition: all 0.28s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-card {
+            background: #15221d;
+            border-color: #23372f;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            border-color: #b45309;
+            box-shadow: 0 14px 30px rgba(180, 83, 9, 0.12);
+        }
+        [data-theme="dark"] .lesson-card:hover {
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+            border-color: #f59e0b;
+        }
+
+        .lesson-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .lesson-number-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(180, 83, 9, 0.1);
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        [data-theme="dark"] .lesson-number-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+        }
+
+        .lesson-status-pill {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        [data-theme="dark"] .lesson-status-pill { background: #1e332a; }
+        .lesson-status-pill.completed { background: #dcfce7; color: #15803d; }
+        [data-theme="dark"] .lesson-status-pill.completed { background: #14532d; color: #86efac; }
+
+        .lesson-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        .lesson-summary {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .lesson-footer-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--card-border);
+        }
+        .lesson-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-open-lesson {
+            background: #b45309;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 7px 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-open-lesson:hover { background: #92400e; transform: scale(1.03); }
+
+        /* نافذة الدرس Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .lesson-modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 88vh;
+            overflow-y: auto;
+            border: 1.5px solid var(--card-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-modal-content { background: #14221d; border-color: #23372f; }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 10;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.06); color: #e11d48; }
+
+        .modal-body { padding: 24px; line-height: 1.9; font-size: 15px; }
+        .modal-body h4 {
+            color: #b45309;
+            font-size: 17px;
+            font-weight: 800;
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1.5px solid rgba(180, 83, 9, 0.15);
+            padding-bottom: 6px;
+        }
+        [data-theme="dark"] .modal-body h4 { color: #f59e0b; border-bottom-color: rgba(245, 158, 11, 0.2); }
+        .modal-body p { margin-bottom: 12px; }
+
+        .quran-ayah-box {
+            background: rgba(180, 83, 9, 0.05);
+            border-right: 4px solid #b45309;
+            border-radius: 0 14px 14px 0;
+            padding: 18px 20px;
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            line-height: 2.2;
+            color: #78350f;
+            margin: 16px 0;
+            text-align: center;
+        }
+        [data-theme="dark"] .quran-ayah-box {
+            background: rgba(245, 158, 11, 0.1);
+            color: #fde68a;
+            border-right-color: #f59e0b;
+        }
+
+        .tafseer-explanation-box {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin: 14px 0;
+            line-height: 1.85;
+        }
+        [data-theme="dark"] .tafseer-explanation-box {
+            background: #182821;
+            border-color: #283e33;
+        }
+
+        .tafseer-benefits-box {
+            background: rgba(16, 185, 129, 0.06);
+            border-right: 4px solid #10b981;
+            border-radius: 0 14px 14px 0;
+            padding: 16px 18px;
+            margin: 16px 0;
+        }
+        [data-theme="dark"] .tafseer-benefits-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-right-color: #34d399;
+        }
+
+        .modal-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: inherit;
+        }
+
+        /* كويز تفاعلي */
+        .quiz-container {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        [data-theme="dark"] .quiz-container {
+            background: #16241f;
+            border-color: #24362e;
+        }
+        .quiz-question-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .quiz-question-title { color: #f1f5f9; }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        .quiz-option-btn {
+            background: #f8fafc;
+            border: 1.5px solid var(--card-border);
+            padding: 13px 16px;
+            border-radius: 14px;
+            text-align: right;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .quiz-option-btn {
+            background: #1c2e27;
+            border-color: #284136;
+            color: #e2e8f0;
+        }
+        .quiz-option-btn:hover {
+            border-color: #b45309;
+            background: rgba(180, 83, 9, 0.08);
+        }
+        [data-theme="dark"] .quiz-option-btn:hover { background: #2e2316; }
+        .quiz-option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .quiz-option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        /* بطاقات سؤال وجواب */
+        .qa-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .qa-card {
+            background: #16241f;
+            border-color: #23362d;
+        }
+        .qa-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .qa-body {
+            padding: 0 20px 18px;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--card-border);
+            padding-top: 14px;
+            display: none;
+        }
+        .qa-card.open .qa-body { display: block; }
+        .qa-card.open .qa-header i { transform: rotate(180deg); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== التوافق مع شاشات الهواتف ========== */
+        @media (max-width: 992px) {
+            .navbar { padding: 10px 12px; }
+            .logo span { font-size: 13px; max-width: 140px; line-height: 1.25; }
+            .logo-img { height: 36px; width: auto; }
+            .user-nav-actions .btn-card-details { padding: 6px 8px; font-size: 11px; white-space: nowrap; }
+            .user-badge { display: none !important; }
+
+            .section-container { padding: 10px 8px 60px !important; max-width: 100% !important; }
+            .tafseer-layout { grid-template-columns: 100% !important; gap: 12px; margin-top: 5px; max-width: 100% !important; }
+            .tafseer-main-view { max-width: 100% !important; min-width: 0; }
+
+            .tafseer-sidebar-panel {
+                position: sticky;
+                top: 58px;
+                z-index: 100;
+                padding: 6px 8px;
+                border-radius: 16px;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                margin-bottom: 4px;
+                max-width: 100%;
+            }
+            [data-theme="dark"] .tafseer-sidebar-panel { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+            .sidebar-heading-box { display: none; }
+            .tafseer-side-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .side-nav-btn {
+                padding: 8px 2px;
+                border-radius: 12px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 2px;
+                transform: none !important;
+            }
+            .side-btn-right { flex-direction: column; align-items: center; gap: 2px; }
+            .side-btn-icon { width: 30px; height: 30px; font-size: 12px; border-radius: 8px; }
+            .side-btn-text h4 { font-size: 11.5px; margin: 0; font-weight: 800; white-space: nowrap; }
+            .side-btn-text span { display: none; }
+            .side-btn-badge { font-size: 9px; padding: 1px 4px; border-radius: 6px; margin: 0; }
+
+            .sidebar-progress-box { margin-top: 6px; padding: 6px 8px; border-radius: 8px; }
+            .sidebar-progress-title { font-size: 10.5px; margin-bottom: 3px; }
+            .sidebar-progress-box > div:last-child { display: none; }
+            .tafseer-sidebar-panel > div:last-child { display: none; }
+
+            .topic-hero-banner { padding: 16px 14px; border-radius: 16px; max-width: 100%; }
+            .topic-badge-top { font-size: 11px; padding: 3px 8px; margin-bottom: 6px; }
+            .topic-hero-title { font-size: 17px; margin-bottom: 6px; }
+            .topic-hero-desc { font-size: 12px; line-height: 1.55; margin-bottom: 10px; }
+            .topic-quote-box { font-size: 14px; padding: 8px 10px; line-height: 1.7; }
+
+            .sub-nav-tabs { gap: 4px; padding-bottom: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .sub-tab-btn { padding: 6px 10px; font-size: 11.5px; flex-shrink: 0; }
+
+            .lessons-grid { grid-template-columns: 1fr; gap: 12px; max-width: 100%; }
+            .lesson-card { padding: 14px; border-radius: 16px; max-width: 100%; }
+            .lesson-title { font-size: 14.5px; }
+            .lesson-summary { font-size: 12px; line-height: 1.55; margin-bottom: 12px; }
+
+            .modal-overlay { padding: 8px; align-items: flex-end; }
+            .lesson-modal-content { max-height: 92vh; border-radius: 20px 20px 10px 10px; width: 100%; }
+            .modal-header { padding: 14px 16px; }
+            .modal-header h3 { font-size: 16.5px !important; }
+            .modal-body { padding: 16px 14px; font-size: 14px; line-height: 1.8; }
+            .quran-ayah-box { font-size: 16px; padding: 12px 14px; line-height: 2; }
+            .modal-footer { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+            .modal-footer button { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/usul-al-deen.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-right"></i> مسار أصول الدين
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span>
+        </a>
+    </div>
+</nav>
+
+<div class="section-container" style="max-width: 1280px; padding: 20px 20px 60px;">
+    <div class="tafseer-layout">
+
+        <!-- اللوحة الجانبية: الأبواب الثلاثة للتفسير -->
+        <aside class="tafseer-sidebar-panel">
+            <div class="sidebar-heading-box">
+                <div class="sidebar-main-title">
+                    <i class="fa-solid fa-book-quran"></i>
+                    <span>أبواب التفسير والعلوم</span>
+                </div>
+                <div class="sidebar-subtitle">اختر الباب لعرض موضوعاته ومساراته:</div>
+            </div>
+
+            <div class="tafseer-side-nav">
+                <!-- خيار 1: تفسير قصار السور -->
+                <button class="side-nav-btn active" id="btn-short" onclick="selectTafseerBranch('short')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <div class="side-btn-text">
+                            <h4>تفسير قصار السور</h4>
+                            <span>معاني جزء عمّ والسور اليومية</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 سور</span>
+                </button>
+
+                <!-- خيار 2: علوم القرآن ومباحث التنزيل -->
+                <button class="side-nav-btn" id="btn-sciences" onclick="selectTafseerBranch('sciences')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+                        <div class="side-btn-text">
+                            <h4>علوم القرآن</h4>
+                            <span>أسباب النزول والمكي والمدني</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 مباحث</span>
+                </button>
+
+                <!-- خيار 3: قواعد التدبر -->
+                <button class="side-nav-btn" id="btn-tadabbur" onclick="selectTafseerBranch('tadabbur')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="side-btn-text">
+                            <h4>قواعد التدبر</h4>
+                            <span>مفاتيح فهم القرآن والعمل به</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 قواعد</span>
+                </button>
+            </div>
+
+            <!-- بطاقة التقدم -->
+            <div class="sidebar-progress-box">
+                <div class="sidebar-progress-title">
+                    <span><i class="fa-solid fa-chart-pie"></i> نسبة الإنجاز في التفسير</span>
+                    <strong id="tafseerProgressText">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="tafseerProgressBar"></div>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
+                    تم إتمام <span id="completedTafseerCount">0</span> من أصل 30 موضوعاً
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="tafseer-main-view">
+            <div class="topic-hero-banner" id="topicBanner">
+                <span class="topic-badge-top" id="topicBadge">
+                    <i class="fa-solid fa-star"></i> تفسير قصار السور
+                </span>
+                <h2 class="topic-hero-title" id="topicTitle">تفسير قصار السور — تدبر آيات المفصل اليومية</h2>
+                <p class="topic-hero-desc" id="topicDescription">
+                    البيان الشافي والتفسير التحليلي آية بآية لمعاني السور القصيرة التي نقرؤها في صلواتنا مع أسباب نزولها وهداياتها الإيمانية.
+                </p>
+                <div class="topic-quote-box" id="topicQuote">
+                    «كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ وَلِيَتَذَكَّرَ أُولُو الْأَلْبَابِ» [ص: 29]
+                </div>
+            </div>
+
+            <div class="sub-nav-tabs">
+                <button class="sub-tab-btn active" onclick="switchTopicView('lessons', this)">
+                    <i class="fa-solid fa-book-open"></i> الدروس والموضوعات (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('qa', this)">
+                    <i class="fa-solid fa-circle-question"></i> أسئلة وأجوبة مركزة (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('quiz', this)">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم التفاعلي (10)
+                </button>
+            </div>
+
+            <!-- عرض الدروس -->
+            <div id="viewLessons" class="lessons-grid"></div>
+
+            <!-- عرض الأسئلة والأجوبة -->
+            <div id="viewQA" style="display: none;"></div>
+
+            <!-- عرض الاختبار التفاعلي -->
+            <div id="viewQuiz" style="display: none;">
+                <div class="quiz-container" id="quizBox"></div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- Modal لعرض التفسير والشرح والفوائد -->
+<div class="modal-overlay" id="lessonModal" onclick="closeLessonModal(event)">
+    <div class="lesson-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="lesson-status-pill" id="modalTopicBadge" style="margin-bottom: 4px; display: inline-block;">التفسير</span>
+                <h3 id="modalLessonTitle" style="font-size: 20px; font-weight: 800; margin: 0; color: #b45309;">عنوان السورة</h3>
+            </div>
+            <button class="modal-close-btn" onclick="closeLessonModal()" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalLessonBody"></div>
+        <div class="modal-footer">
+            <button class="btn-card-details" onclick="closeLessonModal()" style="font-size: 13.5px; padding: 8px 18px;">
+                إغلاق النافذة
+            </button>
+            <button class="btn-enter-branch" id="btnMarkComplete" onclick="toggleCompleteCurrentLesson()" style="width: auto; padding: 8px 22px; font-size: 14px; background: #b45309;">
+                <i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tafseerData = {
+        short: {
+            title: "تفسير قصار السور — تدبر آيات المفصل اليومية",
+            badge: "تفسير قصار السور",
+            desc: "البيان الشافي والتفسير التحليلي آية بآية لمعاني السور القصيرة التي نقرؤها في صلواتنا مع أسباب نزولها وهداياتها الإيمانية.",
+            quote: "«كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ وَلِيَتَذَكَّرَ أُولُو الْأَلْبَابِ» [ص: 29]",
+            lessons: [
+                {
+                    id: "t_sh_1",
+                    num: "01",
+                    title: "تفسير سورة الفاتحة (أم الكتاب والسبع المثاني)",
+                    summary: "بيان معاني آيات الفاتحة، الحمد والثناء، إياك نعبد وإياك نستعين، وطلب الهداية إلى الصراط المستقيم.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص الآيات الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ * الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ * الرَّحْمَٰنِ الرَّحِيمِ * مَالِكِ يَوْمِ الدِّينِ * إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ * اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ * صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان التحليلي آية بآية:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. {بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ}:</strong> أبدأ قراءتي مستعيناً باسم الله الأعظم، المتصف بالرحمة العامة لجميع خلقه (الرحمن)، وبالرحمة الخاصة بأوليائه المؤمنين (الرحيم).</p>
+                            <p><strong>2. {الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ}:</strong> الثناء الكامل بالجميل الاختياري لله وحده مع المحبة والتعظيم؛ فهو خالق ومدبر ومربي جميع العوالم من إنس وجن وملائكة بنعمه.</p>
+                            <p><strong>3. {الرَّحْمَٰنِ الرَّحِيمِ}:</strong> تأكيد لصفة الرحمة الواسعة التي سبقت غضبه.</p>
+                            <p><strong>4. {مَالِكِ يَوْمِ الدِّينِ}:</strong> المنفرد بالملك والتصرف والعدل يوم القيامة والجزاء والحساب، حيث تتلاشى كل دعاوى الملك الدنيوي.</p>
+                            <p><strong>5. {إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ}:</strong> إخلاص وتجريد التوحيد؛ لا نعبد إلا أنت (براءة من الشرك)، ولا نستعين في أمورنا كلها إلا بك (براءة من الحول والقوة).</p>
+                            <p><strong>6. {اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ}:</strong> أعظم دعاء؛ دلنا وثبتنا ووفقنا إلى الطريق الواضح الموصل لرضوانك وجنتك، وهو الإسلام والقرآن وسنة النبي ﷺ.</p>
+                            <p><strong>7. {صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ...}:</strong> طريق النبيين والصديقين والشهداء والصالحين، غير طريق «المغضوب عليهم» (اليهود ومن شابههم ممن عرف الحق ولم يعمل به)، ولا طريق «الضالين» (النصارى ومن شابههم ممن عمل بغير علم ولا هدى).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الهدايات والفوائد التدبرية:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. الفاتحة ركن الصلاة الأعظم، وقراءتها مناجاة مباشرة بين العبد وربه (قسمت الصلاة بيني وبين عبدي نصفين).</li>
+                                <li>2. تقديم الثناء والحمد والتمجيد لله قبل البدء بسؤال الحاجة والدعاء.</li>
+                                <li>3. حاجة العبد المستمرة لهداية الصراط المستقيم في كل ركعة وكل طرفة عين.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_2",
+                    num: "02",
+                    title: "تفسير سورة الإخلاص (صفة الرحمن وثلث القرآن)",
+                    summary: "تفسير سورة قل هو الله أحد، إثبات الوحدانية والصمدية، ونفي الولد والوالد والند والكفؤ.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «قُلْ هُوَ اللَّهُ أَحَدٌ * اللَّهُ الصَّمَدُ * لَمْ يَلِدْ وَلَمْ يُولَدْ * وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان التحليلي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>سبب النزول:</strong> سأل المشركون واليهود النبي ﷺ: انسب لنا ربك وصِفْه لنا؟ فأنزل الله هذه السورة العظيمة لبيان صفات كماله وجلاله.</p>
+                            <p><strong>1. {قُلْ هُوَ اللَّهُ أَحَدٌ}:</strong> قل يا رسول الله لهؤلاء السائلين: الله هو الإله الواحد الأحد، المتفرد بالألوهية والربوبية والأسماء والصفات، الذي لا نظير له ولا مثيل.</p>
+                            <p><strong>2. {اللَّهُ الصَّمَدُ}:</strong> السيد الكامل في سيادته وعلمه وقدرته، الذي تصمد إليه جميع الخلائق وتقصده في حوائجها وافتقارها التام إليه، وهو الغني عن كل ما سواه.</p>
+                            <p><strong>3. {لَمْ يَلِدْ وَلَمْ يُولَدْ}:</strong> منزه عن الوالد والولد والصاحبة؛ فليس له أصل تولد منه، وليس له فرع يتولد منه، رداً على المشركين واليهود والنصارى.</p>
+                            <p><strong>4. {وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ}:</strong> ليس له مكافئ ولا مماثل ولا مساوٍ في ذاته ولا في صفاته ولا في أفعاله جل في علاه.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الهدايات والفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. سورة الإخلاص تعدل ثلث القرآن؛ لأن القرآن أحكام وقصص وتوحيد، وهي تمحضت لتوحيد الله وصفاته.</li>
+                                <li>2. محبة سورة الإخلاص وإدامة تلاوتها سبب موجب لدخول الجنة ومحبة الله للعبد.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_3",
+                    num: "03",
+                    title: "تفسير سورة الفلق (الاستعاذة من الشرور الكونية)",
+                    summary: "الاستعاذة برب الفلق من شر المخلوقات، غاسق إذا وقب، النفاثات في العقد، وحاسد إذا حسد.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ * مِن شَرِّ مَا خَلَقَ * وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ * وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ * وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان التحليلي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. {قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ}:</strong> أعتصم وأتحصن وألتجئ برب الصبح وفالق الحب والنوى وخالق النور من الظلام.</p>
+                            <p><strong>2. {مِن شَرِّ مَا خَلَقَ}:</strong> استعاذة عامة وشاملة من شر كل مخلوق فيه شر من إنس وجن وهوام وسباع ورياح مهلكة.</p>
+                            <p><strong>3. {وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ}:</strong> الاستعاذة من شر الليل إذا أقبل بظلامه وسواده؛ حيث تنتشر فيه الشياطين وسباع الأرض وأهل الإجرام.</p>
+                            <p><strong>4. {وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ}:</strong> السواحر اللاتي يعقدن الخيوط وينفخن فيها بالطلاسم والسموم الشيطانية لإيذاء الناس بالسحر.</p>
+                            <p><strong>5. {وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ}:</strong> من شر العائن والحاسد الذي يتمنى زوال نعمة الله عن غيره ويُظهر حسده بالفعل أو العين.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الهدايات والفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. سورة الفلق والناس أعظم ما تحصن به المؤمن، وما تعوذ متعوذ بمثلهما.</li>
+                                <li>2. خطورة الحسد والسحر وإثبات تأثيرهما بالقدر الإلهي ووجوب التحصن الدائم بالأذكار.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_4",
+                    num: "04",
+                    title: "تفسير سورة الناس (الاستعاذة من الوسواس الخناس)",
+                    summary: "الالتجاء برب الناس وملكهم وإلههم من وسوسة شياطين الإنس والجن وخداعهم في الصدور.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «قُلْ أَعُوذُ بِرَبِّ النَّاسِ * مَلِكِ النَّاسِ * إِلَٰهِ النَّاسِ * مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ * الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ * مِنَ الْجِنَّةِ وَالنَّاسِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان التحليلي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>التوسل بالصفات الإلهية الثلاث:</strong> استعاذ العبد برب الناس (خالقهم ومدبرهم)، وملكهم (الحاكم المتصرف فيهم)، وإلههم (معبودهم الحق)؛ تعظيماً لمقام المستعاذ به واستشعاراً لعظم الخطر المتربص بالقلب.</p>
+                            <p><strong>{مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ}:</strong> الشيطان؛ سُمي «وسواساً» لأنه يلقي الشبهات والشهوات والشكوك في القلب بلطف وخفاء، وسُمي «خنّاساً» لأنه يخنس وينقبض ويهرب فوراً إذا ذُكر الله تعالى.</p>
+                            <p><strong>{الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ}:</strong> ميدان معركته هو القلب والخواطر ليفسد الإيمان والنية والطمأنينة.</p>
+                            <p><strong>{مِنَ الْجِنَّةِ وَالنَّاسِ}:</strong> بيان أن الوسوسة والصد عن الحق تكون من شياطين الجن بالإلقاء الخفي، ومن شياطين الإنس بجلساء السوء ودعاة الفتنة والباطل.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الهدايات والفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. ذكر الله هو السلاح القاطع الذي يخنس به الشيطان وينهزم وساوسه.</li>
+                                <li>2. التحذير من شياطين الإنس الذين يزينون الفواحش بألسنتهم.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_5",
+                    num: "05",
+                    title: "تفسير سورة الكوثر (أعظم نهر وتمام النصر)",
+                    summary: "إعطاء النبي نهر الكوثر والخير العظيم، الأمر بالصلاة والنحر، وبتر شأن أعدائه وحاسديه.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ * فَصَلِّ لِرَبِّكَ وَانْحَرْ * إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان التحليلي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>سبب النزول:</strong> لما مات القاسم وعبد الله ابنا النبي ﷺ قال العاص بن وائل الشانئ الحاقد: «إن محمداً أبتر لا عقب له سينقطع ذكره بموته»، فأنزل الله هذه السورة تسلية لنبيه ﷺ.</p>
+                            <p><strong>1. {إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ}:</strong> الكوثر هو الخير الكثير الدائم في الدنيا والآخرة، ومنه النهر العظيم الذي أعطاه الله لنبيه في الجنة وحوضه المورود في المحشر.</p>
+                            <p><strong>2. {فَصَلِّ لِرَبِّكَ وَانْحَرْ}:</strong> قابل هذه النعم العظيمة بإخلاص العبادة البدنية (الصلاة) والعبادة المالية (نحر الهدي والأضاحي) لله وحده لا للأصنام.</p>
+                            <p><strong>3. {إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ}:</strong> إن مبغضك وعدوك يا محمد هو المقطوع دابره، المبتور من كل خير وذكر وثناء، بينما رُفع ذكرك في الآفاق ومآذن الدنيا إلى يوم القيامة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الهدايات:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. اقتران الصلاة بالنحر كأجلّ العبادات التعبدية والمالية (قل إن صلاتي ونسكي ومحياي ومماتي لله).</li>
+                                <li>2. كل من أبغض النبي ﷺ أو سنته فهو مقطوع البركة وله الخزي في الدنيا والآخرة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_6",
+                    num: "06",
+                    title: "تفسير سورة العصر (دستور النجاة الإلهي)",
+                    summary: "قسم الله بالعصر والدهر، خسران بني الإنسان إلا من اتصف بالإيمان والعمل الصالح والتواصي بالحق والصبر.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «وَالْعَصْرِ * إِنَّ الْإِنسَانَ لَفِي خُسْرٍ * إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>مكانة السورة:</strong> قال الإمام الشافعي: «لو ما أنزل الله حجة على خلقه إلا هذه السورة لكفتهم»؛ لأنها حددت شروط النجاة الأربعة بدقة بالغة.</p>
+                            <p><strong>1. {وَالْعَصْرِ}:</strong> قسَم بالزمان والدهر؛ لما فيه من العِبر وتصريف الأحوال ودلالة على قيمة الوقت وعمر الإنسان.</p>
+                            <p><strong>2. {إِنَّ الْإِنسَانَ لَفِي خُسْرٍ}:</strong> كل جنس بني آدم في غبن وخسران وضياع وهلاك.</p>
+                            <p><strong>3. أركان النجاة الأربعة:</strong></p>
+                            <ul>
+                                <li><strong>الإيمان:</strong> معرفة الحق بالله وكتبه ورسله واليوم الآخر (كمال القوة العلمية).</li>
+                                <li><strong>العمل الصالح:</strong> امتثال الأوامر واجتناب النواهي (كمال القوة العملية).</li>
+                                <li><strong>التواصي بالحق:</strong> الدعوة إلى الله والأمر بالمعروف والنهي عن المنكر (تكميل الغير).</li>
+                                <li><strong>التواصي بالصبر:</strong> الثبات على الطاعة وعن المعصية وعند الابتلاء ومواجهة الأذى في سبيل الدعوة.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. استثمار أوقات العمر في الطاعات؛ فالوقت رأس مال المؤمن.</li>
+                                <li>2. النجاة الحقيقية لا تكون بالصلاح الفردي وحده بل بالإصلاح المجتمعي والتواصي بالحق.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_7",
+                    num: "07",
+                    title: "تفسير سورة الشرح (الانشراح وتيسير العسر)",
+                    summary: "امتنان الله على نبيه بشرح صدره ووضع وزره ورفع ذكره، وقاعدة إن مع العسر يسراً، وإذا فرغت فانصب.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ * وَوَضَعْنَا عَنكَ وِزْرَكَ * الَّذِي أَنقَضَ ظَهْرَكَ * وَرَفَعْنَا لَكَ ذِكْرَكَ * فَإِنَّ مَعَ الْعُسْرِ يُسْرًا * إِنَّ مَعَ الْعُسْرِ يُسْرًا * فَإِذَا فَرَغْتَ فَانصَبْ * وَإِلَىٰ رَبِّكَ فَارْغَب»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. {أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ}:</strong> وسعنا صدرك بنور النبوة والحكمة والقرآن بعد ضيق وهمّ الرسالة وشق الصدر الحسي المبارك.</p>
+                            <p><strong>2. {وَوَضَعْنَا عَنكَ وِزْرَكَ * الَّذِي أَنقَضَ ظَهْرَكَ}:</strong> غفرنا لك وحططنا عنك ما أثقل كاهلك من هموم الجاهلية وتبليغ الرسالة.</p>
+                            <p><strong>3. {وَرَفَعْنَا لَكَ ذِكْرَكَ}:</strong> قرن الله اسم نبيه باسمه في الأذان والإقامة والشهادتين والتشهد والخطب؛ فلا يُذكر الله إلا وذُكر معه رسوله ﷺ.</p>
+                            <p><strong>4. {فَإِنَّ مَعَ الْعُسْرِ يُسْرًا}:</strong> العسر معرف بأل واليسر منكر مكرر؛ ولن يغلب عسر يسرين، فالفرج ملازم ومقترن بالضيق.</p>
+                            <p><strong>5. {فَإِذَا فَرَغْتَ فَانصَبْ * وَإِلَىٰ رَبِّكَ فَارْغَب}:</strong> إذا فرغت من شؤون الدعوة والدنيا فاجهد نفسك في عبادة ربك والدعاء والرغبة فيما عنده.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. اليقين التام بقرب الفرج وتيسير الشدائد مهما تعاظمت الكروب.</li>
+                                <li>2. المسلم لا يعرف الفراغ العقيم؛ فإذا فرغ من عمل دنيوي بادر إلى عمل أخروي وقربة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_8",
+                    num: "08",
+                    title: "تفسير سورة الضحى (عناية الله ورعايته الإلهية)",
+                    summary: "تسلية النبي بعد فتر الوحي، ما ودعك ربك وما قلى، وللآخرة خير لك من الأولى، وتذكير بنعم اليتم والضلال والعيلة.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «وَالضُّحَىٰ * وَاللَّيْلِ إِذَا سَجَىٰ * مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ * وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ * وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ * أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ * وَوَجَدَكَ ضَالًّا فَهَدَىٰ * وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ * فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ * وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ * وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>سبب النزول:</strong> احتبس الوحي عن النبي أياماً فقال المشركون شامتون: «ودّع محمد ربه وقلاه (أبغضه)»، فأنزل الله رداً حاسماً عليهم وتثبيتاً لنبيه.</p>
+                            <p><strong>1. {مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ}:</strong> ما تركك ربك وما أبغضك منذ اصطفاك، بل هو راعيك وحافظك.</p>
+                            <p><strong>2. {وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ}:</strong> وعد جامع لكل ما تقر به عينه ﷺ من شفاعة عظمى، وحوض مورود، ودرجة الوسيلة، وانتشار دينه.</p>
+                            <p><strong>3. التذكير بالرعاية السابقة:</strong> كنت يتيماً فآواك بكفالة جدك وعمك، وغافلاً عن تفاصيل الشرع فهداك بالوحي، وفقيراً فأغناك بنعمه وقناعتك.</p>
+                            <p><strong>4. الوصايا العملية الثلاث:</strong> إكرام اليتيم وعدم قهره، الرفق بالسائل وإعطاؤه أو رده بلطف، والتحدث بنعم الله شكراً واعترافاً.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. استشعار لطف الله السابق في حياة العبد يدفع للقلق والشك في المستقبل.</li>
+                                <li>2. رعاية الأيتام والمحتاجين شكر عملي لنعم الله العظيمة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_9",
+                    num: "09",
+                    title: "تفسير سورة القدر (ليلة الشرف ونزول القرآن)",
+                    summary: "نزول القرآن في ليلة القدر جملة إلى السماء الدنيا، فضل ليلة القدر وخيريتها على ألف شهر، وتنزل الملائكة والروح.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ * وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ * لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ * تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ * سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. {إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ}:</strong> بدأ نزول القرآن جملة واحدة من اللوح المحفوظ إلى بيت العزة بالسماء الدنيا في ليلة القدر المباركة في رمضان، ثم نزل مفرقاً بحسب الوقائع.</p>
+                            <p><strong>2. {لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ}:</strong> العبادة والعمل الصالح وقيام هذه الليلة خير وأفضل من عبادة ألف شهر (أكثر من 83 سنة) ليس فيها ليلة القدر.</p>
+                            <p><strong>3. {تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا}:</strong> تهبط الملائكة وجبريل عليه السلام (الروح) بالرحمات والبركات والسلام على عباد الله المصلين الذاكرين.</p>
+                            <p><strong>4. {سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ}:</strong> ليلة أمن وسلام وخير وبركة لا شر فيها، تسلم فيها الملائكة على أهل المساجد حتى طلوع الفجر الصادق.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. فضل العشر الأواخر من رمضان وتحري ليلة القدر بالاعتكاف والصلاة والدعاء.</li>
+                                <li>2. عظم شأن القرآن الكريم وشرف الليلة التي نزل فيها.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sh_10",
+                    num: "10",
+                    title: "تفسير سورة النصر (فتح مكة ودنو الأجل المحتوم)",
+                    summary: "إشعار بفتح مكة ودخول الناس في دين الله أفواجاً، الأمر بالتسبيح والاستغفار، وإشارة لدنو أجل النبي ﷺ.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> نص السورة الكريمة:</h4>
+                        <div class="quran-ayah-box">
+                            «إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ * وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا * فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> التفسير والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>فهم الصحابة العميق:</strong> سأل عمر كبار الصحابة عن تفسيرها فقالوا: أمرنا بحمد الله واستغفاره إذا نصرنا، فقال ابن عباس: «هو أجل رسول الله ﷺ أعلمه له»، فوافقه عمر على ذلك.</p>
+                            <p><strong>1. {إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ}:</strong> تحقق نصر الله المبين بفتح مكة وتطهير الكعبة من الأصنام في السنة 8 هـ.</p>
+                            <p><strong>2. {وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا}:</strong> أقبلت وفود قبائل العرب جماعات وأفواجاً لإعلان إسلامهم طواعية ورغبة.</p>
+                            <p><strong>3. {فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ}:</strong> اختم حياتك المباركة بإعلان كمال الشكر والتسبيح والاستغفار، فكان النبي يكثر في ركوعه وسجوده أن يقول: «سبحانك اللهم ربنا وبحمدك، اللهم اغفر لي» يتأول القرآن.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. ختام الأعمال والعبادات بالاستغفار والتسبيح تواضعاً واعترافاً بالتقصير.</li>
+                                <li>2. صدق نبوءات القرآن وتحقق فتح مكة وانتشار الإسلام.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. لماذا سميت سورة الفاتحة بأم الكتاب والسبع المثاني؟", a: "سميت بأم الكتاب لاشتمالها على جميع مقاصد القرآن وأصوله (العقيدة، العبادة، والقصص)، وسميت بالسبع المثاني لأنها سبع آيات تثنى وتكرر في كل ركعة صلاة." },
+                { q: "2. ما معنى «الصمد» في سورة الإخلاص؟", a: "الصمد هو السيد الكامل في سيادته وعظمته، الذي تصمد وتقصد إليه جميع الخلائق في حوائجها وافتقارها، المستغني عن كل ما سواه." },
+                { q: "3. ما هو الفرق بين الاستعاذة في سورة الفلق والاستعاذة في سورة الناس؟", a: "سورة الفلق استعاذة بصفة واحدة (رب الفلق) من شرور أربعة خارجية (ما خلق، غاسق، النفاثات، الحاسد)، وسورة الناس استعاذة بثلاث صفات (الرب، الملك، الإله) من شر واحد خفي باطني وهو الوسواس الخناس." },
+                { q: "4. ما معنى «النفاثات في العقد» في سورة الفلق؟", a: "هن السواحر اللاتي يعقدن الخيوط وينفخن فيها بريقهن مع الطلاسم الشيطانية لإلحاق الضرر والسحر بالناس." },
+                { q: "5. ما هو الكوثر الذي أعطاه الله لنبيه ﷺ في سورة الكوثر؟", a: "هو الخير الكثير الدائم في الدنيا والآخرة، ومنه نهر الكوثر العظيم في الجنة وحوضه المورود في المحشر الذي ترده أمته." },
+                { q: "6. ما هي أركان النجاة الأربعة المذكورة في سورة العصر؟", a: "1. الإيمان بالله، 2. العمل الصالح، 3. التواصي بالحق، 4. التواصي بالصبر." },
+                { q: "7. ما معنى «فإذا فرغت فانصب وإلى ربك فارغب» في سورة الشرح؟", a: "إذا فرغت من أعمالك وشؤونك الدنيوية أو الدعوية فاجهد نفسك في عبادة الله والصلاة والدعاء والرغبة فيما عنده." },
+                { q: "8. ما هو سبب نزول سورة الضحى؟", a: "احتباس الوحي وتأخره عن النبي ﷺ أياماً، حتى قال المشركون: قد ودعه ربه وقلاه، فأنزل الله السورة رداً عليهم وتثبيتاً له." },
+                { q: "9. لماذا ليلة القدر خير من ألف شهر؟", a: "لأن العمل الصالح والقيام وتلاوة القرآن والذكر فيها يفضل أجر عبادة ألف شهر (أكثر من 83 سنة) ليس فيها ليلة القدر." },
+                { q: "10. ما هي الإشارة الخفية التي استنبطها ابن عباس من سورة النصر؟", a: "استنبط أن السورة نعي وإشعار بقرب أجل النبي ﷺ ودنو وفاته بعد إتمام تبليغ الرسالة ودخول الناس في الدين." }
+            ],
+            quizList: [
+                { q: "1. السورة التي تعدل قراءتها ثلث القرآن الكريم هي:", opts: ["سورة الإخلاص", "سورة الفاتحة", "سورة الكوثر"], a: 0 },
+                { q: "2. معنى «غاسق إذا وقب» في سورة الفلق هو:", opts: ["الليل إذا أقبل بظلامه وسواده", "الشمس عند طلوعها", "البحر عند هيجانه"], a: 0 },
+                { q: "3. قال الإمام الشافعي: «لو ما أنزل الله حجة على خلقه إلا هذه السورة لكفتهم» عن سورة:", opts: ["سورة العصر", "سورة الفاتحة", "سورة الملك"], a: 0 },
+                { q: "4. معنى «الشانئ» في قوله تعالى (إن شانئك هو الأبتر) هو:", opts: ["المبغض والعدو الحاقد", "الكريم الجواد", "المسافر البعيد"], a: 0 },
+                { q: "5. ليلة القدر خير من:", opts: ["ألف شهر (أكثر من 83 سنة)", "مائة شهر فقط", "عشر سنوات"], a: 0 },
+                { q: "6. «الوسواس الخناس» سُمي خناساً لأنه:", opts: ["يختفي ويهرب وينقبض عند ذكر الله", "يلازم الإنسان دائماً", "لا يؤثر في القلب"], a: 0 },
+                { q: "7. في سورة الشرح، اقترن العسر بـ:", opts: ["يسرين متتابعين (فإن مع العسر يسراً)", "عسر مضاعف", "طول الانتظار"], a: 0 },
+                { q: "8. سورة النصر أشارت إلى قرب أجل النبي ﷺ بعد حدث:", opts: ["فتح مكة الأكبر", "غزوة بدر", "صلح الحديبية"], a: 0 },
+                { q: "9. في سورة الضحى، التوجيه الإلهي للتعامل مع نعم الله هو:", opts: ["التحدث بها وشكرها وإظهارها", "كتمانها بالكامل", "التفاخر بها على الفقراء"], a: 0 },
+                { q: "10. {إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ} في الفاتحة تدل على:", opts: ["إخلاص العبادة والبراءة من الشرك والاتكال", "طلب الرزق الدنيوي فقط", "الاستعانة بالمخلوق دون الخالق"], a: 0 }
+            ]
+        },
+
+        sciences: {
+            title: "علوم القرآن — مباحث التنزيل وأسباب النزول والمصاحف",
+            badge: "علوم القرآن",
+            desc: "دراسة قواعد التنزيل، المكي والمدني، تاريخ جمع القرآن وتدوينه، المحكم والمتشابه والناسخ والمنسوخ.",
+            quote: "«إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ» [الحجر: 9]",
+            lessons: [
+                {
+                    id: "t_sc_1",
+                    num: "01",
+                    title: "المكي والمدني وضوابط التمييز بينهما",
+                    summary: "تعريف المكي والمدني باعتبار مكان وزمان النزول، الخصائص الأسلوبية والموضوعية لكل منهما، وفوائد العلم بهما.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الضابط الأصولي المعتمد:</h4>
+                        <div class="quran-ayah-box">
+                            «المَكِّيُّ: مَا نَزَلَ قَبْلَ الهِجْرَةِ النَّبَوِيَّةِ وَإِنْ نَزَلَ بِغَيْرِ مَكَّةَ، وَالمَدَنِيُّ: مَا نَزَلَ بَعْدَ الهِجْرَةِ وَإِنْ نَزَلَ بِمَكَّةَ أَوْ يَوْمَ الفَتْحِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. خصائص القرآن المكي:</strong></p>
+                            <ul>
+                                <li><strong>الموضوعات:</strong> تقرير التوحيد والعقيدة، إثبات البعث والجزاء، محاجة المشركين، وذكر قصص الأنبياء والأمم السابقة لتثبيت قلب النبي والمؤمنين.</li>
+                                <li><strong>الأسلوب:</strong> قصر الآيات، فخامة الألفاظ وقوة الجرس والخطاب (يا أيها الناس)، واشتماله على سجدات التلاوة وحروف التهجي في أوائل السور.</li>
+                            </ul>
+                            <p><strong>2. خصائص القرآن المدني:</strong></p>
+                            <ul>
+                                <li><strong>الموضوعات:</strong> تفصيل الأحكام التشريعية (المعاملات، الفرائض، المواريث، الحدود، الجهاد، وأحكام الأسرة)، ومخاطبة أهل الكتاب وفضح نفاق المنافقين.</li>
+                                <li><strong>الأسلوب:</strong> طول الآيات والمقاطع، رقة الأسلوب، وغلبة نداء (يا أيها الذين آمنوا).</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> فوائد معرفة المكي والمدني:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. معرفة الناسخ من المنسوخ؛ لتأخر المدني عن المكي زمنياً.</li>
+                                <li>2. تتبع مراحل الدعوة الإسلامية والتدرج في التربية والتشريع.</li>
+                                <li>3. الاستعانة به في التفسير الصحيح لمعرفة سياق وملابسات النزول.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_2",
+                    num: "02",
+                    title: "أسباب النزول وقواعدها الأصولية في التفسير",
+                    summary: "أهمية معرفة سبب النزول في فهم المعنى وإزالة الإشكال، وقاعدة (العبرة بعموم اللفظ لا بخصوص السبب).",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر الأصولي:</h4>
+                        <div class="quran-ayah-box">
+                            قَالَ عَلِيُّ بْنُ المَدِينِيِّ: «مَعْرِفَةُ أَسْبَابِ النُّزُولِ نِصْفُ العِلْمِ بِالقُرْآنِ؛ لِأَنَّهُ طَرِيقٌ قَوِيٌّ فِي فَهْمِ مَعَانِي الكِتَابِ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>تعريف سبب النزول:</strong> هو ما نزلت الآية أو الآيات متحدثة عنه أو مبينة لحكمه أيام وقوعه (كحادثة وقعت أو سؤال وُجه للنبي ﷺ).</p>
+                            <p><strong>فوائده:</strong> بيان وجه الحكمة الباعثة على تشريع الحكم، وفهم المعنى الصحيح وإزالة الإشكال؛ كما أُشكل على مروان بن الحكم فهم قوله تعالى: (لَا تَحْسَبَنَّ الَّذِينَ يَفْرَحُونَ بِمَا أَتَوْا) حتى بين له ابن عباس سبب نزولها في أهل الكتاب.</p>
+                            <p><strong>القاعدة الكبرى:</strong> «العبرة بعموم اللفظ لا بخصوص السبب»؛ فآيات اللعان أو الظهار أو السرقة نزلت في أشخاص محددين ولكن حكمها عام وشامل لكل مكلف إلى يوم القيامة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. لا يُقبل في أسباب النزول إلا الرواية الصحيحة المسندة عن الصحابة المعاصرين للتنزيل.</li>
+                                <li>2. معرفة اسم الشخص الذي نزلت فيه الآية لدفع توهم نزولها في غيره.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_3",
+                    num: "03",
+                    title: "تاريخ جمع وتدوين المصحف الشريف",
+                    summary: "المراحل التاريخية الثلاث: الجمع النبوي في الصدور والرقاع، جمع أبي بكر في صحف، ونسخ عثمان للمصاحف العثمانية.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الوعد الإلهي بالحفظ:</h4>
+                        <div class="quran-ayah-box">
+                            «إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ» [الحجر: 9]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والمراحل التاريخية الثلاث:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. الجمع في العهد النبوي:</strong> حُفظ في صدور الصحابة، وكُتب كل وحي فور نزوله على العسب واللخاف والرقاع بأمر النبي وإشرافه مع كتاب الوحي (كزيد بن ثابت وأبي بن كعب).</p>
+                            <p><strong>2. جمع أبي بكر الصديق (12 هـ):</strong> بعد استشهاد 70 قارئاً في معركة اليمامة، أشار عمر بجمع القرآن، فكلف أبو بكر الصحابي الأمين زيد بن ثابت بجمعه في صحف مرتبة الآيات بعد تثبت شديد بشاهدين عدلين.</p>
+                            <p><strong>3. جمع عثمان بن عفان (25 هـ):</strong> لما اتسعت الفتوحات واختلف الجنود في وجوه القراءة، نسخ عثمان صحف أبي بكر إلى مصاحف موحدة برسم قريش وأرسلها للأمصار وأمر بحرق ما سواها درءاً للفتنة واجتماعاً على كلمة واحدة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. الرسم العثماني رسم توقيفي معجز حوى وجوه القراءات المتواترة.</li>
+                                <li>2. نقل القرآن بالتواتر الصوتي والتدوين الخطي معصوم من أي تحريف أو نقص.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_4",
+                    num: "04",
+                    title: "نزول القرآن على سبعة أحرف",
+                    summary: "حقيقة الأحرف السبعة، تيسير التلاوة على ألسنة العرب، والفرق بين الأحرف السبعة والقراءات السبع.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الحديث الشريف:</h4>
+                        <div class="quran-ayah-box">
+                            عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «أَقْرَأَنِي جِبْرِيلُ عَلَى حَرْفٍ فَرَاجَعْتُهُ، فَلَمْ أَزَلْ أَسْتَزِيدُهُ وَيَزِيدُنِي حَتَّى انْتَهَى إِلَى سَبْعَةِ أَحْرُفٍ». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>الحكمة من الأحرف السبعة:</strong> التيسير والرحمة بالأمة المحمدية؛ لاختلاف لغات قبائل العرب ولهجاتهم في النطق والإبدال والإمالة والتسهيل، فنزل القرآن بوجوه فصيحة متعددة لا تضاد بينها.</p>
+                            <p><strong>الفرق بين الأحرف السبعة والقراءات السبع:</strong> القراءات المتواترة العشر المعروفة اليوم هي جزء من الأحرف السبعة التي كتبها عثمان في مصاحفه واحتملها رسمها العثماني المجرد عن النقط والشكل.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. تعدد القراءات يعطي معاني إضافية وأحكاماً فقهية جديدة تثري التفسير دون تناقض.</li>
+                                <li>2. القراءة سنة متبعة يأخذها الآخر عن الأول بالتلقي والمشافهة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_5",
+                    num: "05",
+                    title: "المحكم والمتشابه وموقف الراسخين في العلم",
+                    summary: "مفهوم المحكم الواضح والمتشابه، حكمة وجود المتشابه في القرآن، وموقف الراسخين في العلم والزائغين منه.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الآية المحكمة:</h4>
+                        <div class="quran-ayah-box">
+                            «هُوَ الَّذِي أَنزَلَ عَلَيْكَ الْكِتَابَ مِنْهُ آيَاتٌ مُّحْكَمَاتٌ هُنَّ أُمُّ الْكِتَابِ وَأُخَرُ مُتَشَابِهَاتٌ ۖ فَأَمَّا الَّذِينَ فِي قُلُوبِهِمْ زَيْغٌ فَيَتَّبِعُونَ مَا تَشَابَهَ مِنْهُ...» [آل عمران: 7]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. المُحْكَم:</strong> الآيات الواضحة الدلالة التي لا تحتمل إلا وجهاً واحداً، وهي عمدة الدين وأصول الأحكام والعقائد (هنّ أم الكتاب).</p>
+                            <p><strong>2. المُتَشَابِه:</strong> ما خفي معناه واستأثر الله بعلمه (كوقت قيامة الساعة وحقائق الغيب)، أو ما يحتمل عدة أوجه ويحتاج إلى رده للآيات المحكمة ليتضح معناه.</p>
+                            <p><strong>موقف الراسخين في العلم:</strong> يؤمنون به كله ويردون المتشابه إلى المحكم فيتضح ويسلمون لله، بخلاف أهل الأهواء والبدع الذين يتبعون المتشابه لإثارة الفتن والشبهات.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. رد المجمل والمتشابه إلى المحكم الواضح هو المنهج الأقوم في التفسير.</li>
+                                <li>2. التحذير من أهل الزيغ الذين يتصيدون المتشابهات لتشكيك الناس في عقيدتهم.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_6",
+                    num: "06",
+                    title: "الناسخ والمنسوخ وحكمته التشريعية",
+                    summary: "مفهوم النسخ في القرآن، أنواعه الثلاثة، شروطه، والحكمة الإلهية في التدرج بالأحكام وتخفيفها.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني:</h4>
+                        <div class="quran-ayah-box">
+                            «مَا نَنسَخْ مِنْ آيَةٍ أَوْ نُنسِهَا نَأْتِ بِخَيْرٍ مِّنْهَا أَوْ مِثْلِهَا ۗ أَلَمْ تَعْلَمْ أَنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ» [البقرة: 106]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>تعريف النسخ:</strong> رفع حكم شرعي سابق بحكم شرعي لاحق بدليل شرعي متأخر عنه.</p>
+                            <p><strong>أنواع النسخ في القرآن:</strong></p>
+                            <ul>
+                                <li><strong>1. نسخ الحكم وبقاء التلاوة:</strong> وهو الأكثر (كآية تحويل القبلة من بيت المقدس إلى الكعبة، وآية عدة المتوفى عنها زوجها).</li>
+                                <li><strong>2. نسخ الحكم والتلاوة معاً:</strong> كروايات الرضاع العشر منسوخة حكماً وتلاوة.</li>
+                                <li><strong>3. نسخ التلاوة وبقاء الحكم:</strong> كآية رجم الزاني المحصن.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. لا يجوز لأحد أن يفسر القرآن أو يفتي حتى يعرف الناسخ من المنسوخ.</li>
+                                <li>2. الحكمة في النسخ: رعاية مصالح العباد والتدرج بهم من الشدة إلى اليسر أو التكليف بالأصلح.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_7",
+                    num: "07",
+                    title: "وجوه إعجاز القرآن الكريم ودلائل نبوته",
+                    summary: "الإعجاز البياني اللغوي، الإعجاز التشريعي، الإعجاز الغيبي، والإشارات العلمية المعجزة في كتاب الله.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> التحدي الإلهي الخالد:</h4>
+                        <div class="quran-ayah-box">
+                            «قُل لَّئِنِ اجْتَمَعَتِ الْإِنسُ وَالْجِنُّ عَلَىٰ أَن يَأْتُوا بِمِثْلِ هَٰذَا الْقُرْآنِ لَا يَأْتُونَ بِمِثْلِهِ وَلَوْ كَانَ بَعْضُهُمْ لِبَعْضٍ ظَهِيرًا» [الإسراء: 88]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> وجوه الإعجاز الأربعة:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. الإعجاز البياني والأسلوبي:</strong> بلاغة ألفاظه ونظمه المعجز الذي تحدى فصحاء العرب فعجزوا عن الإتيان بسورة من مثله.</p>
+                            <p><strong>2. الإعجاز التشريعي:</strong> كمال تشريعاته وأحكامه في تنظيم شؤون الفرد والأسرة والمجتمع والعدل والاقتصاد بما يفوق كل القوانين البشرية.</p>
+                            <p><strong>3. الإعجاز الغيبي:</strong> إخباره الصادق عن غيوب الماضي (قصص الأنبياء) والمستقبل (غلب الروم وفتح مكة) بدقة متناهية.</p>
+                            <p><strong>4. الإشارات الكونية والعلمية:</strong> دقته في وصف خلق الجنين وأطواره، وتوسع السماء، ودوران الأفلاك بما يطابق الحقائق العلمية الثابتة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. القرآن معجزة عقلية خالدة باقية إلى يوم القيامة بخلاف معجزات الأنبياء الحسية السابقة.</li>
+                                <li>2. تزايد وجوه إعجاز القرآن مع تقدم العلوم والاكتشافات.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_8",
+                    num: "08",
+                    title: "أمثال القرآن وقصصه ومقاصدها التربوية",
+                    summary: "حكمة ضرب الأمثال القرآنية في تقريب المعقول بالمحسوس، وأهداف القصص القرآني في العظة والاعتبار.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني:</h4>
+                        <div class="quran-ayah-box">
+                            «وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ ۖ وَمَا يَعْقِلُهَا إِلَّا الْعَالِمُونَ» [العنكبوت: 43]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>أمثال القرآن:</strong> تصوير المعاني الغائبة بالصور الحاضرة المشاهدة؛ كمثل إنفاق المرائي بـ (صفوان عليه تراب)، ومثل كلمة التوحيد بـ (شجرة طيبة أصلها ثابت)، ومثل من اتخذ من دون الله أولياء بـ (العنكبوت اتخذت بيتاً).</p>
+                            <p><strong>أهداف القصص القرآني:</strong></p>
+                            <ul>
+                                <li>1. تثبيت فؤاد النبي ﷺ والمؤمنين وتسلية قلوبهم في مواجهة الابتلاءات.</li>
+                                <li>2. إثبات صدق رسالة النبي بإخباره عن الأمم السابقة وهو أمي لا يقرأ ولا يكتب.</li>
+                                <li>3. بيان سنة الله الكونية في نصرة الرسل وهلاك المكذبين والظالمين.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. القصص القرآني حق وصدق لا مجال فيه للخيال أو الأساطير.</li>
+                                <li>2. استخراج القوانين والسنن الإلهية في نهوض الأمم وسقوطها.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_9",
+                    num: "09",
+                    title: "التفسير بالمأثور والتفسير بالرأي وضوابطهما",
+                    summary: "مراتب التفسير بالمأثور، شروط التفسير بالرأي المحمود، والتحذير من التفسير بالهوى والرأي المذموم.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> منهجية التفسير الأصيلة:</h4>
+                        <div class="quran-ayah-box">
+                            قَالَ ابْنُ كَثِيرٍ: «أَصَحُّ الطُّرُقِ فِي ذَلِكَ أَنْ يُفَسَّرَ القُرْآنُ بِالقُرْآنِ، فَإِنْ أَعْيَاكَ فَعَلَيْكَ بِالسُّنَّةِ، فَإِنْ لَمْ تَجِدْ فَبِأَقْوَالِ الصَّحَابَةِ، ثُمَّ التَّابِعِينَ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. التفسير بالمأثور:</strong> هو التفسير المستند إلى النصوص والآثار المنقولة، ومراتبه:</p>
+                            <ul>
+                                <li>تفسير القرآن بالقرآن (أعلاها وأكملها).</li>
+                                <li>تفسير القرآن بالسنة الصحيحة النبوية الشارحة.</li>
+                                <li>تفسير القرآن بأقوال الصحابة (كابن عباس وابن مسعود) لأنهم شهدوا التنزيل.</li>
+                            </ul>
+                            <p><strong>2. التفسير بالرأي:</strong> ينقسم إلى:</p>
+                            <ul>
+                                <li><strong>محمود:</strong> اجتهاد العالم المتقن المستند لأصول اللغة والشريعة.</li>
+                                <li><strong>مذموم:</strong> القول في القرآن بالجهل أو الهوى والمذاهب الباطلة دون علم.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. التحذير الشديد من القول في كلام الله بغير علم.</li>
+                                <li>2. ضرورة التمكن من علوم اللغة والنحو والصرف والأصول لمن يتصدى للتفسير.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_sc_10",
+                    num: "10",
+                    title: "طبقات المفسرين ومناهج التفاسير الكبرى",
+                    summary: "استعراض مناهج كبار المفسرين (تفسير الطبري، ابن كثير، القرطبي، والسعدي) وخصائص كل كتاب.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-open"></i> أمهات كتب التفسير:</h4>
+                        <div class="quran-ayah-box">
+                            «تَفَاسِيرُ أَهْلِ السُّنَّةِ مَنَابِعُ هِدَايَةٍ جَمَعَتْ بَيْنَ صِحَّةِ المَنْقُولِ وَرَصَانَةِ المَعْقُولِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> أبرز المناهج والكتب:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>1. جامع البيان للطبري (ت 310 هـ):</strong> إمام المفسرين، يتميز بإيراد الروايات بالأسانيد وتحقيق الإعراب وتوجيه الأقوال بالترجيح اللغوي الدقيق.</p>
+                            <p><strong>2. تفسير القرآن العظيم لابن كثير (ت 774 هـ):</strong> عمدة التفسير بالمأثور، يتميز بتفسير القرآن بالقرآن والحديث الصحيح ونقد الإسرائيليات.</p>
+                            <p><strong>3. الجامع لأحكام القرآن للقرطبي (ت 671 هـ):</strong> موسوعة فقهية جامعة لآيات الأحكام واللغة والمسائل الخلافية بأدلتها.</p>
+                            <p><strong>4. تيسير الكريم الرحمن للسعدي (ت 1376 هـ):</strong> تفسير معاصر ميسر يركز على جلاء المعنى والتدبر والتربية الإيمانية.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. تنوع مناهج المفسرين يثري عقل الدارس ويعمق فهمه لكتاب الله.</li>
+                                <li>2. سلامة كتب التفسير المعتمدة من التأويلات الباطنية والبدعية.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هو الضابط المعتمد عند جمهور العلماء في التمييز بين المكي والمدني؟", a: "الضابط الزماني؛ فما نزل قبل الهجرة النبوية فهو مكي وإن نزل بغير مكة، وما نزل بعد الهجرة فهو مدني وإن نزل بمكة كآيات فتح مكة وحجة الوداع." },
+                { q: "2. ما هي القاعدة الأصولية في عموم أسباب النزول؟", a: "القاعدة هي: «العبرة بعموم اللفظ لا بخصوص السبب»؛ فالحكم يعم كل من انطبق عليه وصف الآية ولا يقتصر على الشخص الذي نزلت بسببه." },
+                { q: "3. ما الفرق بين جمع أبي بكر للقرآن وجمع عثمان بن عفان رضي الله عنهما؟", a: "جمع أبي بكر كان لجمع الآيات المكتوبة المتفرقة وحفظها في مصحف وصحف واحدة خوفاً من موت الحفاظ باليمامة، بينما جمع عثمان كان لنسخ المصحف وتوحيد قراءة الأمة على لغة قريش ودرء الاختلاف بين الأمصار." },
+                { q: "4. ما هي أنواع النسخ الثلاثة في القرآن الكريم؟", a: "1. نسخ الحكم وبقاء التلاوة (كالوصية للوالدين المنسوخة بآية المواريث)، 2. نسخ التلاوة والحكم معاً، 3. نسخ التلاوة وبقاء الحكم (كآية الرجم)." },
+                { q: "5. ما هو المحكم وما هو المتشابه؟", a: "المحكم: ما اتضح معناه ودلالته ولا يحتمل إلا وجهاً واحداً (أم الكتاب)، والمتشابه: ما احتمل أوجهاً متعددة ويُرد إلى المحكم لبيانه أو استأثر الله بعلمه كحقائق الغيب." },
+                { q: "6. ما هي أعلى وأصح مراتب التفسير بالإجماع؟", a: "تفسير القرآن بالقرآن؛ لأن ما أُجمل في موضع قد فُصل في موضع آخر، ثم تفسير القرآن بالسنة النبوية الصحيحة الشارحة له." },
+                { q: "7. ما هو الوجه الأساسي والأول لإعجاز القرآن الكريم الذي تحدى به العرب؟", a: "الإعجاز البياني واللغوي والنظم البلاغي المعجز الذي عجز فصحاء العرب وشعراؤهم عن معارضته ولو بسورة واحدة قصيرة." },
+                { q: "8. ما معنى التفسير بالرأي المحمود؟", a: "هو التفسير بالاجتهاد المستند إلى أصول اللغة العربية وقواعد الشريعة ونصوص الكتاب والسنة وضوابط الاستنباط من غير هوى." },
+                { q: "9. من هو إمام المفسرين وصاحب أقدم وأعظم تفسير جامع بالمأثور؟", a: "الإمام محمد بن جرير الطبري رحمه الله في كتابه «جامع البيان عن تأويل آي القرآن»." },
+                { q: "10. ما هي حكمة ضرب الأمثال في القرآن الكريم؟", a: "تقريب المعاني الإيمانية العقلية وتجسيدها بصور حسية ملموسة لترسيخها في العقول وتذكير القلوب (وتلك الأمثال نضربها للناس)." }
+            ],
+            quizList: [
+                { q: "1. الآية التي نزلت بمكة في حجة الوداع (اليوم أكملت لكم دينكم) تُعد من قبيل القرآن:", opts: ["المدني (لأنها نزلت بعد الهجرة)", "المكي", "المتروك"], a: 0 },
+                { q: "2. الصحابي الذي كلفه أبو بكر وعثمان بجمع وكتابة المصحف الشريف هو:", opts: ["زيد بن ثابت رضي الله عنه", "علي بن أبي طالب رضي الله عنه", "عبد الله بن مسعود رضي الله عنه"], a: 0 },
+                { q: "3. العبرة في آيات القرآن الكريم تكون بـ:", opts: ["عموم اللفظ لا بخصوص السبب", "خصوص السبب فقط", "رأي القارئ المجرد"], a: 0 },
+                { q: "4. نسخ الحكم مع بقاء تلاوة الآية في المصحف مثاله:", opts: ["آية عدة المتوفى عنها زوجها حولاً كاملاً", "آية الوضوء", "آية بر الوالدين"], a: 0 },
+                { q: "5. المفسر الملقب بـ «ترجمان القرآن وحبر الأمة» هو الصحابي:", opts: ["عبد الله بن عباس رضي الله عنهما", "أبو هريرة رضي الله عنه", "أنس بن مالك رضي الله عنه"], a: 0 },
+                { q: "6. من خصائص السور والآيات المكية غالباً:", opts: ["قصر الآيات وتقرير التوحيد والقصص", "تفصيل أحكام المواريث والحدود", "ذكر المنافقين وأحوالهم"], a: 0 },
+                { q: "7. المحكم في القرآن الكريم هو ما:", opts: ["اتضح معناه ودلالته ولا يحتمل إلا وجهاً واحداً", "استأثر الله بعلمه فقط", "نسخت تلاوته"], a: 0 },
+                { q: "8. تفسير القرآن بالقرآن يُعد في رتبة التفسير:", opts: ["أعلى وأجل المراتب على الإطلاق", "المرتبة الثانية بعد الرأي", "خاص بالفقه فقط"], a: 0 },
+                { q: "9. مؤلف التفسير الشهير «تيسير الكريم الرحمن في تفسير كلام المنان» هو الشيخ:", opts: ["عبد الرحمن السعدي", "ابن كثير", "ابن القيم"], a: 0 },
+                { q: "10. الغاية الكبرى من إنزال القرآن وتدبر آياته هي:", opts: ["العمل به والاهتداء بأحكامه وتزكية النفس", "مجرد التبرك بالألفاظ فقط", "الجدال اللغوي"], a: 0 }
+            ]
+        },
+
+        tadabbur: {
+            title: "قواعد التدبر — مفاتيح فهم القرآن العظيم والتأثر به",
+            badge: "قواعد التدبر",
+            desc: "المنهجية العملية للعيش مع كتاب الله وتدبر آياته واستخراج كنوزه وهداياته للحياة اليومية.",
+            quote: "«أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا» [محمد: 24]",
+            lessons: [
+                {
+                    id: "t_td_1",
+                    num: "01",
+                    title: "قاعدة استشعار الخطاب الشخصي المباشر",
+                    summary: "أن يقرأ المسلم القرآن كأنه نزل عليه اليوم ويخاطبه شخصياً بأوامره ونواهيه وهداياته.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر السلفي:</h4>
+                        <div class="quran-ayah-box">
+                            قَالَ عَبْدُ اللهِ بْنُ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ: «إِذَا سَمِعْتَ اللهَ يَقُولُ: (يَا أَيُّهَا الَّذِينَ آمَنُوا) فَأَرْعِهَا سَمْعَكَ؛ فَإِنَّهُ خَيْرٌ تُؤْمَرُ بِهِ، أَوْ شَرٌّ تُنْهَى عَنْهُ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتطبيق العملي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>حقيقة القاعدة:</strong> ألا يقرأ القارئ القرآن كأنه كلام موجه لأقوام مضوا وانقضوا، بل يستشعر أن ملك الملوك يخاطبه هو بالذات؛ فإذا مر بأمر امتثله، وإذا مر بنهي حاسب نفسه وانزجر، وإذا مر بوصف للمؤمنين سأل نفسه: أين أنا من هذه الصفات؟</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> ثمرات القاعدة:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. تحول القراءة من مجرد ترتيل سطحي إلى يقظة وانتباه ومحاسبة ذاتية حية.</li>
+                                <li>2. زيادة الخشوع والحياء من الله عند تلاوة آياته.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_2",
+                    num: "02",
+                    title: "قاعدة مراعاة السياق والسباق واللحاق",
+                    summary: "فهم الآية داخل نسقها وسياق السورة التي وردت فيها دون انتزاعها من بيئتها القرآنية.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الضابط البياني:</h4>
+                        <div class="quran-ayah-box">
+                            «السِّيَاقُ يُرْشِدُ إِلَى تَبْيِينِ المُجْمَلِ وَتَعْيِينِ المُحْتَمَلِ وَالقَطْعِ بِعَدَمِ إِرَادَةِ غَيْرِ المَقْصُودِ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>أهمية السياق:</strong> انتزاع الآية من سياقها القرآني قد يوقع في تأويلات باطلة كمن يقرأ (فويل للمصلين) ويقف، أو يحمل آيات خاصة في أحكام الحرب على أحكام السلم؛ فالسياق هو النور الكاشف لمراد المتكلم سبحانه.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. العصمة من تحريف الكلم عن مواضعه أو توظيف الآيات لأهواء حزبية وفكرية.</li>
+                                <li>2. إدراك الروابط البلاغية والترتيب المعجز بين آيات السورة الواحدة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_3",
+                    num: "03",
+                    title: "قاعدة معرفة مقاصد وعمود السورة",
+                    summary: "لكل سورة في القرآن محور ومقصد رئيسي تدور حوله جميع آياتها وأمثالها وقصصها.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الوحدة الموضوعية للسور:</h4>
+                        <div class="quran-ayah-box">
+                            «كُلُّ سُورَةٍ فِي القُرْآنِ لَهَا شَخْصِيَّتُهَا المُمَيَّزَةُ وَعَمُودُهَا الرَّئِيسُ الَّذِي تَنْتَظِمُ حَوْلَهُ آيَاتُهَا»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتطبيق:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>أمثلة لعمود السور:</strong> سورة البقرة محورها «الاستخلاف في الأرض وإقامة شرع الله»، وسورة آل عمران محورها «الثبات على الحق ومحاجة الشبهات»، وسورة الأنعام محورها «تقرير التوحيد ومقارعة الشرك»؛ فمعرفة عمود السورة يربط بين مطلعها وخاتمتها وقصصها في نسق بديع.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. النظرة الكلية الشاملة للسورة بدلاً من النظرة التجزيئية المحدودة.</li>
+                                <li>2. تذوق جمال النظم القرآني وتناسق مقاطعه.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_4",
+                    num: "04",
+                    title: "قاعدة الجمع بين الآيات في الموضوع الواحد",
+                    summary: "ضم الآيات المتشابهة والمتعلقة بالموضوع الواحد في موضع واحد لرؤية الصورة المتكاملة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> القاعدة التفسيرية الكبرى:</h4>
+                        <div class="quran-ayah-box">
+                            «القُرْآنُ يُفَسِّرُ بَعْضُهُ بَعْضًا؛ فَمَا أُجْمِلَ فِي مَوْضِعٍ فُصِّلَ فِي مَوْضِعٍ آخَرَ»
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>التفسير الموضوعي:</strong> جمع آيات الصبر، أو آيات التوبة، أو آيات الإنفاق، ومقارنتها ودراستها معاً، يعطي القارئ فهماً تشريعياً شاملاً متزناً يبعده عن الغلو أو التفريط في فهم قضايا الدين.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. الجمع بين نصوص الوعد ونصوص الوعيد يورث التوازن القلبي بين الخوف والرجاء.</li>
+                                <li>2. دفع شبهات التناقض أو التعارض الموهوم في أذهان الجاهلين.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_5",
+                    num: "05",
+                    title: "قاعدة الترتيل والترسل في التلاوة",
+                    summary: "أثر القراءة المتأنية بترتيل وحسن صوت في تحريك القلب وتثبيت المعاني (ورتل القرآن ترتيلاً).",
+                    duration: "16 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الأمر الإلهي:</h4>
+                        <div class="quran-ayah-box">
+                            «وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا» [المزمل: 4]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتأثير النفسي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>الترتيل:</strong> التمهل والتأني وإعطاء كل حرف حقه ومستحقه مع الوقوف عند رؤوس الآيات؛ لأن السرعة المفرطة (الهذرمة) تمنع العقل من إدراك المعنى والقلب من استشعار الجلال والخشوع.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. ترتيل آية واحدة بتدبر خير من ختم القرآن كله بهذرمة بلا وعي.</li>
+                                <li>2. تزيين الصوت بالقرآن يستجلب رقة القلب والبكاء من خشية الله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_6",
+                    num: "06",
+                    title: "قاعدة تكرار الآية المؤثرة والاستيقاف عندها",
+                    summary: "سنة النبي والصحابة في ترديد آية واحدة طوال الليل حتى الصباح طلباً للخشوع وتجديد الإيمان.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الهدي النبوي الشريف:</h4>
+                        <div class="quran-ayah-box">
+                            عَنْ أَبِي ذَرٍّ رَضِيَ اللهُ عَنْهُ قَالَ: «قَامَ النَّبِيُّ ﷺ بِآيَةٍ يُرَدِّدُهَا حَتَّى أَصْبَحَ: (إِن تُعَذِّبْهُمْ فَإِنَّهُمْ عِبَادُكَ ۖ وَإِن تَغْفِرْ لَهُمْ فَإِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ)». [رواه النسائي وابن ماجه وصححه الحاكم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والأثر التربوي:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>استيقاف الآيات:</strong> إذا مرت بك آية هزت وجدانك واستشعرت فيها تقصيرك أو عظمة ربك، فلا تتجاوزها بل رددها مراراً وتكراراً؛ فإن تكرار الآية يسكب نورها في القلب ويغسل أدران الغفلة ويورث رسوخ الإيمان.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. مشروعية الوقوف وتكرار الآيات في قيام الليل والصلوات الفردية.</li>
+                                <li>2. تجريد القلب للتأثر بكلام الله دون استعجال إنهاء المقادير والأجزاء.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_7",
+                    num: "07",
+                    title: "قاعدة التفاعل مع الآيات بالدعاء والتسبيح",
+                    summary: "سنة النبي في صلاة الليل: إذا مر بآية تسبيح سبح، وإذا مر بآية رحمة سأل، وإذا مر بآية عذاب تعوذ.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> هدي حذيفة بن اليمان مع النبي:</h4>
+                        <div class="quran-ayah-box">
+                            عَنْ حُذَيْفَةَ رَضِيَ اللهُ عَنْهُ قَالَ: صَلَّيْتُ مَعَ النَّبِيِّ ﷺ ذَاتَ لَيْلَةٍ... «إِذَا مَرَّ بِآيَةٍ فِيهَا تَسْبِيحٌ سَبَّحَ، وَإِذَا مَرَّ بِسُؤَالٍ سَأَلَ، وَإِذَا مَرَّ بِتَعَوُّذٍ تَعَوَّذَ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>التفاعل الحي:</strong> ينقل القارئ من دور المستمع السلبي إلى المتفاعل الحي مع ربه وخالقه؛ فيعيش مع كل مشهد قرآني بالاستغفار عند ذكر الذنوب، والسؤال عند ذكر الجنة، والرهبة عند ذكر النار.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. هذا التفاعل هو روح الصلاة ومفتاح الخشوع العظيم.</li>
+                                <li>2. استحضار القرب والمناجاة المباشرة مع الله تعالى.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_8",
+                    num: "08",
+                    title: "قاعدة إزالة موانع وأقفال القلوب",
+                    summary: "تطهير القلب من الذنوب، الرياء، الإصرار على المعاصي، والكبر؛ لتلقي أنوار القرآن وهداه.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> التحذير القرآني:</h4>
+                        <div class="quran-ayah-box">
+                            «أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا» [محمد: 24]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>أقفال القلوب وموانع الفهم:</strong></p>
+                            <ul>
+                                <li>1. <strong>المعاصي وران الذنوب:</strong> قال تعالى: (كَلَّا ۖ بَلْ ۜ رَانَ عَلَىٰ قُلُوبِهِم مَّا كَانُوا يَكْسِبُونَ).</li>
+                                <li>2. <strong>الكبر والتعالي:</strong> قال تعالى: (سَأَصْرِفُ عَنْ آيَاتِيَ الَّذِينَ يَتَكَبَّرُونَ فِي الْأَرْضِ بِغَيْرِ الْحَقِّ).</li>
+                                <li>3. <strong>أكل الحرام:</strong> يحجب نور البصيرة ويقسي الفؤاد.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. التوبة والاستغفار وصدق الإقبال قبل التلاوة يفتح مغاليق القلوب لتدبر الآيات.</li>
+                                <li>2. طهارة القلب شرط لتلقي حقائق الوحي (لا يمسه إلا المطهرون).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_9",
+                    num: "09",
+                    title: "قاعدة تحويل الآيات إلى مشاريع عمل وتطبيق",
+                    summary: "منهج الصحابة: كانوا يتعلمون عشر آيات فلا يجاوزونها حتى يتعلموا ما فيها من العلم والعمل جميعاً.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر السلفي:</h4>
+                        <div class="quran-ayah-box">
+                            قَالَ أَبُو عَبْدِ الرَّحْمَنِ السُّلَمِيُّ: «حَدَّثَنَا الَّذِينَ كَانُوا يُقْرِئُونَنَا أَنَّهُمْ كَانُوا إِذَا تَعَلَّمُوا مِنَ النَّبِيِّ ﷺ عَشْرَ آيَاتٍ لَمْ يُجَاوِزُوهَا حَتَّى يَتَعَلَّمُوا مَا فِيهَا مِنَ العِلْمِ وَالعَمَلِ، قَالُوا: فَتَعَلَّمْنَا القُرْآنَ وَالعِلْمَ وَالعَمَلَ جَمِيعًا».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>ثمرة التدبر هي العمل:</strong> لم ينزل القرآن ليكون ترانيم مجردة بل دستوراً للحياة اليومية؛ فإذا قرأت آية عن بر الوالدين بادرت لتقبيل يد أمك وأبيك، وإذا قرأت عن الصدقة بذلت من مالك، وإذا قرأت عن كظم الغيظ عفوت عمن أساء إليك.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. كان خلق النبي ﷺ القرآن، والمؤمن الصادق هو من يرى الناس القرآن حياً في سلوكه.</li>
+                                <li>2. العلم بلا عمل كشجر بلا ثمر وهو حجة على صاحبه لا له.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "t_td_10",
+                    num: "10",
+                    title: "قاعدة استخراج الهدايات والعِبر الحياتية",
+                    summary: "كيف تسقط هدايات قصص الأنبياء والأمم السابقة على مشكلاتك وواقعك المعاصر لتجد الحل والنور والشفاء.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني:</h4>
+                        <div class="quran-ayah-box">
+                            «لَقَدْ كَانَ فِي قَصَصِهِمْ عِبْرَةٌ لِّأُولِي الْأَلْبَابِ ۗ مَا كَانَ حَدِيثًا يُفْتَرَىٰ وَلَٰكِن تَصْدِيقَ الَّذِي بَيْنَ يَدَيْهِ وَتَفْصِيلَ كُلِّ شَيْءٍ وَهُدًى وَرَحْمَةً لِّقَوْمٍ يُؤْمِنُونَ» [يوسف: 111]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتطبيق:</h4>
+                        <div class="tafseer-explanation-box">
+                            <p><strong>حياة مع القرآن:</strong> القرآن يعالج هموم النفس، والأزمات الأسرية، والمشكلات المالية، والابتلاءات؛ ففي قصة يوسف شفاء للمظلوم والمبتلى، وفي قصة أيوب عزاء للمريض، وفي قصة يونس منجاة للمكروب بالاستغفار والتوحيد (لا إله إلا أنت سبحانك إني كنت من الظالمين).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="tafseer-benefits-box">
+                            <ul>
+                                <li>1. القرآن شفاء ورحمة للمؤمنين في كل زمان ومكان.</li>
+                                <li>2. التمسك بالقرآن تدبراً وعملاً هو صمام الأمان والنجاة في الدنيا والآخرة.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هو الفرق الجوهري بين التفسير والتدبر؟", a: "التفسير هو كشف معاني الألفاظ والآيات وبيان مراد الله منها علمياً، أما التدبر فهو التفكر والتأمل في تلك المعاني للتأثر بها قلبياً وتحويلها إلى سلوك وعمل." },
+                { q: "2. ما هي وصية عبد الله بن مسعود رضي الله عنه عند سماع نداء (يا أيها الذين آمنوا)؟", a: "قال: «إذا سمعت الله يقول: (يا أيها الذين آمنوا) فأرعها سمعك، فإنه خير تؤمر به، أو شر تنهى عنه»." },
+                { q: "3. كيف كان النبي ﷺ يتفاعل مع آيات القرآن في صلاته؟", a: "إذا مر بآية فيها تسبيح سبّح، وإذا مر بسؤال سأل الله من فضله، وإذا مر بتعوذ استعاذ بالله من عذابه." },
+                { q: "4. ما معنى قوله تعالى: (أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا)؟", a: "الأقفال هي حجب الذنوب والمعاصي والرياء والغفلة والكبر التي تغلق القلب وتمنعه من تذوق حلاوة القرآن وفهم هداياته." },
+                { q: "5. ما هو منهج الصحابة الكرام في مدارسة القرآن الكريم؟", a: "كانوا يتعلمون عشر آيات فلا يجاوزونها حتى يتعلموا ما فيها من العلم والعمل جميعاً، فتعلموا القرآن والعلم والعمل معاً." },
+                { q: "6. ما هي ثمرة وفوائد تكرار الآية الواحدة في صلاة الليل؟", a: "تثبيت معناها في سويداء القلب، واستجلاب الخشوع والدموع، وتجريد النفس من الغفلة." },
+                { q: "7. ما هي قاعدة مراعاة السياق في فهم القرآن؟", a: "هي فهم الآية الكريمة في ضوء ما قبلها وما بعدها ومقصد السورة ككل، وعدم انتزاعها مبتورة مما قد يغير معناها المراد." },
+                { q: "8. كيف يحول المسلم قراءة القرآن إلى مشروع عمل وتطبيق؟", a: "بأن يسأل نفسه بعد كل آية: ما هو الواجب الذي طلبتْه مني هذه الآية؟ وما هو الخلق الذي دعتني إليه؟ فيطبقه فوراً في يومه." },
+                { q: "9. ما أثر الترتيل والترسل في تحقيق التدبر؟", a: "الترتيل يعطي الفكر فرصة للتأمل، واللسان حسن الأداء، ويساعد القلب على استيعاب عظمة المتكلم سبحانه." },
+                { q: "10. ما معنى أن القرآن حبل الله المتين ونوره المبين؟", a: "أي أنه المنهج المعصوم الذي من تمسك به نجا، ومن ابتغى الهدى في غيره أضله الله، وهو الهادي للتي هي أقوم في كل شؤون الحياة." }
+            ],
+            quizList: [
+                { q: "1. الغاية الأساسية والمقصد الأسمى من تدبر آيات القرآن الكريم هو:", opts: ["العمل به والتأثر القلبي وتزكية السلوك", "حفظ الألفاظ دون فهم", "المباهاة بكثرة القراءة"], a: 0 },
+                { q: "2. الصحابة الكرام كانوا يتعلمون القرآن بمنهج:", opts: ["عشر آيات بعلمها وعملها معاً", "حفظ المصحف كاملاً أولاً دون فهم", "تجاوز السور بسرعة"], a: 0 },
+                { q: "3. أقفال القلوب التي تحجب فهم القرآن هي:", opts: ["الذنوب والمعاصي والكبر والغفلة", "قلة الذكاء الدنيوي", "الفقر المالي"], a: 0 },
+                { q: "4. عند سماع نداء (يا أيها الذين آمنوا) يرعى المسلم سمعه لأنه:", opts: ["خير يؤمر به أو شر يُنهى عنه", "خاص بالصحابة فقط", "للقراءة دون امتثال"], a: 0 },
+                { q: "5. تكرار النبي ﷺ لآية واحدة طوال صلاة الليل يدل على مشروعية:", opts: ["استيقاف الآية المؤثرة لترديدها واستحضار الخشوع", "قراءة سورة واحدة فقط دائماً", "ترك بقية القرآن"], a: 0 },
+                { q: "6. من أسباب التدبر المشروع في الصلاة:", opts: ["التفاعل بالدعاء عند الرحمة والاستعاذة عند العذاب", "العجلة لإنهاء الجزء", "الصمت التام دون دعاء"], a: 0 },
+                { q: "7. قاعدة مراعاة سياق السورة ومقصدها تعني:", opts: ["فهم الآية ضمن نسق السورة ومحورها العام", "تفسير الآية بمعزل عن غيرها", "إلغاء المعاني اللغوية"], a: 0 },
+                { q: "8. قال تعالى: (وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا) حثاً على:", opts: ["التأني والتؤدة وتجويد الحروف وتدبر المعاني", "السرعة في ختم المصحف", "القراءة بصوت خافت جداً"], a: 0 },
+                { q: "9. القرآن يفسر بعضه بعضاً يُقصد به:", opts: ["جمع الآيات في الموضوع الواحد لبيان المجمل", "عدم الرجوع للسنة إطلاقاً", "تفسير الآيات بالرأي فقط"], a: 0 },
+                { q: "10. المسلم يقرأ القرآن مستشعراً أنه:", opts: ["رسالة إلهية حية موجهة إليه شخصياً في كل زمان", "كتاب تاريخ للأمم السابقة فقط", "نصوص تعبدية مجردة"], a: 0 }
+            ]
+        }
+    };
+
+    var currentBranchKey = 'short';
+    var completedLessons = JSON.parse(localStorage.getItem('completedTafseerLessons') || '[]');
+    var activeModalLesson = null;
+
+    function selectTafseerBranch(branchKey) {
+        currentBranchKey = branchKey;
+        document.querySelectorAll('.side-nav-btn').forEach(function(btn) { btn.classList.remove('active'); });
+        var targetBtn = document.getElementById('btn-' + branchKey);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        var data = tafseerData[branchKey];
+        document.getElementById('topicBadge').innerHTML = '<i class="fa-solid fa-star"></i> ' + data.badge;
+        document.getElementById('topicTitle').innerText = data.title;
+        document.getElementById('topicDescription').innerText = data.desc;
+        document.getElementById('topicQuote').innerText = data.quote;
+
+        var defaultTab = document.querySelector('.sub-tab-btn');
+        if (defaultTab) switchTopicView('lessons', defaultTab);
+
+        renderLessons();
+        renderQA();
+        renderQuiz();
+        updateProgressUI();
+    }
+
+    function renderLessons() {
+        var container = document.getElementById('viewLessons');
+        var lessons = tafseerData[currentBranchKey].lessons;
+        container.innerHTML = '';
+
+        lessons.forEach(function(lesson) {
+            var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+            var card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.innerHTML = `
+                <div>
+                    <div class="lesson-card-top">
+                        <div class="lesson-number-badge">${lesson.num}</div>
+                        <span class="lesson-status-pill ${isCompleted ? 'completed' : ''}">
+                            <i class="fa-solid ${isCompleted ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${isCompleted ? 'تمت دراسته' : 'متاح للمدارسة'}
+                        </span>
+                    </div>
+                    <h3 class="lesson-title">${lesson.title}</h3>
+                    <p class="lesson-summary">${lesson.summary}</p>
+                </div>
+                <div class="lesson-footer-row">
+                    <button class="btn-open-lesson" onclick="openLessonModal('${lesson.id}')">
+                        <i class="fa-solid fa-book-open-reader"></i> مطالعة التفسير والبيان
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQA() {
+        var container = document.getElementById('viewQA');
+        var qaList = tafseerData[currentBranchKey].qa;
+        container.innerHTML = '';
+
+        qaList.forEach(function(item, qIdx) {
+            var cleanQ = item.q.replace(/^\d+\.\s*/, '');
+            var card = document.createElement('div');
+            card.className = 'qa-card';
+            card.innerHTML = `
+                <div class="qa-header" onclick="this.parentElement.classList.toggle('open')">
+                    <span><i class="fa-solid fa-circle-question" style="color: #b45309; margin-left: 8px;"></i> ${qIdx + 1}. ${cleanQ}</span>
+                    <i class="fa-solid fa-chevron-down" style="transition: transform .25s ease; color: var(--text-muted);"></i>
+                </div>
+                <div class="qa-body">
+                    <strong>البيان والجواب: </strong> ${item.a}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQuiz() {
+        var container = document.getElementById('quizBox');
+        var quizList = tafseerData[currentBranchKey].quizList;
+        container.innerHTML = `
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h3 style="font-size: 20px; font-weight: 800; color: #b45309; margin-bottom: 6px;">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم والتدبر في ${tafseerData[currentBranchKey].badge}
+                </h3>
+                <p style="font-size: 13.5px; color: var(--text-muted);">أجب عن الأسئلة العشرة لقياس مدى فهمك واستيعابك لمعاني الآيات والأحكام</p>
+            </div>
+        `;
+
+        quizList.forEach(function(qObj, qIdx) {
+            var qBox = document.createElement('div');
+            qBox.style.marginBottom = '25px';
+            var cleanTitle = qObj.q.replace(/^\d+\.\s*/, '');
+            qBox.innerHTML = `<h4 class="quiz-question-title">${qIdx + 1}. ${cleanTitle}</h4>`;
+
+            var optsBox = document.createElement('div');
+            optsBox.className = 'quiz-options';
+
+            qObj.opts.forEach(function(opt, optIdx) {
+                var btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    var siblings = optsBox.querySelectorAll('.quiz-option-btn');
+                    siblings.forEach(function(b) { b.disabled = true; });
+
+                    if (optIdx === qObj.a) {
+                        btn.classList.add('correct');
+                        btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> ' + opt + ' (إجابة صحيحة وموفقة!)';
+                    } else {
+                        btn.classList.add('wrong');
+                        btn.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ' + opt + ' (إجابة غير صحيحة)';
+                        siblings[qObj.a].classList.add('correct');
+                    }
+                };
+                optsBox.appendChild(btn);
+            });
+
+            qBox.appendChild(optsBox);
+            container.appendChild(qBox);
+        });
+    }
+
+    function switchTopicView(viewType, btn) {
+        document.querySelectorAll('.sub-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+        document.getElementById('viewLessons').style.display = (viewType === 'lessons') ? 'grid' : 'none';
+        document.getElementById('viewQA').style.display = (viewType === 'qa') ? 'block' : 'none';
+        document.getElementById('viewQuiz').style.display = (viewType === 'quiz') ? 'block' : 'none';
+    }
+
+    function openLessonModal(lessonId) {
+        var list = tafseerData[currentBranchKey].lessons;
+        var lesson = list.find(function(l) { return l.id === lessonId; });
+        if (!lesson) return;
+
+        activeModalLesson = lesson;
+        document.getElementById('modalTopicBadge').innerText = tafseerData[currentBranchKey].badge;
+        document.getElementById('modalLessonTitle').innerText = lesson.title;
+        document.getElementById('modalLessonBody').innerHTML = lesson.content;
+
+        var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+        var btnComplete = document.getElementById('btnMarkComplete');
+        if (isCompleted) {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل بالفعل (إلغاء)';
+            btnComplete.style.background = '#059669';
+        } else {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»';
+            btnComplete.style.background = '#b45309';
+        }
+
+        document.getElementById('lessonModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLessonModal(e) {
+        if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close-btn')) return;
+        document.getElementById('lessonModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function toggleCompleteCurrentLesson() {
+        if (!activeModalLesson) return;
+        var lessonId = activeModalLesson.id;
+        var idx = completedLessons.indexOf(lessonId);
+        if (idx === -1) {
+            completedLessons.push(lessonId);
+        } else {
+            completedLessons.splice(idx, 1);
+        }
+
+        localStorage.setItem('completedTafseerLessons', JSON.stringify(completedLessons));
+        openLessonModal(lessonId);
+        renderLessons();
+        updateProgressUI();
+
+        // حفظ وتحديث التقدم في الباك إند في خانة التفسير وعلوم القرآن
+        var token = localStorage.getItem('token');
+        if (token) {
+            fetch('/api/usul-progress/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    science: 'tafseer',
+                    lessonId: lessonId
+                })
+            })
+            .then(function(res) { return res.ok ? res.json() : null; })
+            .then(function(data) {
+                if (data && data.tafseer) {
+                    completedLessons = data.tafseer;
+                    localStorage.setItem('completedTafseerLessons', JSON.stringify(completedLessons));
+                    renderLessons();
+                    updateProgressUI();
+                }
+            })
+            .catch(function(err) {
+                console.warn('تعذر الاتصال بالسيرفر، تم الحفظ محلياً:', err);
+            });
+        }
+    }
+
+    function updateProgressUI() {
+        var total = 30;
+        var count = completedLessons.length;
+        var pct = Math.round((count / total) * 100);
+        var pText = document.getElementById('tafseerProgressText');
+        var pBar = document.getElementById('tafseerProgressBar');
+        var cCount = document.getElementById('completedTafseerCount');
+        if (pText) pText.innerText = pct + '%';
+        if (pBar) pBar.style.width = pct + '%';
+        if (cCount) cCount.innerText = count;
+    }
+
+    function loadProgressFromServer() {
+        var token = localStorage.getItem('token');
+        if (!token) {
+            updateProgressUI();
+            return;
+        }
+
+        fetch('/api/usul-progress', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+            if (data && data.tafseer) {
+                completedLessons = data.tafseer;
+                localStorage.setItem('completedTafseerLessons', JSON.stringify(completedLessons));
+                renderLessons();
+                updateProgressUI();
+            }
+        })
+        .catch(function(err) {
+            console.warn('تعذر جلب التقدم من السيرفر:', err);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        selectTafseerBranch('short');
+        loadProgressFromServer();
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

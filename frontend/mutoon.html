@@ -1,0 +1,772 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار حفظ المتون العلمية - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="مسار تأصيلي لضبط وحفظ متون التجويد والقراءات المعتمدة، مثل تحفة الأطفال والمقدمة الجزرية والشاطبية، مع الشرح الصوتي والتسميع.">
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        .mutoon-header-section {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        /* فلاتر المتون */
+        .mutoon-filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 25px 0 35px;
+        }
+
+        .m-filter-btn {
+            background: #fff;
+            color: var(--text-main);
+            border: 1.5px solid var(--card-border);
+            padding: 9px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .m-filter-btn {
+            background: #16241f;
+            color: #e2e8f0;
+            border-color: #23352c;
+        }
+        .m-filter-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+            transform: translateY(-2px);
+        }
+        .m-filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(13, 107, 83, 0.3);
+        }
+        [data-theme="dark"] .m-filter-btn.active {
+            background: linear-gradient(135deg, #0d6b53, #10b981);
+            color: #fff;
+        }
+
+        /* شبكة كروت المتون */
+        .mutoon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .matn-card {
+            background: #fff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all .3s ease;
+            position: relative;
+        }
+        [data-theme="dark"] .matn-card {
+            background: #16241f;
+            border-color: #23352c;
+        }
+        .matn-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(13, 107, 83, 0.14);
+            border-color: var(--emerald);
+        }
+        [data-theme="dark"] .matn-card:hover {
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4);
+            border-color: #34d399;
+        }
+
+        .matn-banner {
+            padding: 22px 20px;
+            background: linear-gradient(135deg, var(--primary-green), #107050);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .matn-banner.gold {
+            background: linear-gradient(135deg, #1b3a4b, #006466);
+        }
+        .matn-banner.emerald {
+            background: linear-gradient(135deg, #0f5132, #198754);
+        }
+        .matn-banner.amber {
+            background: linear-gradient(135deg, #5c3d11, #855b1a);
+        }
+
+        .matn-banner-icon {
+            position: absolute;
+            left: -10px;
+            bottom: -15px;
+            font-size: 85px;
+            opacity: 0.12;
+            color: #fff;
+            transform: rotate(-15deg);
+        }
+
+        .matn-badges-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .matn-verses-count {
+            background: var(--gold);
+            color: #000;
+            font-weight: 800;
+            font-size: 11.5px;
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+
+        .matn-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .matn-author {
+            font-size: 12.5px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .matn-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .matn-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .matn-features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--light-emerald);
+            padding: 12px 14px;
+            border-radius: 12px;
+        }
+        [data-theme="dark"] .matn-features-list {
+            background: rgba(74, 222, 128, 0.06);
+        }
+        .matn-feature-item {
+            font-size: 12.5px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .matn-feature-item {
+            color: #cbd5e1;
+        }
+        .matn-feature-item i {
+            color: var(--emerald);
+            font-size: 13px;
+        }
+
+        .matn-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-matn-listen {
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            border: 1.5px solid rgba(13, 107, 83, 0.2);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all .2s ease;
+        }
+        [data-theme="dark"] .btn-matn-listen {
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, 0.25);
+        }
+        .btn-matn-listen:hover {
+            border-color: var(--emerald);
+            transform: translateY(-2px);
+        }
+
+        .btn-matn-study {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all .2s ease;
+            box-shadow: 0 4px 14px rgba(13, 107, 83, 0.25);
+        }
+        .btn-matn-study:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 107, 83, 0.35);
+        }
+
+        /* نافذة مشغل الصوت التفاعلي */
+        .audio-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .audio-modal {
+            background: #fff;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 24px;
+            padding: 28px 24px;
+            position: relative;
+            animation: modalFadeIn .3s ease;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        [data-theme="dark"] .audio-modal {
+            background: #16241f;
+            border: 1.5px solid #23352c;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .audio-disc-wrapper {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: #fff;
+            font-size: 38px;
+            box-shadow: 0 8px 25px rgba(13, 107, 83, 0.35);
+        }
+        .audio-disc-wrapper.playing {
+            animation: rotateDisc 4s linear infinite;
+        }
+        @keyframes rotateDisc {
+            100% { transform: rotate(360deg); }
+        }
+
+        .audio-reciter-select {
+            background: var(--bg-light);
+            border: 1.5px solid var(--card-border);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            width: 100%;
+            margin: 15px 0 18px;
+            outline: none;
+        }
+        [data-theme="dark"] .audio-reciter-select {
+            background: #0f1a16;
+            border-color: #23352c;
+            color: #fff;
+        }
+
+        .audio-element-wrapper audio {
+            width: 100%;
+            border-radius: 50px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- رأس الصفحة -->
+<section class="section-container mutoon-header-section">
+    <div class="section-header" style="justify-content: center; margin-bottom: 8px;">
+        <h3 class="section-title"><i class="fa-solid fa-scroll"></i> مسار حفظ وضبط متون التجويد والقراءات</h3>
+    </div>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.9; max-width: 760px; margin: 0 auto;">
+        المتون العلمية هي مفتاح ضبط علوم القرآن والتجويد؛ حفظاً وفهماً وتطبيقاً. يمكنك قراءة الأبيات كاملة أو الاستماع للتسجيلات الصوتية المتقنة مباشرة.
+    </p>
+
+    <!-- أزرار التصنيف -->
+    <div class="mutoon-filters">
+        <button class="m-filter-btn active" onclick="filterMutoon('all', this)">
+            <i class="fa-solid fa-layer-group"></i> جميع المتون
+        </button>
+        <button class="m-filter-btn" onclick="filterMutoon('tajweed', this)">
+            <i class="fa-solid fa-book-open-reader"></i> متون التجويد
+        </button>
+        <button class="m-filter-btn" onclick="filterMutoon('qiraat', this)">
+            <i class="fa-solid fa-book-quran"></i> متون القراءات
+        </button>
+        <button class="m-filter-btn" onclick="filterMutoon('drawing', this)">
+            <i class="fa-solid fa-pen-nib"></i> رسم وضبط القرآن
+        </button>
+    </div>
+
+    <!-- شبكة كروت المتون -->
+    <div class="mutoon-grid" id="mutoonGrid">
+
+        <!-- متن 1: تحفة الأطفال -->
+        <div class="matn-card" data-cat="tajweed">
+            <div>
+                <div class="matn-banner">
+                    <i class="fa-solid fa-feather-pointed matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 61 بيتاً</span>
+                    </div>
+                    <div class="matn-title">تحفة الأطفال والغلمان</div>
+                    <div class="matn-author">للإمام سليمان الجمزوري رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        أشهر منظومة للمبتدئين في علم التجويد، تشرح أحكام النون الساكنة والتنوين، الميم والنون المشددتين، أحكام اللامات، والمدود وأقسامها بأسلوب سلس وسهل الحفظ.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> شرح ميسر وتطبيقي لكل بيت</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تسجيلات صوتية متقنة للحفظ والتكرار</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تسميع وإجازة بالسند المتصل</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=tohfa" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('tohfa')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن 2: المقدمة الجزرية -->
+        <div class="matn-card" data-cat="tajweed">
+            <div>
+                <div class="matn-banner emerald">
+                    <i class="fa-solid fa-book-quran matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 107 أبيات</span>
+                    </div>
+                    <div class="matn-title">المقدمة الجزرية</div>
+                    <div class="matn-author">للإمام شمس الدين ابن الجزري رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        عمدة متون التجويد وأساس الإتقان، تجمع مخارج الحروف وصفاتها اللازمة والعارضة، الترقيق والتفخيم، أحكام الوقف والابتداء، والمقطوع والموصول في رسم المصحف.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تدريب عملي دقيق على المخارج والصفات</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تفكيك الأبيات والعلل التجويدية</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> إجازة مسندة إلى الإمام ابن الجزري</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=jazariya" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('jazariya')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن 3: الشاطبية -->
+        <div class="matn-card" data-cat="qiraat">
+            <div>
+                <div class="matn-banner gold">
+                    <i class="fa-solid fa-layer-group matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 1173 بيتاً</span>
+                    </div>
+                    <div class="matn-title">حرز الأماني (الشاطبية)</div>
+                    <div class="matn-author">للإمام القاسم بن فيرُّه الشاطبي رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        درة المنظومات القرآنية في القراءات السبع المتواترة من طريق التيسير، تجمع أصول وفرش الرواة السبعة برموز شعرية فريدة وبلاغة استثنائية.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> حل وفك الرموز الشاطبية بدقة</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تطبيق أصول وفرش السور آية بآية</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> التمهيد لجمع القراءات السبع إفراداً وجمعاً</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=shatibiya" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('shatibiya')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن 4: الدرة المضية -->
+        <div class="matn-card" data-cat="qiraat">
+            <div>
+                <div class="matn-banner amber">
+                    <i class="fa-solid fa-gem matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 241 بيتاً</span>
+                    </div>
+                    <div class="matn-title">الدرة المضية في القراءات الثلاث</div>
+                    <div class="matn-author">للإمام شمس الدين ابن الجزري رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        المنظومة المتممة للشاطبية لجمع القراءات العشر الصغرى، تضم قراءات الأئمة (أبي جعفر، يعقوب، وخلف العاشر) مبنية على أصول الشاطبية.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> إتقان القراءات العشر الصغرى كاملة</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> بيان الفروق والوجوه بين القراء</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تأهيل مباشر لختمة العشر الصغرى</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=dorrah" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('dorrah')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن 5: طيبة النشر -->
+        <div class="matn-card" data-cat="qiraat">
+            <div>
+                <div class="matn-banner gold">
+                    <i class="fa-solid fa-star matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 1015 بيتاً</span>
+                    </div>
+                    <div class="matn-title">طيبة النشر في القراءات العشر</div>
+                    <div class="matn-author">للإمام شمس الدين ابن الجزري رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        قمة علم القراءات في العالم الإسلامي، تجمع طرق وروايات القراءات العشر الكبرى من كتاب النشر بأسلوب بديع ومحكم.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> شرح التحريرات وتدقيق الأوجه</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> متابعة مع كبار القراء المقرئين</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> إجازة عليا في القراءات العشر الكبرى</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=tayyibah" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('tayyibah')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن 6: مورد الظمآن في رسم القرآن -->
+        <div class="matn-card" data-cat="drawing">
+            <div>
+                <div class="matn-banner">
+                    <i class="fa-solid fa-pen-nib matn-banner-icon"></i>
+                    <div class="matn-badges-row">
+                        <span class="matn-verses-count"><i class="fa-solid fa-lines-leaning"></i> 454 بيتاً</span>
+                    </div>
+                    <div class="matn-title">مورد الظمآن في رسم وضبط القرآن</div>
+                    <div class="matn-author">للإمام محمد بن محمد الخراز رحمه الله</div>
+                </div>
+                <div class="matn-body">
+                    <p class="matn-desc">
+                        المرجع المعتمد في قواعد رسم المصحف العثماني وقواعد الضبط، وحذف وإثبات الحروف والهمزات وفق المصاحف العثمانية الأولى.
+                    </p>
+                    <div class="matn-features-list">
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> فهم قواعد الرسم العثماني الستة</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تطبيق علامات الضبط والتشكيل المصحفي</div>
+                        <div class="matn-feature-item"><i class="fa-solid fa-circle-check"></i> تدريب عملي للمتخصصين وكتاب المصاحف</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="matn-actions">
+                    <a href="/matn-reader.html?id=mowrid" class="btn-matn-listen">
+                        <i class="fa-solid fa-book-open"></i> قراءة الأبيات
+                    </a>
+                    <button class="btn-matn-study" onclick="openAudioPlayer('mowrid')">
+                        <i class="fa-solid fa-circle-play"></i> استمع
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- نافذة مشغل الصوت التفاعلي -->
+<div class="audio-modal-overlay" id="audioModalOverlay" onclick="closeAudioPlayer(event)">
+    <div class="audio-modal" onclick="event.stopPropagation()">
+        <button onclick="closeAudioPlayer()" style="position: absolute; left: 20px; top: 18px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted);">&times;</button>
+        
+        <div class="audio-disc-wrapper" id="audioDisc">
+            <i class="fa-solid fa-headphones"></i>
+        </div>
+
+        <h3 id="audioMatnTitle" style="color: var(--primary-green); font-size: 19px; font-weight: 800; margin-bottom: 4px;">-</h3>
+        <p id="audioMatnAuthor" style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">-</p>
+
+        <!-- اختيار القارئ / التسجيل الصوتي -->
+        <select class="audio-reciter-select" id="reciterSelect" onchange="changeReciterAudio()">
+            <option value="reciter1">🎙️ تلاوة تعليمية متقنة ومضبوطة</option>
+            <option value="reciter2">🎙️ بصوت فضيلة الشيخ د. أيمن رشدي سويد</option>
+            <option value="reciter3">🎙️ بصوت الشيخ سعد الغامدي</option>
+        </select>
+
+        <!-- مشغل الصوت -->
+        <div class="audio-element-wrapper">
+            <audio id="matnAudioPlayer" controls style="width: 100%;">
+                <source id="audioSource" src="" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوتيات.
+            </audio>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+            <button class="btn-matn-listen" onclick="closeAudioPlayer()" style="flex: 1;">إغلاق</button>
+            <a id="audioReadLink" href="/matn-reader.html" class="btn-matn-study" style="flex: 1.6;">
+                <i class="fa-solid fa-book-open"></i> قراءة الأبيات كاملة
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- الفوتر -->
+<footer>
+    <div class="footer-links">
+        <a href="/home.html">الرئيسية</a>
+        <a href="/courses.html">الدورات والكورسات</a>
+        <a href="/beginners-track.html">قصار السور</a>
+    </div>
+    <div>
+        تحت إشراف الشيخ / محمد سنار
+    </div>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61573914129043" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://chat.whatsapp.com/F0JKCalWIw8905sUT8EPTQ?mode=gi_c" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://youtube.com/@markazeltahfeez?si=YN_S-aZdcl6y-Eb-" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+</footer>
+
+<script src="/js/app.js"></script>
+<script>
+    const MATN_AUDIO_SOURCES = {
+        tohfa: {
+            title: 'متن تحفة الأطفال والغلمان في تجويد القرآن',
+            author: 'للإمام سليمان الجمزوري رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/3.Matn_Tohfat_Atfal/01_KAdim_Kitab_Alah.mp3',
+                reciter2: 'https://archive.org/download/20240227_20240227_1654/001.mp3',
+                reciter3: 'https://archive.org/download/3.Matn_Tohfat_Atfal/01_KAdim_Kitab_Alah.mp3'
+            }
+        },
+        jazariya: {
+            title: 'منظومة المقدمة الجزرية في التجويد',
+            author: 'للإمام شمس الدين ابن الجزري رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/Kasaid_Mtoon/Matn_Al-Jazariyah.mp3',
+                reciter2: 'https://archive.org/download/sjazaria/01.mp3',
+                reciter3: 'https://archive.org/download/Kasaid_Mtoon/Matn_Al-Jazariyah.mp3'
+            }
+        },
+        shatibiya: {
+            title: 'حرز الأماني ووجه التهاني (الشاطبية)',
+            author: 'للإمام القاسم بن فيرُّه الشاطبي رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/Mutun_kiraat_mujtami3a/shatbeya.mp3',
+                reciter2: 'https://archive.org/download/Kasaid_Mtoon/Matn_Ashatibiya.mp3',
+                reciter3: 'https://archive.org/download/Mutun_kiraat_mujtami3a/shatbeya.mp3'
+            }
+        },
+        dorrah: {
+            title: 'الدرة المضية في القراءات الثلاث المتممة للعشر',
+            author: 'للإمام شمس الدين ابن الجزري رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/Mutun_kiraat_mujtami3a/dorah.mp3',
+                reciter2: 'https://archive.org/download/Kasaid_Mtoon/Matn_Ad-Durrah.mp3',
+                reciter3: 'https://archive.org/download/Mutun_kiraat_mujtami3a/dorah.mp3'
+            }
+        },
+        tayyibah: {
+            title: 'طيبة النشر في القراءات العشر الكبرى',
+            author: 'للإمام شمس الدين ابن الجزري رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/Mutun_kiraat_mujtami3a/tayebatunashr.mp3',
+                reciter2: 'https://archive.org/download/Mutun_kiraat_mujtami3a/tayebatunashr.mp3',
+                reciter3: 'https://archive.org/download/Mutun_kiraat_mujtami3a/tayebatunashr.mp3'
+            }
+        },
+        mowrid: {
+            title: 'مورد الظمآن في رسم وضبط القرآن',
+            author: 'للإمام محمد بن محمد الخراز رحمه الله',
+            reciters: {
+                reciter1: 'https://archive.org/download/3.Matn_Tohfat_Atfal/10_KAdim_Kitab_Alah.mp3',
+                reciter2: 'https://archive.org/download/3.Matn_Tohfat_Atfal/10_KAdim_Kitab_Alah.mp3',
+                reciter3: 'https://archive.org/download/3.Matn_Tohfat_Atfal/10_KAdim_Kitab_Alah.mp3'
+            }
+        }
+    };
+
+    let currentActiveMatnKey = 'tohfa';
+
+    function filterMutoon(cat, btn) {
+        document.querySelectorAll('.m-filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        const cards = document.querySelectorAll('.matn-card');
+        cards.forEach(function (card) {
+            if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function openAudioPlayer(key) {
+        currentActiveMatnKey = key;
+        const item = MATN_AUDIO_SOURCES[key] || MATN_AUDIO_SOURCES['tohfa'];
+
+        document.getElementById('audioMatnTitle').textContent = item.title;
+        document.getElementById('audioMatnAuthor').textContent = item.author;
+        document.getElementById('audioReadLink').href = '/matn-reader.html?id=' + key;
+
+        const reciterKey = document.getElementById('reciterSelect').value;
+        const audioUrl = item.reciters[reciterKey] || item.reciters['reciter1'];
+
+        const player = document.getElementById('matnAudioPlayer');
+        player.src = audioUrl;
+        player.load();
+        player.play().catch(function() {});
+
+        const disc = document.getElementById('audioDisc');
+        player.onplay = function() { disc.classList.add('playing'); };
+        player.onpause = function() { disc.classList.remove('playing'); };
+        player.onended = function() { disc.classList.remove('playing'); };
+
+        document.getElementById('audioModalOverlay').style.display = 'flex';
+    }
+
+    function changeReciterAudio() {
+        const item = MATN_AUDIO_SOURCES[currentActiveMatnKey];
+        if (!item) return;
+        const reciterKey = document.getElementById('reciterSelect').value;
+        const audioUrl = item.reciters[reciterKey] || item.reciters['reciter1'];
+
+        const player = document.getElementById('matnAudioPlayer');
+        player.src = audioUrl;
+        player.load();
+        player.play().catch(function() {});
+    }
+
+    function closeAudioPlayer(e) {
+        if (!e || e.target === document.getElementById('audioModalOverlay') || e.target.tagName === 'BUTTON') {
+            const player = document.getElementById('matnAudioPlayer');
+            player.pause();
+            document.getElementById('audioDisc').classList.remove('playing');
+            document.getElementById('audioModalOverlay').style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>

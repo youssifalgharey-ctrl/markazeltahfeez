@@ -1,0 +1,495 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قارئ المتون العلمية التفاعلي - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        .reader-page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 16px 80px;
+        }
+
+        .reader-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-back-mutoon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: var(--primary-green);
+            border: 1.5px solid var(--card-border);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all .2s ease;
+        }
+        [data-theme="dark"] .btn-back-mutoon {
+            background: #16241f;
+            color: #4ade80;
+            border-color: #23352c;
+        }
+        .btn-back-mutoon:hover {
+            border-color: var(--emerald);
+            transform: translateX(4px);
+        }
+
+        /* رأس المتن والمعلومات */
+        .reader-hero-card {
+            background: linear-gradient(135deg, var(--primary-green), #107050);
+            border-radius: 24px;
+            padding: 28px 24px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(13, 107, 83, 0.2);
+        }
+        .reader-hero-icon {
+            position: absolute;
+            left: -15px;
+            bottom: -20px;
+            font-size: 130px;
+            opacity: 0.1;
+            color: #fff;
+            transform: rotate(-15deg);
+        }
+        .reader-hero-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .reader-tag {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .reader-verses-tag {
+            background: var(--gold);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .reader-matn-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .reader-matn-author {
+            font-size: 14px;
+            opacity: 0.92;
+            font-weight: 600;
+        }
+
+        /* شريط التحكم بالقارئ (حجم الخط، البحث، إلخ) */
+        .reader-controls-bar {
+            background: #fff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 18px;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+        [data-theme="dark"] .reader-controls-bar {
+            background: #16241f;
+            border-color: #23352c;
+        }
+
+        .reader-search-input {
+            background: var(--bg-light);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13.5px;
+            font-family: inherit;
+            color: var(--text-main);
+            outline: none;
+            width: 240px;
+            max-width: 100%;
+        }
+        [data-theme="dark"] .reader-search-input {
+            background: #0f1a16;
+            border-color: #23352c;
+            color: #fff;
+        }
+
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .font-ctrl-btn {
+            background: var(--bg-light);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            transition: all .2s ease;
+        }
+        [data-theme="dark"] .font-ctrl-btn {
+            background: #0f1a16;
+            border-color: #23352c;
+            color: #fff;
+        }
+        .font-ctrl-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+        }
+
+        /* أبواب وأبيات المتن */
+        .chapter-container {
+            margin-bottom: 30px;
+        }
+        .chapter-header {
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 4px solid var(--emerald);
+        }
+        [data-theme="dark"] .chapter-header {
+            background: rgba(74, 222, 128, 0.08);
+            color: #4ade80;
+        }
+
+        .verses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .verse-card {
+            background: #fff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            transition: all .2s ease;
+            position: relative;
+        }
+        [data-theme="dark"] .verse-card {
+            background: #16241f;
+            border-color: #23352c;
+        }
+        .verse-card:hover {
+            border-color: var(--emerald);
+            box-shadow: 0 6px 20px rgba(13, 107, 83, 0.08);
+        }
+
+        .verse-header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .verse-num {
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 2px 10px;
+            border-radius: 50px;
+        }
+        [data-theme="dark"] .verse-num {
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+        }
+        .verse-copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 13px;
+            transition: color .2s;
+        }
+        .verse-copy-btn:hover {
+            color: var(--emerald);
+        }
+
+        .verse-text-content {
+            font-family: 'Amiri', serif;
+            font-size: 21px;
+            line-height: 2.3;
+            text-align: center;
+            color: #1e293b;
+            direction: rtl;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .verse-text-content {
+            color: #f8fafc;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .verse-first-half, .verse-second-half {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        [data-theme="dark"] .verse-first-half,
+        [data-theme="dark"] .verse-second-half {
+            color: #f8fafc;
+        }
+        .verse-separator {
+            color: var(--gold);
+            font-size: 18px;
+            margin: 0 8px;
+        }
+        [data-theme="dark"] .verse-separator {
+            color: #fbbf24;
+        }
+
+        /* رسالة النسخ */
+        .toast-notify {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary-green);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: all .3s ease;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .toast-notify.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<div class="reader-page-wrapper">
+    <!-- شريط العودة للمسارات -->
+    <div class="reader-nav-header">
+        <a href="/mutoon.html" class="btn-back-mutoon">
+            <i class="fa-solid fa-arrow-right"></i> العودة لقائمة المتون
+        </a>
+    </div>
+
+    <!-- كارت رأس المتن -->
+    <div class="reader-hero-card">
+        <i class="fa-solid fa-book-open-reader reader-hero-icon"></i>
+        <div class="reader-hero-badges">
+            <span class="reader-tag" id="readerLevel">المستوى التأسيسي</span>
+            <span class="reader-verses-tag" id="readerCount">61 بيتاً</span>
+        </div>
+        <h1 class="reader-matn-title" id="readerTitle">متن تحفة الأطفال والغلمان</h1>
+        <p class="reader-matn-author" id="readerAuthor">للإمام سليمان الجمزوري رحمه الله</p>
+    </div>
+
+    <!-- شريط التحكم بالقارئ -->
+    <div class="reader-controls-bar">
+        <input type="text" class="reader-search-input" id="searchInput" placeholder="ابحث في أبيات المتن..." oninput="filterVerses(this.value)">
+        <div class="font-controls">
+            <span style="font-size: 13px; color: var(--text-muted); font-weight: 700; margin-left: 6px;">حجم الخط:</span>
+            <button class="font-ctrl-btn" onclick="adjustFontSize(-2)" title="تصغير الخط">A-</button>
+            <button class="font-ctrl-btn" onclick="adjustFontSize(2)" title="تكبير الخط">A+</button>
+        </div>
+    </div>
+
+    <!-- حاوية الأبواب والأبيات -->
+    <div id="chaptersContainer">
+        <!-- يتم إدراج الأبواب والأبيات هنا برمجياً -->
+    </div>
+</div>
+
+<!-- توست النسخ -->
+<div class="toast-notify" id="toastNotify">تم نسخ البيت بنجاح</div>
+
+<!-- الفوتر -->
+<footer>
+    <div class="footer-links">
+        <a href="/home.html">الرئيسية</a>
+        <a href="/mutoon.html">قائمة المتون</a>
+        <a href="/courses.html">الدورات والكورسات</a>
+    </div>
+    <div>
+        تحت إشراف الشيخ / محمد سنار
+    </div>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61573914129043" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://chat.whatsapp.com/F0JKCalWIw8905sUT8EPTQ?mode=gi_c" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://youtube.com/@markazeltahfeez?si=YN_S-aZdcl6y-Eb-" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+</footer>
+
+<script src="/js/app.js"></script>
+<script src="/js/mutoon-data.js"></script>
+<script>
+    let currentFontSize = 21;
+
+    // استخراج معرّف المتن من الـ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const matnKey = urlParams.get('id') || 'tohfa';
+
+    function loadMatn() {
+        const data = ALL_MUTOON[matnKey] || ALL_MUTOON['tohfa'];
+
+        document.getElementById('readerTitle').textContent = data.title;
+        document.getElementById('readerAuthor').textContent = data.author;
+        document.getElementById('readerLevel').textContent = data.level;
+        document.getElementById('readerCount').textContent = data.versesCount + ' بيتاً';
+        document.title = data.title + ' (كامل) - مركز أسريجه';
+
+        const container = document.getElementById('chaptersContainer');
+        container.innerHTML = '';
+
+        let globalVerseIndex = 1;
+
+        data.chapters.forEach(function (chap) {
+            const chapDiv = document.createElement('div');
+            chapDiv.className = 'chapter-container';
+
+            const header = document.createElement('div');
+            header.className = 'chapter-header';
+            header.innerHTML = '<i class="fa-solid fa-feather"></i> ' + chap.title;
+            chapDiv.appendChild(header);
+
+            const versesList = document.createElement('div');
+            versesList.className = 'verses-list';
+
+            chap.verses.forEach(function (verse) {
+                const verseCard = document.createElement('div');
+                verseCard.className = 'verse-card';
+
+                const meta = document.createElement('div');
+                meta.className = 'verse-header-meta';
+                meta.innerHTML = `
+                    <span class="verse-num">بيت ${globalVerseIndex}</span>
+                    <button class="verse-copy-btn" onclick="copyVerse('${verse[0]} * ${verse[1]}')" title="نسخ البيت">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                `;
+
+                const textDiv = document.createElement('div');
+                textDiv.className = 'verse-text-content';
+                textDiv.style.fontSize = currentFontSize + 'px';
+                textDiv.innerHTML = `
+                    <span class="verse-first-half">${verse[0]}</span>
+                    <span class="verse-separator">۞</span>
+                    <span class="verse-second-half">${verse[1]}</span>
+                `;
+
+                verseCard.appendChild(meta);
+                verseCard.appendChild(textDiv);
+                versesList.appendChild(verseCard);
+
+                globalVerseIndex++;
+            });
+
+            chapDiv.appendChild(versesList);
+            container.appendChild(chapDiv);
+        });
+    }
+
+    function adjustFontSize(delta) {
+        currentFontSize = Math.max(16, Math.min(32, currentFontSize + delta));
+        document.querySelectorAll('.verse-text-content').forEach(function (el) {
+            el.style.fontSize = currentFontSize + 'px';
+        });
+    }
+
+    function copyVerse(text) {
+        navigator.clipboard.writeText(text).then(function () {
+            const toast = document.getElementById('toastNotify');
+            toast.classList.add('show');
+            setTimeout(function () {
+                toast.classList.remove('show');
+            }, 2000);
+        });
+    }
+
+    function filterVerses(query) {
+        const q = query.trim().toLowerCase();
+        document.querySelectorAll('.verse-card').forEach(function (card) {
+            const text = card.textContent.toLowerCase();
+            if (!q || text.includes(q)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // تشغيل التحميل عند الفتح
+    window.addEventListener('DOMContentLoaded', loadMatn);
+</script>
+</body>
+</html>

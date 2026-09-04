@@ -1,0 +1,2060 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار الحديث الشريف وعلومه - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="مدارسة أحاديث النبي ﷺ وحفظ جوامع كلمه من الأربعين النووية، مع الشرح التفصيلي والفوائد المستنبطة، ومصطلح الحديث ورياض الصالحين.">
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        /* منع التمرير الأفقي الزائد */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            width: 100%;
+        }
+
+        .hadeeth-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            margin-top: 25px;
+            align-items: start;
+        }
+
+        /* اللوحة الجانبية للاختيارات */
+        .hadeeth-sidebar-panel {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 18px;
+            position: sticky;
+            top: 85px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="dark"] .hadeeth-sidebar-panel {
+            background: #14221d;
+            border-color: #23372f;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .sidebar-heading-box {
+            padding: 0 8px 16px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 18px;
+        }
+        .sidebar-main-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        [data-theme="dark"] .sidebar-main-title { color: #f1f5f9; }
+        .sidebar-main-title i { color: #2563eb; font-size: 20px; }
+        .sidebar-subtitle { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
+
+        .hadeeth-side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .side-nav-btn {
+            background: #f8fafc;
+            border: 1.5px solid transparent;
+            border-radius: 18px;
+            padding: 16px 14px;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            font-family: inherit;
+            width: 100%;
+        }
+        [data-theme="dark"] .side-nav-btn { background: #192a24; color: #e2e8f0; }
+        .side-nav-btn:hover {
+            border-color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+            transform: translateX(-4px);
+        }
+        [data-theme="dark"] .side-nav-btn:hover {
+            background: #142a42;
+            border-color: #60a5fa;
+        }
+
+        .side-nav-btn.active {
+            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            transform: translateX(-6px);
+        }
+        [data-theme="dark"] .side-nav-btn.active {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: #ffffff !important;
+        }
+
+        .side-btn-right { display: flex; align-items: center; gap: 12px; }
+        .side-btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .side-btn-icon { background: rgba(96, 165, 250, 0.15); color: #93c5fd; }
+        .side-nav-btn.active .side-btn-icon { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+
+        .side-btn-text h4 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+        .side-btn-text span { font-size: 11.5px; color: var(--text-muted); display: block; }
+        .side-nav-btn.active .side-btn-text span { color: rgba(255, 255, 255, 0.85); }
+
+        .side-btn-badge {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .side-btn-badge { background: rgba(96, 165, 250, 0.15); color: #93c5fd; }
+        .side-nav-btn.active .side-btn-badge { background: rgba(255, 255, 255, 0.25); color: #ffffff; }
+
+        /* بطاقة التقدم */
+        .sidebar-progress-box {
+            margin-top: 25px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px dashed rgba(37, 99, 235, 0.3);
+        }
+        [data-theme="dark"] .sidebar-progress-box {
+            background: rgba(37, 99, 235, 0.12);
+            border-color: rgba(96, 165, 250, 0.25);
+        }
+        .sidebar-progress-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1e40af;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        [data-theme="dark"] .sidebar-progress-title { color: #93c5fd; }
+        .progress-bar-bg { background: #cbd5e1; height: 7px; border-radius: 10px; overflow: hidden; }
+        [data-theme="dark"] .progress-bar-bg { background: #243b32; }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* المحتوى الرئيسي */
+        .hadeeth-main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            min-width: 0;
+        }
+
+        .topic-hero-banner {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 70%, #3b82f6 100%);
+            border-radius: 24px;
+            padding: 30px 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.2);
+            animation: fadeIn 0.35s ease;
+        }
+        [data-theme="dark"] .topic-hero-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border: 1px solid #1e40af;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .topic-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .topic-hero-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .topic-hero-desc {
+            font-size: 14px;
+            opacity: 0.92;
+            line-height: 1.7;
+            max-width: 820px;
+            margin-bottom: 16px;
+        }
+        .topic-quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-family: 'Amiri', serif;
+            font-size: 16.5px;
+            line-height: 1.8;
+            border-right: 3px solid #bfdbfe;
+            display: inline-block;
+        }
+
+        /* تبويبات التنقل الداخلية */
+        .sub-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .sub-tab-btn {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 9px 18px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .sub-tab-btn {
+            background: #192a24;
+            border-color: #23362d;
+            color: #94a3b8;
+        }
+        .sub-tab-btn.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+        [data-theme="dark"] .sub-tab-btn.active {
+            background: #3b82f6;
+            color: #ffffff;
+        }
+
+        /* شبكة الدروس */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .lesson-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            transition: all 0.28s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-card {
+            background: #15221d;
+            border-color: #23372f;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            border-color: #2563eb;
+            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.12);
+        }
+        [data-theme="dark"] .lesson-card:hover {
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+            border-color: #60a5fa;
+        }
+
+        .lesson-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .lesson-number-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        [data-theme="dark"] .lesson-number-badge {
+            background: rgba(96, 165, 250, 0.15);
+            color: #93c5fd;
+        }
+
+        .lesson-status-pill {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        [data-theme="dark"] .lesson-status-pill { background: #1e332a; }
+        .lesson-status-pill.completed { background: #dcfce7; color: #15803d; }
+        [data-theme="dark"] .lesson-status-pill.completed { background: #14532d; color: #86efac; }
+
+        .lesson-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        .lesson-summary {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .lesson-footer-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--card-border);
+        }
+        .lesson-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-open-lesson {
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 7px 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-open-lesson:hover { background: #1d4ed8; transform: scale(1.03); }
+
+        /* نافذة قراءة الدرس Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .lesson-modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 88vh;
+            overflow-y: auto;
+            border: 1.5px solid var(--card-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-modal-content { background: #14221d; border-color: #23372f; }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 10;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.06); color: #e11d48; }
+
+        .modal-body { padding: 24px; line-height: 1.9; font-size: 15px; }
+        .modal-body h4 {
+            color: #2563eb;
+            font-size: 17px;
+            font-weight: 800;
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1.5px solid rgba(37, 99, 235, 0.15);
+            padding-bottom: 6px;
+        }
+        [data-theme="dark"] .modal-body h4 { color: #60a5fa; border-bottom-color: rgba(96, 165, 250, 0.2); }
+        .modal-body p { margin-bottom: 12px; }
+
+        .hadith-quote-box {
+            background: rgba(37, 99, 235, 0.05);
+            border-right: 4px solid #2563eb;
+            border-radius: 0 14px 14px 0;
+            padding: 18px 20px;
+            font-family: 'Amiri', serif;
+            font-size: 19px;
+            line-height: 2.2;
+            color: #1e3a8a;
+            margin: 16px 0;
+        }
+        [data-theme="dark"] .hadith-quote-box {
+            background: rgba(96, 165, 250, 0.1);
+            color: #bfdbfe;
+            border-right-color: #60a5fa;
+        }
+
+        .hadith-explanation-box {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin: 14px 0;
+            line-height: 1.85;
+        }
+        [data-theme="dark"] .hadith-explanation-box {
+            background: #182821;
+            border-color: #283e33;
+        }
+
+        .hadith-benefits-box {
+            background: rgba(16, 185, 129, 0.06);
+            border-right: 4px solid #10b981;
+            border-radius: 0 14px 14px 0;
+            padding: 16px 18px;
+            margin: 16px 0;
+        }
+        [data-theme="dark"] .hadith-benefits-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-right-color: #34d399;
+        }
+
+        .modal-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: inherit;
+        }
+
+        /* كويز تفاعلي */
+        .quiz-container {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        [data-theme="dark"] .quiz-container {
+            background: #16241f;
+            border-color: #24362e;
+        }
+        .quiz-question-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .quiz-question-title { color: #f1f5f9; }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        .quiz-option-btn {
+            background: #f8fafc;
+            border: 1.5px solid var(--card-border);
+            padding: 13px 16px;
+            border-radius: 14px;
+            text-align: right;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .quiz-option-btn {
+            background: #1c2e27;
+            border-color: #284136;
+            color: #e2e8f0;
+        }
+        .quiz-option-btn:hover {
+            border-color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+        }
+        [data-theme="dark"] .quiz-option-btn:hover { background: #1c364e; }
+        .quiz-option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .quiz-option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        /* بطاقات سؤال وجواب */
+        .qa-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .qa-card {
+            background: #16241f;
+            border-color: #23362d;
+        }
+        .qa-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .qa-body {
+            padding: 0 20px 18px;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--card-border);
+            padding-top: 14px;
+            display: none;
+        }
+        .qa-card.open .qa-body { display: block; }
+        .qa-card.open .qa-header i { transform: rotate(180deg); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== التوافق مع شاشات الهواتف ========== */
+        @media (max-width: 992px) {
+            .navbar { padding: 10px 12px; }
+            .logo span { font-size: 13px; max-width: 140px; line-height: 1.25; }
+            .logo-img { height: 36px; width: auto; }
+            .user-nav-actions .btn-card-details { padding: 6px 8px; font-size: 11px; white-space: nowrap; }
+            .user-badge { display: none !important; }
+
+            .section-container { padding: 10px 8px 60px !important; max-width: 100% !important; }
+            .hadeeth-layout { grid-template-columns: 100% !important; gap: 12px; margin-top: 5px; max-width: 100% !important; }
+            .hadeeth-main-view { max-width: 100% !important; min-width: 0; }
+
+            .hadeeth-sidebar-panel {
+                position: sticky;
+                top: 58px;
+                z-index: 100;
+                padding: 6px 8px;
+                border-radius: 16px;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                margin-bottom: 4px;
+                max-width: 100%;
+            }
+            [data-theme="dark"] .hadeeth-sidebar-panel { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+            .sidebar-heading-box { display: none; }
+            .hadeeth-side-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .side-nav-btn {
+                padding: 8px 2px;
+                border-radius: 12px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 2px;
+                transform: none !important;
+            }
+            .side-btn-right { flex-direction: column; align-items: center; gap: 2px; }
+            .side-btn-icon { width: 30px; height: 30px; font-size: 12px; border-radius: 8px; }
+            .side-btn-text h4 { font-size: 11.5px; margin: 0; font-weight: 800; white-space: nowrap; }
+            .side-btn-text span { display: none; }
+            .side-btn-badge { font-size: 9px; padding: 1px 4px; border-radius: 6px; margin: 0; }
+
+            .sidebar-progress-box { margin-top: 6px; padding: 6px 8px; border-radius: 8px; }
+            .sidebar-progress-title { font-size: 10.5px; margin-bottom: 3px; }
+            .sidebar-progress-box > div:last-child { display: none; }
+            .hadeeth-sidebar-panel > div:last-child { display: none; }
+
+            .topic-hero-banner { padding: 16px 14px; border-radius: 16px; max-width: 100%; }
+            .topic-badge-top { font-size: 11px; padding: 3px 8px; margin-bottom: 6px; }
+            .topic-hero-title { font-size: 17px; margin-bottom: 6px; }
+            .topic-hero-desc { font-size: 12px; line-height: 1.55; margin-bottom: 10px; }
+            .topic-quote-box { font-size: 14px; padding: 8px 10px; line-height: 1.7; }
+
+            .sub-nav-tabs { gap: 4px; padding-bottom: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .sub-tab-btn { padding: 6px 10px; font-size: 11.5px; flex-shrink: 0; }
+
+            .lessons-grid { grid-template-columns: 1fr; gap: 12px; max-width: 100%; }
+            .lesson-card { padding: 14px; border-radius: 16px; max-width: 100%; }
+            .lesson-title { font-size: 14.5px; }
+            .lesson-summary { font-size: 12px; line-height: 1.55; margin-bottom: 12px; }
+
+            .modal-overlay { padding: 8px; align-items: flex-end; }
+            .lesson-modal-content { max-height: 92vh; border-radius: 20px 20px 10px 10px; width: 100%; }
+            .modal-header { padding: 14px 16px; }
+            .modal-header h3 { font-size: 16.5px !important; }
+            .modal-body { padding: 16px 14px; font-size: 14px; line-height: 1.8; }
+            .hadith-quote-box { font-size: 16px; padding: 12px 14px; line-height: 2; }
+            .modal-footer { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+            .modal-footer button { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/usul-al-deen.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-right"></i> مسار أصول الدين
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span>
+        </a>
+    </div>
+</nav>
+
+<div class="section-container" style="max-width: 1280px; padding: 20px 20px 60px;">
+    <div class="hadeeth-layout">
+
+        <!-- اللوحة الجانبية: الأبواب الثلاثة للحديث -->
+        <aside class="hadeeth-sidebar-panel">
+            <div class="sidebar-heading-box">
+                <div class="sidebar-main-title">
+                    <i class="fa-solid fa-scroll"></i>
+                    <span>أبواب الحديث الشريف</span>
+                </div>
+                <div class="sidebar-subtitle">اختر الباب لعرض موضوعاته ومساراته:</div>
+            </div>
+
+            <div class="hadeeth-side-nav">
+                <!-- خيار 1: الأربعين النووية -->
+                <button class="side-nav-btn active" id="btn-nawawi" onclick="selectHadeethBranch('nawawi')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                        <div class="side-btn-text">
+                            <h4>الأربعين النووية</h4>
+                            <span>جوامع الكلم وقواعد الدين الكبرى</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 أحاديث</span>
+                </button>
+
+                <!-- خيار 2: مصطلح الحديث -->
+                <button class="side-nav-btn" id="btn-mustalah" onclick="selectHadeethBranch('mustalah')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="side-btn-text">
+                            <h4>مصطلح الحديث</h4>
+                            <span>قواعد قبول الروايات وضبط السند</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 قواعد</span>
+                </button>
+
+                <!-- خيار 3: رياض الصالحين -->
+                <button class="side-nav-btn" id="btn-riyad" onclick="selectHadeethBranch('riyad')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-hands-praying"></i></div>
+                        <div class="side-btn-text">
+                            <h4>رياض الصالحين</h4>
+                            <span>الآداب والأخلاق والسنن النبوية</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 أبواب</span>
+                </button>
+            </div>
+
+            <!-- بطاقة التقدم -->
+            <div class="sidebar-progress-box">
+                <div class="sidebar-progress-title">
+                    <span><i class="fa-solid fa-chart-pie"></i> نسبة الإنجاز في الحديث</span>
+                    <strong id="hadeethProgressText">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="hadeethProgressBar"></div>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
+                    تم إتمام <span id="completedHadeethCount">0</span> من أصل 30 موضوعاً
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="hadeeth-main-view">
+            <div class="topic-hero-banner" id="topicBanner">
+                <span class="topic-badge-top" id="topicBadge">
+                    <i class="fa-solid fa-star"></i> الأربعين النووية
+                </span>
+                <h2 class="topic-hero-title" id="topicTitle">الأربعين النووية — أصول الإسلام وقواعد الأحكام</h2>
+                <p class="topic-hero-desc" id="topicDescription">
+                    شرح وتحليل أحاديث الإمام النووي الجامعة التي يدور عليها فلك الإسلام مع الفوائد التربوية والأحكام الفقهية المستنبطة.
+                </p>
+                <div class="topic-quote-box" id="topicQuote">
+                    «نَضَّرَ اللَّهُ امْرَأً سَمِعَ مِنَّا حَدِيثًا فَحَفِظَهُ حَتَّى يُبَلِّغَهُ» [صحيح أبي داود]
+                </div>
+            </div>
+
+            <div class="sub-nav-tabs">
+                <button class="sub-tab-btn active" onclick="switchTopicView('lessons', this)">
+                    <i class="fa-solid fa-book-open"></i> الدروس والموضوعات (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('qa', this)">
+                    <i class="fa-solid fa-circle-question"></i> أسئلة وأجوبة مركزة (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('quiz', this)">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم التفاعلي (10)
+                </button>
+            </div>
+
+            <!-- عرض الدروس -->
+            <div id="viewLessons" class="lessons-grid"></div>
+
+            <!-- عرض الأسئلة والأجوبة -->
+            <div id="viewQA" style="display: none;"></div>
+
+            <!-- عرض الاختبار التفاعلي -->
+            <div id="viewQuiz" style="display: none;">
+                <div class="quiz-container" id="quizBox"></div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- Modal لعرض الحديث والشرح الموسع والفوائد -->
+<div class="modal-overlay" id="lessonModal" onclick="closeLessonModal(event)">
+    <div class="lesson-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="lesson-status-pill" id="modalTopicBadge" style="margin-bottom: 4px; display: inline-block;">الحديث الشريف</span>
+                <h3 id="modalLessonTitle" style="font-size: 20px; font-weight: 800; margin: 0; color: #2563eb;">عنوان الحديث</h3>
+            </div>
+            <button class="modal-close-btn" onclick="closeLessonModal()" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalLessonBody"></div>
+        <div class="modal-footer">
+            <button class="btn-card-details" onclick="closeLessonModal()" style="font-size: 13.5px; padding: 8px 18px;">
+                إغلاق النافذة
+            </button>
+            <button class="btn-enter-branch" id="btnMarkComplete" onclick="toggleCompleteCurrentLesson()" style="width: auto; padding: 8px 22px; font-size: 14px; background: #2563eb;">
+                <i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hadeethData = {
+        nawawi: {
+            title: "الأربعين النووية — أصول الإسلام وقواعد الأحكام",
+            badge: "الأربعين النووية",
+            desc: "شرح أحاديث الإمام النووي الجامعة التي يدور عليها فلك الإسلام مع الفوائد التربوية والأحكام المستنبطة.",
+            quote: "«نَضَّرَ اللَّهُ امْرَأً سَمِعَ مِنَّا حَدِيثًا فَحَفِظَهُ حَتَّى يُبَلِّغَهُ» [صحيح أبي داود]",
+            lessons: [
+                {
+                    id: "h_nw_1",
+                    num: "01",
+                    title: "الحديث 1: إنما الأعمال بالنيات",
+                    summary: "مدار قبول الأعمال على إخلاص النية لله، والتفريق بين العبادة والعادة، وحكم الهجرة لله وللدنيا.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَمِيرِ المُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>مكانة الحديث:</strong> هذا الحديث أصل عظيم من أصول الإسلام وقاعدة تدور عليها جميع الأحكام؛ قال الإمام الشافعي: «هذا الحديث ثلث العلم ويدخل في سبعين باباً من الفقه».</p>
+                            <p><strong>«إنما الأعمال بالنيات»:</strong> أسلوب حصر، أي لا صحة ولا قبول ولا كمال لأي عمل شرعي إلا بوجود النية الصالحة الصادقة المبتغى بها وجه الله وحده.</p>
+                            <p><strong>«وإنما لكل امرئ ما نوى»:</strong> بيان للجزاء؛ فمن نوى بعمله وجه الله نال الأجر والمثوبة، ومن نوى الرياء أو حظوظ الدنيا لم يكن له من عمله إلا ما قصد وحُرم ثواب الآخرة.</p>
+                            <p><strong>«فمن كانت هجرته إلى الله ورسوله...»:</strong> الهجرة هي الانتقال من دار الكفر إلى دار الإسلام أو هجر الذنوب والمعاصي؛ فمن قصد بهجرته طاعة الله ورسوله نال الشرف العظيم، ومن قصد عرضاً زائلاً كمال أو زواج فليس له إلا غرضه الدنيوي الفاني.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات المستنبطة:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. النية شرط أساسي لصحة العبادات (كالصلاة والصيام والزكاة والحج).</li>
+                                <li>2. النية تحول المباحات والعادات اليومية (كالنوم والأكل والعمل) إلى عبادات وقربات يؤجر عليها العبد.</li>
+                                <li>3. التحذير الشديد من الشرك الخفي والرياء وإرادة الدنيا بعمل الآخرة.</li>
+                                <li>4. فضل الإخلاص ومضاعفة الحسنات بحسب صدق الباعث القلبي.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_2",
+                    num: "02",
+                    title: "الحديث 2: حديث جبريل الطويل (مراتب الدين)",
+                    summary: "بيان أركان الإسلام الخمسة، أركان الإيمان الستة، مقام الإحسان، وأشراط الساعة وعلاماتها.",
+                    duration: "25 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: بَيْنَمَا نَحْنُ عِنْدَ رَسُولِ اللهِ ﷺ ذَاتَ يَوْمٍ إِذْ طَلَعَ عَلَيْنَا رَجُلٌ شَدِيدُ بَيَاضِ الثِّيَابِ شَدِيدُ سَوَادِ الشَّعْرِ، لاَ يُرَى عَلَيْهِ أَثَرُ السَّفَرِ، وَلاَ يَعْرِفُهُ مِنَّا أَحَدٌ... فَقَالَ: «يَا مُحَمَّدُ أَخْبِرْنِي عَنِ الإِسْلاَمِ... أَخْبِرْنِي عَنِ الإِيمَانِ... أَخْبِرْنِي عَنِ الإِحْسَانِ... قَالَ: أَنْ تَعْبُدَ اللهَ كَأَنَّكَ تَرَاهُ، فَإِنْ لَمْ تَكُنْ تَرَاهُ فَإِنَّهُ يَرَاكَ... ثُمَّ قَالَ: هَذَا جِبْرِيلُ أَتَاكُمْ يُعَلِّمُكُمْ دِينَكُمْ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>أم السنة:</strong> يُسمى هذا الحديث «أم السنة» لأنه شمل الدين كله بمراتبه الثلاث وأصوله وفروعه.</p>
+                            <p><strong>1. مرتبة الإسلام:</strong> الأعمال الظاهرة الجوارحية (الشهادتان، إقام الصلاة، إيتاء الزكاة، صوم رمضان، وحج البيت).</p>
+                            <p><strong>2. مرتبة الإيمان:</strong> الاعتقادات الباطنة (الإيمان بالله، وملائكته، وكتبه، ورسله، واليوم الآخر، والقدر خيره وشره).</p>
+                            <p><strong>3. مرتبة الإحسان:</strong> أعلى مراتب الدين؛ وهي مراقبة الله التامة، ولها درجتان: درجة المشاهدة (أن تعبد الله كأنك تراه)، ودرجة المراقبة (فإن لم تكن تراه فاستشعر أنه يراك).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات المستنبطة:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. بيان مراتب الدين وأن كل مرتبة أعلى مما قبلها (إسلام ثم إيمان ثم إحسان).</li>
+                                <li>2. أدب طالب العلم في حسن الثياب والجلوس بتواضع وتوقير المعلم.</li>
+                                <li>3. استئثار الله تعالى بعلم وقت الساعة وأن جبريل والنبي لا يعلمان وقتها المحدد.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_3",
+                    num: "03",
+                    title: "الحديث 3: بني الإسلام على خمس",
+                    summary: "أركان الإسلام الخمسة ودعائمه التي يقوم عليها البناء الإيماني للفرد والمجتمع.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللهِ بْنِ عُمَرَ بْنِ الخَطَّابِ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ البَيْتِ، وَصَوْمِ رَمَضَانَ». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p>شبه النبي ﷺ الإسلام بالقبة أو البناء القائم على خمسة أعمدة مركزية؛ فإذا سقط عمود الشهادتين انهار البناء كلياً، وإذا تهاون المسلم في بقية الأركان تضعضع بناؤه الإيماني.</p>
+                            <p><strong>ترتيب الأركان:</strong> بدأ بالأصل العقدي (الشهادتين)، ثم العبادة البدنية اليومية المتكررة (الصلاة)، ثم المالية (الزكاة)، ثم البدنية السنوية (الصوم)، ثم المركبة من المال والبدن في العمر مرة (الحج لمن استطاع).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. عظم شأن هذه الأركان الخمسة وأنها أساس النجاة يوم القيامة.</li>
+                                <li>2. تلازم القول والعمل في الشريعة الإسلامية.</li>
+                                <li>3. يسر الإسلام باشتراط الاستطاعة في فريضة الحج.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_4",
+                    num: "04",
+                    title: "الحديث 4: مراحل خلق الجنين والقدر المكتوب",
+                    summary: "تطور أطوار الجنين في الرحم، نفخ الروح، وكتابة الأجل والرزق والعمل والشقاوة والسعادة.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ عَبْدِ اللهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللهِ ﷺ وَهُوَ الصَّادِقُ المَصْدُوقُ: «إِنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إِلَيْهِ المَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ، وَيُؤْمَرُ بِأَرْبَعِ كَلِمَاتٍ: بِكَتْبِ رِزْقِهِ، وَأَجَلِهِ، وَعَمَلِهِ، وَشَقِيٌّ أَوْ سَعِيدٌ...». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>الإعجاز العلمي:</strong> يصف الحديث بدقة أطوار الجنين (نطفة، علقة، مضغة) كل طور 40 يوماً، حتى يتم 120 يوماً فيُرسل الملك لنفخ الروح، وهو ما اتفق عليه الفقهاء في حرمة إسقاط الجنين بعد نفخ الروح إلا لإنقاذ حياة الأم.</p>
+                            <p><strong>الإيمان بالقدر:</strong> كل ما يجري في الكون مكتوب في اللوح المحفوظ وفي الصحيفة الجنينية؛ والاعتبار بالخواتيم وطلب الثبات على الهداية والعمل الصالح.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الرزق والأجل مقدران لا يزيدان بالحرص ولا ينقصان بالكسل.</li>
+                                <li>2. وجوب الخوف من سوء الخاتمة وسؤال الله الثبات وحسن الختام.</li>
+                                <li>3. حرمة قتل النفس والإجهاض بعد نفخ الروح.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_5",
+                    num: "05",
+                    title: "الحديث 5: رد البدع والمحدثات في الدين",
+                    summary: "قاعدة أصيلة في حماية الدين: كل عبادة أو تشريع لم يأذن به الله ورسوله فهو مردود باطل.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أُمِّ المُؤْمِنِينَ أُمِّ عَبْدِ اللهِ عَائِشَةَ رَضِيَ اللهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللهِ ﷺ: «مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ مِنْهُ فَهُوَ رَدٌّ». [رواه البخاري ومسلم]، وفي رواية لمسلم: «مَنْ عَمِلَ عَمَلًا لَيْسَ عَلَيْهِ أَمْرُنَا فَهُوَ رَدٌّ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>ميزان الأعمال الظاهرة:</strong> هذا الحديث ميزان لقبول الأعمال من حيث المتابعة، كما أن حديث «إنما الأعمال بالنيات» ميزان للأعمال من حيث الإخلاص.</p>
+                            <p><strong>«فهو رد»:</strong> أي مردود على صاحبه باطل غير مقبول ولا يثاب عليه، بل قد يأثم إذا كان ابتداعاً في أصل الدين وشعائره التعبدية.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. العبادات توقيفية لا تثبت إلا بدليل شرعي صحيح من الكتاب والسنة.</li>
+                                <li>2. وجوب اتباع النبي ﷺ في الكيفيات والأعداد والأزمنة والأماكن التعبدية.</li>
+                                <li>3. بطلان العقود والشروط الفاسدة المخالفة لأحكام الشريعة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_6",
+                    num: "06",
+                    title: "الحديث 6: الحلال بيّن والحرام بيّن (الورع)",
+                    summary: "أقسام الأحكام: حلال واضح، حرام واضح، ومشتبهات، وأهمية الورع وسلامة القلب وصلاحه.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي عَبْدِ اللهِ النُّعْمَانِ بْنِ بَشِيرٍ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «إِنَّ الحَلاَلَ بَيِّنٌ، وَإِنَّ الحَرَامَ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ لاَ يَعْلَمُهُنَّ كَثِيرٌ مِنَ النَّاسِ، فَمَنِ اتَّقَى الشُّبُهَاتِ اسْتَبْرَأَ لِدِينِهِ وَعِرْضِهِ... أَلاَ وَإِنَّ فِي الجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الجَسَدُ كُلُّهُ، أَلاَ وَهِيَ القَلْبُ». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>تقسيم الأحكام:</strong> الحلال الصريح لا شبهة فيه، والحرام الصريح كالميتة والسرقة واضح، وبينهما أمور تلتبس على العوام ويجليها العلماء المحققون.</p>
+                            <p><strong>حمى الله ومضغة القلب:</strong> حمى الله محارمه، والقلب هو الملك الآمر وسائر الجوارح جنود له تابعة؛ فبصلاح القلب بالتقوى والخشية تستقيم الجوارح في الطاعات.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. مشروعية الورع وترك ما يريب إلى ما لا يريب.</li>
+                                <li>2. صيانة العِرض والدين من الوقوع في مواطن الشبهات والتهم.</li>
+                                <li>3. العناية بصلاح القلب وتطهيره من أمراض الغل والحسد والرياء.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_7",
+                    num: "07",
+                    title: "الحديث 7: الدين النصيحة",
+                    summary: "حقيقة النصيحة لله ولكتابه ولرسوله ولأئمة المسلمين وعامتهم كأساس لسلامة المجتمع.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي رُقَيَّةَ تَمِيمِ بْنِ أَوْسٍ الدَّارِيِّ رَضِيَ اللهُ عَنْهُ أَنَّ النَّبِيَّ ﷺ قَالَ: «الدِّينُ النَّصِيحَةُ». قُلْنَا: لِمَنْ؟ قَالَ: «للهِ، وَلِكِتَابِهِ، وَلِرَسُولِهِ، وَلأَئِمَّةِ المُسْلِمِينَ، وَعَامَّتِهِمْ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p>النصيحة لغةً هي إخلاص النية وتنقية الشيء من الشوائب.</p>
+                            <p><strong>1. النصيحة لله:</strong> الإيمان بوحدانيته وإفراده بالعبادة وتنزيهه عن النقائص.</p>
+                            <p><strong>2. لكتابه:</strong> تلاوته حق تلاوته، وتدبر معانيه، والعمل بأحكامه والدفاع عنه.</p>
+                            <p><strong>3. لرسوله:</strong> تصديقه، محبته فوق كل مخلوق، واتباع سنته ونشر هديه.</p>
+                            <p><strong>4. لأئمة المسلمين:</strong> معاونتهم على الحق، طاعتهم في غير معصية، وتذكيرهم برفق.</p>
+                            <p><strong>5. لعامة المسلمين:</strong> إرشادهم لمصالحهم، كف الأذى عنهم، ومحبة الخير لهم.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. عظم شأن التناصح بين المسلمين بالأسلوب الحكيم والكلمة الطيبة.</li>
+                                <li>2. شمولية مفهوم النصيحة لجميع علاقات العبد مع ربه ودينه ومجتمعه.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_8",
+                    num: "08",
+                    title: "الحديث 8: حرمة دم المسلم وماله وعصمته",
+                    summary: "عصمة دماء المسلمين وأموالهم بالشهادتين وأداء الصلاة وإيتاء الزكاة وحقوق الإسلام.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنِ ابْنِ عُمَرَ رَضِيَ اللهُ عَنْهُمَا أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «أُمِرْتُ أَنْ أُقَاتِلَ النَّاسَ حَتَّى يَشْهَدُوا أَنْ لاَ إِلَهَ إِلاَّ اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَيُقِيمُوا الصَّلاَةَ، وَيُؤْتُوا الزَّكَاةَ، فَإِذَا فَعَلُوا ذَلِكَ عَصَمُوا مِنِّي دِمَاءَهُمْ وَأَمْوَالَهُمْ إِلاَّ بِحَقِّ الإِسْلاَمِ، وَحِسَابُهُمْ عَلَى اللهِ». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>عصمة الدم والمال:</strong> من نطق بالشهادتين والتزم بشعائر الإسلام الظاهرة حُرم دمه وماله وصار معصوماً، وتُقبل منه ظواهره ويُكل سره إلى الله علام الغيوب.</p>
+                            <p><strong>«إلا بحق الإسلام»:</strong> كالقصاص في القتل العمد، والحدود الشرعية المقررة بالعدل.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الحكم على الناس بالظاهر وعدم التفتيش عن السرائر والضمائر.</li>
+                                <li>2. مكانة الصلاة والزكاة كركنين عمليين لا ينفكان عن صحة الانتساب للإسلام.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_9",
+                    num: "09",
+                    title: "الحديث 9: النهي عن كثرة السؤال والتكليف بما يُستطاع",
+                    summary: "قاعدة التيسير في الشريعة: ما أمرتكم به فأتوا منه ما استطعتم وما نهيتكم عنه فاجتنبوه.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ عَبْدِ الرَّحْمَنِ بْنِ صَخْرٍ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ، وَمَا أَمَرْتُكُمْ بِهِ فَأْتُوا مِنْهُ مَا اسْتَطَعْتُمْ، فَإِنَّمَا أَهْلَكَ الَّذِينَ مِنْ قَبْلِكُمْ كَثْرَةُ مَسَائِلِهِمْ وَاخْتِلاَفُهُمْ عَلَى أَنْبِيَائِهِمْ». [رواه البخاري ومسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>الفرق بين الأمر والنهي:</strong> النهي يُطلب تركه كلياً بلا استثناء لأنه كف، بينما الأمر منوط بالقدرة والاستطاعة (لا يكلف الله نفساً إلا وسعها) فالمريض يصلي قاعداً إذا عجز عن القيام.</p>
+                            <p><strong>التحذير من التنطع:</strong> النهي عن الأسئلة العقيمة والتكلف في تفاصيل لم يوجبها الشرع كما فعل بنو إسرائيل في قصة البقرة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. المشقة تجلب التيسير في الأحكام الشرعية.</li>
+                                <li>2. وجوب ترك المحرمات كافة دون تهاون أو استثناء إلا لضرورة شرعية معتبرة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_nw_10",
+                    num: "10",
+                    title: "الحديث 10: إن الله طيب لا يقبل إلا طيباً",
+                    summary: "أثر الكسب الحلال والمطعم والمشرب النقي في استجابة الدعاء وقبول الصدقات والأعمال.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «إِنَّ اللهَ تَعَالَى طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا... ثُمَّ ذَكَرَ الرَّجُلَ يُطِيلُ السَّفَرَ أَشْعَثَ أَغْبَرَ، يَمُدُّ يَدَيْهِ إِلَى السَّمَاءِ: يَا رَبِّ يَا رَبِّ، وَمَطْعَمُهُ حَرَامٌ، وَمَشْرَبُهُ حَرَامٌ، وَمَلْبَسُهُ حَرَامٌ، وَغُذِيَ بِالحَرَامِ، فَأَنَّى يُسْتَجَابُ لِذَلِكَ!». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>«إن الله طيب»:</strong> مقدس منزه عن النقائص والعيوب، فلا يقبل من الأعمال والصدقات إلا ما كان خالصاً صواباً من مال حلال طيب.</p>
+                            <p><strong>موانع إجابة الدعاء:</strong> مع أن الرجل اجتمعت فيه أربعة أسباب لإجابة الدعاء (السفر، الرثاثة والافتقار، مد اليدين، والإلحاح بالربوبية)، إلا أن أكل الحرام منعه من القبول.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. خطورة المال الحرام وأثره السيئ على العبادات واستجابة الدعاء.</li>
+                                <li>2. التحري التام في الكسب الحلال والتجارة الصادقة.</li>
+                                <li>3. معرفة آداب وأسباب إجابة الدعاء الشرعية.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هي مكانة حديث «إنما الأعمال بالنيات» عند أئمة الإسلام؟", a: "هو أصل عظيم وقاعدة كلية في الدين، قال الإمام الشافعي وأحمد إنه ثلث العلم ويدخل في أكثر من سبعين باباً من أبواب الفقه الإسلامي." },
+                { q: "2. ما هي المراتب الثلاث للدين المذكورة في حديث جبريل المشهور؟", a: "الإسلام (الأعمال الظاهرة)، الإيمان (الاعتقادات الباطنة)، والإحسان (أعلى المراتب: أن تعبد الله كأنك تراه فإن لم تكن تراه فإنه يراك)." },
+                { q: "3. متى تُنفخ الروح في الجنين في بطن أمه وفق الحديث النبوي؟", a: "تُنفخ الروح بعد تمام ثلاثة أطوار مدة كل طور 40 يوماً (نطفة ثم علقة ثم مضغة)، أي بعد 120 يوماً (أربعة أشهر هجرية كاملة)." },
+                { q: "4. ما الضابط الشرعي في رد الأعمال والبدع وفق حديث السيدة عائشة؟", a: "كل عبادة أو عمل أحدثه الإنسان في الدين بغير أصل أو دليل شرعي من الكتاب والسنة فهو باطل ومردود على فاعله." },
+                { q: "5. ما هو الفارق بين التعامل مع الأوامر والنواهي في حديث أبي هريرة؟", a: "النهي يجب اجتنابه وتركه كلياً بلا استثناء لأنه كف، بينما الأمر الشرعي يؤتى منه ما يستطيعه المكلف وفق طاقته ووسعه." },
+                { q: "6. ما هي موانع استجابة الدعاء المذكورة في حديث «إن الله طيب»؟", a: "أكل الحرام، شرب الحرام، لبس الحرام، والتغذي بالحرام؛ فهذه الموانع تحجب إجابة الدعاء وإن توفرت أسباب الإجابة." },
+                { q: "7. ما معنى «الدين النصيحة لله ولكتابه ولرسوله»؟", a: "النصيحة لله: إفراده بالعبادة وتنزيهه، ولكتابه: تلاوته وتدبره والعمل به، ولرسوله: تصديقه واتباع سنته ونصرة هديه." },
+                { q: "8. ما هي الكلمات الأربع التي يؤمر بها الملك بكتابتها للجنين في بطن أمه؟", a: "يؤمر بكتب: رزقه، وأجله، وعمله، وشقي أو سعيد." },
+                { q: "9. ما معنى الورع في حديث «الحلال بين والحرام بين»؟", a: "الورع هو ترك الشبهات والأمور الملتبسة التي يُخشى أن توقع العبد في الحرام، استبراءً للدين والعِرض." },
+                { q: "10. ما هي الأركان الخمسة التي بُني عليها الإسلام بالترتيب؟", a: "شهادة أن لا إله إلا الله وأن محمداً رسول الله، إقام الصلاة، إيتاء الزكاة، حج البيت، وصوم رمضان." }
+            ],
+            quizList: [
+                { q: "1. راوي حديث «إنما الأعمال بالنيات» هو الصحابي الجليل:", opts: ["عمر بن الخطاب رضي الله عنه", "أبو هريرة رضي الله عنه", "عبد الله بن عمر رضي الله عنهما"], a: 0 },
+                { q: "2. مرتبة «الإحسان» في حديث جبريل تعني اصطلاحاً:", opts: ["أن تعبد الله كأنك تراه فإن لم تكن تراه فإنه يراك", "إخراج الصدقات للمحتاجين فقط", "حفظ القرآن الكريم كاملاً"], a: 0 },
+                { q: "3. تُنفخ الروح في الجنين بعد مرور:", opts: ["120 يوماً (أربعة أشهر)", "40 يوماً فقط", "9 أشهر كاملة"], a: 0 },
+                { q: "4. حديث «من أحدث في أمرنا هذا ما ليس منه فهو رد» يُعد ميزاناً لـ:", opts: ["الأعمال الظاهرة والمتابعة النبوية", "صحة النيات الباطنة", "حساب الزكاة والمال"], a: 0 },
+                { q: "5. الأمر الشرعي في الحديث مقيد بـ:", opts: ["القدرة والاستطاعة (ما استطعتم)", "الرغبة النفسية فقط", "عدم التعب مطلقاً"], a: 0 },
+                { q: "6. مانع استجابة الدعاء الأساسي للرجل الأشعث الأغبر في الحديث هو:", opts: ["مطعم ومشرب وغذاء الحرام", "طول السفر في الصحراء", "رفع اليدين إلى السماء"], a: 0 },
+                { q: "7. المضغة التي إذا صلحت صلح الجسد كله وإذا فسدت فسد كله هي:", opts: ["القلب", "اللسان", "العين"], a: 0 },
+                { q: "8. صاحب الشورى في حديث «الدين النصيحة» وراوي الحديث هو:", opts: ["تميم بن أوس الداري رضي الله عنه", "سلمان الفارسي رضي الله عنه", "أبو بكر الصديق رضي الله عنه"], a: 0 },
+                { q: "9. من ترك الشبهات فقد:", opts: ["استبرأ لدينه وعِرضه", "وقع في التشدد المذموم", "ترك الواجبات العينية"], a: 0 },
+                { q: "10. حكم الإخلاص والنية في العبادات الشرعية هو:", opts: ["شرط لصحة وقبول العمل", "سنة مستحبة فقط", "مستحب للنوافل دون الفرائض"], a: 0 }
+            ]
+        },
+
+        mustalah: {
+            title: "مصطلح الحديث — قواعد قبول الرواية ونقد السند",
+            badge: "مصطلح الحديث",
+            desc: "مدخل علمي رصين لمعرفة قواعد الحديث الصحيح، الحسن، الضعيف، الشاذ، والمعلل ومراتب الرواة وطرق نقد الأسانيد.",
+            quote: "«إِنَّ هَذَا الْعِلْمَ دِينٌ فَانْظُرُوا عَمَّنْ تَأْخُذُونَ دِينَكُمْ» [محمد بن سيرين رحمه الله]",
+            lessons: [
+                {
+                    id: "h_ms_1",
+                    num: "01",
+                    title: "مفهوم علم مصطلح الحديث وأهميته ونشأته",
+                    summary: "تعريف السند والمتن، نشأة العلم، أهداف حفظ السنة من الدس والتحريف، ومكانة الإسناد في الإسلام.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر والقاعدة الحديثية:</h4>
+                        <div class="hadith-quote-box">
+                            قَالَ الإِمَامُ عَبْدُ اللهِ بْنُ المُبَارَكِ رَحِمَهُ اللهُ: «الإِسْنَادُ مِنَ الدِّينِ، وَلَوْلَا الإِسْنَادُ لَقَالَ مَنْ شَاءَ مَا شَاءَ». [رواه الإمام مسلم في مقدمة صحيحه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>علم مصطلح الحديث (أصول الحديث):</strong> هو علم بأصول وقواعد يُعرف بها أحوال السند والمتن من حيث القبول والرد.</p>
+                            <p><strong>1. السَّنَد:</strong> سلسلة الرجال والرواة الموصلة إلى متن الحديث (مثل: حدثنا الحميدي قال حدثنا سفيان عن يحيى بن سعيد...).</p>
+                            <p><strong>2. المَتْن:</strong> هو ما ينتهي إليه السند من ألفاظ الحديث النبوي الشريف.</p>
+                            <p><strong>النشأة والغاية:</strong> نشأ هذا العلم استجابة لأمر الله بالتثبت في الأخبار، ولحماية سنة المصطفى ﷺ من الوضع والكذب ودس المبتدعة بعد وقوع الفتنة الكبرى، فابتكر علماء الإسلام أعظم منهج توثيقي ونقدي عرفته البشرية.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والقواعد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. ميزة الإسناد خصيصة انفردت بها هذه الأمة الإسلامية لحفظ الشريعة.</li>
+                                <li>2. التمييز الدقيق بين ما صح نسبته للنبي ﷺ وما لا يصح.</li>
+                                <li>3. وجوب التثبت في نقل الأخبار الدينية وعدم نشر أي حديث إلا بعد معرفة درجته وصحته.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_2",
+                    num: "02",
+                    title: "شروط الحديث الصحيح لذاته الخمسة",
+                    summary: "الشروط الخمسة الجامعة: اتصال السند، عدالة الرواة، تمام الضبط، انتفاء الشذوذ، وانتفاء العلة القادحة.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> القاعدة والتعريف الأصولي:</h4>
+                        <div class="hadith-quote-box">
+                            قَالَ الحَافِظُ ابْنُ الصَّلَاحِ: «الحَدِيثُ الصَّحِيحُ: هُوَ الحَدِيثُ المُسْنَدُ الَّذِي يَتَّصِلُ إِسْنَادُهُ بِنَقْلِ العَدْلِ الضَّابِطِ عَنِ العَدْلِ الضَّابِطِ إِلَى مُنْتَهَاهُ، وَلَا يَكُونُ شَاذًّا وَلَا مُعَلَّلًا». [مقدمة ابن الصلاح]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان للشروط الخمسة:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>1. اتّصال السَّند:</strong> أن يكون كل راوٍ في السلسلة قد تحمّل الحديث وسمعه مباشرة من شيخه من أول السند إلى منتهاه دون أي انقطاع.</p>
+                            <p><strong>2. عدالة الرواة:</strong> أن يتصف كل راوٍ بالاستقامة الدينية، والتقوى، والمروءة، والسلامة من الفسق والبدع المفسقة.</p>
+                            <p><strong>3. تمام الضَّبط:</strong> حفظ الراوي وإتقانه التام لما يرويه، سواء كان ضبط صدر (حفظاً في الصدر) أو ضبط كتاب (صيانة لكتبه من التحريف).</p>
+                            <p><strong>4. انتفاء الشذوذ:</strong> ألا يخالف الراوي الثقة من هو أوثق منه أو أكثر عدداً.</p>
+                            <p><strong>5. انتفاء العلّة القادحة:</strong> خلو الحديث من سبب خفي غامض يقدح في صحته مع أن الظاهر السلامة منه.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الحديث الصحيح لذاته حجة قاطعة يجب العمل بها في العقائد والأحكام بلا تردد.</li>
+                                <li>2. أعلى مراتب الصحيح: ما اتفق عليه البخاري ومسلم (متفق عليه).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_3",
+                    num: "03",
+                    title: "الحديث الحسن لذاته ولغيره",
+                    summary: "الفارق بين الصحيح والحسن (خفة الضبط)، وكيف يرتقي الحديث الحسن لغيره بتعدد الطرق والشواهد.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الضابط والتعريف:</h4>
+                        <div class="hadith-quote-box">
+                            قَالَ ابْنُ حَجَرٍ: «فَإِنْ خَفَّ الضَّبْطُ فَالحَسَنُ لِذَاتِهِ، وَبِكَثْرَةِ طُرُقِهِ يُصَحَّحُ (الصَّحِيحُ لِغَيْرِهِ)، وَإِنْ فُقِدَ شَرْطٌ فَهُوَ الضَّعِيفُ وَيَرْتَقِي لِلْحَسَنِ لِغَيْرِهِ إِذَا تَعَدَّدَتْ طُرُقُهُ». [نخبة الفكر]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>1. الحسن لذاته:</strong> هو حديث توفرت فيه شروط الصحيح الخمسة تماماً، عدا أن راويه نزل ضبطه وحفظه قليلاً عن رتبة التمام، مع بقائه ثقة مأموناً عدلاً.</p>
+                            <p><strong>2. الحسن لغيره:</strong> هو حديث ضعيف ضعفاً خفيفاً غير شديد (كسوء الحفظ أو الانقطاع الخفيف)، ثم رُوي من طرق وأسانيد أخرى معتبرة تجبر ضعفه وترفعه لرتبة القبول والاحتجاج.</p>
+                            <p><strong>حكمه:</strong> الحديث الحسن بنوعيه حجة مقبولة ومعمول بها عند عامة الفقهاء والمحدثين كالصحيح.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. غالب أحاديث السنن (الترمذي وأبي داود وابن ماجه) من رتبة الحسن.</li>
+                                <li>2. تضافر الطرق وتعدد الأسانيد يقوي الروايات الضعيفة ضعفاً يسيراً.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_4",
+                    num: "04",
+                    title: "الحديث الضعيف وأسباب ضعفه العشرة",
+                    summary: "أسباب الضعف الراجعة لسقط في السند أو طعن في الراوي، وضوابط العمل بالحديث الضعيف في فضائل الأعمال.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> تعريف الحديث الضعيف:</h4>
+                        <div class="hadith-quote-box">
+                            «الحَدِيثُ الضَّعِيفُ: هُوَ كُلُّ حَدِيثٍ لَمْ تَجْتَمِعْ فِيهِ صِفَاتُ القَبُولِ (الصَّحِيحِ وَالحَسَنِ)، وَتَتَفَاوَتُ دَرَجَاتُ ضَعْفِهِ بِحَسَبِ سَبَبِ الرَّدِّ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان لأسباب الضعف:</h4>
+                        <div class="hadith-explanation-box">
+                            <p>تنقسم أسباب ضعف الحديث إلى قسمين رئيسيين:</p>
+                            <p><strong>أولاً: سقط في الإسناد:</strong> إما ظاهر كالمعلق، المرسل، المعضل، والمنقطع، أو خفي كالتدليس والإرسال الخفي.</p>
+                            <p><strong>ثانياً: طعن في الراوي:</strong> إما في عدالته (كالكذب، التهمة بالكذب، الفسق، البدعة، والجهالة)، أو في ضبطه (كفحش الغلط، الغفلة، كثرة الأوهام، ومخالفة الثقات).</p>
+                            <p><strong>شروط العمل بالضعيف في الفضائل عند الإمام أحمد وابن حجر:</strong><br>
+                            1. ألا يكون الضعف شديداً.<br>
+                            2. أن يندرج تحت أصل عام معمول به في الشريعة.<br>
+                            3. ألا يُعتقد عند العمل به ثبوته بل يُعمل به على وجه الاحتياط.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. لا يُبنى على الحديث الضعيف حكم شرعي في التحليل والتحريم أو أصول العقائد.</li>
+                                <li>2. تدرج الضعف من الضعيف الخفيف المحتمل إلى شديد الضعف والمتروك.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_5",
+                    num: "05",
+                    title: "أنواع السقط الظاهر في الإسناد",
+                    summary: "المعلق، المرسل، المعضل، والمنقطع؛ الفروق الدقيقة بينها، صورها التطبيقية، وحكم كل نوع.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> المنظومة البيقونية:</h4>
+                        <div class="hadith-quote-box">
+                            وَمَرْسَلٌ مِنْهُ الصَّحَابِيُّ سَقَطْ * وَقُلْ غَرِيبٌ مَا رَوَى رَاوٍ فَقَطْ<br>
+                            وَكُلُّ مَا لَمْ يَتَّصِلْ بِحَالِ * إِسْنَادُهُ مُنْقَطِعُ الأَوْصَالِ<br>
+                            وَالمُعْضَلُ السَّاقِطُ مِنْهُ اثْنَانِ * وَمَا أَتَى مُعَلَّقًا فِي الشَّانِ
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>1. المُعَلَّق:</strong> ما حُذف من أول سنده راوٍ فأكثر على التوالي (كأن يقول البخاري: قال رسول الله مباشرة).</p>
+                            <p><strong>2. المُرْسَل:</strong> ما رفعه التابعي الكبير إلى النبي ﷺ مباشرة دون ذكر الصحابي الواسطة.</p>
+                            <p><strong>3. المُعْضَل:</strong> ما سقط من إسناده راويان متتاليان فأكثر في أي موضع من السند، وهو أشد انقطاعاً.</p>
+                            <p><strong>4. المُنْقَطِع:</strong> ما سقط من إسناده راوٍ واحد في أثناء السند، أو سقط راويان غير متتاليين.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. هذه الأنواع الأربعة من قبيل الحديث الضعيف بسبب انقطاع السند وجهالة الساقط.</li>
+                                <li>2. معلقات البخاري بصيغة الجزم (قال، روى) صحيحة عنده إلى من علقه عنه.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_6",
+                    num: "06",
+                    title: "الحديث الموضوع والوضاعون وجهود كشفهم",
+                    summary: "تعريف الحديث الموضوع، دوافع الوضع والكذب، علامات وضعه في السند والمتن، والكتب المصنفة فيه.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> التحذير النبوي الشديد:</h4>
+                        <div class="hadith-quote-box">
+                            قَالَ رَسُولُ اللهِ ﷺ: «مَنْ كَذَبَ عَلَيَّ مُتَعَمِّدًا فَلْيَتَبَوَّأْ مَقْعَدَهُ مِنَ النَّارِ». [حديث متواتر رواه أكثر من 70 صحابياً]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>تعريف الموضوع:</strong> هو الكذب المختلق المصنوع المنسوب زوراً وبهتاناً إلى رسول الله ﷺ، وهو شر أنواع المردود وأقبحها.</p>
+                            <p><strong>دوافع الوضع:</strong> التعصب المذهبي والقبلي، الزندقة للطعن في الإسلام، التقرب للحكام، الرغبة في التكسب، أو جهل بعض الزهاد فوضعوا أحاديث في فضائل السور بزعم ترغيب الناس!</p>
+                            <p><strong>علامات الوضع:</strong> إقرار الواضع بالكذب، ركاكة الألفاظ والمعاني، مخالفة صريح القرآن والعقل والبديهة القطعية، أو اشتماله على مجازفات باطلة (مثل: من صلى ركعتين أعطاه الله ألف قصر في الجنة).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. تحريم رواية الحديث الموضوع ونشره إلا لبيان كذبه والتحذير منه.</li>
+                                <li>2. عظمة جهود أئمة الحديث (كابن الجوزي في الموضوعات والسيوطي في اللآلئ المصنوعة) في فضح الدجالين.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_7",
+                    num: "07",
+                    title: "الحديث المتواتر وأقسام الآحاد (المشهور والعزيز والغريب)",
+                    summary: "شروط المتواتر اللفظي والمعنوي، وتقسيم خبر الآحاد بحسب عدد طرقه وأحكام العمل بها.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> التقسيم الأصولي للرواية:</h4>
+                        <div class="hadith-quote-box">
+                            «المُتَوَاتِرُ: مَا رَوَاهُ جَمْعٌ غَفِيرٌ تَحِيلُ العَادَةُ تَوَاطُؤَهُمْ عَلَى الكَذِبِ عَنْ مِثْلِهِمْ فِي كُلِّ طَبَقَةٍ وَاسْتَنَدَ خَبَرُهُمْ إِلَى الحِسِّ، وَمَا دُونَهُ فَهُوَ الآحَادُ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>1. المتواتر:</strong> يفيد العلم اليقيني القطعي الذي لا يقبل الشك؛ كأحاديث رؤية الله في الجنة، وحديث الحوض، والمسح على الخفين، ومن كذب علي متعمداً.</p>
+                            <p><strong>2. خبر الآحاد (3 أقسام):</strong></p>
+                            <ul>
+                                <li><strong>المشهور (أو المستفيض):</strong> ما رواه ثلاثة فأكثر في كل طبقة ولم يبلغ حد التواتر.</li>
+                                <li><strong>العزيز:</strong> ما رواه اثنان فقط في أي طبقة من طبقات السند.</li>
+                                <li><strong>الغريب (الفرد):</strong> ما انفرد بروايته شخص واحد (كحديث إنما الأعمال بالنيات تفرد به يحيى بن سعيد عن محمد بن إبراهيم عن علقمة عن عمر).</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. خبر الآحاد إذا صح سنده وجب تصديقه والعمل به في العقائد والأحكام عند أهل السنة.</li>
+                                <li>2. الغرابة في السند لا تعني الضعف؛ فقد يكون الحديث غريباً وهو في أعلى درجات الصحة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_8",
+                    num: "08",
+                    title: "علم الجرح والتعديل وقواعد نقد الرواة",
+                    summary: "مراتب التعديل والتجريح الست، شروط الناقد المعدل والجارح، وقاعدة تقديم الجرح المفسر على التعديل.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> القاعدة الحديثية في نقد الرجال:</h4>
+                        <div class="hadith-quote-box">
+                            قَالَ الإِمَامُ يَحْيَى بْنُ سَعِيدٍ القَطَّانُ: «لَأَنْ يَكُونَ خَصْمِي فِي القِيَامَةِ رَجُلٌ أَقُولُ فِيهِ لَيْسَ بِثِقَةٍ أَحَبُّ إِلَيَّ مِنْ أَنْ يَكُونَ خَصْمِي رَسُولُ اللهِ ﷺ يَقُولُ لِي: لِمَ لَمْ تَذُبَّ الكَذِبَ عَنْ حَدِيثِي!».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>حقيقة العلم:</strong> هو ميزان تقييم الرواة لبيان من يُقبل حديثه (العدل الضابط) ومن يُرد حديثه (الفاسق أو الضعيف أو الوضاع) نصيحة للأمة وصيانة للدين.</p>
+                            <p><strong>ألفاظ التعديل:</strong> (ثقة ثقة، حجة، ثقة ثبت، صدوق، لا بأس به).</p>
+                            <p><strong>ألفاظ التجريح:</strong> (ضعيف، لين الحديث، منكر الحديث، متروك، دجال، كذاب وضاع).</p>
+                            <p><strong>قاعدة التعارض:</strong> إذا تعارض الجرح والتعديل في راوٍ واحد، قُدّم الجرح المفسر (المبين سببه) على التعديل المجمل؛ لأن الجارح معه زيادة علم خفيت على المعدل.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الكلام في الرواة ليس غيبة محرمة بل هو واجب شرعي لحفظ الدين بالإجماع.</li>
+                                <li>2. إنصاف أئمة الجرح والتعديل وتجردهم الكامل لله تعالى.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_9",
+                    num: "09",
+                    title: "الحديث الشاذ والمنكر والفرق الدقيق بينهما",
+                    summary: "مخالفة الثقة لمن هو أوثق منه (الشاذ)، ومخالفة الضعيف للثقات (المنكر)، ووجه التفريق بينهما.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> القاعدة الأصولية:</h4>
+                        <div class="hadith-quote-box">
+                            «الشَّاذُّ: هُوَ مَا رَوَاهُ المَقْبُولُ (الثِّقَةُ) مُخَالِفًا لِمَنْ هُوَ أَوْثَقُ مِنْهُ، وَالمُنْكَرُ: هُوَ مَا رَوَاهُ الضَّعِيفُ مُخَالِفًا لِلثِّقَاتِ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>1. الشاذ ومقابله (المحفوظ):</strong> إذا روى راوٍ ثقة حديثاً بزيادة أو لفظ يخالف فيه جمعاً من الثقات أو من هو أحفظ منه، حُكم على روايته بالشذوذ وعلى رواية الأكثر بأنها «المحفوظ» وتُرد الرواية الشاذة.</p>
+                            <p><strong>2. المنكر ومقابله (المعروف):</strong> إذا تفرد الراوي الضعيف برواية تخالف رواية الأئمة الثقات، فروايته منكرة مردودة ورواية الثقات هي «المعروف».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. وثاقة الراوي لا تمنع من خطئه أو وهمه في بعض الألفاظ، ولذا وجب مقارنة الروايات.</li>
+                                <li>2. النكارة أشد ضعفاً من الشذوذ لأن راوي المنكر ضعيف في أصله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ms_10",
+                    num: "10",
+                    title: "علل الحديث وأشهر المصنفات المعتمدة",
+                    summary: "العلة الخفية القادحة وطرق اكتشافها عند جهابذة الحفاظ، واستعراض أمهات كتب المصطلح.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> تعريف العلة:</h4>
+                        <div class="hadith-quote-box">
+                            «العِلَّةُ فِي اصْطِلَاحِ المحدِّثِينَ: سَبَبٌ خَفِيٌّ غَامِضٌ يَقْدَحُ فِي صِحَّةِ الحَدِيثِ مَعَ أَنَّ الظَّاهِرَ السَّلَامَةُ مِنْهُ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>علم العلل:</strong> هو أدق علوم الحديث وأغمضها، ولا يُحسنه إلا نقاد جهابذة جمعوا الطرق وحفظوا الأسانيد وقارنوا بين المتون كالبخاري، علي بن المديني، أحمد بن حنبل، والدارقطني.</p>
+                            <p><strong>أشهر المصنفات في علم المصطلح:</strong></p>
+                            <ul>
+                                <li><strong>المحدث الفاصل:</strong> للرامهرمزي (أول مصنف مستقل).</li>
+                                <li><strong>معرفة علوم الحديث:</strong> للحاكم النيسابوري.</li>
+                                <li><strong>مقدمة ابن الصلاح (علوم الحديث):</strong> عمدة المتأخرين وجامع شتات الفن.</li>
+                                <li><strong>نخبة الفكر وشرحها نزهة النظر:</strong> للحافظ ابن حجر العسقلاني.</li>
+                            </ul>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. لا يُكتفى بظاهر صحة السند حتى يُعرض الحديث على أئمة العلل.</li>
+                                <li>2. ضبط قواعد المصطلح يقي الدارس من الوقوع في فخاخ الروايات المعلولة والمدرجة.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هي الشروط الخمسة الواجب توفرها في الحديث الصحيح لذاته؟", a: "1. اتصال السند، 2. عدالة الرواة، 3. تمام الضبط، 4. السلامة من الشذوذ، 5. السلامة من العلة القادحة." },
+                { q: "2. ما هو الفرق الجوهري بين الحديث الصحيح والحديث الحسن لذاته؟", a: "الفرق الوحيد هو في «الضبط»؛ فراوي الصحيح تام الضبط، بينما راوي الحسن خفيف الضبط مع اتصافه بالعدالة واتصال السند." },
+                { q: "3. ما هو الحديث المرسل وما حكم الاحتجاج به عند جمهور المحدثين؟", a: "المرسل هو ما رفعه التابعي مباشرة إلى رسول الله ﷺ دون ذكر الصحابي، وحكمه عند جمهور المحدثين ضعيف لجهالة الساقط." },
+                { q: "4. ما هو الحديث المعضل وما مثاله؟", a: "المعضل هو الحديث الذي سقط من إسناده راويان متتاليان فأكثر في أي موضع من السند وهو أشد ضعفاً من المنقطع." },
+                { q: "5. ما الفرق بين الحديث المتواتر وحديث الآحاد؟", a: "المتواتر رواه جمع غفير تحيل العادة تواطؤهم على الكذب ويفيد العلم اليقيني القطعي، والآحاد هو ما لم يبلغ حد التواتر ويفيد الظن الراجح الموجب للعمل." },
+                { q: "6. ما هو الحديث الشاذ في مصطلح أهل الحديث؟", a: "هو ما رواه الراوي المقبول (الثقة) مخالفاً لمن هو أوثق منه حفظاً أو أكثر منه عدداً." },
+                { q: "7. ما هو الحديث الموضوع وهل يجوز روايته؟", a: "هو الحديث المختلق المكذوب على رسول الله ﷺ، ولا تجوز روايته في أي حال إلا مقروناً ببيان وضعه وبطلانه للتحذير منه." },
+                { q: "8. ما هي درجات وأقسام خبر الآحاد من حيث عدد الطرق؟", a: "المشهور (ما رواه ثلاثة فأكثر في كل طبقة ولم يبلغ التواتر)، العزيز (ما رواه اثنان)، والغريب (ما انفرد بروايته راوٍ واحد)." },
+                { q: "9. ما معنى «العدالة» في راوي الحديث؟", a: "العدالة ملكة تحمل صاحبها على التقوى وملازمة المروءة، باجتناب الكبائر والبدع وخوارم المروءة وعدم الإصرار على الصغائر." },
+                { q: "10. ما هي أشهر الكتب والمصنفات التأسيسية في علم مصطلح الحديث؟", a: "مقدمة ابن الصلاح (معرفة أنواع علوم الحديث)، نخبة الفكر للحافظ ابن حجر، والبيقونية للبيقوني." }
+            ],
+            quizList: [
+                { q: "1. الشرط الذي يُميز الحديث الصحيح عن الحديث الحسن هو:", opts: ["تمام الضبط مقابل خفة الضبط", "اتصال السند", "عدالة الراوي"], a: 0 },
+                { q: "2. الحديث الذي سقط من إسناده راويان متتاليان يسمى:", opts: ["المعضل", "المرسل", "المعلق"], a: 0 },
+                { q: "3. ما رفعه التابعي مباشرة إلى النبي ﷺ دون ذكر الواسطة يسمى:", opts: ["المرسل", "المرفوع", "الموقوف"], a: 0 },
+                { q: "4. رواية الثقة المخالفة لمن هو أوثق منه تسمى حديثاً:", opts: ["شاذاً", "منكراً", "موضوعاً"], a: 0 },
+                { q: "5. الحديث الذي رواه في كل طبقة راويان فقط يسمى:", opts: ["عزيزاً", "مشهوراً", "غريباً"], a: 0 },
+                { q: "6. حكم رواية الحديث الموضوع مع العلم بوضعه دون تبيينه هو:", opts: ["حرام ومن كبائر الذنوب", "مكروه فقط", "جائز في الرقائق"], a: 0 },
+                { q: "7. من شروط المتواتر إفادته لـ:", opts: ["العلم اليقيني القطعي", "الظن الضعيف", "الشك المتردد"], a: 0 },
+                { q: "8. مؤلف كتاب «نخبة الفكر في مصطلح أهل الأثر» هو الحافظ:", opts: ["ابن حجر العسقلاني", "الإمام النووي", "ابن كثير"], a: 0 },
+                { q: "9. ما ينتهي إليه السند من الكلام يسمى اصطلاحاً:", opts: ["المتن", "السند", "التخريج"], a: 0 },
+                { q: "10. السقط من أول الإسناد من جهة المصنف يسمى حديثاً:", opts: ["معلقاً", "مرسلاً", "منقطعاً"], a: 0 }
+            ]
+        },
+
+        riyad: {
+            title: "رياض الصالحين — الأخلاق والآداب والسنن اليومية",
+            badge: "رياض الصالحين",
+            desc: "مدارسة أحاديث الأخلاق والآداب والأذكار النبوية وشروحها وفوائدها من كتاب رياض الصالحين للإمام النووي.",
+            quote: "«إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ» [رواه الإمام أحمد والبيهقي وصححه الألباني]",
+            lessons: [
+                {
+                    id: "h_ry_1",
+                    num: "01",
+                    title: "باب التوبة وسعة رحمة الله تعالى",
+                    summary: "وجوب المبادرة بالتوبة من كل ذنب، شروطها المتعلقة بحق الله وبحقوق الآدميين، وفرح الله بتوبة عبده.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «وَاللهِ إِنِّي لَأَسْتَغْفِرُ اللهَ وَأَتُوبُ إِلَيْهِ فِي اليَوْمِ أَكْثَرَ مِنْ سَبْعِينَ مَرَّةً». [رواه البخاري]، وعَنْ أَنَسٍ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «لَلَّهُ أَفْرَحُ بِتَوْبَةِ عَبْدِهِ مِنْ أَحَدِكُمْ سَقَطَ عَلَى بَعِيرِهِ وَقَدْ أَضَلَّهُ فِي أَرْضِ فَلَاةٍ». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>حقيقة التوبة:</strong> الرجوع من معصية الله إلى طاعته، وهي واجبة على الفور من كل ذنب صغير أو كبير لقوله تعالى: (وَتُوبُوا إِلَى اللَّهِ جَمِيعًا أَيُّهَ الْمُؤْمِنُونَ لَعَلَّكُمْ تُفْلِحُونَ).</p>
+                            <p><strong>شروط التوبة النصوح:</strong><br>
+                            1. الإقلاع الفوري عن الذنب.<br>
+                            2. الندم الصادق على ما فرط منه.<br>
+                            3. العزم الجازم ألا يعود إليه أبداً.<br>
+                            4. إن كانت المعصية تتعلق بحق آدمي (كمظلمة مال أو عِرض) وجب رد الحق لأصحابه أو استحلالهم.</p>
+                            <p><strong>فرح الله بالتائب:</strong> ضرب النبي مثلاً بأعظم درجات الفرح بنجاة رجل ضلت راحلته في صحراء مهلكة وعليها طعامه وشرابه فأيس من الحياة ثم وجدها؛ فالله أشد فرحاً برجوع عبده التائب كرماً منه وفضلاً.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد والهدايات:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. استغفار النبي ﷺ أكثر من سبعين مرة وهو المغفور له ما تقدم من ذنبه لتعليم أمته وشكراً لربه.</li>
+                                <li>2. فتح باب الرجاء وعدم القنوط من رحمة الله مهما عظمت الذنوب.</li>
+                                <li>3. التوبة تمحو ما قبلها وتُبدل السيئات حسنات بفضل الله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_2",
+                    num: "02",
+                    title: "باب الصبر وفضله وأنواعه الثلاثة",
+                    summary: "الصبر على الطاعات، الصبر عن المعاصي، والصبر على أقدار الله المؤلمة، وعظم أجر الصابرين واحتساب الأجر.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي مَالِكٍ الأَشْعَرِيِّ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «... وَالصَّلَاةُ نُورٌ، وَالصَّدَقَةُ بُرْهَانٌ، وَالصَّبْرُ ضِيَاءٌ، وَالقُرْآنُ حُجَّةٌ لَكَ أَوْ عَلَيْكَ...». [رواه مسلم]، وعَنْ صُهَيْبٍ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «عَجَبًا لِأَمْرِ المُؤْمِنِ، إِنَّ أَمْرَهُ كُلَّهُ خَيْرٌ... إِنْ أَصَابَتْهُ سَرَّاءُ شَكَرَ فَكَانَ خَيْرًا لَهُ، وَإِنْ أَصَابَتْهُ ضَرَّاءُ صَبَرَ فَكَانَ خَيْرًا لَهُ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>«والصبر ضياء»:</strong> الضياء هو النور المصحوب بحرارة ومجاهدة (كالضياء المنبعث من الشمس)؛ لأن حبس النفس عن الجزع وتجرع مرارة المصيبة يحتاج إلى كفاح وقوة إيمان، فيضيء للمسلم طريقه في ظلمات الفتن والمحن.</p>
+                            <p><strong>أنواع الصبر الثلاثة:</strong><br>
+                            1. <strong>صبر على طاعة الله:</strong> بالاستمرار على الصلوات وصيام الهواجر والجهاد.<br>
+                            2. <strong>صبر عن معصية الله:</strong> بكبح جماح الشهوات المحرمة ومخالفة الهوى.<br>
+                            3. <strong>صبر على أقدار الله المؤلمة:</strong> كفقد الأحبة، والفقر، والمرض دون تسخط.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. المسلم الرابح في كل أحواله يتقلب بين مقامي الشكر عند الرخاء والصبر عند البلاء.</li>
+                                <li>2. الصبر الحقيقي المأجور ما كان عند الصدمة الأولى للابتلاء.</li>
+                                <li>3. تكفير السيئات ورفع الدرجات بالمرض والهم والغم حتى الشوكة يُشاكها المؤمن.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_3",
+                    num: "03",
+                    title: "باب الصدق وملازمة الحقيقة والبر",
+                    summary: "الصدق يهدي إلى البر والجنة، والتحذير الشديد من الكذب وعواقبه الوخيمة في الدنيا والآخرة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ عَبْدِ اللهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: «عَلَيْكُمْ بِالصِّدْقِ، فَإِنَّ الصِّدْقَ يَهْدِي إِلَى البِرِّ، وَإِنَّ البِرَّ يَهْدِي إِلَى الجَنَّةِ، وَمَا يَزَالُ الرَّجُلُ يَصْدُقُ وَيَتَحَرَّى الصِّدْقَ حَتَّى يُكْتَبَ عِنْدَ اللهِ صِدِّيقًا، وَإِيَّاكُمْ وَالكَذِبَ، فَإِنَّ الكَذِبَ يَهْدِي إِلَى الفُجُورِ، وَإِنَّ الفُجُورَ يَهْدِي إِلَى النَّارِ، وَمَا يَزَالُ الرَّجُلُ يَكْذِبُ وَيَتَحَرَّى الكَذِبَ حَتَّى يُكْتَبَ عِنْدَ اللهِ كَذَّابًا». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>«عليكم بالصدق»:</strong> اسم فعل أمر؛ أي الزموا الصدق في أقوالكم وأفعالكم ونياتكم؛ فالصدق أساس الإيمان وسُلّم الوصول إلى رتبة «الصديقية» وهي أعلى رتب أولياء الله بعد النبوة.</p>
+                            <p><strong>«وإياكم والكذب»:</strong> تحذير شديد من الكذب بجميع أنواعه ومبرراته؛ فالكذب يجر إلى الفجور والجرأة على المعاصي ويجعل صاحبه ملعوناً مطروداً من رحمة الله.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. التحري والممارسة الدائمة للصدق ترسخ الفضيلة حتى تصبح سجية وطبيعة.</li>
+                                <li>2. طمأنينة القلب بالصدق وريبته وقلقه بالكذب (الصدق طمأنينة والكذب ريبة).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_4",
+                    num: "04",
+                    title: "باب المراقبة واستشعار معية الله الخفية",
+                    summary: "استشعار مراقبة الله للسرائر والعلانية، والتقوى أينما كان العبد، ووصية النبي الخالدة لابن عباس.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي العَبَّاسِ عَبْدِ اللهِ بْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا قَالَ: كُنْتُ خَلْفَ النَّبِيِّ ﷺ يَوْمًا فَقَالَ: «يَا غُلَامُ، إِنِّي أُعَلِّمُكَ كَلِمَاتٍ: احْفَظِ اللهَ يَحْفَظْكَ، احْفَظِ اللهَ تَجِدْهُ تُجَاهَكَ، إِذَا سَأَلْتَ فَاسْأَلِ اللهَ، وَإِذَا اسْتَعَنْتَ فَاسْتَعِنْ بِاللهِ، وَاعْلَمْ أَنَّ الأُمَّةَ لَوِ اجْتَمَعَتْ عَلَى أَنْ يَنْفَعُوكَ بِشَيْءٍ لَمْ يَنْفَعُوكَ إِلَّا بِشَيْءٍ قَدْ كَتَبَهُ اللهُ لَكَ... رُفِعَتِ الأَقْلَامُ وَجَفَّتِ الصُّحُفُ». [رواه الترمذي وقال حديث حسن صحيح]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>«احفظ الله يحفظك»:</strong> احفظ أوامره بالامتثال، ونواهيه بالاجتناب، وحدوده بالتوقير؛ يحفظك الله في دينك، وبدنك، وأهلك، وذريتك، ويحفظك عند سكرات الموت وفي القبر ويوم الحشر.</p>
+                            <p><strong>إفراد الله بالسؤال والاستعانة:</strong> توجيه القلب للتوكل المطلق على الله وحده؛ لأن النفع والضر بيده سبحانه وحده، فالمخلوقون كلهم أسباب لا تأثير لهم إلا بإذن الله ومشيئته.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. شجاعة القلب وزوال الخوف من المخلوقين باليقين بأن النفع والضر بيد الله.</li>
+                                <li>2. عناية النبي ﷺ بتربية الصغار والشباب وتثبيت العقيدة في قلوبهم.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_5",
+                    num: "05",
+                    title: "باب بر الوالدين وصلة الأرحام",
+                    summary: "عظم حق الوالدين وقرنه بالتوحيد، خطورة العقوق وقطيعة الرحم، وبرهما بالدعاء والإنفاق بعد وفاتهما.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: جَاءَ رَجُلٌ إِلَى رَسُولِ اللهِ ﷺ فَقَالَ: يَا رَسُولَ اللهِ، مَنْ أَحَقُّ النَّاسِ بِحُسْنِ صَحَابَتِي؟ قَالَ: «أُمُّكَ». قَالَ: ثُمَّ مَنْ؟ قَالَ: «ثُمَّ أُمُّكَ». قَالَ: ثُمَّ مَنْ؟ قَالَ: «ثُمَّ أُمُّكَ». قَالَ: ثُمَّ مَنْ؟ قَالَ: «ثُمَّ أَبُوكَ». [متفق عليه]، وعَنْ أَنَسٍ رَضِيَ اللهُ عَنْهُ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «مَنْ أَحَبَّ أَنْ يُبْسَطَ لَهُ فِي رِزْقِهِ، وَيُنْسَأَ لَهُ فِي أَثَرِهِ، فَلْيَصِلْ رَحِمَهُ». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>تفضيل حق الأم:</strong> خص النبي ﷺ الأم بثلاثة أضعاف حسن الصحبة لمقاساتها مشقات الحمل، والوضع، والرضاع، والرعاية المستمرة.</p>
+                            <p><strong>بركة صلة الرحم:</strong> صلة القرابة تجلب سعة الرزق، والبركة في العمر (إما بطول العمر الحقيقي أو بالبركة والتوفيق للأعمال الصالحة التي يبقى ذكرها وثوابها بعد الموت).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. بر الوالدين أعظم القربات بعد الصلاة في وقتها، وعقوقهما من أكبر الكبائر.</li>
+                                <li>2. صلة الرحم لا تكون بالمكافئ فقط بل بمن يصل رحمه إذا قطعت.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_6",
+                    num: "06",
+                    title: "باب حق الجار وإكرامه والإحسان إليه",
+                    summary: "وصية جبريل المؤكدة بالجار، مراتب الجيران الثلاثة، وحرمة أذية الجار والترهيب القاطع منها.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنِ ابْنِ عُمَرَ وَعَائِشَةَ رَضِيَ اللهُ عَنْهُمَا قَالَا: قَالَ رَسُولُ اللهِ ﷺ: «مَا زَالَ جِبْرِيلُ يُوصِينِي بِالجَارِ حَتَّى ظَنَنْتُ أَنَّهُ سَيُوَرِّثُهُ». [متفق عليه]، وعَنْ أَبِي شُرَيْحٍ الخُزَاعِيِّ رَضِيَ اللهُ عَنْهُ أَنَّ النَّبِيَّ ﷺ قَالَ: «وَاللهِ لَا يُؤْمِنُ، وَاللهِ لَا يُؤْمِنُ، وَاللهِ لَا يُؤْمِنُ! قِيلَ: وَمَنْ يَا رَسُولَ اللهِ؟ قَالَ: الَّذِي لَا يَأْمَنُ جَارُهُ بَوَائِقَهُ». [رواه البخاري]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>«حتى ظننت أنه سيورثه»:</strong> من شدة تكرار جبريل الوصية بالجار وتأكيد حقوقه، ظن النبي ﷺ أنه سينزل وحي يجعله شريكاً في الميراث مع الورثة الشرعيين.</p>
+                            <p><strong>«بوائقه»:</strong> أي شروره وغدره وأذاه وظلمه؛ فالأيمان المؤكدة بنفي الإيمان تدل على نفي كمال الإيمان الواجب وخطورة أذية الجيران باللسان أو العين أو التصرفات.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. وجوب كف الأذى عن الجار وبذل المعروف له وتفقد محتاجه وإهداء الطعام إليه.</li>
+                                <li>2. تضاعف حرمة المعصية وإثمها إذا كانت في حق الجار.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_7",
+                    num: "07",
+                    title: "باب حسن الخلق والتواضع ولين الجانب",
+                    summary: "أثقل ما يوضع في الميزان حسن الخلق، أقرب المؤمنين مجلساً من النبي، وفضل التواضع وخفض الجناح.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي الدَّرْدَاءِ رَضِيَ اللهُ عَنْهُ أَنَّ النَّبِيَّ ﷺ قَالَ: «مَا مِنْ شَيْءٍ أَثْقَلُ فِي مِيزَانِ المُؤْمِنِ يَوْمَ القِيَامَةِ مِنْ حُسْنِ الخُلُقِ، وَإِنَّ اللهَ لَيُبْغِضُ الفَاحِشَ البَذِيءَ». [رواه الترمذي وصححه]، وعَنْ عِيَاضِ بْنِ حِمَارٍ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «إِنَّ اللهَ أَوْحَى إِلَيَّ أَنْ تَوَاضَعُوا حَتَّى لَا يَفْخَرَ أَحَدٌ عَلَى أَحَدٍ، وَلَا يَبْغِيَ أَحَدٌ عَلَى أَحَدٍ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>حقيقة حسن الخلق:</strong> كف الأذى، بذل الندى (الإحسان)، وطلاقة الوجه والتبسم وسعة الصدر مع الصغير والكبير والغني والفقير.</p>
+                            <p><strong>مكانة الخلق الحسن:</strong> يبلغ به العبد درجة الصائم القائم بنوافله، وهو أثقل الأعمال في ميزان الحسنات يوم القيامة، وأقرب أسباب مرافقة النبي ﷺ في الفردوس الأعلى.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الإسلام دين الأخلاق الفاضلة التي تُترجم العقيدة إلى سلوك ومعاملات راقية.</li>
+                                <li>2. بغض الله للفاحش البذيء الذي يتفوه بالكلمات النابية ويسيء للآخرين.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_8",
+                    num: "08",
+                    title: "باب فضل الأذكار والتسبيح والاستغفار",
+                    summary: "فضل الأذكار الراتبة، كلمتان خفيفتان على اللسان حبيبتان للرحمن، أحب الكلام إلى الله، وكنوز الجنة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي المِيزَانِ، حَبِيبَتَانِ إِلَى الرَّحْمَنِ: سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ اللهِ العَظِيمِ». [متفق عليه]، وعَنْ سَمُرَةَ بْنِ جُنْدَبٍ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «أَحَبُّ الكَلَامِ إِلَى اللهِ أَرْبَعٌ: سُبْحَانَ اللهِ، وَالحَمْدُ للهِ، وَلَا إِلَهَ إِلَّا اللهُ، وَاللهُ أَكْبَرُ، لَا يَضُرُّكَ بِأَيِّهِنَّ بَدَأْتَ». [رواه مسلم]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>فضل الذكر:</strong> الذكر قوت القلوب وجلاء الصدور وحصن المسلم الحصين من الشيطان؛ وقد خفف الله ألفاظه ويسرها وعظم ثوابها وأجورها ليرطب المسلم لسانه دائماً بذكر ربه.</p>
+                            <p><strong>«سبحان الله وبحمده سبحان الله العظيم»:</strong> تجمع بين تنزيه الله عن كل نقص (التسبيح)، وإثبات جميع صفات الكمال والجلال له سبحانه (التحميد والتعظيم).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. تثقيل ميزان العبد بكلمات سهلة يسيرة يواظب عليها في قيامه وقعوده وركوبه.</li>
+                                <li>2. مثل الذي يذكر ربه والذي لا يذكر ربه كمثل الحي والميت.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_9",
+                    num: "09",
+                    title: "باب حفظ اللسان وكف الجوارح عن الآثام",
+                    summary: "خطر اللسان وحصائده في النار، قاعدة (فليقل خيراً أو ليصمت)، وسلامة الإنسان في حفظ اللسان.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ عَنْ رَسُولِ اللهِ ﷺ قَالَ: «مَنْ كَانَ يُؤْمِنُ بِاللهِ وَاليَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ...». [متفق عليه]، وعَنْ سَهْلِ بْنِ سَعْدٍ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «مَنْ يَضْمَنْ لِي مَا بَيْنَ لَحْيَيْهِ وَمَا بَيْنَ رِجْلَيْهِ أَضْمَنْ لَهُ الجَنَّةَ». [رواه البخاري]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>خطر اللسان:</strong> اللسان عضو صغير الحجم لكنه عظيم الجرم؛ فمعظم خطايا بني آدم من ألسنتهم (الغيبة، النميمة، الكذب، السخرية، وقذف المحصنات).</p>
+                            <p><strong>ضمان الجنة:</strong> «ما بين لحييه» هو اللسان، و«ما بين رجليه» هو الفرج؛ فمن حفظ لسانه عن الحرام وفرجه عن الفواحش ضمن له رسول الله ﷺ دخول الجنة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الصمت حكمة ووقار إلا في موطن الأمر بالمعروف والنهي عن المنكر وقول الحق.</li>
+                                <li>2. مراقبة الكلمات قبل التلفظ بها لأن كل لفظ مسجل: (مَّا يَلْفِظُ مِن قَوْلٍ إِلَّا لَدَيْهِ رَقِيبٌ عَتِيدٌ).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "h_ry_10",
+                    num: "10",
+                    title: "باب فضل الصلاة والسلام على النبي ﷺ",
+                    summary: "مواطن وفضل الصلاة على النبي، نيل الشفاعة ومغفرة الذنوب وكفاية الهموم، والتحذير من البخل بعدم الصلاة عليه.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف:</h4>
+                        <div class="hadith-quote-box">
+                            عَنْ عَبْدِ اللهِ بْنِ عَمْرِو بْنِ العَاصِ رَضِيَ اللهُ عَنْهُمَا أَنَّهُ سَمِعَ النَّبِيَّ ﷺ يَقُولُ: «مَنْ صَلَّى عَلَيَّ صَلَاةً صَلَّى اللهُ عَلَيْهِ بِهَا عَشْرًا». [رواه مسلم]، وعَنْ أُبَيِّ بْنِ كَعْبٍ رَضِيَ اللهُ عَنْهُ قَالَ: قُلْتُ: يَا رَسُولَ اللهِ، إِنِّي أُكْثِرُ الصَّلَاةَ عَلَيْكَ فَكَمْ أَجْعَلُ لَكَ مِنْ صَلَاتِي؟... قَالَ: «أَجْعَلُ لَكَ صَلَاتِي كُلَّهَا؟ قَالَ: إِذًا تُكْفَى هَمَّكَ، وَيُغْفَرُ لَكَ ذَنْبُكَ». [رواه الترمذي وقال حسن صحيح]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان التفصيلي:</h4>
+                        <div class="hadith-explanation-box">
+                            <p><strong>معنى صلاة الله على عبده:</strong> ثناؤه عليه في الملأ الأعلى عند الملائكة المقربين ورحمته ومغفرته له ورفع درجاته.</p>
+                            <p><strong>«إذاً تكفى همك ويغفر لك ذنبك»:</strong> من جعل دعاءه كله صلاة على النبي ﷺ كفاه الله ما أهمه من أمر دنياه وآخرته وغفر له ذنوبه كلها ببركة الصلاة على الحبيب المصطفى ﷺ.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="hadith-benefits-box">
+                            <ul>
+                                <li>1. الصلاة على النبي سبب لإجابة الدعاء وانفراج الكروب والهموم.</li>
+                                <li>2. البخيل الحقيقي من ذُكر عنده النبي ﷺ فلم يصلِّ عليه.</li>
+                                <li>3. استحباب الإكثار من الصلاة عليه خصوصاً ليلة الجمعة ويوم الجمعة وفي التشهد والأذان.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هي الشروط الأربعة للتوبة الصادقة إذا كانت المعصية تتعلق بحق آدمي؟", a: "1. الإقلاع الفوري عن الذنب، 2. الندم الصادق على فعله، 3. العزم الجازم على عدم العودة، 4. إبراء الذمة ورد المظالم أو الحقوق إلى أصحابها أو استحلالهم." },
+                { q: "2. ما هي أقسام وأنواع الصبر الثلاثة في الشريعة الإسلامية؟", a: "1. الصبر على طاعة الله (كأداء الفرائض)، 2. الصبر عن معصية الله (بترك المحرمات والشهوات)، 3. الصبر على أقدار الله المؤلمة (كالمرض والابتلاءات)." },
+                { q: "3. ما هو أثقل شيء يوضع في ميزان العبد المؤمن يوم القيامة؟", a: "حسن الخلق؛ لقول النبي ﷺ: «ما شيء أثقل في ميزان المؤمن يوم القيامة من خلق حسن، وإن الله ليبغض الفاحش البذيء»." },
+                { q: "4. ما هما الكلمتان الخفيفتان على اللسان الثقيلتان في الميزان الحبيبتان للرحمن؟", a: "«سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ اللهِ العَظِيمِ» كما ثبت في الصحيحين." },
+                { q: "5. ما هو فضل صلة الرحم كما رغّب فيه النبي ﷺ؟", a: "بسط الرزق، البركة في العمر والأثر، ومحبة الأهل، لقوله ﷺ: «من سره أن يُبسط له في رزقه ويُنسأ له في أثره فليصل رحمه»." },
+                { q: "6. ما هي وصية النبي ﷺ لمعاذ بن جبل في حفظ اللسان؟", a: "أخذ النبي ﷺ بلسان نفسه وقال: «كف عليك هذا»، ثم قال: «وهل يكب الناس في النار على وجوههم إلا حصائد ألسنتهم!»." },
+                { q: "7. ما معنى قول النبي ﷺ: «والصبر ضياء»؟", a: "الضياء هو النور المقترن بحرارة ومجاهدة؛ فالصبر يحتاج لمجاهدة النفس ويكشف ظلمات الحيرة والفتن ويهدي صاحبه إلى الصراط المستقيم." },
+                { q: "8. ما هو جزاء من صلى على النبي ﷺ صلاة واحدة؟", a: "صلى الله عليه بها عشراً، وحط عنه عشر خطايا، ورفع له عشر درجات." },
+                { q: "9. ما هي مراتب وحقوق الجيران الثلاثة في الإسلام؟", a: "جار له حق واحد (كافر له حق الجوار)، وجار له حقان (مسلم له حق الجوار وحق الإسلام)، وجار له ثلاثة حقوق (مسلم قريب له حق الجوار والإسلام وصلة الرحم)." },
+                { q: "10. ما معنى «من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت»؟", a: "قاعدة نبوية عظيمة في ضبط الكلام؛ فإذا أراد المسلم أن يتكلم فليفكر: فإن كان كلامه خيراً نطق به ونال الأجر، وإن كان شراً أو لغواً أمسك عنه وسلم." }
+            ],
+            quizList: [
+                { q: "1. الشرط الزائد في التوبة إذا كانت المعصية متعلقة بحق من حقوق العباد هو:", opts: ["رد المظالم أو استحلال صاحبها", "صيام شهرين متتابعين", "إطعام عشرة مساكين"], a: 0 },
+                { q: "2. أثقل ما يوضع في ميزان المؤمن يوم القيامة بعد التوحيد هو:", opts: ["حسن الخلق ولين الجانب", "كثرة الأسفار والتجارة", "الصمت الدائم المطلق"], a: 0 },
+                { q: "3. الكلمتان الحبيبتان إلى الرحمن الخفيفتان على اللسان هما:", opts: ["سبحان الله وبحمده سبحان الله العظيم", "لا حول ولا قوة إلا بالله فقط", "أستغفر الله وأتوب إليه فقط"], a: 0 },
+                { q: "4. الصبر على أداء الصلوات في أوقاتها يُعد من باب:", opts: ["الصبر على طاعة الله", "الصبر على الأقدار المؤلمة", "الصبر عن المعاصي"], a: 0 },
+                { q: "5. جزاء من صلى على النبي ﷺ صلاة واحدة أن الله:", opts: ["يصلي عليه بها عشراً", "يصلي عليه مرة واحدة فقط", "يغفر له ذنوب سنة فقط"], a: 0 },
+                { q: "6. من ثمرات صلة الرحم المذكورة في الحديث الشريف:", opts: ["بسط الرزق والبركة في الأثر والعمر", "الشهرة والجاه فقط", "الحصول على المال دون كسب"], a: 0 },
+                { q: "7. مؤلف كتاب «رياض الصالحين من كلام سيد المرسلين» هو الإمام:", opts: ["النووي رحمه الله", "ابن حجر رحمه الله", "الشافعي رحمه الله"], a: 0 },
+                { q: "8. الصدق يهدي إلى البر، وإن البر يهدي إلى:", opts: ["الجنة", "الغنى الدنيوي فقط", "راحة البدن فقط"], a: 0 },
+                { q: "9. وصية جبريل المتكررة للنبي ﷺ كانت في شأن:", opts: ["حق الجار وإكرامه", "بناء المساجد فقط", "التجارة والأسواق"], a: 0 },
+                { q: "10. الحديث الآمر بقول الخير أو الصمت يدل على وجوب:", opts: ["حفظ اللسان والتروي قبل النطق", "عدم الكلام مطلقاً مع الناس", "السكوت في مجالس العلم"], a: 0 }
+            ]
+        }
+    };
+
+    var currentBranchKey = 'nawawi';
+    var completedLessons = JSON.parse(localStorage.getItem('completedHadeethLessons') || '[]');
+    var activeModalLesson = null;
+
+    function selectHadeethBranch(branchKey) {
+        currentBranchKey = branchKey;
+        document.querySelectorAll('.side-nav-btn').forEach(function(btn) { btn.classList.remove('active'); });
+        var targetBtn = document.getElementById('btn-' + branchKey);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        var data = hadeethData[branchKey];
+        document.getElementById('topicBadge').innerHTML = '<i class="fa-solid fa-star"></i> ' + data.badge;
+        document.getElementById('topicTitle').innerText = data.title;
+        document.getElementById('topicDescription').innerText = data.desc;
+        document.getElementById('topicQuote').innerText = data.quote;
+
+        var defaultTab = document.querySelector('.sub-tab-btn');
+        if (defaultTab) switchTopicView('lessons', defaultTab);
+
+        renderLessons();
+        renderQA();
+        renderQuiz();
+        updateProgressUI();
+    }
+
+    function renderLessons() {
+        var container = document.getElementById('viewLessons');
+        var lessons = hadeethData[currentBranchKey].lessons;
+        container.innerHTML = '';
+
+        lessons.forEach(function(lesson) {
+            var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+            var card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.innerHTML = `
+                <div>
+                    <div class="lesson-card-top">
+                        <div class="lesson-number-badge">${lesson.num}</div>
+                        <span class="lesson-status-pill ${isCompleted ? 'completed' : ''}">
+                            <i class="fa-solid ${isCompleted ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${isCompleted ? 'تمت دراسته' : 'متاح للمدارسة'}
+                        </span>
+                    </div>
+                    <h3 class="lesson-title">${lesson.title}</h3>
+                    <p class="lesson-summary">${lesson.summary}</p>
+                </div>
+                <div class="lesson-footer-row">
+                    <button class="btn-open-lesson" onclick="openLessonModal('${lesson.id}')">
+                        <i class="fa-solid fa-book-open-reader"></i> مطالعة الحديث والشرح
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQA() {
+        var container = document.getElementById('viewQA');
+        var qaList = hadeethData[currentBranchKey].qa;
+        container.innerHTML = '';
+
+        qaList.forEach(function(item, qIdx) {
+            var cleanQ = item.q.replace(/^\d+\.\s*/, '');
+            var card = document.createElement('div');
+            card.className = 'qa-card';
+            card.innerHTML = `
+                <div class="qa-header" onclick="this.parentElement.classList.toggle('open')">
+                    <span><i class="fa-solid fa-circle-question" style="color: #2563eb; margin-left: 8px;"></i> ${qIdx + 1}. ${cleanQ}</span>
+                    <i class="fa-solid fa-chevron-down" style="transition: transform .25s ease; color: var(--text-muted);"></i>
+                </div>
+                <div class="qa-body">
+                    <strong>الإجابة والبيان: </strong> ${item.a}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQuiz() {
+        var container = document.getElementById('quizBox');
+        var quizList = hadeethData[currentBranchKey].quizList;
+        container.innerHTML = `
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h3 style="font-size: 20px; font-weight: 800; color: #2563eb; margin-bottom: 6px;">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم السريع في ${hadeethData[currentBranchKey].badge}
+                </h3>
+                <p style="font-size: 13.5px; color: var(--text-muted);">أجب عن الأسئلة العشرة لقياس مدى استيعابك للأحاديث والفوائد والأحكام</p>
+            </div>
+        `;
+
+        quizList.forEach(function(qObj, qIdx) {
+            var qBox = document.createElement('div');
+            qBox.style.marginBottom = '25px';
+            var cleanTitle = qObj.q.replace(/^\d+\.\s*/, '');
+            qBox.innerHTML = `<h4 class="quiz-question-title">${qIdx + 1}. ${cleanTitle}</h4>`;
+
+            var optsBox = document.createElement('div');
+            optsBox.className = 'quiz-options';
+
+            qObj.opts.forEach(function(opt, optIdx) {
+                var btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    var siblings = optsBox.querySelectorAll('.quiz-option-btn');
+                    siblings.forEach(function(b) { b.disabled = true; });
+
+                    if (optIdx === qObj.a) {
+                        btn.classList.add('correct');
+                        btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> ' + opt + ' (إجابة صحيحة وموفقة!)';
+                    } else {
+                        btn.classList.add('wrong');
+                        btn.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ' + opt + ' (إجابة غير صحيحة)';
+                        siblings[qObj.a].classList.add('correct');
+                    }
+                };
+                optsBox.appendChild(btn);
+            });
+
+            qBox.appendChild(optsBox);
+            container.appendChild(qBox);
+        });
+    }
+
+    function switchTopicView(viewType, btn) {
+        document.querySelectorAll('.sub-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+        document.getElementById('viewLessons').style.display = (viewType === 'lessons') ? 'grid' : 'none';
+        document.getElementById('viewQA').style.display = (viewType === 'qa') ? 'block' : 'none';
+        document.getElementById('viewQuiz').style.display = (viewType === 'quiz') ? 'block' : 'none';
+    }
+
+    function openLessonModal(lessonId) {
+        var list = hadeethData[currentBranchKey].lessons;
+        var lesson = list.find(function(l) { return l.id === lessonId; });
+        if (!lesson) return;
+
+        activeModalLesson = lesson;
+        document.getElementById('modalTopicBadge').innerText = hadeethData[currentBranchKey].badge;
+        document.getElementById('modalLessonTitle').innerText = lesson.title;
+        document.getElementById('modalLessonBody').innerHTML = lesson.content;
+
+        var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+        var btnComplete = document.getElementById('btnMarkComplete');
+        if (isCompleted) {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل بالفعل (إلغاء)';
+            btnComplete.style.background = '#059669';
+        } else {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»';
+            btnComplete.style.background = '#2563eb';
+        }
+
+        document.getElementById('lessonModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLessonModal(e) {
+        if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close-btn')) return;
+        document.getElementById('lessonModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function toggleCompleteCurrentLesson() {
+        if (!activeModalLesson) return;
+        var lessonId = activeModalLesson.id;
+        var idx = completedLessons.indexOf(lessonId);
+        if (idx === -1) {
+            completedLessons.push(lessonId);
+        } else {
+            completedLessons.splice(idx, 1);
+        }
+
+        localStorage.setItem('completedHadeethLessons', JSON.stringify(completedLessons));
+        openLessonModal(lessonId);
+        renderLessons();
+        updateProgressUI();
+
+        // حفظ وتحديث التقدم في الباك إند في خانة الحديث الشريف
+        var token = localStorage.getItem('token');
+        if (token) {
+            fetch('/api/usul-progress/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    science: 'hadeeth',
+                    lessonId: lessonId
+                })
+            })
+            .then(function(res) { return res.ok ? res.json() : null; })
+            .then(function(data) {
+                if (data && data.hadeeth) {
+                    completedLessons = data.hadeeth;
+                    localStorage.setItem('completedHadeethLessons', JSON.stringify(completedLessons));
+                    renderLessons();
+                    updateProgressUI();
+                }
+            })
+            .catch(function(err) {
+                console.warn('تعذر الاتصال بالسيرفر، تم الحفظ محلياً:', err);
+            });
+        }
+    }
+
+    function updateProgressUI() {
+        var total = 30;
+        var count = completedLessons.length;
+        var pct = Math.round((count / total) * 100);
+        var pText = document.getElementById('hadeethProgressText');
+        var pBar = document.getElementById('hadeethProgressBar');
+        var cCount = document.getElementById('completedHadeethCount');
+        if (pText) pText.innerText = pct + '%';
+        if (pBar) pBar.style.width = pct + '%';
+        if (cCount) cCount.innerText = count;
+    }
+
+    function loadProgressFromServer() {
+        var token = localStorage.getItem('token');
+        if (!token) {
+            updateProgressUI();
+            return;
+        }
+
+        fetch('/api/usul-progress', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+            if (data && data.hadeeth) {
+                completedLessons = data.hadeeth;
+                localStorage.setItem('completedHadeethLessons', JSON.stringify(completedLessons));
+                renderLessons();
+                updateProgressUI();
+            }
+        })
+        .catch(function(err) {
+            console.warn('تعذر جلب التقدم من السيرفر:', err);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        selectHadeethBranch('nawawi');
+        loadProgressFromServer();
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

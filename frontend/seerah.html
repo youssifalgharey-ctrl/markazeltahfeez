@@ -1,0 +1,2016 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار السيرة النبوية والتاريخ - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="محطات السيرة النبوية العطرة والشمائل المحمدية على صاحبها أفضل الصلاة والسلام.">
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        /* منع التمرير الأفقي الزائد */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            width: 100%;
+        }
+
+        .seerah-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            margin-top: 25px;
+            align-items: start;
+        }
+
+        /* اللوحة الجانبية للاختيارات */
+        .seerah-sidebar-panel {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 18px;
+            position: sticky;
+            top: 85px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="dark"] .seerah-sidebar-panel {
+            background: #14221d;
+            border-color: #23372f;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .sidebar-heading-box {
+            padding: 0 8px 16px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 18px;
+        }
+        .sidebar-main-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        [data-theme="dark"] .sidebar-main-title { color: #f1f5f9; }
+        .sidebar-main-title i { color: #7c3aed; font-size: 20px; }
+        .sidebar-subtitle { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
+
+        .seerah-side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .side-nav-btn {
+            background: #f8fafc;
+            border: 1.5px solid transparent;
+            border-radius: 18px;
+            padding: 16px 14px;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            font-family: inherit;
+            width: 100%;
+        }
+        [data-theme="dark"] .side-nav-btn { background: #192a24; color: #e2e8f0; }
+        .side-nav-btn:hover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+            transform: translateX(-4px);
+        }
+        [data-theme="dark"] .side-nav-btn:hover {
+            background: #231638;
+            border-color: #a78bfa;
+        }
+
+        .side-nav-btn.active {
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+            transform: translateX(-6px);
+        }
+        [data-theme="dark"] .side-nav-btn.active {
+            background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%);
+            color: #ffffff !important;
+        }
+
+        .side-btn-right { display: flex; align-items: center; gap: 12px; }
+        .side-btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(124, 58, 237, 0.12);
+            color: #7c3aed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .side-btn-icon { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+        .side-nav-btn.active .side-btn-icon { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+
+        .side-btn-text h4 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+        .side-btn-text span { font-size: 11.5px; color: var(--text-muted); display: block; }
+        .side-nav-btn.active .side-btn-text span { color: rgba(255, 255, 255, 0.85); }
+
+        .side-btn-badge {
+            background: rgba(124, 58, 237, 0.1);
+            color: #7c3aed;
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .side-btn-badge { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+        .side-nav-btn.active .side-btn-badge { background: rgba(255, 255, 255, 0.25); color: #ffffff; }
+
+        /* بطاقة التقدم */
+        .sidebar-progress-box {
+            margin-top: 25px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px dashed rgba(124, 58, 237, 0.3);
+        }
+        [data-theme="dark"] .sidebar-progress-box {
+            background: rgba(124, 58, 237, 0.12);
+            border-color: rgba(167, 139, 250, 0.25);
+        }
+        .sidebar-progress-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #5b21b6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        [data-theme="dark"] .sidebar-progress-title { color: #c4b5fd; }
+        .progress-bar-bg { background: #cbd5e1; height: 7px; border-radius: 10px; overflow: hidden; }
+        [data-theme="dark"] .progress-bar-bg { background: #243b32; }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* المحتوى الرئيسي */
+        .seerah-main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            min-width: 0;
+        }
+
+        .topic-hero-banner {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 70%, #7c3aed 100%);
+            border-radius: 24px;
+            padding: 30px 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(109, 40, 217, 0.2);
+            animation: fadeIn 0.35s ease;
+        }
+        [data-theme="dark"] .topic-hero-banner {
+            background: linear-gradient(135deg, #201035 0%, #4c1d95 100%);
+            border: 1px solid #6d28d9;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .topic-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .topic-hero-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .topic-hero-desc {
+            font-size: 14px;
+            opacity: 0.92;
+            line-height: 1.7;
+            max-width: 820px;
+            margin-bottom: 16px;
+        }
+        .topic-quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-family: 'Amiri', serif;
+            font-size: 16.5px;
+            line-height: 1.8;
+            border-right: 3px solid #ddd6fe;
+            display: inline-block;
+        }
+
+        /* تبويبات التنقل الداخلية */
+        .sub-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .sub-tab-btn {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 9px 18px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .sub-tab-btn {
+            background: #192a24;
+            border-color: #23362d;
+            color: #94a3b8;
+        }
+        .sub-tab-btn.active {
+            background: #7c3aed;
+            color: #ffffff;
+            border-color: #7c3aed;
+        }
+        [data-theme="dark"] .sub-tab-btn.active {
+            background: #8b5cf6;
+            color: #ffffff;
+        }
+
+        /* شبكة الدروس */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .lesson-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            transition: all 0.28s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-card {
+            background: #15221d;
+            border-color: #23372f;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+            box-shadow: 0 14px 30px rgba(124, 58, 237, 0.12);
+        }
+        [data-theme="dark"] .lesson-card:hover {
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+            border-color: #a78bfa;
+        }
+
+        .lesson-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .lesson-number-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(124, 58, 237, 0.1);
+            color: #7c3aed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        [data-theme="dark"] .lesson-number-badge {
+            background: rgba(167, 139, 250, 0.15);
+            color: #c4b5fd;
+        }
+
+        .lesson-status-pill {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        [data-theme="dark"] .lesson-status-pill { background: #1e332a; }
+        .lesson-status-pill.completed { background: #dcfce7; color: #15803d; }
+        [data-theme="dark"] .lesson-status-pill.completed { background: #14532d; color: #86efac; }
+
+        .lesson-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        .lesson-summary {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .lesson-footer-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--card-border);
+        }
+        .lesson-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-open-lesson {
+            background: #7c3aed;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 7px 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-open-lesson:hover { background: #5b21b6; transform: scale(1.03); }
+
+        /* نافذة الدرس Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .lesson-modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 88vh;
+            overflow-y: auto;
+            border: 1.5px solid var(--card-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        [data-theme="dark"] .lesson-modal-content { background: #14221d; border-color: #23372f; }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 10;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.06); color: #e11d48; }
+
+        .modal-body { padding: 24px; line-height: 1.9; font-size: 15px; }
+        .modal-body h4 {
+            color: #7c3aed;
+            font-size: 17px;
+            font-weight: 800;
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1.5px solid rgba(124, 58, 237, 0.15);
+            padding-bottom: 6px;
+        }
+        [data-theme="dark"] .modal-body h4 { color: #a78bfa; border-bottom-color: rgba(167, 139, 250, 0.2); }
+        .modal-body p { margin-bottom: 12px; }
+
+        .seerah-quote-box {
+            background: rgba(124, 58, 237, 0.05);
+            border-right: 4px solid #7c3aed;
+            border-radius: 0 14px 14px 0;
+            padding: 18px 20px;
+            font-family: 'Amiri', serif;
+            font-size: 19px;
+            line-height: 2.1;
+            color: #5b21b6;
+            margin: 16px 0;
+            text-align: center;
+        }
+        [data-theme="dark"] .seerah-quote-box {
+            background: rgba(167, 139, 250, 0.1);
+            color: #ddd6fe;
+            border-right-color: #a78bfa;
+        }
+
+        .seerah-explanation-box {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin: 14px 0;
+            line-height: 1.85;
+        }
+        [data-theme="dark"] .seerah-explanation-box {
+            background: #182821;
+            border-color: #283e33;
+        }
+
+        .seerah-benefits-box {
+            background: rgba(16, 185, 129, 0.06);
+            border-right: 4px solid #10b981;
+            border-radius: 0 14px 14px 0;
+            padding: 16px 18px;
+            margin: 16px 0;
+        }
+        [data-theme="dark"] .seerah-benefits-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-right-color: #34d399;
+        }
+
+        .modal-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: inherit;
+        }
+
+        /* كويز تفاعلي */
+        .quiz-container {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        [data-theme="dark"] .quiz-container {
+            background: #16241f;
+            border-color: #24362e;
+        }
+        .quiz-question-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .quiz-question-title { color: #f1f5f9; }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        .quiz-option-btn {
+            background: #f8fafc;
+            border: 1.5px solid var(--card-border);
+            padding: 13px 16px;
+            border-radius: 14px;
+            text-align: right;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .quiz-option-btn {
+            background: #1c2e27;
+            border-color: #284136;
+            color: #e2e8f0;
+        }
+        .quiz-option-btn:hover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        [data-theme="dark"] .quiz-option-btn:hover { background: #2e1d3e; }
+        .quiz-option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .quiz-option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        /* بطاقات سؤال وجواب */
+        .qa-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .qa-card {
+            background: #16241f;
+            border-color: #23362d;
+        }
+        .qa-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .qa-body {
+            padding: 0 20px 18px;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--card-border);
+            padding-top: 14px;
+            display: none;
+        }
+        .qa-card.open .qa-body { display: block; }
+        .qa-card.open .qa-header i { transform: rotate(180deg); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== التوافق مع شاشات الهواتف ========== */
+        @media (max-width: 992px) {
+            .navbar { padding: 10px 12px; }
+            .logo span { font-size: 13px; max-width: 140px; line-height: 1.25; }
+            .logo-img { height: 36px; width: auto; }
+            .user-nav-actions .btn-card-details { padding: 6px 8px; font-size: 11px; white-space: nowrap; }
+            .user-badge { display: none !important; }
+
+            .section-container { padding: 10px 8px 60px !important; max-width: 100% !important; }
+            .seerah-layout { grid-template-columns: 100% !important; gap: 12px; margin-top: 5px; max-width: 100% !important; }
+            .seerah-main-view { max-width: 100% !important; min-width: 0; }
+
+            .seerah-sidebar-panel {
+                position: sticky;
+                top: 58px;
+                z-index: 100;
+                padding: 6px 8px;
+                border-radius: 16px;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                margin-bottom: 4px;
+                max-width: 100%;
+            }
+            [data-theme="dark"] .seerah-sidebar-panel { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+            .sidebar-heading-box { display: none; }
+            .seerah-side-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .side-nav-btn {
+                padding: 8px 2px;
+                border-radius: 12px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 2px;
+                transform: none !important;
+            }
+            .side-btn-right { flex-direction: column; align-items: center; gap: 2px; }
+            .side-btn-icon { width: 30px; height: 30px; font-size: 12px; border-radius: 8px; }
+            .side-btn-text h4 { font-size: 11.5px; margin: 0; font-weight: 800; white-space: nowrap; }
+            .side-btn-text span { display: none; }
+            .side-btn-badge { font-size: 9px; padding: 1px 4px; border-radius: 6px; margin: 0; }
+
+            .sidebar-progress-box { margin-top: 6px; padding: 6px 8px; border-radius: 8px; }
+            .sidebar-progress-title { font-size: 10.5px; margin-bottom: 3px; }
+            .sidebar-progress-box > div:last-child { display: none; }
+            .seerah-sidebar-panel > div:last-child { display: none; }
+
+            .topic-hero-banner { padding: 16px 14px; border-radius: 16px; max-width: 100%; }
+            .topic-badge-top { font-size: 11px; padding: 3px 8px; margin-bottom: 6px; }
+            .topic-hero-title { font-size: 17px; margin-bottom: 6px; }
+            .topic-hero-desc { font-size: 12px; line-height: 1.55; margin-bottom: 10px; }
+            .topic-quote-box { font-size: 14px; padding: 8px 10px; line-height: 1.7; }
+
+            .sub-nav-tabs { gap: 4px; padding-bottom: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .sub-tab-btn { padding: 6px 10px; font-size: 11.5px; flex-shrink: 0; }
+
+            .lessons-grid { grid-template-columns: 1fr; gap: 12px; max-width: 100%; }
+            .lesson-card { padding: 14px; border-radius: 16px; max-width: 100%; }
+            .lesson-title { font-size: 14.5px; }
+            .lesson-summary { font-size: 12px; line-height: 1.55; margin-bottom: 12px; }
+
+            .modal-overlay { padding: 8px; align-items: flex-end; }
+            .lesson-modal-content { max-height: 92vh; border-radius: 20px 20px 10px 10px; width: 100%; }
+            .modal-header { padding: 14px 16px; }
+            .modal-header h3 { font-size: 16.5px !important; }
+            .modal-body { padding: 16px 14px; font-size: 14px; line-height: 1.8; }
+            .seerah-quote-box { font-size: 16px; padding: 12px 14px; line-height: 2; }
+            .modal-footer { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+            .modal-footer button { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/usul-al-deen.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-right"></i> مسار أصول الدين
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span>
+        </a>
+    </div>
+</nav>
+
+<div class="section-container" style="max-width: 1280px; padding: 20px 20px 60px;">
+    <div class="seerah-layout">
+
+        <!-- اللوحة الجانبية: الأبواب الثلاثة للسيرة -->
+        <aside class="seerah-sidebar-panel">
+            <div class="sidebar-heading-box">
+                <div class="sidebar-main-title">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>أبواب السيرة النبوية</span>
+                </div>
+                <div class="sidebar-subtitle">اختر الباب لعرض موضوعاته ومحطاته:</div>
+            </div>
+
+            <div class="seerah-side-nav">
+                <!-- خيار 1: العهد المكي -->
+                <button class="side-nav-btn active" id="btn-makki" onclick="selectSeerahBranch('makki')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="side-btn-text">
+                            <h4>العهد المكي</h4>
+                            <span>الميلاد، البعثة، وبدايات الدعوة</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 محطات</span>
+                </button>
+
+                <!-- خيار 2: العهد المدني -->
+                <button class="side-nav-btn" id="btn-madani" onclick="selectSeerahBranch('madani')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-mosque"></i></div>
+                        <div class="side-btn-text">
+                            <h4>العهد المدني</h4>
+                            <span>الهجرة، الغزوات، والتمكين الأكبر</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 محطات</span>
+                </button>
+
+                <!-- خيار 3: الشمائل المحمدية -->
+                <button class="side-nav-btn" id="btn-shamail" onclick="selectSeerahBranch('shamail')">
+                    <div class="side-btn-right">
+                        <div class="side-btn-icon"><i class="fa-solid fa-ribbon"></i></div>
+                        <div class="side-btn-text">
+                            <h4>الشمائل المحمدية</h4>
+                            <span>صفاته الخَلقية والخُلقية وهديه</span>
+                        </div>
+                    </div>
+                    <span class="side-btn-badge">10 خصال</span>
+                </button>
+            </div>
+
+            <!-- بطاقة التقدم -->
+            <div class="sidebar-progress-box">
+                <div class="sidebar-progress-title">
+                    <span><i class="fa-solid fa-chart-pie"></i> نسبة الإنجاز في السيرة</span>
+                    <strong id="seerahProgressText">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="seerahProgressBar"></div>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
+                    تم إتمام <span id="completedSeerahCount">0</span> من أصل 30 موضوعاً
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="seerah-main-view">
+            <div class="topic-hero-banner" id="topicBanner">
+                <span class="topic-badge-top" id="topicBadge">
+                    <i class="fa-solid fa-star"></i> العهد المكي
+                </span>
+                <h2 class="topic-hero-title" id="topicTitle">العهد المكي — فجر الرسالة وبداية النور</h2>
+                <p class="topic-hero-desc" id="topicDescription">
+                    أحداث السيرة من المولد الشريف إلى غار حراء والدعوة السرية والجهرية والإسراء والمعراج.
+                </p>
+                <div class="topic-quote-box" id="topicQuote">
+                    «يَا أَيُّهَا الْمُدَّثِّرُ * قُمْ فَأَنذِرْ * وَرَبَّكَ فَكَبِّرْ» [المدثر: 1-3]
+                </div>
+            </div>
+
+            <div class="sub-nav-tabs">
+                <button class="sub-tab-btn active" onclick="switchTopicView('lessons', this)">
+                    <i class="fa-solid fa-book-bookmark"></i> المحطات والموضوعات (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('qa', this)">
+                    <i class="fa-solid fa-circle-question"></i> أسئلة وأجوبة في السيرة (10)
+                </button>
+                <button class="sub-tab-btn" onclick="switchTopicView('quiz', this)">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم التفاعلي (10)
+                </button>
+            </div>
+
+            <!-- عرض الدروس -->
+            <div id="viewLessons" class="lessons-grid"></div>
+
+            <!-- عرض الأسئلة والأجوبة -->
+            <div id="viewQA" style="display: none;"></div>
+
+            <!-- عرض الاختبار التفاعلي -->
+            <div id="viewQuiz" style="display: none;">
+                <div class="quiz-container" id="quizBox"></div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- Modal لعرض تفاصيل المحطة التاريخية والشرح والفوائد -->
+<div class="modal-overlay" id="lessonModal" onclick="closeLessonModal(event)">
+    <div class="lesson-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="lesson-status-pill" id="modalTopicBadge" style="margin-bottom: 4px; display: inline-block;">السيرة</span>
+                <h3 id="modalLessonTitle" style="font-size: 20px; font-weight: 800; margin: 0; color: #7c3aed;">عنوان المحطة</h3>
+            </div>
+            <button class="modal-close-btn" onclick="closeLessonModal()" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalLessonBody"></div>
+        <div class="modal-footer">
+            <button class="btn-card-details" onclick="closeLessonModal()" style="font-size: 13.5px; padding: 8px 18px;">
+                إغلاق النافذة
+            </button>
+            <button class="btn-enter-branch" id="btnMarkComplete" onclick="toggleCompleteCurrentLesson()" style="width: auto; padding: 8px 22px; font-size: 14px; background: #7c3aed;">
+                <i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var seerahData = {
+        makki: {
+            title: "العهد المكي — فجر الرسالة وتأسيس العقيدة",
+            badge: "العهد المكي",
+            desc: "أحداث السيرة من المولد الشريف إلى غار حراء والدعوة السرية والجهرية والابتلاءات والإسراء والمعراج.",
+            quote: "«يَا أَيُّهَا الْمُدَّثِّرُ * قُمْ فَأَنذِرْ * وَرَبَّكَ فَكَبِّرْ» [المدثر: 1-3]",
+            lessons: [
+                {
+                    id: "s_mk_1",
+                    num: "01",
+                    title: "المولد النبوي الشريف والنشأة والشباب",
+                    summary: "ولادته عام الفيل، رضاعته في بني سعد، كفالة جده عبد المطلب وعمه أبي طالب، وتجارته ولقبه بالصادق الأمين.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر والنص التاريخي:</h4>
+                        <div class="seerah-quote-box">
+                            وُلِدَ الْهُدَى فَالْكَائِنَاتُ ضِيَاءُ * وَفَمُ الزَّمَانِ تَبَسُّمٌ وَثَنَاءُ<br>
+                            «وُلِدَ النَّبِيُّ ﷺ يَوْمَ الِاثْنَيْنِ الثَّانِي عَشَرَ مِنْ رَبِيعٍ الأَوَّلِ مِنْ عَامِ الفِيلِ يَتِيمَ الأَبِ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل التاريخي:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>المولد والرضاعة:</strong> توفي والده عبد الله وهو جنين في بطن أمه آمنة بنت وهب، وأرضعته ثويبة مولاة أبي لهب، ثم حليمة السعدية في بادية بني سعد حيث وقعت حادثة شق الصدر الأولى المباركة.</p>
+                            <p><strong>الكفالة والشباب:</strong> توفيت أمه وعمره 6 سنوات فكفله جده عبد المطلب، ثم توفي جده وعمره 8 سنوات فكفله عمه أبو طالب. عمل في صباه برعي الغنم ليعتاد الصبر والرعاية، ثم تاجر في مال السيدة خديجة رضي الله عنها وعُرف بين قريش بالصادق الأمين، فتزوجها وعمره 25 سنة.</p>
+                            <p><strong>حلف الفضول وبناء الكعبة:</strong> شارك في حلف الفضول لنصرة المظلوم، وكان له الدور الحاسم بحكمته في وضع الحجر الأسود في مكانه وحقن دماء قبائل قريش.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس والعبر:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. حكمة الله في نشأة النبي يتيماً ليتولى الله تربيته وصناعته على عينه بلا فضل لأحد.</li>
+                                <li>2. رعي الغنم سنة مشتركة لجميع الأنبياء لتدريبهم على سياسة الأمم بالصبر والحلم.</li>
+                                <li>3. العصمة الإلهية لنبيه في شبابه من شرب الخمر وسجود الأصنام وسائر مساوئ الجاهلية.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_2",
+                    num: "02",
+                    title: "بدء الوحي في غار حراء (اقرأ باسم ربك)",
+                    summary: "تحنثه ﷺ في غار حراء، نزول جبريل عليه السلام، وتثبيت أم المؤمنين خديجة وبشارة ورقة بن نوفل له.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص الحديث الشريف في الصحيحين:</h4>
+                        <div class="seerah-quote-box">
+                            عَنْ عَائِشَةَ رَضِيَ اللهُ عَنْهَا قَالَتْ: «أَوَّلُ مَا بُدِئَ بِهِ رَسُولُ اللهِ ﷺ مِنَ الوَحْيِ الرُّؤْيَا الصَّالِحَةُ فِي النَّوْمِ... ثُمَّ حُبِّبَ إِلَيْهِ الخَلَاءُ، وَكَانَ يَخْلُو بِغَارِ حِرَاءٍ فَيَتَحَنَّثُ فِيهِ... حَتَّى جَاءَهُ الحَقُّ وَهُوَ فِي غَارِ حِرَاءٍ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>نزول الوحي:</strong> لما بلغ ﷺ الأربعين من عمره، فاجأه الملك جبريل في غار حراء فقال له: «اقرأ»، فقال: «ما أنا بقارئ»، فغطه ثلاثاً حتى بلغ منه الجهد، ثم أنزل عليه أول آيات القرآن: (اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ).</p>
+                            <p><strong>دور السيدة خديجة العظيم:</strong> رجع النبي يرجف فؤاده ويقول: «زملوني زملوني»، فثبتته قائلة كلماتها الخالدة: «كلا والله ما يخزيك الله أبداً؛ إنك لتصل الرحم، وتحمل الكل، وتكسب المعدوم، وتقري الضيف، وتعين على نوائب الحق».</p>
+                            <p><strong>شهادة ورقة بن نوفل:</strong> ذهبت به إلى ابن عمها ورقة وكان شيخاً نصرانياً يقرأ الإنجيل بالعبرانية، فبشره قائلاً: «هذا الناموس (جبريل) الذي نُزّل على موسى، يا ليتني فيها جذعاً إذ يخرجك قومك!».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس والعبر:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. عظمة العلم والتعلم بافتتاح التنزيل بكلمة (اقرأ).</li>
+                                <li>2. صنائع المعروف تقي مصارع السوء؛ كما استدلت السيدة خديجة بمكارم أخلاقه على حفظ الله له.</li>
+                                <li>3. سنة الابتلاء ومواجهة العداء لكل من قام بالدعوة إلى الحق.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_3",
+                    num: "03",
+                    title: "مرحلة الدعوة السرية ودار الأرقم",
+                    summary: "إسلام السابقين الأولين (خديجة، علي، أبو بكر، وزيد)، واجتماعهم السري للتعلم والتربية في دار الأرقم بن أبي الأرقم.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر التاريخي:</h4>
+                        <div class="seerah-quote-box">
+                            «دَعَا النَّبِيُّ ﷺ فِي بِدَايَةِ أَمْرِهِ سِرًّا مُدَّةَ ثَلَاثِ سِنِينَ، حَتَّى بَلَغَ عَدَدُ مَنْ أَسْلَمَ نَحْوَ أَرْبَعِينَ رَجُلًا وَامْرَأَةً، وَكَانَتْ دَارُ الأَرْقَمِ مَحَضْنَ التَّرْبِيَةِ الإِيمَانِيَّةِ الأَوَّلِ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>السابقون الأولون:</strong> بادر النبي بدعوة أقرب الناس إليه؛ فكانت خديجة أول من أسلم من النساء، وعلي بن أبي طالب أول من أسلم من الصبيان، وزيد بن حارثة أول من أسلم من الموالي، وأبو بكر الصديق أول من أسلم من الرجال الأحرار.</p>
+                            <p><strong>جهاد أبي بكر الدعوي:</strong> أسلم على يد أبي بكر كبار الصحابة كعثمان بن عفان، الزبير بن العوام، عبد الرحمن بن عوف، سعد بن أبي وقاص، وطلحة بن عبيد الله.</p>
+                            <p><strong>دار الأرقم:</strong> اختار النبي دار الفتى الأرقم بن أبي الأرقم المخزومي مقراً سرياً؛ لبُعدها عن أنظار قريش، حيث كان يتلو عليهم القرآن ويزكيهم ويربيهم على التوحيد الخالص.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الأخذ بالأسباب وحسن التخطيط والسرية في مراحل الضعف والتأسيس.</li>
+                                <li>2. مركزية التربية الإيمانية وبناء النواة الصلبة من الرجال قبل خوض المواجهات الكبرى.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_4",
+                    num: "04",
+                    title: "الجهر بالدعوة والصدع بالحق على الصفا",
+                    summary: "نزول الأمر الإلهي (فاصدع بما تؤمر)، وقوف النبي على الصفا لإنذار بطون قريش، وبداية العداء والمواجهة المفتوحة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الأمر الإلهي بالجهر:</h4>
+                        <div class="seerah-quote-box">
+                            «فَاصْدَعْ بِمَا تُؤْمَرُ وَأَعْرِضْ عَنِ الْمُشْرِكِينَ» [الحجر: 94]، «وَأَنذِرْ عَشِيرَتَكَ الْأَقْرَبِينَ» [الشعراء: 214]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>الوقوف على الصفا:</strong> صعد النبي ﷺ جبل الصفا ونادى بأعلى صوته: «يا صباحاه!»، فاجتمعت إليه قريش، فقال: «أرأيتكم لو أخبرتكم أن خيلاً بالوادي تريد أن تغير عليكم أكنتم مصدقي؟»، قالوا: «نعم، ما جربنا عليك إلا صدقاً»، فقال: «فإني نذير لكم بين يدي عذاب شديد».</p>
+                            <p><strong>موقف أبي لهب:</strong> صاح عمه أبو لهب بحقد واستكبار: «تباً لك سائر اليوم! ألهذا جمعتنا؟»، فأنزل الله رداً حاسماً سورة المسد: (تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الجهر بالحق وعدم المداهنة في العقيدة والتوحيد.</li>
+                                <li>2. استثمار السمعة الطيبة والماضي النزيه في إقناع الناس بالدعوة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_5",
+                    num: "05",
+                    title: "الابتلاء والتعذيب والهجرة إلى الحبشة",
+                    summary: "تعذيب المستضعفين (بلال، آل ياسر، وخباب)، وأمر النبي بالهجرة الأولى والثانية للحبشة لعدالة ملكها النجاشي.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر النبوي الشريف:</h4>
+                        <div class="seerah-quote-box">
+                            «صَبْرًا آلَ يَاسِرٍ، فَإِنَّ مَوْعِدَكُمُ الجَنَّةُ» [رواه الحاكم وصححه]، وقال لأصحابه: «لَوْ خَرَجْتُمْ إِلَى أَرْضِ الحَبَشَةِ، فَإِنَّ بِهَا مَلِكًا لَا يُظْلَمُ عِنْدَهُ أَحَدٌ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>صمود المستضعفين:</strong> اشتد تعذيب قريش للمسلمين كبلال بن رباح الذي كان يردد تحت الصخرة الرمضاء: «أحدٌ أحد»، وسمية بنت خياط أول شهيدة في الإسلام، وزوجها ياسر.</p>
+                            <p><strong>الهجرة إلى الحبشة:</strong> هاجر الفوج الأول (12 رجلاً و4 نسوة منهم عثمان ورقية)، ثم الهجرة الثانية بنحو 83 رجلاً بقيادة جعفر بن أبي طالب، الذي خطب أمام النجاشي وقرأ عليه سورة مريم، فبكى النجاشي وقال: «إن هذا والذي جاء به موسى ليخرج من مشكاة واحدة»، ورفض تسليمهم لوفد قريش.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. ثبات العقيدة الراسخة أمام أعتى أشكال التعذيب والترهيب.</li>
+                                <li>2. البحث عن ملاذات آمنة لحفظ الدعوة والمؤمنين وتوسيع رقعة الإسلام عالمياً.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_6",
+                    num: "06",
+                    title: "حصار شعب أبي طالب والمقاطعة الظالمة",
+                    summary: "حصار قريش لبني هاشم وبني المطلب 3 سنوات في الشعب، كتابة الصحيفة الظالمة، وأكل الأرضة لبنودها الجائرة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> خبر المقاطعة والمعجزة:</h4>
+                        <div class="seerah-quote-box">
+                            «اجْتَمَعَتْ قُرَيْشٌ عَلَى كِتَابَةِ صَحِيفَةٍ قَاطَعُوا فِيهَا بَنِي هَاشِمٍ وَالمُطَّلِبِ أَلَّا يُنَاكِحُوهُمْ وَلَا يُبَايِعُوهُمْ، فَحُوصِرُوا فِي الشِّعْبِ ثَلَاثَ سِنِينَ، حَتَّى أَكَلَتِ الأَرَضَةُ الصَّحِيفَةَ إِلَّا اسْمَ اللهِ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>شدة الحصار:</strong> عانى المحاصرون من الجوع الشديد حتى أكلوا أوراق الشجر وجلود الميتة وسُمع بكاء أطفالهم من وراء الجبال، مع ثبات كامل لم يتزعزع من النبي وصحبه.</p>
+                            <p><strong>نقض الصحيفة:</strong> تحركت النخوة والمروءة في جماعة من أشراف قريش (كهشام بن عمرو والمطعم بن عدي وزهير بن أبي أمية) وسعوا في نقض الصحيفة، وأخبر النبي عمه أبا طالب بأن الله سلط الأرضة (دودة الخشب) فأكلت كل ظلم وقطيعة في الصحيفة ولم تبقِ إلا «باسمك اللهم».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. التضحية بكل متاع الدنيا في سبيل نصرة الدين والمبدأ.</li>
+                                <li>2. تسخير الله لأصحاب المروءات من غير المسلمين لنصرة المظلومين ودفع الظلم.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_7",
+                    num: "07",
+                    title: "عام الحزن ورحلة الطائف وصبر النبي",
+                    summary: "وفاة السيدة خديجة وعمه أبي طالب، خروج النبي للطائف لدعوة ثقيف، أذيتهم له، ودعاؤه الخالد (اللهم إليك أشكو ضعف قوتي).",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> مناجاة النبي في بستان الطائف:</h4>
+                        <div class="seerah-quote-box">
+                            «اللَّهُمَّ إِلَيْكَ أَشْكُو ضَعْفَ قُوَّتِي، وَقِلَّةَ حِيلَتِي، وَهَوَانِي عَلَى النَّاسِ، يَا أَرْحَمَ الرَّاحِمِينَ... إِنْ لَمْ يَكُنْ بِكَ عَلَيَّ غَضَبٌ فَلَا أُبَالِي، وَلَكِنَّ عَافِيَتَكَ هِيَ أَوْسَعُ لِي...».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>عام الحزن (السنة 10 للبعثة):</strong> فقد النبي زوجته خديجة سنده العاطفي والداخلي، وعمه أبا طالب سنده وحاميه الخارجي، فتجرأت قريش على أذيته بمكة.</p>
+                            <p><strong>الخروج إلى الطائف:</strong> مشى النبي ﷺ على قدميه 100 كم إلى الطائف لطلب النصرة من قبيلة ثقيف، فقابلوه بالسخرية وأغروا به سفهاءهم وعبيدهم فرموه بالحجارة حتى سالت الدماء الزكية من عقبيه الشريفتين، فالتجأ إلى بستان ودعا ربه بهذا الدعاء العظيم، ونزل إليه ملك الجبال ليطبق عليهم الأخشبين فقال النبي الرحيم: «بل أرجو أن يخرج الله من أصلابهم من يعبد الله وحده».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. كمال عبودية النبي وافتقاره لربه ورضاه التام بقضائه.</li>
+                                <li>2. قمة الرحمة والشفقة بالأعداء والأمل في هداية أجيالهم القادمة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_8",
+                    num: "08",
+                    title: "حادثة الإسراء والمعراج وفرض الصلاة",
+                    summary: "إسراء النبي ليلاً من المسجد الحرام للمسجد الأقصى، عروجه للسموات العلا وسدرة المنتهى، وفرض الصلوات الخمس.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني الخالد:</h4>
+                        <div class="seerah-quote-box">
+                            «سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى الَّذِي بَارَكْنَا حَوْلَهُ لِنُرِيَهُ مِنْ آيَاتِنَا ۚ إِنَّهُ هُوَ السَّمِيعُ الْبَصِيرُ» [الإسراء: 1]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>التكريم الرباني بعد المحن:</strong> أسرى الله بنبيه جسداً وروحاً على البراق بصحبة جبريل إلى بيت المقدس فصلى بالأنبياء إماماً (إعلاناً لإمامة ورسالة الإسلام الخاتمة).</p>
+                            <p><strong>المعراج إلى السموات العلا:</strong> عرج به إلى سدرة المنتهى، وكلّمه ربه جل وعلا وفرض عليه وعلى أمته الصلوات الخمس في اليوم والليلة بثواب خمسين صلاة، ورأى الجنة والنار وملكوت الله العظيم.</p>
+                            <p><strong>موقف الصديق:</strong> لما كذبت قريش الخبر، قال أبو بكر بثقة ويقين: «إن كان قال فقد صدق؛ إني لأصدقه في خبر السماء بكرة وعشية»، فسُمي من يومها «الصِّدِّيق».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الربط الإلهي الوثيق بين المسجد الحرام والمسجد الأقصى المبارك ومكانة القدس في قلب العقيدة.</li>
+                                <li>2. عظم شأن الصلاة؛ فهي الفريضة الوحيدة التي فُرضت في السماء السابعة مباشرة بلا واسطة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_9",
+                    num: "09",
+                    title: "عرض الدعوة على القبائل وبيعتا العقبة",
+                    summary: "عرض النبي نفسه على وفود الحج، لقاؤه بستة من شباب يثرب، بيعة العقبة الأولى، وبيعة العقبة الثانية الكبرى بالدفاع والنصرة.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> نص بيعة العقبة الكبرى:</h4>
+                        <div class="seerah-quote-box">
+                            قَالَ البَرَاءُ بْنُ مَعْرُورٍ: «نُبَايِعُكَ يَا رَسُولَ اللهِ عَلَى السَّمْعِ وَالطَّاعَةِ فِي النَّشَاطِ وَالكَسَلِ، وَالنَّفَقَةِ فِي العُسْرِ وَاليُسْرِ... وَأَنْ نَمْنَعَكَ مِمَّا نَمْنَعُ مِنْهُ نِسَاءَنَا وَأَبْنَاءَنَا، فَمَا لَنَا إِنْ نَحْنُ وَفَّيْنَا بِذَلِكَ؟ قَالَ: الجَنَّةُ!».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>لقاء يثرب:</strong> التقى النبي في موسم الحج بـ 6 رجال من الخزرج فشرح لهم الإسلام فأسلموا وقالوا: «إنا تركنا قومنا وبينهم عداوة لا نظن أن تجتمع، فعسى الله أن يجمعهم بك».</p>
+                            <p><strong>بيعة العقبة الأولى ومصعب بن عمير:</strong> بايع 12 رجلاً بيعة النساء (على التوحيد والفضائل)، وأرسل النبي معهم سفيره الأول مصعب بن عمير ليعلمهم القرآن، فدخل الإسلام كل بيوت المدينة بحكمته وحسن بيانه.</p>
+                            <p><strong>بيعة العقبة الثانية (73 رجلاً وامرأتان):</strong> بايعوا النبي على النصرة والحماية واستضافته بالمدينة وإقامة دار الهجرة والدولة الإسلامية.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الإصرار والاستمرار في طرق كل أبواب الدعوة والمواسم دون يأس.</li>
+                                <li>2. نجاح سفارة الشباب (مصعب بن عمير) في تغيير مصير أمة كاملة بحسن الخلق والقرآن.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_mk_10",
+                    num: "10",
+                    title: "الهجرة النبوية الشريفة إلى المدينة والغار",
+                    summary: "مؤامرة دار الندوة، مبيت علي في فراش النبي، رحلة الغار مع الصديق (لا تحزن إن الله معنا)، وسراقة بن مالك وسواري كسرى.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني في الغار:</h4>
+                        <div class="seerah-quote-box">
+                            «إِلَّا تَنصُرُوهُ فَقَدْ نَصَرَهُ اللَّهُ إِذْ أَخْرَجَهُ الَّذِينَ كَفَرُوا ثَانِيَ اثْنَيْنِ إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا» [التوبة: 40]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>مؤامرة دار الندوة:</strong> اجتمعت قريش وقرروا قتل النبي بضربة سيف واحدة من فتيان القبائل ليتفرق دمه بين القبائل، فنزل جبريل بالخبر وأمره بالهجرة، وبات علي بن أبي طالب في فراشه للتمويه ورد الأمانات لأهل مكة.</p>
+                            <p><strong>التخطيط المعجز للهجرة:</strong> اختار الصديق رفيقاً، وعبد الله بن أبي بكر للمعلومات، وأسماء بنت أبي بكر (ذات النطاقين) للتموين، وعامر بن فهيرة لإخفاء الآثار، وعبد الله بن أريقط دليلاً ماهراً.</p>
+                            <p><strong>الغار وسراقة:</strong> مكثا في غار ثور 3 ليالٍ، ولما وقف المشركون على فم الغار قال أبو بكر: «لو نظر أحدهم تحت قدميه لرآنا»، فقال النبي: «ما ظنك باثنين الله ثالثهما!». ولحق بهما سراقة بن مالك فساخت قوائم فرسه في الرمال فطلب الأمان وبشره النبي بسواري كسرى ملك الفرس.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الجمع الأكمل بين قمة التخطيط البشري المحكم والتوكل واليقين التام بالله.</li>
+                                <li>2. الهجرة نقطة التحول الكبرى في التاريخ الإنساني التي بدأ بها التأريخ الهجري.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. متى وأين وُلد النبي محمد ﷺ وما كان حاله من حيث الأبوين؟", a: "وُلد النبي ﷺ يوم الاثنين 12 ربيع الأول من عام الفيل بمكة المكرمة يتيماً، حيث مات أبوه عبد الله وهو حمل في بطن أمه." },
+                { q: "2. ما هي أول آيات نزلت على النبي ﷺ في غار حراء؟", a: "أول ما نزل قوله تعالى من سورة العلق: (اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ * خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ * اقْرَأْ وَرَبُّكَ الْأَكْرَمُ)." },
+                { q: "3. ما هي الحكمة من جعل الدعوة سرية في بدايتها لمدة 3 سنوات؟", a: "حماية النواة الأولى للجماعة المسلمة من الاستئصال، وتربيتهم في دار الأرقم دون إثارة قريش قبل اشتداد عودهم." },
+                { q: "4. ما هو سبب اختيار النبي ﷺ للحبشة كمهجر للمسلمين المستضعفين؟", a: "لأن فيها ملكاً نصرانياً عادلاً (النجاشي أصحمة) لا يُظلم عنده أحد، ولحفظ المسلمين من فتنة التعذيب بمكة." },
+                { q: "5. ما هو مضمون الصحيفة الظالمة التي علقتها قريش في الكعبة؟", a: "مقاطعة بني هاشم وبني المطلب اقتصادياً واجتماعياً؛ فلا يناكحونهم ولا يبايعونهم ولا يجالسونهم حتى يسلموا النبي للقتل." },
+                { q: "6. لماذا سُمي العام العاشر للبعثة بعام الحزن؟", a: "لوفاة السيدة خديجة رضي الله عنها سنده الداخلي، وعمه أبي طالب كافله وحاميه الخارجي، وتضاعف أذى قريش بعدهما." },
+                { q: "7. ما هي الفرائض التي فُرضت ليلة الإسراء والمعراج في السماء السابعة؟", a: "فُرضت الصلوات الخمس في اليوم والليلة وكانت خمسين صلاة فخففها الله لخمس صلوات في العمل وخمسين في الأجر." },
+                { q: "8. من هو الصحابي الشاب الملقب بأول سفير في الإسلام وما كانت مهمته؟", a: "هو مصعب بن عمير رضي الله عنه، أرسله النبي إلى يثرب بعد بيعة العقبة الأولى ليعلم الأنصار القرآن ويدعوهم للإسلام." },
+                { q: "9. ما هي أدوار الشخصيات المساعدة في خطة الهجرة النبوية الشريفة؟", a: "علي (الفداء في الفراش)، أبو بكر (الصحبة)، أسماء (التموين والغذاء)، عبد الله بن أبي بكر (الاستخبارات)، عامر بن فهيرة (إخفاء الآثار)، وابن أريقط (دليل الطريق)." },
+                { q: "10. ما هي البشارة النبوية العجيبة التي وعد بها النبي سراقة بن مالك أثناء الهجرة؟", a: "وعده بأن يلبس سواري كسرى ملك الفرس وتاجه ومنطقته، وقد تحقق ذلك في عهد عمر بن الخطاب رضي الله عنه بعد فتح فارس." }
+            ],
+            quizList: [
+                { q: "1. مرضعة النبي ﷺ في بادية بني سعد هي السيدة:", opts: ["حليمة السعدية", "ثويبة مولاة أبي لهب", "أم أيمن بركة"], a: 0 },
+                { q: "2. المكان الذي كان يتحنث ويتعبد فيه النبي ﷺ قبل البعثة هو:", opts: ["غار حراء بجبل النور", "غار ثور", "شعب أبي طالب"], a: 0 },
+                { q: "3. أول من آمن بالنبي ﷺ من الرجال الأحرار هو الصحابي الجليل:", opts: ["أبو بكر الصديق رضي الله عنه", "عمر بن الخطاب رضي الله عنه", "عثمان بن عفان رضي الله عنه"], a: 0 },
+                { q: "4. الصحابي الذي قاد المسلمين وتحدث أمام النجاشي ملك الحبشة هو:", opts: ["جعفر بن أبي طالب رضي الله عنه", "عبد الرحمن بن عوف رضي الله عنه", "مصعب بن عمير رضي الله عنه"], a: 0 },
+                { q: "5. دامت مقاطعة وحصار قريش لبني هاشم في الشعب مدة:", opts: ["ثلاث سنوات كاملة", "سنة واحدة", "ستة أشهر"], a: 0 },
+                { q: "6. نزل ملك الجبال على النبي ﷺ ليعرض عليه إطباق الأخشبين على أهل:", opts: ["الطائف وثقيف", "أهل يثرب", "أهل خيبر"], a: 0 },
+                { q: "7. صلى النبي ﷺ إماماً بجميع الأنبياء ليلة الإسراء والمعراج في:", opts: ["المسجد الأقصى بالقدس الشريف", "المسجد الحرام بمكة", "المسجد النبوي"], a: 0 },
+                { q: "8. لُقب أبو بكر الصديق بهذا اللقب الشريف بعد حادثة:", opts: ["الإسراء والمعراج وتصديقه المطلق للخبر", "غزوة بدر", "صلح الحديبية"], a: 0 },
+                { q: "9. السفير الأول في الإسلام الذي أسلم على يديه أهل المدينة هو:", opts: ["مصعب بن عمير رضي الله عنه", "سعد بن معاذ رضي الله عنه", "أسعد بن زرارة رضي الله عنه"], a: 0 },
+                { q: "10. قال النبي ﷺ لأبي بكر في غار ثور: «ما ظنك باثنين...»:", opts: ["الله ثالثهما (لا تحزن إن الله معنا)", "قريش لن تراهما", "الصحابة يحرسونهما"], a: 0 }
+            ]
+        },
+
+        madani: {
+            title: "العهد المدني — تأسيس الدولة والفتوحات الكبرى",
+            badge: "العهد المدني",
+            desc: "محطات الهجرة، بناء المسجد، المؤاخاة، الغزوات الكبرى (بدر، أحد، الخندق، خيبر، فتح مكة)، وحجة الوداع.",
+            quote: "«الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا» [المائدة: 3]",
+            lessons: [
+                {
+                    id: "s_md_1",
+                    num: "01",
+                    title: "تأسيس الدولة المدنية وبناء المجتمع",
+                    summary: "بناء المسجد النبوي الشريف، المؤاخاة التاريخية بين المهاجرين والأنصار، ووثيقة المدينة الدستورية.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر التاريخي النبوي:</h4>
+                        <div class="seerah-quote-box">
+                            «لَمَّا دَخَلَ النَّبِيُّ ﷺ المَدِينَةَ قَالَ: يَا أَيُّهَا النَّاسُ: أَفْشُوا السَّلَامَ، وَأَطْعِمُوا الطَّعَامَ، وَصِلُوا الأَرْحَامَ، وَصَلُّوا بِاللَّيْلِ وَالنَّاسُ نِيَامٌ؛ تَدْخُلُوا الجَنَّةَ بِسَلَامٍ». [رواه الترمذي وصححه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الأركان الثلاثة لبناء الدولة:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>1. بناء المسجد النبوي:</strong> بركت ناقة النبي (القصواء) في موضع المسجد فاشتراه من غلامين يتيمين وبناه بمشاركة الصحابة ليكون مقراً للعبادة، والتعليم، ومجلساً للشورى والقيادة وإدارة شؤون الأمة.</p>
+                            <p><strong>2. المؤاخاة بين المهاجرين والأنصار:</strong> آخى بين 90 رجلاً ليذيب الفوارق القبلية، فقدم الأنصار أروع صور الإيثار التاريخية وقاسموا إخوانهم المهاجرين أموالهم ومنازلهم وبساتينهم: (وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ).</p>
+                            <p><strong>3. وثيقة المدينة (أول دستور مدني):</strong> نظمت العلاقات بين سكان المدينة من مسلمين ويهود ومشركين، وأرست مبادئ المواطنة، والعدل، وحرية الاعتقاد، والدفاع المشترك عن المدينة ضد أي عدوان خارجي.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. المسجد هو المنطلق والقلب النابض لأي نهضة إسلامية وحضارية.</li>
+                                <li>2. الأخوة الإيمانية والتكافل المجتمعي أقوى من رابطة الدم والنسب.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_2",
+                    num: "02",
+                    title: "تحويل القبلة ومشروعية القتال في سبيل الله",
+                    summary: "تحويل القبلة من بيت المقدس إلى الكعبة المشرفة في السنة 2 هـ، وإذن الله للمؤمنين بالدفاع عن النفس وجهاد المعتدين.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> الأمر الإلهي بتحويل القبلة والإذن بالقتال:</h4>
+                        <div class="seerah-quote-box">
+                            «قَدْ نَرَىٰ تَقَلُّبَ وَجْهِكَ فِي السَّمَاءِ ۖ فَلَنُوَلِّيَنَّكَ قِبْلَةً تَرْضَاهَا ۚ فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ» [البقرة: 144]، «أُذِنَ لِلَّذِينَ يُقَاتَلُونَ بِأَنَّهُمْ ظُلِمُوا ۚ وَإِنَّ اللَّهَ عَلَىٰ نَصْرِهِمْ لَقَدِيرٌ» [الحج: 39]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>تحويل القبلة (رجب 2 هـ):</strong> صلى المسلمون 16 أو 17 شهراً نحو المسجد الأقصى، وكان النبي يقلب وجهه في السماء متمنياً قبلة إبراهيم (الكعبة)، فنزل الوحي بالأمر بالتوجه للكعبة ليكون تمييزاً للأمة واستقلالاً لهويتها.</p>
+                            <p><strong>تشريع الجهاد:</strong> شُرع القتال بعد 13 سنة من الصبر لدفع الظلم، واسترداد الحقوق المسلوبة، وحماية حرية نشر الدعوة ومنع فتنة الناس عن دينهم.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الاستجابة الفورية والامتثال المطلق لأمر الله دون تردد كما فعل صحابة مسجد القبلتين.</li>
+                                <li>2. الجهاد في الإسلام وسيلة شرعية لردع المعتدين وإقامة العدل وليس للاعتداء.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_3",
+                    num: "03",
+                    title: "غزوة بدر الكبرى (يوم الفرقان الأعظم)",
+                    summary: "أحداث 17 رمضان 2 هـ، خروج 314 صحابياً لاعتراض العير ومواجهة جيش قريش بألف مقاتل، واستنزال نصر الله وملائكته.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني في بدر:</h4>
+                        <div class="seerah-quote-box">
+                            «وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ ۖ فَاتَّقُوا اللَّهَ لَعَلَّكُمْ تَشْكُرُونَ * إِذْ تَقُولُ لِلْمُؤْمِنِينَ أَلَن يَكْفِيَكُمْ أَن يُمِدَّكُمْ رَبُّكُم بِثَلَاثَةِ آلَافٍ مِّنَ الْمَلَائِكَةِ مُنزَلِينَ» [آل عمران: 123-124]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>الشورى والقيادة:</strong> استشار النبي أصحابه، فتكلم المهاجرون، ثم قال سعد بن معاذ باسم الأنصار: «صل حبال من شئت، واقطع حبال من شئت... فوالذي بعثك بالحق لو استعرضت بنا هذا البحر فخضته لخضناه معك ما تخلف منا رجل واحد»، فتهلل وجه النبي بشراً.</p>
+                            <p><strong>سير المعركة والنصر:</strong> أمضى النبي ليلته ساجداً يلح بالدعاء حتى سقط رداؤه عن منكبيه، ونزلت الملائكة تقاتل مع المؤمنين، وقُتل 70 من صناديد قريش (منهم أبو جهل وأمية بن خلف وعتبة بن ربيعة) وأُسر 70، وكانت بداية عز الإسلام وظهوره.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. النصر من عند الله وحده ولا يعتمد على كثرة العدد والعتاد (كم من فئة قليلة غلبت فئة كثيرة بإذن الله).</li>
+                                <li>2. ترسيخ مبدأ الشورى العسكرية والتلاحم بين القائد وجنده.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_4",
+                    num: "04",
+                    title: "غزوة أحد ودروس مخالفة أمر القيادة",
+                    summary: "شوال 3 هـ، استشهاد 70 صحابياً منهم حمزة ومصعب، درس مخالفة الرماة لأمر النبي، والتمحيص الإلهي للمؤمنين.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> العتاب والبيان القرآني:</h4>
+                        <div class="seerah-quote-box">
+                            «حَتَّىٰ إِذَا فَشِلْتُمْ وَتَنَازَعْتُمْ فِي الْأَمْرِ وَعَصَيْتُم مِّن بَعْدِ مَا أَرَاكُم مَّا تُحِبُّونَ ۚ مِنكُم مَّن يُرِيدُ الدُّنْيَا وَمِنكُم مَّن يُرِيدُ الْآخِرَةَ» [آل عمران: 152]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتحليل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>خطة المعركة ووصية الرماة:</strong> وضع النبي 50 رامياً على جبل الرماة بقيادة عبد الله بن جبير وأمرهم أمراً صارماً: «احموا ظهورنا ولا تبرحوا مكانكم إن رأيتمونا نُخطف أو نَغنم».</p>
+                            <p><strong>نقطة التحول:</strong> انتصر المسلمون أولاً، فلما رأى غالب الرماة الغنائم نزلوا لجمعها وخالفوا الأمر، فالتف خالد بن الوليد بفرسان قريش وهاجم المسلمين من الخلف، واضطربت الصفوف وأُشيع مقتل النبي وجُرح وجهه الشريف وكُسرت رباعيته، واستبسل أصحابه في الدفاع عنه واستُشهد 70 صحابياً على رأسهم أسد الله حمزة بن عبد المطلب.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. خطورة معصية أمر القائد وأثر التعلق بالدنيا على هزيمة الجيوش.</li>
+                                <li>2. الابتلاء سنة لازمة لتمحيص الصف الداخلي وكشف المنافقين.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_5",
+                    num: "05",
+                    title: "غزوة الخندق (الأحزاب) وتحالف القبائل",
+                    summary: "شوال 5 هـ، تجمع 10 آلاف مقاتل لحصار المدينة، حفر الخندق بفكرة سلمان الفارسي، خيانة بني قريظة، وهزيمة الأحزاب بالريح.",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> المشهد القرآني في الخندق:</h4>
+                        <div class="seerah-quote-box">
+                            «إِذْ جَاءُوكُم مِّن فَوْقِكُمْ وَمِنْ أَسْفَلَ مِنكُمْ وَإِذْ زَاغَتِ الْأَبْصَارُ وَبَلَغَتِ الْقُلُوبُ الْحَنَاجِرَ وَتَظُنُّونَ بِاللَّهِ الظُّنُونَا * هُنَالِكَ ابْتُلِيَ الْمُؤْمِنُونَ وَزُلْزِلُوا زِلْزَالًا شَدِيدًا» [الأحزاب: 10-11]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>التحالف والحفر:</strong> تحالفت قريش وغطفان وقبائل نجد بتحريض يهود بني النضير في 10 آلاف مقاتل، فأشار سلمان الفارسي بحفر خندق شمال المدينة في خطة دفاعية عبقرية لم تعهدها العرب، وشارك النبي أصحابه الحفر ونقل التراب وبشرهم بفتح فارس والروم واليمن.</p>
+                            <p><strong>المحنة والفرج:</strong> غدرت يهود بني قريظة بالعهد من داخل المدينة، فاشتد الكرب والبرد، فأرسل الله نعيم بن مسعود فخذّل بين الأحزاب وبني قريظة، ثم أرسل الله ريحاً عاصفة وجنوداً من الملائكة قلعت خيامهم وكفأت قدورهم وألقت الرعب في قلوبهم فانصرفوا خائبين.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الاستفادة من تجارب وخبرات الأمم الأخرى فيما ينفع المسلمين.</li>
+                                <li>2. تولي الله الدفاع عن أوليائه المؤمنين وإهلاك الباطل بجنود الغيب (وكفى الله المؤمنين القتال).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_6",
+                    num: "06",
+                    title: "صلح الحديبية والفتح المبين",
+                    summary: "ذو القعدة 6 هـ، خروج 1400 معتمر، بيعة الرضوان تحت الشجرة، بنود الصلح العظيم، ونزول سورة الفتح.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> إعلان الفتح الإلهي:</h4>
+                        <div class="seerah-quote-box">
+                            «إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا * لِّيَغْفِرَ لَكَ اللَّهُ مَا تَقَدَّمَ مِن ذَنبِكَ وَمَا تَأَخَّرَ وَيُتِمَّ نِعْمَتَهُ عَلَيْكَ وَيَهْدِيَكَ صِرَاطًا مُّسْتَقِيمًا» [الفتح: 1-2]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>بيعة الرضوان:</strong> أرسل النبي عثمان بن عفان لمكة للتفاوض، فأشيع مقتله، فدعا النبي أصحابه فبايعوه تحت الشجرة على ألا يفروا والموت في سبيل الله، فرضي الله عنهم: (لَّقَدْ رَضِيَ اللَّهُ عَنِ الْمُؤْمِنِينَ إِذْ يُبَايِعُونَكَ تَحْتَ الشَّجَرَةِ).</p>
+                            <p><strong>بنود الصلح:</strong> عقد النبي الصلح مع سهيل بن عمرو ممثل قريش (هدنة 10 سنوات، تأجيل العمرة للعام القادم، ورد من أتى مسلماً). ورغم حزن بعض الصحابة لظاهر الشروط، إلا أن الصلح كان أعظم نصر سياسي ودبلوماسي؛ حيث اعترفت قريش بدولة الإسلام وعاش الناس في أمن فدخل في الإسلام في سنتين أضعاف من دخلوا فيه طوال 18 سنة سابقة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. بُعد النظر السياسي وتقديم المصالح العليا للإسلام على العواطف الآنية.</li>
+                                <li>2. الأمن والسلام أعظم مناخ لانتشار الدعوة والحوار الهادئ.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_7",
+                    num: "07",
+                    title: "غزوة خيبر ومكاتبة ملوك ورؤساء العالم",
+                    summary: "المحرم 7 هـ، فتح حصون خيبر وكسر شوكة الغدر اليهودي، وإرسال الرسائل النبوية لملوك فارس والروم ومصر والحبشة.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الحديث الشريف في فتح خيبر:</h4>
+                        <div class="seerah-quote-box">
+                            قَالَ رَسُولُ اللهِ ﷺ: «لَأُعْطِيَنَّ الرَّايَةَ غَدًا رَجُلًا يُحِبُّ اللهَ وَرَسُولَهُ، وَيُحِبُّهُ اللهُ وَرَسُولُهُ، يَفْتَحُ اللهُ عَلَى يَدَيْهِ»، فَأَعْطَاهَا عَلِيَّ بْنَ أَبِي طَالِبٍ رَضِيَ اللهُ عَنْهُ. [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>فتح خيبر:</strong> كانت خيبر وكر المؤامرات والتمويل ضد الإسلام، فحاصرها النبي ﷺ ودك حصونها الحصينة، وقاد علي بن أبي طالب الهجوم وفتح حصن القموص المنيع، وصالحهم النبي على البقاء على أرضهم لزراعتها بنصف ما يخرج منها.</p>
+                            <p><strong>عالمية الرسالة:</strong> ختم النبي رسائله بخاتمه الفضي وأرسل سفراءه لملوك الأرض (هرقل قيصر الروم، كسرى ملك الفرس الذي مزق الرسالة فمزق الله ملكه، المقوقس حاكم مصر، والنجاشي الذي أسلم وحسن إسلامه).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. عالمية الرسالة الإسلامية وأنها دعوة موجهة للبشرية كافة.</li>
+                                <li>2. فضل علي بن أبي طالب وشجاعته النادرة في اقتحام الحصون.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_8",
+                    num: "08",
+                    title: "فتح مكة الأعظم وتطهير بيت الله الحرام",
+                    summary: "رمضان 8 هـ، دخول مكة بـ 10 آلاف مقاتل دون قتال، تحطيم 360 صنماً حول الكعبة، والعفو العام (اذهبوا فأنتم الطلقاء).",
+                    duration: "22 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني وإعلان التوحيد:</h4>
+                        <div class="seerah-quote-box">
+                            «وَقُلْ جَاءَ الْحَقُّ وَزَهَقَ الْبَاطِلُ ۚ إِنَّ الْبَاطِلَ كَانَ زَهُوقًا» [الإسراء: 81]<br>
+                            «مَا تَرَوْنَ أَنِّي فَاعِلٌ بِكُمْ؟ قَالُوا: خَيْرًا، أَخٌ كَرِيمٌ وَابْنُ أَخٍ كَرِيمٍ. فَقَالَ: اذْهَبُوا فَأَنْتُمُ الطُّلَقَاءُ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>سبب الفتح:</strong> نقضت قريش صلح الحديبية بإعانتها قبيلة بني بكر بالمال والسلاح في الهجوم على خزاعة حليفة المسلمين داخل الحرم.</p>
+                            <p><strong>دخول مكة:</strong> زحف النبي بجيش من 10 آلاف صحابي، ودخل مكة فاتحاً مطأطئاً رأسه تواضعاً لله حتى كادت لحيته تمس واسطة رحله، وطاف بالكعبة وحطم 360 صنماً بعصاه وهو يتلو: (جاء الحق وزهق الباطل)، وأصدر عفوه العام التاريخي عن أهل مكة الذين طردوه وعذبوه وأعلن: «اليوم يوم المرحمة».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. التواضع لله عند النصر والتمكين والابتعاد عن الغرور والتشفي.</li>
+                                <li>2. قمة العفو والصفح عند المقدرة؛ وهو الخلق الذي جعل قريش تدخل في دين الله أفواجاً.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_9",
+                    num: "09",
+                    title: "غزوة حنين وتبوك وعام الوفود",
+                    summary: "غزوة حنين والدرس من الإعجاب بالكثرة، غزوة تبوك (العسرة) ومواجهة الروم، وتوافد القبائل العربية لإعلان إسلامها.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني في حنين وتبوك:</h4>
+                        <div class="seerah-quote-box">
+                            «وَيَوْمَ حُنَيْنٍ ۙ إِذْ أَعْجَبَتْكُمْ كَثْرَتُكُمْ فَلَمْ تُغْنِ عَنكُمْ شَيْئًا» [التوبة: 25]، «لَقَد تَّابَ اللَّهُ عَلَى النَّبِيِّ وَالْمُهَاجِرِينَ وَالْأَنصَارِ الَّذِينَ اتَّبَعُوهُ فِي سَاعَةِ الْعُسْرَةِ» [التوبة: 117]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>غزوة حنين (8 هـ):</strong> واجه المسلمون هوازن وثقيف بجيش من 12 ألفاً، فاغتر بعضهم بالكثرة، فباغتهم الرماة واضطرب الجيش، فثبت النبي على بغلته ونادى: «أنا النبي لا كذب، أنا ابن عبد المطلب»، فعاد الصحابة وانتصروا وغنموا غنائم هائلة.</p>
+                            <p><strong>غزوة تبوك (رجب 9 هـ):</strong> خرج 30 ألف صحابي في قيظ الصيف الشديد لمسافة 1000 كم لردع حشود الروم، وجاد عثمان بتجهيز ثلث الجيش (جيش العسرة)، وألقى الله الرعب في قلوب الروم فتراجعوا، وتوافدت بعدها وفود العرب من كل حدب وصوب لمبايعة النبي في «عام الوفود».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. التحذير من الغرور بالكثرة والقوة المادية والاعتماد على نصر الله وتوفيقه.</li>
+                                <li>2. التضحية بالمال والنفس في أوقات الشدة نصرة لدين الله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_md_10",
+                    num: "10",
+                    title: "حجة الوداع ووفاة النبي ﷺ إلى الرفيق الأعلى",
+                    summary: "ذو الحجة 10 هـ، خطبة حجة الوداع الجامعة لحقوق الإنسان، مرض النبي، ووفاته في حجر عائشة يوم الاثنين 12 ربيع الأول 11 هـ.",
+                    duration: "24 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> وصية خطبة الوداع وآخر كلماته:</h4>
+                        <div class="seerah-quote-box">
+                            «إِنَّ دِمَاءَكُمْ وَأَمْوَالَكُمْ وَأَعْرَاضَكُمْ عَلَيْكُمْ حَرَامٌ كَحُرْمَةِ يَوْمِكُمْ هَذَا فِي شَهْرِكُمْ هَذَا فِي بَلَدِكُمْ هَذَا... أَلَا هَلْ بَلَّغْتُ؟ اللَّهُمَّ فَاشْهَدْ».<br>
+                            وكانت آخر كلماته في حجر عائشة: «بَلِ الرَّفِيقَ الأَعْلَى، مَعَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>حجة الوداع (10 هـ):</strong> حج مع النبي أكثر من 100 ألف مسلم، وألقى خطبته الجامعة على صعيد عرفات؛ حرم فيها الدماء والأموال والأعراض والربا وعادات الجاهلية، وأوصى بالنساء خيراً وبالتمسك بالقرآن والسنة، ونزل قوله تعالى: (اليَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ).</p>
+                            <p><strong>الوفاة الكبرى (12 ربيع الأول 11 هـ):</strong> اشتد به المرض، واستأذن أزواجه ليمرض في بيت عائشة، وأمر أبا بكر أن يصلي بالناس. ولما فاضت روحه الطاهرة اضطربت المدينة وذهل الصحابة، فوقف أبو بكر الصديق بخطابه الخالد: «ألا من كان يعبد محمداً فإن محمداً قد مات، ومن كان يعبد الله فإن الله حي لا يموت»، ثم تلا: (وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ الرُّسُلُ).</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الإسلام دين كامل تام لا يقبل الزيادة ولا النقصان.</li>
+                                <li>2. ثبات أبي بكر ورباطة جأشه في قيادة الأمة واستمرار مسيرة الإسلام بعد وفاة النبي ﷺ.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. ما هي الأركان الثلاثة الكبرى التي أقام عليها النبي ﷺ الدولة الإسلامية في المدينة؟", a: "1. بناء المسجد النبوي الشريف، 2. المؤاخاة بين المهاجرين والأنصار، 3. كتابة وثيقة المدينة (الدستور المدني والتعايش والدفاع المشترك)." },
+                { q: "2. متى تم تحويل القبلة من المسجد الأقصى إلى الكعبة المشرفة؟", a: "تم في شهر رجب من السنة الثانية للهجرة (بعد 16 أو 17 شهراً من الصلاة نحو بيت المقدس)." },
+                { q: "3. ما هو يوم الفرقان المذكور في القرآن الكريم ولماذا سُمي بذلك؟", a: "هو يوم غزوة بدر الكبرى (17 رمضان 2 هـ)؛ وسُمي بالفرقان لأن الله فرّق به بين الحق والباطل وأعز الإسلام وجنده." },
+                { q: "4. ما هو السبب المباشر في تحول نصر المسلمين إلى اضطراب في غزوة أحد؟", a: "مخالفة غالبية الرماة (40 رامياً) لأمر النبي ﷺ الصريح ونزولهم من فوق جبل الرماة لجمع الغنائم، مما مكن فرسان قريش من الالتفاف." },
+                { q: "5. من هو الصحابي الذي أشار بفكرة حفر الخندق في غزوة الأحزاب؟", a: "الصحابي الجليل سلمان الفارسي رضي الله عنه، وكانت مكيدة حربية لم تعهدها العرب من قبل." },
+                { q: "6. لماذا وصف الله صلح الحديبية بأنه «فتح مبين» في سورة الفتح؟", a: "لأنه أقر هدنة أمنية اعترفت فيها قريش بدولة الإسلام، فانتشرت الدعوة بحرية ودخل في الإسلام في عامين أضعاف من دخلوا فيه في 18 سنة سابقة." },
+                { q: "7. ما هي قصة فتح حصون خيبر ومن هو الصحابي الذي فتح الله على يديه؟", a: "حاصر النبي حصون خيبر المنيعة وأعطى الراية لعلي بن أبي طالب رضي الله عنه ففتح الله على يديه وقتل مرحب البطل اليهودي واقتحم الحصن." },
+                { q: "8. ما هو الشعار النبوي العظيم والقرار التاريخي الذي أعلنه النبي عند فتح مكة؟", a: "أعلن: «اليوم يوم المرحمة»، وأصدر عفوه العام عن أهل مكة قائلاً: «اذهبوا فأنتم الطلقاء» بعد تحطيم الأصنام وتطهير الكعبة." },
+                { q: "9. ما هي أبرز المبادئ الإنسانية التي رسخها النبي ﷺ في خطبة حجة الوداع؟", a: "حرمة الدماء والأموال والأعراض، إبطال الربا ومظالم الجاهلية، الوصية بالنساء والرفق بهن، والتمسك بالقرآن وسنة نبيه." },
+                { q: "10. ما هي الكلمات التاريخية الثابتة التي قالها أبو بكر الصديق يوم وفاة النبي ﷺ؟", a: "قال: «ألا من كان يعبد محمداً فإن محمداً قد مات، ومن كان يعبد الله فإن الله حي لا يموت»، وقرأ قوله تعالى: (وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ الرُّسُلُ)." }
+            ],
+            quizList: [
+                { q: "1. بركت ناقة النبي ﷺ في موضع المسجد النبوي وكانت أرضاً لـ:", opts: ["غلامين يتيمين من الأنصار (سهل وسهيل)", "رئيس قبيلة الخزرج", "أحد ملوك اليهود"], a: 0 },
+                { q: "2. غزوة بدر الكبرى وقعت في شهر رمضان المبارك من السنة:", opts: ["الثانية للهجرة (2 هـ)", "الأولى للهجرة", "الخامسة للهجرة"], a: 0 },
+                { q: "3. قائد شهداء أحد الملقب بـ «أسد الله وسيد الشهداء» هو الصحابي:", opts: ["حمزة بن عبد المطلب رضي الله عنه", "مصعب بن عمير رضي الله عنه", "سعد بن معاذ رضي الله عنه"], a: 0 },
+                { q: "4. في غزوة الخندق، غدرت قبيلة من اليهود بالعهد داخل المدينة وهي قبيلة:", opts: ["بنو قريظة", "بنو قينقاع", "بنو النضير"], a: 0 },
+                { q: "5. بيعة الرضوان التي بايع فيها الصحابة النبي تحت الشجرة كانت لـ:", opts: ["الثأر لعثمان بن عفان بعد شائعة مقتله", "توزيع غنائم بدر", "بناء مسجد قباء"], a: 0 },
+                { q: "6. الصحابي الذي جهز ثلث جيش العسرة في غزوة تبوك بماله هو:", opts: ["عثمان بن عفان رضي الله عنه", "عبد الرحمن بن عوف رضي الله عنه", "أبو بكر الصديق رضي الله عنه"], a: 0 },
+                { q: "7. دخل النبي ﷺ مكة المكرمة يوم الفتح الأعظم وهو:", opts: ["مطأطئاً رأسه تواضعاً وشكراً لله", "مفتخراً بقوته وجنده", "متوعداً أهل مكة بالقتل"], a: 0 },
+                { q: "8. في غزوة حنين، ثبت النبي ﷺ ونادى في الناس قائلاً:", opts: ["أنا النبي لا كذب، أنا ابن عبد المطلب", "إليكم عني", "اليوم يوم الملحمة"], a: 0 },
+                { q: "9. السورة الكريمة التي نزلت فيها آية (اليوم أكملت لكم دينكم) في حجة الوداع هي سورة:", opts: ["سورة المائدة", "سورة البقرة", "سورة التوبة"], a: 0 },
+                { q: "10. توفي النبي ﷺ وانتقل إلى الرفيق الأعلى في السنة:", opts: ["الحادية عشرة للهجرة (11 هـ)", "العاشرة للهجرة", "الثانية عشرة للهجرة"], a: 0 }
+            ]
+        },
+
+        shamail: {
+            title: "الشمائل المحمدية — صفات النبي الخَلقية والخُلقية وهديه",
+            badge: "الشمائل المحمدية",
+            desc: "مدارسة أوصاف النبي ﷺ، رحمته، شجاعته، جوده، تواضعه، حلمه، عبادته، وحسن عشرته لأهله وأصحابه.",
+            quote: "«وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ» [القلم: 4]",
+            lessons: [
+                {
+                    id: "s_sh_1",
+                    num: "01",
+                    title: "صفته الخَلقية وجمال صورته وطلّته الشريفة",
+                    summary: "وصف وجهه كالقمر، لونه أزهر، وسامته، خاتم النبوة بين كتفيه، ورائحته أطيب من المسك.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> وصف الصحابة الدقيق لجمال خلقته:</h4>
+                        <div class="seerah-quote-box">
+                            عَنِ البَرَاءِ بْنِ عَازِبٍ رَضِيَ اللهُ عَنْهُ قَالَ: «كَانَ رَسُولُ اللهِ ﷺ أَحْسَنَ النَّاسِ وَجْهًا، وَأَحْسَنَهُمْ خَلْقًا، لَيْسَ بِالطَّوِيلِ البَائِنِ، وَلَا بِالقَصِيرِ... كَأَنَّ وَجْهَهُ القَمَرُ لَيْلَةَ البَدْرِ». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>الوصف الكامل:</strong> كان ﷺ أزهر اللون (أبيض مشرباً بحمرة)، ليس بالطويل البائن ولا بالقصير، عريض المنكبين، كث اللحية، كاحل العينين من غير كحل، إذا ضحك وسر استنار وجهه حتى كأنه قطعة قمر.</p>
+                            <p><strong>خاتم النبوة وطيب ريحه:</strong> كان بين كتفيه خاتم النبوة (غدة حمراء مثل بيضة الحمامة)، وكان عرقه أطيب من ريح المسك الأذفر، وما صافحه رجل إلا وجد ليده ريحاً طيبة ليومه كله.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الفوائد:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. جمع الله لنبيه بين كمال الصورة وجمال الخلقة وكمال الباطن وحسن السيرة.</li>
+                                <li>2. محبة النبي الشديدة ومعرفة صفاته تغرس الشوق لرؤيته في الجنة.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_2",
+                    num: "02",
+                    title: "رحمته العامة بالخلق والضعفاء والحيوان",
+                    summary: "رحمته المهداة للعالمين، شفقته بالأطفال، عطفه على الخدم، ونهيه عن تعذيب الحيوان والطير.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-book-quran"></i> النص القرآني والحديث:</h4>
+                        <div class="seerah-quote-box">
+                            «وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ» [الأنبياء: 107]<br>
+                            وقال ﷺ: «إِنَّمَا أَنَا رَحْمَةٌ مُهْدَاةٌ»، و«الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>رحمته بالصغار والضعفاء:</strong> كان يقبل الصبيان ويحمل حفيديه الحسن والحسين في صلاته، وكان يوجز في الصلاة إذا سمع بكاء صبي رحمة بأمه.</p>
+                            <p><strong>رحمته بالحيوان:</strong> دخل بستاناً فرأى جملاً يذرف الدموع فمسح ذفراه حتى سكن وقال لصاحبه: «أفلا تتقي الله في هذه البهيمة التي ملكك الله إياها! فإنه شكا إليّ أنك تجيعه وتدئبه»، وحرم اتخاذ ذوات الأرواح غرضاً للرمي أو حرق النمل بالنار.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. شمولية الرحمة المحمدية للإنسان والحيوان والجماد.</li>
+                                <li>2. نزع الرحمة من القلب علامة على الشقاء والبعد عن الله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_3",
+                    num: "03",
+                    title: "صدقه وأمانته ووفاؤه التام بالعهود",
+                    summary: "لقبه بالصادق الأمين قبل البعثة، شهادة أعدائه بنزاهته (كأبي سفيان وهرقل)، والوفاء بالعهود والشروط.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> شهادة أبي سفيان أمام هرقل ملك الروم:</h4>
+                        <div class="seerah-quote-box">
+                            سَأَلَ هِرَقْلُ أَبَا سُفْيَانَ: «فَهَلْ كُنْتُمْ تَتَّهِمُونَهُ بِالكَذِبِ قَبْلَ أَنْ يَقُولَ مَا قَالَ؟ قُلْتُ: لَا. قَالَ: فَهَلْ يَغْدِرُ؟ قُلْتُ: لَا. فَقَالَ هِرَقْلُ: مَا كَانَ لِيَدَعَ الكَذِبَ عَلَى النَّاسِ وَيَكْذِبَ عَلَى اللهِ!». [رواه البخاري]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>رد الأمانات ليلة الهجرة:</strong> مع أن كفار مكة حاربوه وأخرجوه وتآمروا على قتله، إلا أنهم كانوا يضعون نفائس أموالهم عنده لأمانته، وترك علياً بن أبي طالب ليرد كل أمانة إلى صاحبها المشرك قبل أن يهاجر.</p>
+                            <p><strong>الوفاء بالعهود:</strong> التزم بكل بنود صلح الحديبية بحذافيرها وأوفى بعهد حذيفة بن اليمان وأبيه ألا يقاتلا في بدر بعد أن عاهدهما كفار قريش على ذلك.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الأمانة خلق إسلامي مطلق لا يسقط حتى في حالة الحرب مع الأعداء.</li>
+                                <li>2. الصدق هو عنوان المؤمن ورأس مال الداعية إلى الله.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_4",
+                    num: "04",
+                    title: "شجاعته النادرة وثباته في ساحات الوغى",
+                    summary: "شجاعته التي يلوذ بها الأبطال، ثباته في حنين وأحد، وخروجه وحده ليلاً لاستكشاف صوت الفزع بالمدينة.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> شهادة علي بن أبي طالب في شجاعة النبي:</h4>
+                        <div class="seerah-quote-box">
+                            قَالَ عَلِيٌّ رَضِيَ اللهُ عَنْهُ: «كُنَّا إِذَا احْمَرَّ البَأْسُ، وَلَقِيَ القَوْمُ القَوْمَ، اتَّقَيْنَا بِرَسُولِ اللهِ ﷺ، فَمَا يَكُونُ مِنَّا أَحَدٌ أَدْنَى إِلَى العَدُوِّ مِنْهُ». [رواه أحمد بإسناد صحيح]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>شجاعة القلب والموقف:</strong> فزع أهل المدينة ذات ليلة من صوت مخيف، فانطلق الناس نحو الصوت، فإذا بالنبي ﷺ قد سبقهم راجعاً على فرس عري لأبي طلحة متقلداً سيفه وهو يطمئنهم بابتسامة: «لن تراعوا، لن تراعوا».</p>
+                            <p><strong>الثبات في المعارك:</strong> في غزوة حنين حين تراجع الجيش، تقدم النبي وحده على بغلته في وجه آلاف السهام وهو ينادي بثبات صخري: «أنا النبي لا كذب، أنا ابن عبد المطلب» حتى اجتمع حوله الصحابة وانتصروا.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الشجاعة الحقيقية هي ثبات الجنان واليقين بالله عند الملمات.</li>
+                                <li>2. القائد الحقيقي يكون في مقدمة الصفوف عند المخاطر.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_5",
+                    num: "05",
+                    title: "جوده وكرمه وزهده في حطام الدنيا",
+                    summary: "أجود الناس بالخير كالريح المرسلة، إعطاؤه غنم بين جبلين، وزهده حيث مات ودرعه مرهونة في شعير.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> الأثر في جوده وزهده ﷺ:</h4>
+                        <div class="seerah-quote-box">
+                            عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا قَالَ: «كَانَ رَسُولُ اللهِ ﷺ أَجْوَدَ النَّاسِ، وَكَانَ أَجْوَدَ مَا يَكُونُ فِي رَمَضَانَ... فَلَرَسُولُ اللهِ ﷺ أَجْوَدُ بِالخَيْرِ مِنَ الرِّيحِ المُرْسَلَةِ». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>كرم لا يعرف الشح:</strong> ما سُئل النبي ﷺ على الإسلام شيئاً إلا أعطاه؛ أعطى صفوان بن أمية وادياً مملوءاً إبلاً وغنماً بين جبلين، فرجع صفوان لقومه قائلاً: «يا قوم أسلموا، فإن محمداً يعطي عطاء من لا يخشى الفاقة».</p>
+                            <p><strong>زهده العجيب:</strong> كان ينام على الحصير حتى يؤثر في جنبه الشريف، ويمر الهلال ثم الهلال ثم الهلال ثلاثة أهلة في شهرين وما يوقد في بيوته نار، وطعامه الأسودان: التمر والماء، ومات ﷺ ولم يترك ديناراً ولا درهماً ودرعه مرهونة عند يهودي في 30 صاعاً من شعير لطعام أهله.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. الزهد الحقيقي هو أن تكون الدنيا في اليد لا في القلب.</li>
+                                <li>2. الإنفاق وسخاء النفس أعظم وسيلة لتأليف القلوب وترسيخ الإيمان.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_6",
+                    num: "06",
+                    title: "تواضعه الجم وخفض جناحه للناس",
+                    summary: "خدمته في بيته، جلوسه مع المساكين، إجابته لدعوة المملوك، وقوله: (إنما أنا ابن امرأة كانت تأكل القديد بمكة).",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> تواضعه وتطمين القلوب الخائفة:</h4>
+                        <div class="seerah-quote-box">
+                            أَتَى النَّبِيَّ ﷺ رَجُلٌ فَكَلَّمَهُ، فَجَعَلَتْ تُرْعَدُ فَرَائِصُهُ هَيْبَةً لَهُ، فَقَالَ لَهُ ﷺ: «هَوِّنْ عَلَيْكَ، فَإِنِّي لَسْتُ بِمَلِكٍ، إِنَّمَا أَنَا ابْنُ امْرَأَةٍ مِنْ قُرَيْشٍ كَانَتْ تَأْكُلُ القَدِيدَ بِمَكَّةَ». [رواه ابن ماجه وصححه الألباني]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>مظاهر تواضعه:</strong> كان يركب الحمار ويردف خلفه، ويجلس على الأرض بين أصحابه كأحدهم حتى يأتي الغريب فلا يعرفه فيسأل: «أيكم محمد؟»، وكان يأكل كما يأكل العبد، ويجيب دعوة الفقير والمملوك ولو على ذراع شاة أو كراع.</p>
+                            <p><strong>في بيته:</strong> سُئلت عائشة: ما كان النبي يصنع في بيته؟ قالت: «كان في مهنة أهله (يخصف نعله، ويرقع ثوبه، ويحلب شاته)، فإذا حضرت الصلاة خرج إلى الصلاة».</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. التواضع يرفع صاحبه في الدنيا والآخرة (من تواضع لله رفعه).</li>
+                                <li>2. خدمة الرجل لأهله ونفسه في البيت من كمال الرجولة والسنة النبوية.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_7",
+                    num: "07",
+                    title: "حلمه وصبره وعفوه عند المقدرة",
+                    summary: "حلمه على الأعرابي الذي جبذ رداءه، دعاؤه بالهداية لمن آذاه (اللهم اغفر لقومي فإنهم لا يعلمون)، ونهيه عن الفحش.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> موقف الأعرابي ورداء نجران:</h4>
+                        <div class="seerah-quote-box">
+                            عَنْ أَنَسٍ رَضِيَ اللهُ عَنْهُ قَالَ: كُنْتُ أَمْشِي مَعَ النَّبِيِّ ﷺ وَعَلَيْهِ بُرْدٌ نَجْرَانِيٌّ غَلِيظُ الحَاشِيَةِ، فَأَدْرَكَهُ أَعْرَابِيٌّ فَجَبَذَهُ بِرِدَائِهِ جَبْذَةً شَدِيدَةً حَتَّى أَثَّرَتْ فِي عُنُقِهِ، وَقَالَ: «مُرْ لِي مِنْ مَالِ اللهِ الَّذِي عِنْدَكَ»، فَالتَفَتَ إِلَيْهِ ﷺ وَضَحِكَ، ثُمَّ أَمَرَ لَهُ بِعَطَاءٍ. [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>سعة الحلم:</strong> كان ﷺ لا يزيده شدة الجهل عليه إلا حلماً؛ ما انتقم لنفسه قط في شيء إلا أن تُنتهك حرمة من حرمات الله فينتقم لله بها.</p>
+                            <p><strong>عفوه عن السم والسحر:</strong> عفا عن المرأة اليهودية التي سممت له الشاة في خيبر، وعفا عن لبيد بن الأعصم الساحر الذي سحره، وعفا عن المشركين يوم فتح مكة.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. مقابلة الإساءة بالإحسان تفتح القلوب المغلقة وتحول العدو إلى ولي حميم.</li>
+                                <li>2. ضبط النفس وكظم الغيظ عند القدرة على الانتقام.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_8",
+                    num: "08",
+                    title: "عبادته وتهجده وخشوعه وبكاؤه في صلاة الليل",
+                    summary: "قيامه الليل حتى تفطرت قدماه (أفلا أكون عبداً شكوراً)، بكاؤه عند تلاوة القرآن، ودوام ذكره واستغفاره.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> قيام الليل وشكر المنعم:</h4>
+                        <div class="seerah-quote-box">
+                            عَنْ عَائِشَةَ رَضِيَ اللهُ عَنْهَا أَنَّ نَبِيَّ اللهِ ﷺ كَانَ يَقُومُ مِنَ اللَّيْلِ حَتَّى تَتَفَطَّرَ قَدَمَاهُ، فَقَالَتْ عَائِشَةُ: لِمَ تَصْنَعُ هَذَا يَا رَسُولَ اللهِ وَقَدْ غَفَرَ اللهُ لَكَ مَا تَقَدَّمَ مِنْ ذَنْبِكَ وَمَا تَأَخَّرَ؟ قَالَ: «أَفَلَا أُحِبُّ أَنْ أَكُونَ عَبْدًا شَكُورًا!». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والبيان:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>خشوعه وبكاؤه:</strong> كان في صدره أزيز كأزيز المرجل (القدر يغلي) من البكاء والخشوع في الصلاة، وطلب من ابن مسعود أن يقرأ عليه القرآن فلما بلغ قوله تعالى: (فَكَيْفَ إِذَا جِئْنَا مِن كُلِّ أُمَّةٍ بِشَهِيدٍ وَجِئْنَا بِكَ عَلَىٰ هَٰؤُلَاءِ شَهِيدًا) قال له: «حسبك الآن»، فإذا عيناه تذرفان من الدموع إجلالاً لله وإشفاقاً على أمته.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. العبادة ليست فقط لطلب المغفرة بل هي مقام شكر ومحبة وتعظيم للرب سبحانه.</li>
+                                <li>2. قيام الليل دأب الصالحين ومصدر النور والثبات الإيماني.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_9",
+                    num: "09",
+                    title: "عدله وإنصافه بين الناس ورفضه للوساطة في الحدود",
+                    summary: "إقامة العدل على الشريف والوضيع، قوله الخالد (لو أن فاطمة بنت محمد سرقت لقطعت يدها)، وحفظ الحقوق والمظالم.",
+                    duration: "18 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> موقفه الحازم في شفاعة أسامة بن زيد:</h4>
+                        <div class="seerah-quote-box">
+                            قَالَ رَسُولُ اللهِ ﷺ حِينَ شَفَعَ أُسَامَةُ فِي المَرْأَةِ المَخْزُومِيَّةِ: «أَتَشْفَعُ فِي حَدٍّ مِنْ حُدُودِ اللهِ! إِنَّمَا أَهْلَكَ الَّذِينَ قَبْلَكُمْ أَنَّهُمْ كَانُوا إِذَا سَرَقَ فِيهِمُ الشَّرِيفُ تَرَكُوهُ، وَإِذَا سَرَقَ فِيهِمُ الضَّعِيفُ أَقَامُوا عَلَيْهِ الحَدَّ، وَايْمُ اللهِ لَوْ أَنَّ فَاطِمَةَ بِنْتَ مُحَمَّدٍ سَرَقَتْ لَقَطَعْتُ يَدَهَا!». [متفق عليه]
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>العدل المطلق:</strong> أقام النبي ميزان العدل الإلهي بحيث يتساوى أمامه القريب والبعيد والفقير والغني والأمير والمأمور، وطلب من الصحابة قبل وفاته أن يقتصوا منه إن كان قد ضرب ظهراً أو أخذ مالاً ليبرئ ذمته أمام ربه.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. سيادة الشرع والعدالة والمساواة أساس استقرار وبقاء الأمم والدول.</li>
+                                <li>2. تحريم الشفاعة والمحسوبية في حدود الله وحقوق العباد.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "s_sh_10",
+                    num: "10",
+                    title: "حسن عشرته لأهله وأزواجه ولطفه ومداعبته لهم",
+                    summary: "قاعدة (خيركم خيركم لأهله)، وفاءه لخديجة، مسابقته لعائشة، لطفه مع بناته وأحفاده، وبشاشته الدائمة.",
+                    duration: "20 دقيقة",
+                    content: `
+                        <h4><i class="fa-solid fa-scroll"></i> القاعدة النبوية الذهبية في الأسرة:</h4>
+                        <div class="seerah-quote-box">
+                            قَالَ رَسُولُ اللهِ ﷺ: «خَيْرُكُمْ خَيْرُكُمْ لِأَهْلِهِ، وَأَنَا خَيْرُكُمْ لِأَهْلِي». [رواه الترمذي وصححه]<br>
+                            «وَكَانَ ﷺ دَائِمَ البِشْرِ، سَهْلَ الخُلُقِ، لَيِّنَ الجَانِبِ، يُسَابِقُ عَائِشَةَ وَيُكْرِمُ صُوَيْحِبَاتِ خَدِيجَةَ».
+                        </div>
+
+                        <h4><i class="fa-solid fa-book-open"></i> الشرح والتفصيل:</h4>
+                        <div class="seerah-explanation-box">
+                            <p><strong>العشرة الزوجية الراقية:</strong> كان ينادي عائشة بـ «يا عائش» تدليلاً، ويشرب من الموضع الذي شربت منه، وسابقها في الجري فسبقته مرة وسبقها أخرى فقال: «هذه بتلك». وكان وفياً لذكرى خديجة يذبح الشاة ويهدي صديقاتها بعد وفاتها بسنوات طويلة.</p>
+                            <p><strong>بشاشته ومزاحه:</strong> كان لا يمزح إلا حقاً، وكان يداعب الصغار فيقول لأبي عمير: «يا أبا عمير، ما فعل النغير؟» تطييباً لخاطره عند موت عصفوره الصغير.</p>
+                        </div>
+
+                        <h4><i class="fa-solid fa-award"></i> أهم الدروس:</h4>
+                        <div class="seerah-benefits-box">
+                            <ul>
+                                <li>1. مقياس النبل الحقيقي وحسن الخلق يظهر في التعامل الداخلي مع الزوجة والأهل.</li>
+                                <li>2. الوفاء للمشاعر والمودة والمرح المباح يصنع السعادة الأسرية المتكاملة.</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            qa: [
+                { q: "1. كيف وصف الصحابة الكرام وجه وهيئة النبي ﷺ وجمال صورته؟", a: "كان أحسن الناس وجهاً وخلقاً، أزهر اللون (أبيض مشرباً بحمرة)، وجهه كالقمر ليلة البدر، ليس بالطويل البائن ولا بالقصير، ورائحته أطيب من المسك." },
+                { q: "2. ما هي مظاهر رحمة النبي ﷺ بالحيوان والبهائم؟", a: "مسح دموع الجمل الذي اشتكى له قسوة صاحبه، نهى عن اتخاذ الطير غرضاً للرمي، وحرم حرق النمل بالنار أو إجهاد الدواب فوق طاقتها." },
+                { q: "3. كيف تجلت أمانة النبي ﷺ حتى مع المشركين ليلة الهجرة؟", a: "أبقى علي بن أبي طالب في فراشه ليرد الودائع والنفائس التي استأمنه عليها كفار مكة إلى أصحابها قبل أن يغادر إلى يثرب." },
+                { q: "4. كيف كان النبي ﷺ يتعامل مع الصحابة عند اشتداد الخوف والمعارك؟", a: "كان أشجع الناس، قال علي: كنا إذا احمر البأس اتقينا برسول الله ﷺ فما يكون أحد أقرب إلى العدو منه." },
+                { q: "5. ما هو سبب قيام النبي ﷺ الليل حتى تفطرت قدماه وهو المغفور له ما تقدم من ذنبه؟", a: "قال إجابة لعائشة: «أفلا أحب أن أكون عبداً شكوراً!»؛ فالعبادة عنده شكر ومحبة وتعظيم لله سبحانه." },
+                { q: "6. ما هو الموقف الذي غضب فيه النبي ﷺ من الشفاعة في الحدود الشرعية؟", a: "حين شفع أسامة بن زيد في المرأة المخزومية التي سرقت، فقال النبي بحزم: «أتشفع في حد من حدود الله! وايم الله لو أن فاطمة بنت محمد سرقت لقطعت يدها»." },
+                { q: "7. كيف كان النبي ﷺ يعامل أزواجه وأهل بيته؟", a: "كان في مهنة أهله يخدم نفسه ويرقع ثوبه، وكان يلاطفهن ويسابق عائشة ويناديها بالتدليل، وقال: «خيركم خيركم لأهله وأنا خيركم لأهلي»." },
+                { q: "8. ما معنى خاتم النبوة وموضعه في جسد النبي الشريف؟", a: "هو شامة وغدة حمراء مثل بيضة الحمامة بين كتفي النبي ﷺ، كانت من علامات نبوته المذكورة في الكتب السابقة." },
+                { q: "9. ما هو موقف النبي ﷺ حين جبذه الأعرابي بردائه بنجران بقوة؟", a: "التفت إليه النبي ﷺ وتبسم في وجهه بحلم وأمر له بمال وعطاء دون أي غضب أو تعنيف." },
+                { q: "10. كيف كان زهد النبي ﷺ في الدنيا عند وفاته؟", a: "توفي ﷺ ولم يترك ديناراً ولا درهماً ولا شاة ولا بعيراً، وكانت درعه مرهونة عند يهودي بالمدينة في 30 صاعاً من شعير لطعام أهله." }
+            ],
+            quizList: [
+                { q: "1. خاتم النبوة كان موجوداً في جسد النبي ﷺ الشريف بين:", opts: ["كتفيه الشريفتين", "كفيه", "صدره"], a: 0 },
+                { q: "2. قال النبي ﷺ: «لو أن فاطمة بنت محمد سرقت لقطعت يدها» تأكيداً على مبدأ:", opts: ["العدالة والمساواة وتحريم المحسوبية في حدود الله", "التشدد مع الأقارب", "حفظ المال فقط"], a: 0 },
+                { q: "3. لما سُئلت عائشة رضي الله عنها عما كان النبي يصنعه في بيته قالت:", opts: ["كان في مهنة أهله (يخدم نفسه وأهله)", "يجلس صامتاً دائماً", "يأمر وينهى فقط"], a: 0 },
+                { q: "4. قال النبي ﷺ: «أفلا أكون عبداً شكوراً» جواباً عن سبب:", opts: ["قيامه الليل بالصلاة والتهجد حتى تفطرت قدماه", "كثرة صيامه للنوافل", "إنفاق كل أمواله"], a: 0 },
+                { q: "5. الصحابي الذي قال: «كنا إذا احمر البأس اتقينا برسول الله» هو:", opts: ["علي بن أبي طالب رضي الله عنه", "خالد بن الوليد رضي الله عنه", "عمر بن الخطاب رضي الله عنه"], a: 0 },
+                { q: "6. مات النبي ﷺ ودرعه مرهونة عند يهودي في مقابل:", opts: ["30 صاعاً من شعير لطعام أهله", "دنانير من ذهب", "فرس للحرب"], a: 0 },
+                { q: "7. خلق النبي ﷺ الذي جعله يعفو عن أهل مكة واليهودية التي سممت الشاة هو:", opts: ["الحلم والعفو عند المقدرة", "الخوف من ردهم", "النسيان"], a: 0 },
+                { q: "8. مسابقة النبي ﷺ لعائشة ومداعبته لأبي عمير تدل على:", opts: ["حسن العشرة واللطف والمرح المباح", "تضييع الأوقات", "كثرة اللهو"], a: 0 },
+                { q: "9. شبه ابن عباس جود النبي ﷺ في رمضان بـ:", opts: ["الريح المرسلة بالخير والسخاء", "البحر الهادئ", "الجبال الراسية"], a: 0 },
+                { q: "10. قال النبي ﷺ: «إنما أنا ابن امرأة كانت تأكل... بمكة» تواضعاً:", opts: ["القديد (اللحم المجفف البسيط)", "الحلوى الفاخرة", "الفاكهة"], a: 0 }
+            ]
+        }
+    };
+
+    var currentBranchKey = 'makki';
+    var completedLessons = JSON.parse(localStorage.getItem('completedSeerahLessons') || '[]');
+    var activeModalLesson = null;
+
+    function selectSeerahBranch(branchKey) {
+        currentBranchKey = branchKey;
+        document.querySelectorAll('.side-nav-btn').forEach(function(btn) { btn.classList.remove('active'); });
+        var targetBtn = document.getElementById('btn-' + branchKey);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        var data = seerahData[branchKey];
+        document.getElementById('topicBadge').innerHTML = '<i class="fa-solid fa-star"></i> ' + data.badge;
+        document.getElementById('topicTitle').innerText = data.title;
+        document.getElementById('topicDescription').innerText = data.desc;
+        document.getElementById('topicQuote').innerText = data.quote;
+
+        var defaultTab = document.querySelector('.sub-tab-btn');
+        if (defaultTab) switchTopicView('lessons', defaultTab);
+
+        renderLessons();
+        renderQA();
+        renderQuiz();
+        updateProgressUI();
+    }
+
+    function renderLessons() {
+        var container = document.getElementById('viewLessons');
+        var lessons = seerahData[currentBranchKey].lessons;
+        container.innerHTML = '';
+
+        lessons.forEach(function(lesson) {
+            var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+            var card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.innerHTML = `
+                <div>
+                    <div class="lesson-card-top">
+                        <div class="lesson-number-badge">${lesson.num}</div>
+                        <span class="lesson-status-pill ${isCompleted ? 'completed' : ''}">
+                            <i class="fa-solid ${isCompleted ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${isCompleted ? 'تمت دراسته' : 'متاح للمدارسة'}
+                        </span>
+                    </div>
+                    <h3 class="lesson-title">${lesson.title}</h3>
+                    <p class="lesson-summary">${lesson.summary}</p>
+                </div>
+                <div class="lesson-footer-row">
+                    <button class="btn-open-lesson" onclick="openLessonModal('${lesson.id}')">
+                        <i class="fa-solid fa-book-bookmark"></i> مطالعة المحطة
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQA() {
+        var container = document.getElementById('viewQA');
+        var qaList = seerahData[currentBranchKey].qa;
+        container.innerHTML = '';
+
+        qaList.forEach(function(item, qIdx) {
+            var cleanQ = item.q.replace(/^\d+\.\s*/, '');
+            var card = document.createElement('div');
+            card.className = 'qa-card';
+            card.innerHTML = `
+                <div class="qa-header" onclick="this.parentElement.classList.toggle('open')">
+                    <span><i class="fa-solid fa-circle-question" style="color: #7c3aed; margin-left: 8px;"></i> ${qIdx + 1}. ${cleanQ}</span>
+                    <i class="fa-solid fa-chevron-down" style="transition: transform .25s ease; color: var(--text-muted);"></i>
+                </div>
+                <div class="qa-body">
+                    <strong>البيان والجواب: </strong> ${item.a}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderQuiz() {
+        var container = document.getElementById('quizBox');
+        var quizList = seerahData[currentBranchKey].quizList;
+        container.innerHTML = `
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h3 style="font-size: 20px; font-weight: 800; color: #7c3aed; margin-bottom: 6px;">
+                    <i class="fa-solid fa-graduation-cap"></i> اختبار الفهم والاستيعاب في ${seerahData[currentBranchKey].badge}
+                </h3>
+                <p style="font-size: 13.5px; color: var(--text-muted);">أجب عن الأسئلة العشرة لقياس مدى إلمامك بمحطات السيرة والشمائل النبوية</p>
+            </div>
+        `;
+
+        quizList.forEach(function(qObj, qIdx) {
+            var qBox = document.createElement('div');
+            qBox.style.marginBottom = '25px';
+            var cleanTitle = qObj.q.replace(/^\d+\.\s*/, '');
+            qBox.innerHTML = `<h4 class="quiz-question-title">${qIdx + 1}. ${cleanTitle}</h4>`;
+
+            var optsBox = document.createElement('div');
+            optsBox.className = 'quiz-options';
+
+            qObj.opts.forEach(function(opt, optIdx) {
+                var btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    var siblings = optsBox.querySelectorAll('.quiz-option-btn');
+                    siblings.forEach(function(b) { b.disabled = true; });
+
+                    if (optIdx === qObj.a) {
+                        btn.classList.add('correct');
+                        btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> ' + opt + ' (إجابة صحيحة وموفقة!)';
+                    } else {
+                        btn.classList.add('wrong');
+                        btn.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ' + opt + ' (إجابة غير صحيحة)';
+                        siblings[qObj.a].classList.add('correct');
+                    }
+                };
+                optsBox.appendChild(btn);
+            });
+
+            qBox.appendChild(optsBox);
+            container.appendChild(qBox);
+        });
+    }
+
+    function switchTopicView(viewType, btn) {
+        document.querySelectorAll('.sub-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+        document.getElementById('viewLessons').style.display = (viewType === 'lessons') ? 'grid' : 'none';
+        document.getElementById('viewQA').style.display = (viewType === 'qa') ? 'block' : 'none';
+        document.getElementById('viewQuiz').style.display = (viewType === 'quiz') ? 'block' : 'none';
+    }
+
+    function openLessonModal(lessonId) {
+        var list = seerahData[currentBranchKey].lessons;
+        var lesson = list.find(function(l) { return l.id === lessonId; });
+        if (!lesson) return;
+
+        activeModalLesson = lesson;
+        document.getElementById('modalTopicBadge').innerText = seerahData[currentBranchKey].badge;
+        document.getElementById('modalLessonTitle').innerText = lesson.title;
+        document.getElementById('modalLessonBody').innerHTML = lesson.content;
+
+        var isCompleted = completedLessons.indexOf(lesson.id) !== -1;
+        var btnComplete = document.getElementById('btnMarkComplete');
+        if (isCompleted) {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل بالفعل (إلغاء)';
+            btnComplete.style.background = '#059669';
+        } else {
+            btnComplete.innerHTML = '<i class="fa-solid fa-check"></i> تعليم كـ «مكتمل»';
+            btnComplete.style.background = '#7c3aed';
+        }
+
+        document.getElementById('lessonModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLessonModal(e) {
+        if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close-btn')) return;
+        document.getElementById('lessonModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function toggleCompleteCurrentLesson() {
+        if (!activeModalLesson) return;
+        var lessonId = activeModalLesson.id;
+        var idx = completedLessons.indexOf(lessonId);
+        if (idx === -1) {
+            completedLessons.push(lessonId);
+        } else {
+            completedLessons.splice(idx, 1);
+        }
+
+        localStorage.setItem('completedSeerahLessons', JSON.stringify(completedLessons));
+        openLessonModal(lessonId);
+        renderLessons();
+        updateProgressUI();
+
+        // حفظ وتحديث التقدم في الباك إند في خانة السيرة النبوية
+        var token = localStorage.getItem('token');
+        if (token) {
+            fetch('/api/usul-progress/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    science: 'seerah',
+                    lessonId: lessonId
+                })
+            })
+            .then(function(res) { return res.ok ? res.json() : null; })
+            .then(function(data) {
+                if (data && data.seerah) {
+                    completedLessons = data.seerah;
+                    localStorage.setItem('completedSeerahLessons', JSON.stringify(completedLessons));
+                    renderLessons();
+                    updateProgressUI();
+                }
+            })
+            .catch(function(err) {
+                console.warn('تعذر الاتصال بالسيرفر، تم الحفظ محلياً:', err);
+            });
+        }
+    }
+
+    function updateProgressUI() {
+        var total = 30;
+        var count = completedLessons.length;
+        var pct = Math.round((count / total) * 100);
+        var pText = document.getElementById('seerahProgressText');
+        var pBar = document.getElementById('seerahProgressBar');
+        var cCount = document.getElementById('completedSeerahCount');
+        if (pText) pText.innerText = pct + '%';
+        if (pBar) pBar.style.width = pct + '%';
+        if (cCount) cCount.innerText = count;
+    }
+
+    function loadProgressFromServer() {
+        var token = localStorage.getItem('token');
+        if (!token) {
+            updateProgressUI();
+            return;
+        }
+
+        fetch('/api/usul-progress', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+            if (data && data.seerah) {
+                completedLessons = data.seerah;
+                localStorage.setItem('completedSeerahLessons', JSON.stringify(completedLessons));
+                renderLessons();
+                updateProgressUI();
+            }
+        })
+        .catch(function(err) {
+            console.warn('تعذر جلب التقدم من السيرفر:', err);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        selectSeerahBranch('makki');
+        loadProgressFromServer();
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

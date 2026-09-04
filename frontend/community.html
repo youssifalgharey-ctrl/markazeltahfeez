@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المجتمع والتفاعل - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- محتوى صفحة المجتمع والتفاعل -->
+
+<!-- مقدمة الصفحة -->
+<section class="section-container" id="community">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-users"></i> المجتمع والتفاعل</h3>
+    </div>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 10px; text-align: center; max-width: 700px; margin-inline: auto;">
+        مساحة لمشاركة أجمل لحظات المركز: صور وفيديوهات الحفلات، وتكريم الطلاب المتفوقين وحفظة القرآن الكريم.
+    </p>
+</section>
+
+<!-- معرض الصور والفيديوهات -->
+<section class="section-container" id="community-gallery">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-photo-film"></i> صور وفيديوهات الحفلات والتكريمات</h3>
+    </div>
+
+    <div class="empty-state-card">
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-images"></i>
+        </div>
+        <div class="empty-state-title">لا يوجد محتوى حتى الآن</div>
+        <p class="empty-state-text">
+            سيتم إضافة محتوى قريبًا. تابعونا هنا لمشاهدة صور وفيديوهات حفلات التكريم ولحظات تفوق طلاب المركز في حفظ القرآن الكريم.
+        </p>
+        <span class="empty-state-badge"><i class="fa-solid fa-clock"></i> قريبًا</span>
+    </div>
+
+    <div class="media-placeholder-grid">
+        <div class="media-placeholder-card">
+            <i class="fa-solid fa-image"></i>
+            <span>صور الحفلات</span>
+        </div>
+        <div class="media-placeholder-card">
+            <i class="fa-solid fa-video"></i>
+            <span>فيديوهات التكريم</span>
+        </div>
+        <div class="media-placeholder-card">
+            <i class="fa-solid fa-award"></i>
+            <span>لحظات التفوق</span>
+        </div>
+        <div class="media-placeholder-card">
+            <i class="fa-solid fa-champagne-glasses"></i>
+            <span>مناسبات المركز</span>
+        </div>
+    </div>
+</section>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الدورة ومحتوى المحاضرات - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/courses.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-right"></i> كل الدورات
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- المحتوى الرئيسي لتفاصيل الدورة -->
+<div class="section-container" style="max-width: 1200px; margin-top: 25px;">
+    
+    <div class="course-detail-layout">
+        
+        <!-- العمود الأيمن: المحتوى والتبويبات والأكورديون -->
+        <div class="course-main-content">
+            
+            <!-- بطاقة الهيدر الترحيبي بالدورة -->
+            <div class="course-hero-card">
+                <span class="course-category-tag" id="courseCategoryBadge">باقة شاملة (3 شهور)</span>
+                <h1 class="course-hero-title" id="courseMainTitle">الباقة المخفضة الأولى (3 شهور) «نظام إلزامي — أحكام التجويد والإتقان»</h1>
+                
+                <div class="course-instructor-row">
+                    <div class="instructor-avatar-circle">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <div class="instructor-name" id="courseInstructorName">إشراف: نخبة من شيوخ مركز أسريجه المجازين</div>
+                        <div class="instructor-title">قسم القراءات والتجويد — إجازات متصلة السند</div>
+                    </div>
+                </div>
+
+                <!-- تبويبات التنقل داخل الدورة -->
+                <div class="course-tabs-nav">
+                    <button class="course-tab-btn active" onclick="switchCourseTab('about', this)">
+                        <i class="fa-solid fa-circle-info"></i> عن الكورس
+                    </button>
+                    <button class="course-tab-btn" onclick="switchCourseTab('curriculum', this)">
+                        <i class="fa-solid fa-list-check"></i> المحاضرات والدروس
+                    </button>
+                    <button class="course-tab-btn" onclick="switchCourseTab('rules', this)">
+                        <i class="fa-solid fa-shield-halved"></i> التعليمات والتنبيهات
+                    </button>
+                </div>
+            </div>
+
+            <!-- تبويب 1: عن الكورس -->
+            <div class="course-tab-pane active" id="tab-about">
+                <div class="course-desc-box">
+                    <h4 class="course-section-heading"><i class="fa-solid fa-book-open"></i> نبذة عن مسار الدورة</h4>
+                    <p id="courseFullDescription" style="margin-bottom: 16px;">
+                        هذه الباقة «نظام إلزامي» مخصصة للطلاب الراغبين في نظام متابعة منتظم وملتزم، بحيث تتابع كل محاضرة أول ما تنزل، وما تسيبش المحاضرات تتراكم عليك. الباقة عبارة عن اشتراك مخفض يشمل كل أحكام التجويد النظرية والتطبيقية، بالإضافة إلى الامتحانات الشاملة وتصحيح التلاوة أولاً بأول.
+                    </p>
+
+                    <h4 class="course-section-heading" style="margin-top: 24px;"><i class="fa-solid fa-circle-check"></i> ماذا ستتعلم في هذه الدورة؟</h4>
+                    <ul class="course-features-list">
+                        <li><i class="fa-solid fa-circle-check"></i> إتقان مخارج الحروف العربية بدقة</li>
+                        <li><i class="fa-solid fa-circle-check"></i> معرفة صفات الحروف اللازمة والعارضة</li>
+                        <li><i class="fa-solid fa-circle-check"></i> تطبيق أحكام النون الساكنة والتنوين</li>
+                        <li><i class="fa-solid fa-circle-check"></i> ضبط أحكام الميم الساكنة والمشددتين</li>
+                        <li><i class="fa-solid fa-circle-check"></i> أنواع المدود وحركات المد والتفخيم والترقيق</li>
+                        <li><i class="fa-solid fa-circle-check"></i> الوقف والابتداء وعلامات المصحف الشريف</li>
+                    </ul>
+
+                    <div class="course-rules-alert">
+                        <h5><i class="fa-solid fa-triangle-exclamation"></i> تنبيهات هامة للمشتركين:</h5>
+                        <ul>
+                            <li>• الالتزام بمشاهدة كل محاضرة في موعدها يضمن استمرار فتح المحاضرات التالية تباعاً.</li>
+                            <li>• متاح لك فرصة تسليم الواجب الصوتي مرة واحدة لكل محاضرة ليتم تقييمها من قبل الشيخ.</li>
+                            <li>• الامتحان الشامل يتطلب الحصول على درجة 60% كحد أدنى لاجتياز الوحدة والحصول على شهادة الدورة.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تبويب 2: المحاضرات والدروس (أكورديون تفاعلي) -->
+            <div class="course-tab-pane" id="tab-curriculum">
+                <div class="curriculum-accordion" id="curriculumAccordion">
+                    
+                    <!-- الوحدة الأولى -->
+                    <div class="curriculum-module open">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title-wrap">
+                                <span class="module-badge">الوحدة 1</span>
+                                <span class="module-title">المحاضرة الأولى: مقدمة علم التجويد ومخارج الحروف العامة</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down module-toggle-icon"></i>
+                        </div>
+                        <div class="module-body">
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-play"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">شرح المحاضرة الأولى: مقدمة التجويد وأهميته</div>
+                                        <div class="lesson-row-meta"><i class="fa-regular fa-clock"></i> 25 دقيقة • فيديو عالي الجودة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge free"><i class="fa-solid fa-unlock"></i> متاح للمعاينة</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">مذكرة وخريطة ذهنية لمخارج الحروف (PDF)</div>
+                                        <div class="lesson-row-meta"><i class="fa-solid fa-download"></i> ملف ملخص جاهز للطباعة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge free"><i class="fa-solid fa-unlock"></i> متاح</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">تدريب واختبار تفاعلي على المحاضرة الأولى</div>
+                                        <div class="lesson-row-meta">10 أسئلة اختيار من متعدد وتطبيق عملي</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-microphone"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">تسليم تسجيل الواجب الصوتي لتصحيح التلاوة</div>
+                                        <div class="lesson-row-meta">تسجيل صوتي لسورة الفاتحة وأول البقرة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الوحدة الثانية -->
+                    <div class="curriculum-module">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title-wrap">
+                                <span class="module-badge">الوحدة 2</span>
+                                <span class="module-title">المحاضرة الثانية: تفصيل مخارج الحلق واللسان والشفتين</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down module-toggle-icon"></i>
+                        </div>
+                        <div class="module-body">
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-play"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">شرح فيديو: مخارج اللسان العشرة وحروفها</div>
+                                        <div class="lesson-row-meta"><i class="fa-regular fa-clock"></i> 32 دقيقة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">جدول توضيحي ورسومات ثلاثية الأبعاد للمخارج</div>
+                                        <div class="lesson-row-meta">ملف PDF تدريبي</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-microphone"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">تسميع مقاطع حروف الاستعلاء والصفير</div>
+                                        <div class="lesson-row-meta">متابعة المعلم المباشرة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الوحدة الثالثة -->
+                    <div class="curriculum-module">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title-wrap">
+                                <span class="module-badge">الوحدة 3</span>
+                                <span class="module-title">المحاضرة الثالثة: صفات الحروف (الهمس والجهر والقلقلة)</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down module-toggle-icon"></i>
+                        </div>
+                        <div class="module-body">
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-play"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">شرح الصفات التي لها ضد والتي لا ضد لها</div>
+                                        <div class="lesson-row-meta"><i class="fa-regular fa-clock"></i> 28 دقيقة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">امتحان نصف الدورة على المخارج والصفات</div>
+                                        <div class="lesson-row-meta">اختبار تقييم شامل</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الوحدة الرابعة -->
+                    <div class="curriculum-module">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title-wrap">
+                                <span class="module-badge">الوحدة 4</span>
+                                <span class="module-title">المحاضرة الرابعة: أحكام النون الساكنة والتنوين والمدود</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down module-toggle-icon"></i>
+                        </div>
+                        <div class="module-body">
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-play"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">الإظهار، الإدغام، الإقلاب، الإخفاء مع الأمثلة</div>
+                                        <div class="lesson-row-meta"><i class="fa-regular fa-clock"></i> 35 دقيقة</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+
+                            <div class="lesson-row-item">
+                                <div class="lesson-row-right">
+                                    <div class="lesson-type-icon"><i class="fa-solid fa-award"></i></div>
+                                    <div>
+                                        <div class="lesson-row-title">الاختبار النهائي للدورة ومنح شهادة الإتقان</div>
+                                        <div class="lesson-row-meta">اختبار نظري وتسميع عملي</div>
+                                    </div>
+                                </div>
+                                <span class="lesson-status-badge locked"><i class="fa-solid fa-lock"></i> يتطلب اشتراك</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- تبويب 3: التعليمات والتنبيهات -->
+            <div class="course-tab-pane" id="tab-rules">
+                <div class="course-desc-box">
+                    <h4 class="course-section-heading"><i class="fa-solid fa-circle-exclamation"></i> شروط وتعليمات الاشتراك بالنظام</h4>
+                    <div style="font-size: 14px; line-height: 2;">
+                        <p><strong>1. المشاهدة والمتابعة:</strong></p>
+                        <p style="color: var(--text-muted); margin-bottom: 12px;">يتم فتح المحاضرات بترتيب زمني منظم لضمان التدرج في الفهم والتطبيق دون تشتت.</p>
+                        
+                        <p><strong>2. تصحيح التلاوة الصوتي:</strong></p>
+                        <p style="color: var(--text-muted); margin-bottom: 12px;">يقوم الشيخ المشرف بالاستماع لتسجيلك وإرسال ملاحظات صوتية وكتابية تفصيلية على نطقك لكل حرف.</p>
+
+                        <p><strong>3. الشهادة والإجازة:</strong></p>
+                        <p style="color: var(--text-muted);">عند إتمام جميع المحاضرات وتسليم الواجبات بنجاح، يحصل الطالب على شهادة إتمام المسار معتمدة من مركز تحفيظ القرآن الكريم بأسريجه.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- العمود الأيسر: بطاقة الاشتراك الجانبية الثابتة -->
+        <div>
+            <div class="course-side-card">
+                <div class="side-course-banner">
+                    <i class="fa-solid fa-book-quran" style="font-size: 48px; margin-bottom: 8px; color: var(--gold);"></i>
+                    <h5 style="font-size: 16px; font-weight: 800;" id="sideCardCourseBadge">باقة 3 شهور</h5>
+                    <p style="font-size: 12px; opacity: 0.9;">مركز تحفيظ أسريجه</p>
+                </div>
+
+                <div class="side-price-display">
+                    <div class="side-price-val" id="sidePriceVal">440.00 <span>ج.م</span></div>
+                </div>
+
+                <a href="/checkout.html?course=pkg-mandatory" class="btn-enroll-now" id="btnMainEnroll">
+                    <i class="fa-solid fa-bolt"></i> اشترك الآن !
+                </a>
+
+                <div class="side-features-box">
+                    <h6>تتضمن هذه الدورة:</h6>
+                    <ul>
+                        <li><i class="fa-solid fa-video"></i> جميع المحاضرات المصورة بدقة عالية</li>
+                        <li><i class="fa-solid fa-file-pdf"></i> مذكرات PDF وخرائط ذهنية قابلة للتحميل</li>
+                        <li><i class="fa-solid fa-microphone-lines"></i> تصحيح تلاوة وتسميع صوتي مباشر</li>
+                        <li><i class="fa-solid fa-list-check"></i> بنك أسئلة واختبارات شاملة</li>
+                        <li><i class="fa-solid fa-certificate"></i> شهادة إتمام معتمدة من المركز</li>
+                        <li><i class="fa-solid fa-headset"></i> دعم فني ومتابعة مستمرة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // بيانات الدورات لتحديث المحتوى حسب رابط الصفحة
+    var coursesData = {
+        'course-foundation': {
+            title: 'كورس التأسيس وإتقان القراءة والتهجي القرآني (نور البيان)',
+            badge: 'كورس تأسيسي شامل',
+            sideBadge: 'مسار التأسيس (شهرين)',
+            instructor: 'إشراف: نخبة من معلمي التأسيس بمركز أسريجه',
+            price: '190.00',
+            checkoutCode: 'course-foundation',
+            desc: 'مسار تأهيلي متكامل يبدأ من الصفر لضبط الحروف الهجائية، أصوات الحركات، السكون، التنوين والمدود، مع التدريب العملي المكثف على التهجي والقراءة الصحيحة من المصحف الشريف بطلاقة وبدون تعثر.'
+        },
+        'course-tajweed': {
+            title: 'كورس أحكام التجويد النظري والتطبيقي والإتقان العملي',
+            badge: 'كورس تجويد وإتقان',
+            sideBadge: 'دورة التجويد (3 أشهر)',
+            instructor: 'إشراف: قسم التجويد والقراءات بمركز أسريجه',
+            price: '350.00',
+            checkoutCode: 'course-tajweed',
+            desc: 'دراسة متكاملة لأحكام التجويد من مخارج الحروف وصفاتها، أحكام النون والميم الساكنتين، المدود وأقسامها، التفخيم والترقيق، والوقف والابتداء، مع تطبيقات عملية على الآيات وتصحيح صوتي مباشر مع الشيوخ.'
+        },
+        'course-ijaza': {
+            title: 'مسار الإجازة القرآنية بالسند المتصل إلى النبي ﷺ',
+            badge: 'مسار الإجازة بالسند',
+            sideBadge: 'ختمة كاملة متصلة السند',
+            instructor: 'إشراف: الشيوخ المقرئون المسندون بمركز أسريجه',
+            price: '600.00',
+            checkoutCode: 'course-ijaza',
+            desc: 'مسار إقرائي مخصص للمتقنين الراغبين في عرض ختمة كاملة برواية حفص عن عاصم (أو ورش) على شيخ مقرئ مسند، والتدقيق في لطائف الأداء ودقائق التجويد حتى نيل الإجازة بالسند المتصل إلى رسول الله ﷺ.'
+        },
+        'course-qiraat': {
+            title: 'كورس القراءات العشر (الصغرى والكبرى) — جمعاً وإفراداً',
+            badge: 'تخصص القراءات العشر',
+            sideBadge: 'دبلوم القراءات العشر',
+            instructor: 'إشراف: كبار مقرئي القراءات المتواترة',
+            price: '750.00',
+            checkoutCode: 'course-qiraat',
+            desc: 'دراسة تخصصية متقدمة في القراءات العشر المتواترة من طريق الشاطبية والدرة وطيبة النشر، شرح الأصول والفرش، مع التدريب المنهجي على أصول الجمع والإفراد وعرض الروايات على نخبة من كبار المقرئين.'
+        },
+        'pkg-mandatory': {
+            title: 'الباقة المخفضة الأولى (3 شهور) «نظام إلزامي — أحكام التجويد والإتقان»',
+            badge: 'باقة شاملة (3 شهور)',
+            sideBadge: 'باقة 3 شهور (إلزامي)',
+            instructor: 'إشراف: نخبة من شيوخ مركز أسريجه المجازين',
+            price: '440.00',
+            checkoutCode: 'pkg-mandatory'
+        },
+        'pkg-flexible': {
+            title: 'الباقة المخفضة الأولى (3 شهور) «نظام مرن — سرعة ذاتية»',
+            badge: 'باقة مرنة (3 شهور)',
+            sideBadge: 'باقة 3 شهور (مرن)',
+            instructor: 'إشراف: قسم التجويد والقراءات بالمركز',
+            price: '440.00',
+            checkoutCode: 'pkg-flexible'
+        },
+        'free-intro': {
+            title: 'كتالوج المنصة + المحاضرة التعريفية بأحكام التجويد ومخارج الحروف',
+            badge: 'دورة مجانية بالكامل',
+            sideBadge: 'كورس تجريبي مجاني',
+            instructor: 'إشراف: إدارة مركز أسريجه',
+            price: '0.00',
+            checkoutCode: 'free-intro'
+        },
+        'course-month-1': {
+            title: 'الكورس التأسيسي — الشهر الأول (مخارج الحروف والتطبيق العملي)',
+            badge: 'كورس شهري تأسيسي',
+            sideBadge: 'كورس الشهر الأول',
+            instructor: 'إشراف: الشيخ / محمود عبد الحميد',
+            price: '175.00',
+            checkoutCode: 'course-month-1'
+        },
+        'course-motun': {
+            title: 'دورة شرح متني تحفة الأطفال والمقدمة الجزرية مع حفظ الأبيات',
+            badge: 'شرح متون وإجازة',
+            sideBadge: 'دورة المتون والإجازة',
+            instructor: 'إشراف: الشيخ المقرئ / أحمد المصري',
+            price: '260.00',
+            checkoutCode: 'course-motun'
+        }
+    };
+
+    // قراءة معرف الدورة من الرابط
+    var urlParams = new URLSearchParams(window.location.search);
+    var courseId = urlParams.get('id') || 'course-tajweed';
+    var activeCourse = coursesData[courseId] || coursesData['course-tajweed'];
+
+    // تعبئة البيانات في الصفحة
+    document.getElementById('courseMainTitle').textContent = activeCourse.title;
+    document.getElementById('courseCategoryBadge').textContent = activeCourse.badge;
+    document.getElementById('courseInstructorName').textContent = activeCourse.instructor;
+    document.getElementById('sideCardCourseBadge').textContent = activeCourse.sideBadge;
+    document.getElementById('sidePriceVal').innerHTML = activeCourse.price + ' <span>ج.م</span>';
+    if (activeCourse.desc && document.getElementById('courseFullDescription')) {
+        document.getElementById('courseFullDescription').textContent = activeCourse.desc;
+    }
+    
+    // إذا كان الكورس مجانياً (free-intro) يتم فتحه بالكامل تلقائياً
+    var isFreeCourse = (courseId === 'free-intro' || activeCourse.price === '0.00');
+    var btnEnroll = document.getElementById('btnMainEnroll');
+    var priceDisplay = document.querySelector('.side-price-display');
+
+    if (isFreeCourse) {
+        if (priceDisplay) {
+            priceDisplay.style.display = 'none';
+        }
+
+        if (btnEnroll) {
+            btnEnroll.innerHTML = '<i class="fa-solid fa-circle-play"></i> تصفح المحاضرات مجاناً';
+            btnEnroll.style.background = '#059669';
+            btnEnroll.style.color = '#ffffff';
+            btnEnroll.href = '#tab-curriculum';
+            btnEnroll.onclick = function(e) {
+                var tabBtn = document.querySelectorAll('.course-tab-btn')[1];
+                if (tabBtn) switchCourseTab('curriculum', tabBtn);
+            };
+        }
+
+        // فتح جميع المحاضرات والدروس والاختبارات فوراً
+        document.querySelectorAll('.lesson-status-badge.locked').forEach(function(badge) {
+            badge.classList.remove('locked');
+            badge.classList.add('free');
+            badge.innerHTML = '<i class="fa-solid fa-unlock"></i> متاح مجاناً';
+        });
+    } else {
+        btnEnroll.href = '/checkout.html?course=' + activeCourse.checkoutCode;
+    }
+
+    // تبديل التبويبات
+    function switchCourseTab(tabName, btn) {
+        document.querySelectorAll('.course-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.course-tab-pane').forEach(function(p) { p.classList.remove('active'); });
+
+        btn.classList.add('active');
+        var targetPane = document.getElementById('tab-' + tabName);
+        if (targetPane) targetPane.classList.add('active');
+    }
+
+    // فتح وإغلاق أكورديون الوحدات
+    function toggleModule(headerEl) {
+        var moduleEl = headerEl.parentElement;
+        moduleEl.classList.toggle('open');
+    }
+
+    // التحقق التلقائي مما إذا كان اشتراك الطالب مفعلاً للكورسات المدفوعة
+    document.addEventListener('DOMContentLoaded', async function() {
+        if (isFreeCourse) return; // تم الفتح التلقائي للكورس المجاني
+
+        var user = null;
+        try {
+            var raw = localStorage.getItem('user');
+            if (raw) user = JSON.parse(raw);
+        } catch(e) {}
+
+        var token = localStorage.getItem('token');
+        var role = localStorage.getItem('role') || (user ? user.role : null);
+        var isAdmin = (role === 'ADMIN');
+        var headers = {};
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+
+        var currentCourseKey = activeCourse.checkoutCode || courseId;
+        var isUserSubscribed = isAdmin; // مفتوح بالكامل لحساب المسؤول
+
+        if (!isUserSubscribed) {
+            try {
+                // محاولة أولى عبر my-subscriptions الشاملة
+                var q = new URLSearchParams();
+                if (user) {
+                    if (user.phone) q.append('phone', user.phone);
+                    if (user.userCode) q.append('userCode', user.userCode);
+                    if (user.email) q.append('email', user.email);
+                }
+
+                var res = await fetch('/api/payment/my-subscriptions?' + q.toString(), { headers: headers });
+                if (res.ok) {
+                    var data = await res.json();
+                    if (data && (data.isAdmin || (data.activeCourseKeys && Array.isArray(data.activeCourseKeys)))) {
+                        if (data.isAdmin || data.activeCourseKeys.includes(currentCourseKey) || data.activeCourseKeys.includes(courseId)) {
+                            isUserSubscribed = true;
+                        }
+                    }
+                }
+
+                // فحص إضافي عبر check-subscription إذا لم يثبت بعد
+                if (!isUserSubscribed) {
+                    var qCheck = new URLSearchParams({
+                        courseKey: currentCourseKey
+                    });
+                    if (user) {
+                        if (user.phone) qCheck.append('phone', user.phone);
+                        if (user.userCode) qCheck.append('userCode', user.userCode);
+                        if (user.email) qCheck.append('email', user.email);
+                    }
+                    var resCheck = await fetch('/api/payment/check-subscription?' + qCheck.toString(), { headers: headers });
+                    if (resCheck.ok) {
+                        var dataCheck = await resCheck.json();
+                        if (dataCheck && (dataCheck.isSubscribed || dataCheck.isAdmin)) {
+                            isUserSubscribed = true;
+                        }
+                    }
+                }
+            } catch (err) {
+                console.warn('Subscription check error:', err);
+            }
+        }
+
+        // تطبيق حالة الاشتراك المفعّل وإزالة السعر والأقفال
+        if (isUserSubscribed) {
+            // 1. إخفاء أو استبدال السعر الجانبي ببادج الاشتراك
+            var priceDisplay = document.querySelector('.side-price-display');
+            if (priceDisplay) {
+                var badgeLabel = isAdmin ? 'متاح بالكامل (حساب الإدارة)' : 'اشتراكك مفعّل وصالح';
+                var iconClass = isAdmin ? 'fa-shield-halved' : 'fa-circle-check';
+                priceDisplay.innerHTML = '<div style="background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #10b981; padding: 12px; border-radius: 12px; text-align: center; font-weight: 800; font-size: 15px;"><i class="fa-solid ' + iconClass + '"></i> ' + badgeLabel + '</div>';
+            }
+
+            // 2. تحديث زر الاشتراك الجانبي
+            var btnEnroll = document.getElementById('btnMainEnroll');
+            if (btnEnroll) {
+                btnEnroll.innerHTML = '<i class="fa-solid fa-circle-play"></i> دخول المحاضرات والدروس';
+                btnEnroll.style.background = '#059669';
+                btnEnroll.style.color = '#ffffff';
+                btnEnroll.href = '#tab-curriculum';
+                btnEnroll.onclick = function(e) {
+                    e.preventDefault();
+                    var tabBtn = document.querySelectorAll('.course-tab-btn')[1];
+                    if (tabBtn) switchCourseTab('curriculum', tabBtn);
+                    var currTab = document.getElementById('tab-curriculum');
+                    if (currTab) currTab.scrollIntoView({ behavior: 'smooth' });
+                };
+            }
+
+            // 3. فتح جميع شارات الدروس المغلقة وإزالة "يتطلب اشتراك"
+            document.querySelectorAll('.lesson-status-badge.locked').forEach(function(badge) {
+                badge.classList.remove('locked');
+                badge.classList.add('free');
+                badge.innerHTML = '<i class="fa-solid fa-unlock"></i> متاح لك';
+            });
+        }
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

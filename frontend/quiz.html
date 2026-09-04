@@ -1,0 +1,1508 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إختبرني في حفظ القرآن الكريم | مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="اختبر حفظك وإتقانك لسور القرآن الكريم مع نظام إختبرني التفاعلي بمركز تحفيظ القرآن الكريم بأسريجه. أسئلة متنوعة وحفظ مباشر للنتائج.">
+    
+    <!-- الخطوط والأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- الأنماط الأساسية -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        :root {
+            --quiz-primary: #059669;
+            --quiz-primary-dark: #047857;
+            --quiz-accent: #d97706;
+            --quiz-gold: #f59e0b;
+            --quiz-gold-light: #fef3c7;
+            --quiz-bg: #f8fafc;
+            --quiz-card-bg: #ffffff;
+            --quiz-border: #e2e8f0;
+            --quiz-text: #1e293b;
+            --quiz-muted: #64748b;
+        }
+
+        [data-theme="dark"] {
+            --quiz-bg: #0b1512;
+            --quiz-card-bg: #13231e;
+            --quiz-border: #1e3a32;
+            --quiz-text: #f1f5f9;
+            --quiz-muted: #94a3b8;
+            --quiz-gold-light: rgba(245, 158, 11, 0.15);
+        }
+
+        body {
+            background-color: var(--quiz-bg);
+            color: var(--quiz-text);
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 60px;
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* رأس الصفحة وبانر البداية */
+        .quiz-hero-card {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%);
+            border: 2px solid rgba(5, 150, 105, 0.3);
+            border-radius: 24px;
+            padding: 35px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .quiz-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--quiz-primary);
+            color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 13.5px;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .quiz-hero-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--quiz-text);
+            margin: 0 0 10px 0;
+        }
+
+        .quiz-hero-desc {
+            font-size: 15.5px;
+            color: var(--quiz-muted);
+            line-height: 1.8;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* البطاقات العامة */
+        .quiz-card {
+            background: var(--quiz-card-bg);
+            border: 1px solid var(--quiz-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        /* خطوة اختيار السورة */
+        .surah-select-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-label {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--quiz-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .surah-select-dropdown {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--quiz-border);
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            background-color: var(--quiz-bg);
+            color: var(--quiz-text);
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 20px center;
+            background-size: 18px;
+        }
+
+        .surah-select-dropdown:focus {
+            outline: none;
+            border-color: var(--quiz-primary);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+        }
+
+        .surah-select-dropdown option {
+            background-color: var(--quiz-card-bg);
+            color: var(--quiz-text);
+            padding: 10px;
+        }
+
+        .surah-info-card {
+            background: rgba(5, 150, 105, 0.08);
+            border: 1.5px solid var(--quiz-primary);
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+            animation: fadeInNotice 0.3s ease;
+        }
+
+        @keyframes fadeInNotice {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .level-badge {
+            font-size: 12.5px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .level-badge.level-1 {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .level-badge.level-2 {
+            background: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
+
+        .btn-start-quiz {
+            background: linear-gradient(135deg, var(--quiz-primary) 0%, var(--quiz-primary-dark) 100%);
+            color: #ffffff;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+            transition: all 0.25s ease;
+            margin-top: 10px;
+        }
+
+        .btn-start-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.45);
+        }
+
+        /* واجهة الاختبار التفاعلي */
+        .quiz-play-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .quiz-surah-tag {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--quiz-primary);
+            border: 1px solid var(--quiz-primary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .quiz-progress-text {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--quiz-muted);
+        }
+
+        .quiz-progress-bar-wrap {
+            width: 100%;
+            height: 8px;
+            background: var(--quiz-border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .quiz-progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--quiz-primary) 0%, #10b981 100%);
+            width: 20%;
+            transition: width 0.4s ease;
+        }
+
+        .question-box {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .question-category {
+            font-size: 13px;
+            color: var(--quiz-accent);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--quiz-text);
+            line-height: 2;
+            font-family: 'Amiri', 'Cairo', serif;
+            background: rgba(5, 150, 105, 0.04);
+            border: 1px dashed var(--quiz-primary);
+            border-radius: 16px;
+            padding: 22px 20px;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            background: var(--quiz-bg);
+            border: 2px solid var(--quiz-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            cursor: pointer;
+            font-family: 'Amiri', 'Cairo', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--quiz-text);
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .option-letter {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--quiz-muted);
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--quiz-primary);
+            transform: translateX(-4px);
+            background: rgba(5, 150, 105, 0.05);
+        }
+
+        .option-btn.selected {
+            border-color: var(--quiz-primary);
+            background: rgba(5, 150, 105, 0.12);
+            font-weight: 800;
+        }
+
+        .option-btn.selected .option-letter {
+            background: var(--quiz-primary);
+            color: #ffffff;
+        }
+
+        .quiz-actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-quiz-nav {
+            background: var(--quiz-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-quiz-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* صفحة النتيجة والمراجعة */
+        .result-score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 6px solid var(--quiz-primary);
+            background: var(--quiz-card-bg);
+        }
+
+        .result-score-circle.pass {
+            border-color: #10b981;
+            color: #047857;
+        }
+
+        .result-score-circle.retry {
+            border-color: #f59e0b;
+            color: #b45309;
+        }
+
+        .result-big-num {
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .result-sub-text {
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .review-item {
+            border: 1px solid var(--quiz-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 15px;
+            text-align: right;
+            background: var(--quiz-bg);
+        }
+
+        .review-item.correct {
+            border-right: 5px solid #10b981;
+        }
+
+        .review-item.incorrect {
+            border-right: 5px solid #ef4444;
+        }
+
+        /* سجل الاختبارات السابقة */
+        .history-table-card {
+            margin-top: 40px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        .history-table th {
+            background: rgba(5, 150, 105, 0.06);
+            color: var(--quiz-text);
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--quiz-border);
+        }
+
+        .history-table td {
+            padding: 12px 14px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--quiz-border);
+        }
+
+        .score-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 800;
+        }
+
+        .score-pill.green {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .score-pill.amber {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+    </style>
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<div class="quiz-container">
+    
+    <!-- بانر الترحيب -->
+    <div class="quiz-hero-card">
+        <div class="quiz-hero-badge">
+            <i class="fa-solid fa-clipboard-question"></i> نظام الاختبارات القرآنية التفاعلي
+        </div>
+        <h1 class="quiz-hero-title">إختبرني في حفظ وإتقان القرآن الكريم</h1>
+        <p class="quiz-hero-desc">
+            حدد السورة التي ترغب في مراجعتها واختبار حفظك فيها، وسيتم توليد 5 أسئلة ذكية متنوعة بإجابات عشوائية التوزيع، مع حفظ درجاتك دائماً في سجلك الأكاديمي.
+        </p>
+    </div>
+
+    <!-- 1. شاشة اختيار السورة -->
+    <div class="quiz-card" id="surahSelectionSection">
+        <div class="surah-select-box">
+            <label class="form-label" for="surahSelectDropdown">
+                <i class="fa-solid fa-book-quran" style="color: var(--quiz-primary);"></i>
+                اختر السورة القرآنية للاختبار:
+            </label>
+            
+            <select id="surahSelectDropdown" class="surah-select-dropdown" onchange="onSurahDropdownChange()">
+                <option value="">-- اضغط هنا لاختيار سورة من سور القرآن الكريم (114 سورة) --</option>
+                <option value="1">1. سورة الفاتحة (مكية - 7 آيات)</option>
+                <option value="2">2. سورة البقرة (مدنية - 286 آية)</option>
+                <option value="3">3. سورة آل عمران (مدنية - 200 آية)</option>
+                <option value="4">4. سورة النساء (مدنية - 176 آية)</option>
+                <option value="5">5. سورة المائدة (مدنية - 120 آية)</option>
+                <option value="6">6. سورة الأنعام (مكية - 165 آية)</option>
+                <option value="7">7. سورة الأعراف (مكية - 206 آية)</option>
+                <option value="8">8. سورة الأنفال (مدنية - 75 آية)</option>
+                <option value="9">9. سورة التوبة (مدنية - 129 آية)</option>
+                <option value="10">10. سورة يونس (مكية - 109 آيات)</option>
+                <option value="11">11. سورة هود (مكية - 123 آية)</option>
+                <option value="12">12. سورة يوسف (مكية - 111 آية)</option>
+                <option value="13">13. سورة الرعد (مدنية - 43 آية)</option>
+                <option value="14">14. سورة إبراهيم (مكية - 52 آية)</option>
+                <option value="15">15. سورة الحجر (مكية - 99 آية)</option>
+                <option value="16">16. سورة النحل (مكية - 128 آية)</option>
+                <option value="17">17. سورة الإسراء (مكية - 111 آية)</option>
+                <option value="18">18. سورة الكهف (مكية - 110 آيات)</option>
+                <option value="19">19. سورة مريم (مكية - 98 آية)</option>
+                <option value="20">20. سورة طه (مكية - 135 آية)</option>
+                <option value="21">21. سورة الأنبياء (مكية - 112 آية)</option>
+                <option value="22">22. سورة الحج (مدنية - 78 آية)</option>
+                <option value="23">23. سورة المؤمنون (مكية - 118 آية)</option>
+                <option value="24">24. سورة النور (مدنية - 64 آية)</option>
+                <option value="25">25. سورة الفرقان (مكية - 77 آية)</option>
+                <option value="26">26. سورة الشعراء (مكية - 227 آية)</option>
+                <option value="27">27. سورة النمل (مكية - 93 آية)</option>
+                <option value="28">28. سورة القصص (مكية - 88 آية)</option>
+                <option value="29">29. سورة العنكبوت (مكية - 69 آية)</option>
+                <option value="30">30. سورة الروم (مكية - 60 آية)</option>
+                <option value="31">31. سورة لقمان (مكية - 34 آية)</option>
+                <option value="32">32. سورة السجدة (مكية - 30 آية)</option>
+                <option value="33">33. سورة الأحزاب (مدنية - 73 آية)</option>
+                <option value="34">34. سورة سبأ (مكية - 54 آية)</option>
+                <option value="35">35. سورة فاطر (مكية - 45 آية)</option>
+                <option value="36">36. سورة يس (مكية - 83 آية)</option>
+                <option value="37">37. سورة الصافات (مكية - 182 آية)</option>
+                <option value="38">38. سورة ص (مكية - 88 آية)</option>
+                <option value="39">39. سورة الزمر (مكية - 75 آية)</option>
+                <option value="40">40. سورة غافر (مكية - 85 آية)</option>
+                <option value="41">41. سورة فصلت (مكية - 54 آية)</option>
+                <option value="42">42. سورة الشورى (مكية - 53 آية)</option>
+                <option value="43">43. سورة الزخرف (مكية - 89 آية)</option>
+                <option value="44">44. سورة الدخان (مكية - 59 آية)</option>
+                <option value="45">45. سورة الجاثية (مكية - 37 آية)</option>
+                <option value="46">46. سورة الأحقاف (مكية - 35 آية)</option>
+                <option value="47">47. سورة محمد (مدنية - 38 آية)</option>
+                <option value="48">48. سورة الفتح (مدنية - 29 آية)</option>
+                <option value="49">49. سورة الحجرات (مدنية - 18 آية)</option>
+                <option value="50">50. سورة ق (مكية - 45 آية)</option>
+                <option value="51">51. سورة الذاريات (مكية - 60 آية)</option>
+                <option value="52">52. سورة الطور (مكية - 49 آية)</option>
+                <option value="53">53. سورة النجم (مكية - 62 آية)</option>
+                <option value="54">54. سورة القمر (مكية - 55 آية)</option>
+                <option value="55">55. سورة الرحمن (مدنية - 78 آية)</option>
+                <option value="56">56. سورة الواقعة (مكية - 96 آية)</option>
+                <option value="57">57. سورة الحديد (مدنية - 29 آية)</option>
+                <option value="58">58. سورة المجادلة (مدنية - 22 آية)</option>
+                <option value="59">59. سورة الحشر (مدنية - 24 آية)</option>
+                <option value="60">60. سورة الممتحنة (مدنية - 13 آية)</option>
+                <option value="61">61. سورة الصف (مدنية - 14 آية)</option>
+                <option value="62">62. سورة الجمعة (مدنية - 11 آية)</option>
+                <option value="63">63. سورة المنافقون (مدنية - 11 آية)</option>
+                <option value="64">64. سورة التغابن (مدنية - 18 آية)</option>
+                <option value="65">65. سورة الطلاق (مدنية - 12 آية)</option>
+                <option value="66">66. سورة التحريم (مدنية - 12 آية)</option>
+                <option value="67">67. سورة الملك (مكية - 30 آية)</option>
+                <option value="68">68. سورة القلم (مكية - 52 آية)</option>
+                <option value="69">69. سورة الحاقة (مكية - 52 آية)</option>
+                <option value="70">70. سورة المعارج (مكية - 44 آية)</option>
+                <option value="71">71. سورة نوح (مكية - 28 آية)</option>
+                <option value="72">72. سورة الجن (مكية - 28 آية)</option>
+                <option value="73">73. سورة المزمل (مكية - 20 آية)</option>
+                <option value="74">74. سورة المدثر (مكية - 56 آية)</option>
+                <option value="75">75. سورة القيامة (مكية - 40 آية)</option>
+                <option value="76">76. سورة الإنسان (مدنية - 31 آية)</option>
+                <option value="77">77. سورة المرسلات (مكية - 50 آية)</option>
+                <option value="78">78. سورة النبأ (مكية - 40 آية)</option>
+                <option value="79">79. سورة النازعات (مكية - 46 آية)</option>
+                <option value="80">80. سورة عبس (مكية - 42 آية)</option>
+                <option value="81">81. سورة التكوير (مكية - 29 آية)</option>
+                <option value="82">82. سورة الانفطار (مكية - 19 آية)</option>
+                <option value="83">83. سورة المطففين (مكية - 36 آية)</option>
+                <option value="84">84. سورة الانشقاق (مكية - 25 آية)</option>
+                <option value="85">85. سورة البروج (مكية - 22 آية)</option>
+                <option value="86">86. سورة الطارق (مكية - 17 آية)</option>
+                <option value="87">87. سورة الأعلى (مكية - 19 آية)</option>
+                <option value="88">88. سورة الغاشية (مكية - 26 آية)</option>
+                <option value="89">89. سورة الفجر (مكية - 30 آية)</option>
+                <option value="90">90. سورة البلد (مكية - 20 آية)</option>
+                <option value="91">91. سورة الشمس (مكية - 15 آية)</option>
+                <option value="92">92. سورة الليل (مكية - 21 آية)</option>
+                <option value="93">93. سورة الضحى (مكية - 11 آية)</option>
+                <option value="94">94. سورة الشرح (مكية - 8 آيات)</option>
+                <option value="95">95. سورة التين (مكية - 8 آيات)</option>
+                <option value="96">96. سورة العلق (مكية - 19 آية)</option>
+                <option value="97">97. سورة القدر (مكية - 5 آيات)</option>
+                <option value="98">98. سورة البينة (مدنية - 8 آيات)</option>
+                <option value="99">99. سورة الزلزلة (مدنية - 8 آيات)</option>
+                <option value="100">100. سورة العاديات (مكية - 11 آية)</option>
+                <option value="101">101. سورة القارعة (مكية - 11 آية)</option>
+                <option value="102">102. سورة التكاثر (مكية - 8 آيات)</option>
+                <option value="103">103. سورة العصر (مكية - 3 آيات)</option>
+                <option value="104">104. سورة الهمزة (مكية - 9 آيات)</option>
+                <option value="105">105. سورة الفيل (مكية - 5 آيات)</option>
+                <option value="106">106. سورة قريش (مكية - 4 آيات)</option>
+                <option value="107">107. سورة الماعون (مكية - 7 آيات)</option>
+                <option value="108">108. سورة الكوثر (مكية - 3 آيات)</option>
+                <option value="109">109. سورة الكافرون (مكية - 6 آيات)</option>
+                <option value="110">110. سورة النصر (مدنية - 3 آيات)</option>
+                <option value="111">111. سورة المسد (مكية - 5 آيات)</option>
+                <option value="112">112. سورة الإخلاص (مكية - 4 آيات)</option>
+                <option value="113">113. سورة الفلق (مكية - 5 آيات)</option>
+                <option value="114">114. سورة الناس (مكية - 6 آيات)</option>
+            </select>
+
+            <div id="selectedSurahNotice" class="surah-info-card" style="display: none;">
+                <div>
+                    <span style="font-weight: 800; font-size: 16px; color: var(--quiz-text);" id="selectedSurahNameText">-</span>
+                    <span style="font-size: 13.5px; color: var(--quiz-muted); margin-right: 8px;" id="selectedSurahMetaText">-</span>
+                </div>
+                <div id="surahDifficultyBadge" class="level-badge level-1">
+                    المستوى الأول: تثبيت الحفظ
+                </div>
+            </div>
+
+            <button type="button" class="btn-start-quiz" id="btnStartQuiz" onclick="startQuiz()" disabled>
+                <i class="fa-solid fa-play"></i> بدء الاختبار
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. شاشة خوض الاختبار التفاعلي (مخفية افتراضياً) -->
+    <div class="quiz-card" id="quizPlaySection" style="display: none;">
+        <div class="quiz-play-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="quiz-surah-tag" id="currentSurahTag">سورة الفاتحة</div>
+                <div id="quizLevelPill" class="level-badge level-1">المستوى الأول</div>
+            </div>
+            <div class="quiz-progress-text" id="quizProgressText">السؤال 1 من 5</div>
+        </div>
+
+        <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-bar-fill" id="progressBarFill"></div>
+        </div>
+
+        <div class="question-box">
+            <div class="question-category" id="questionCategory">إكمال الآية الكريمة</div>
+            <div class="question-text" id="questionText">جاري تحميل السؤال...</div>
+        </div>
+
+        <div class="options-grid" id="optionsContainer">
+            <!-- تُولد الخيارات الأربعة ديناميكياً مع توزيع عشوائي للأماكن -->
+        </div>
+
+        <div class="quiz-actions-row">
+            <button type="button" class="btn-quiz-nav" id="btnNextQuestion" onclick="goToNextQuestion()" disabled>
+                <span>السؤال التالي</span> <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. شاشة النتيجة والمراجعة (مخفية افتراضياً) -->
+    <div class="quiz-card" id="quizResultSection" style="display: none; text-align: center;">
+        <div class="result-score-circle" id="resultCircle">
+            <div class="result-big-num" id="resultScoreRatio">5/5</div>
+            <div class="result-sub-text" id="resultScorePercent">100%</div>
+        </div>
+
+        <h2 id="resultTitle" style="font-size: 24px; font-weight: 900; margin: 0 0 8px 0; color: var(--quiz-text);">ممتاز! تبارك الله 🌟</h2>
+        <p id="resultFeedback" style="font-size: 15px; color: var(--quiz-muted); margin-bottom: 25px;">أحسنت صنعاً، حفظك متقن ومثبت لهذه السورة المباركة.</p>
+
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+            <button type="button" class="btn-quiz-nav" onclick="restartQuizSameSurah()">
+                <i class="fa-solid fa-rotate-right"></i> إعادة الاختبار (مستوى متقدم وأصعب 🔥)
+            </button>
+            <button type="button" class="btn-quiz-nav" style="background: var(--quiz-accent);" onclick="backToSurahSelection()">
+                <i class="fa-solid fa-list-check"></i> اختبار في سورة أخرى
+            </button>
+        </div>
+
+        <h3 style="font-size: 18px; font-weight: 800; text-align: right; margin-bottom: 15px;">
+            <i class="fa-solid fa-clipboard-check" style="color: var(--quiz-primary);"></i> مراجعة إجاباتك:
+        </h3>
+        <div id="reviewListContainer">
+            <!-- ملء مراجعة الأسئلة مع الإجابة الصحيحة وإجابة الطالب -->
+        </div>
+    </div>
+
+    <!-- سجل الدرجات السابقة المحفوظة في قاعدة البيانات -->
+    <div class="quiz-card history-table-card">
+        <h3 style="font-size: 18px; font-weight: 800; margin: 0 0 15px 0;">
+            <i class="fa-solid fa-clock-rotate-left" style="color: var(--quiz-accent);"></i> سجل اختباراتي السابقة في المنصة
+        </h3>
+        <div style="overflow-x: auto;">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>السورة</th>
+                        <th>الدرجة</th>
+                        <th>النسبة</th>
+                        <th>الحالة</th>
+                        <th>تاريخ الاختبار</th>
+                    </tr>
+                </thead>
+                <tbody id="scoresHistoryBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--quiz-muted); padding: 25px;">جاري تحميل سجل درجاتك...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- ملفات الجافاسكريبت الأساسية للمنصة -->
+<script src="/js/app.js"></script>
+
+<script>
+    // قائمة سور القرآن الكريم الـ 114
+    const ALL_SURAHS = [
+        { id: 1, name: "الفاتحة", verses: 7, type: "مكية" },
+        { id: 2, name: "البقرة", verses: 286, type: "مدنية" },
+        { id: 3, name: "آل عمران", verses: 200, type: "مدنية" },
+        { id: 4, name: "النساء", verses: 176, type: "مدنية" },
+        { id: 5, name: "المائدة", verses: 120, type: "مدنية" },
+        { id: 6, name: "الأنعام", verses: 165, type: "مكية" },
+        { id: 7, name: "الأعراف", verses: 206, type: "مكية" },
+        { id: 8, name: "الأنفال", verses: 75, type: "مدنية" },
+        { id: 9, name: "التوبة", verses: 129, type: "مدنية" },
+        { id: 10, name: "يونس", verses: 109, type: "مكية" },
+        { id: 11, name: "هود", verses: 123, type: "مكية" },
+        { id: 12, name: "يوسف", verses: 111, type: "مكية" },
+        { id: 13, name: "الرعد", verses: 43, type: "مدنية" },
+        { id: 14, name: "إبراهيم", verses: 52, type: "مكية" },
+        { id: 15, name: "الحجر", verses: 99, type: "مكية" },
+        { id: 16, name: "النحل", verses: 128, type: "مكية" },
+        { id: 17, name: "الإسراء", verses: 111, type: "مكية" },
+        { id: 18, name: "الكهف", verses: 110, type: "مكية" },
+        { id: 19, name: "مريم", verses: 98, type: "مكية" },
+        { id: 20, name: "طه", verses: 135, type: "مكية" },
+        { id: 21, name: "الأنبياء", verses: 112, type: "مكية" },
+        { id: 22, name: "الحج", verses: 78, type: "مدنية" },
+        { id: 23, name: "المؤمنون", verses: 118, type: "مكية" },
+        { id: 24, name: "النور", verses: 64, type: "مدنية" },
+        { id: 25, name: "الفرقان", verses: 77, type: "مكية" },
+        { id: 26, name: "الشعراء", verses: 227, type: "مكية" },
+        { id: 27, name: "النمل", verses: 93, type: "مكية" },
+        { id: 28, name: "القصص", verses: 88, type: "مكية" },
+        { id: 29, name: "العنكبوت", verses: 69, type: "مكية" },
+        { id: 30, name: "الروم", verses: 60, type: "مكية" },
+        { id: 31, name: "لقمان", verses: 34, type: "مكية" },
+        { id: 32, name: "السجدة", verses: 30, type: "مكية" },
+        { id: 33, name: "الأحزاب", verses: 73, type: "مدنية" },
+        { id: 34, name: "سبأ", verses: 54, type: "مكية" },
+        { id: 35, name: "فاطر", verses: 45, type: "مكية" },
+        { id: 36, name: "يس", verses: 83, type: "مكية" },
+        { id: 37, name: "الصافات", verses: 182, type: "مكية" },
+        { id: 38, name: "ص", verses: 88, type: "مكية" },
+        { id: 39, name: "الزمر", verses: 75, type: "مكية" },
+        { id: 40, name: "غافر", verses: 85, type: "مكية" },
+        { id: 41, name: "فصلت", verses: 54, type: "مكية" },
+        { id: 42, name: "الشورى", verses: 53, type: "مكية" },
+        { id: 43, name: "الزخرف", verses: 89, type: "مكية" },
+        { id: 44, name: "الدخان", verses: 59, type: "مكية" },
+        { id: 45, name: "الجاثية", verses: 37, type: "مكية" },
+        { id: 46, name: "الأحقاف", verses: 35, type: "مكية" },
+        { id: 47, name: "محمد", verses: 38, type: "مدنية" },
+        { id: 48, name: "الفتح", verses: 29, type: "مدنية" },
+        { id: 49, name: "الحجرات", verses: 18, type: "مدنية" },
+        { id: 50, name: "ق", verses: 45, type: "مكية" },
+        { id: 51, name: "الذاريات", verses: 60, type: "مكية" },
+        { id: 52, name: "الطور", verses: 49, type: "مكية" },
+        { id: 53, name: "النجم", verses: 62, type: "مكية" },
+        { id: 54, name: "القمر", verses: 55, type: "مكية" },
+        { id: 55, name: "الرحمن", verses: 78, type: "مدنية" },
+        { id: 56, name: "الواقعة", verses: 96, type: "مكية" },
+        { id: 57, name: "الحديد", verses: 29, type: "مدنية" },
+        { id: 58, name: "المجادلة", verses: 22, type: "مدنية" },
+        { id: 59, name: "الحشر", verses: 24, type: "مدنية" },
+        { id: 60, name: "الممتحنة", verses: 13, type: "مدنية" },
+        { id: 61, name: "الصف", verses: 14, type: "مدنية" },
+        { id: 62, name: "الجمعة", verses: 11, type: "مدنية" },
+        { id: 63, name: "المنافقون", verses: 11, type: "مدنية" },
+        { id: 64, name: "التغابن", verses: 18, type: "مدنية" },
+        { id: 65, name: "الطلاق", verses: 12, type: "مدنية" },
+        { id: 66, name: "التحريم", verses: 12, type: "مدنية" },
+        { id: 67, name: "الملك", verses: 30, type: "مكية" },
+        { id: 68, name: "القلم", verses: 52, type: "مكية" },
+        { id: 69, name: "الحاقة", verses: 52, type: "مكية" },
+        { id: 70, name: "المعارج", verses: 44, type: "مكية" },
+        { id: 71, name: "نوح", verses: 28, type: "مكية" },
+        { id: 72, name: "الجن", verses: 28, type: "مكية" },
+        { id: 73, name: "المزمل", verses: 20, type: "مكية" },
+        { id: 74, name: "المدثر", verses: 56, type: "مكية" },
+        { id: 75, name: "القيامة", verses: 40, type: "مكية" },
+        { id: 76, name: "الإنسان", verses: 31, type: "مدنية" },
+        { id: 77, name: "المرسلات", verses: 50, type: "مكية" },
+        { id: 78, name: "النبأ", verses: 40, type: "مكية" },
+        { id: 79, name: "النازعات", verses: 46, type: "مكية" },
+        { id: 80, name: "عبس", verses: 42, type: "مكية" },
+        { id: 81, name: "التكوير", verses: 29, type: "مكية" },
+        { id: 82, name: "الانفطار", verses: 19, type: "مكية" },
+        { id: 83, name: "المطففين", verses: 36, type: "مكية" },
+        { id: 84, name: "الانشقاق", verses: 25, type: "مكية" },
+        { id: 85, name: "البروج", verses: 22, type: "مكية" },
+        { id: 86, name: "الطارق", verses: 17, type: "مكية" },
+        { id: 87, name: "الأعلى", verses: 19, type: "مكية" },
+        { id: 88, name: "الغاشية", verses: 26, type: "مكية" },
+        { id: 89, name: "الفجر", verses: 30, type: "مكية" },
+        { id: 90, name: "البلد", verses: 20, type: "مكية" },
+        { id: 91, name: "الشمس", verses: 15, type: "مكية" },
+        { id: 92, name: "الليل", verses: 21, type: "مكية" },
+        { id: 93, name: "الضحى", verses: 11, type: "مكية" },
+        { id: 94, name: "الشرح", verses: 8, type: "مكية" },
+        { id: 95, name: "التين", verses: 8, type: "مكية" },
+        { id: 96, name: "العلق", verses: 19, type: "مكية" },
+        { id: 97, name: "القدر", verses: 5, type: "مكية" },
+        { id: 98, name: "البينة", verses: 8, type: "مدنية" },
+        { id: 99, name: "الزلزلة", verses: 8, type: "مدنية" },
+        { id: 100, name: "العاديات", verses: 11, type: "مكية" },
+        { id: 101, name: "القارعة", verses: 11, type: "مكية" },
+        { id: 102, name: "التكاثر", verses: 8, type: "مكية" },
+        { id: 103, name: "العصر", verses: 3, type: "مكية" },
+        { id: 104, name: "الهمزة", verses: 9, type: "مكية" },
+        { id: 105, name: "الفيل", verses: 5, type: "مكية" },
+        { id: 106, name: "قريش", verses: 4, type: "مكية" },
+        { id: 107, name: "الماعون", verses: 7, type: "مكية" },
+        { id: 108, name: "الكوثر", verses: 3, type: "مكية" },
+        { id: 109, name: "الكافرون", verses: 6, type: "مكية" },
+        { id: 110, name: "النصر", verses: 3, type: "مدنية" },
+        { id: 111, name: "المسد", verses: 5, type: "مكية" },
+        { id: 112, name: "الإخلاص", verses: 4, type: "مكية" },
+        { id: 113, name: "الفلق", verses: 5, type: "مكية" },
+        { id: 114, name: "الناس", verses: 6, type: "مكية" }
+    ];
+
+    // بنك أسئلة متخصص: إكمال الآيات الكريمة من السور القرآنية نفسها {جزء من الآية ...}
+    const SURAH_VERSE_COMPLETIONS = {
+        "الفاتحة": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{اهْدِنَا الصِّرَاطَ ...}", correct: "الْمُسْتَقِيمَ", wrong: ["الْعَظِيمَ", "الْكَرِيمَ", "الرَّحِيمَ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{الْحَمْدُ لِلَّهِ رَبِّ ...}", correct: "الْعَالَمِينَ", wrong: ["السَّمَاوَاتِ", "النَّاسِ", "الْعَرْشِ الْعَظِيمِ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{إِيَّاكَ نَعْبُدُ وَإِيَّاكَ ...}", correct: "نَسْتَعِينُ", wrong: ["نَسْتَغْفِرُ", "نَرْجُو", "نَتَوَكَّلُ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{مَالِكِ يَوْمِ ...}", correct: "الدِّينِ", wrong: ["الْقِيَامَةِ", "الْحِسَابِ", "الْفَصْلِ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ ...}", correct: "وَلَا الضَّالِّينَ", wrong: ["وَهُمُ الْمُفْلِحُونَ", "وَهُمُ الْفَائِزُونَ", "إِنَّهُمْ كَانُوا خَاسِرِينَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{الرَّحْمَٰنِ ...}", correct: "الرَّحِيمِ", wrong: ["الْعَلِيمِ", "الْحَكِيمِ", "الْقَدِيرِ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{صِرَاطَ الَّذِينَ أَنْعَمْتَ ...}", correct: "عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ", wrong: ["عَلَيْهِمْ بِالْإِيمَانِ وَالْهُدَىٰ", "عَلَيْهِمْ وَهَدَيْنَاهُمْ صِرَاطًا مُّسْتَقِيمًا", "عَلَيْهِمْ رَضِيَ اللَّهُ عَنْهُمْ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{بِسْمِ اللَّهِ الرَّحْمَٰنِ ...}", correct: "الرَّحِيمِ", wrong: ["الْعَظِيمِ", "الْكَرِيمِ", "الْغَفُورِ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{إِيَّاكَ ...}", correct: "نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", wrong: ["نَسْتَعِينُ وَإِيَّاكَ نَرْجُو", "نَسْأَلُ وَإِلَيْكَ نَتُوبُ", "نَدْعُو وَإِيَّاكَ نَخَافُ"] },
+                { q: "أكمل قوله تعالى في سورة الفاتحة:\n{غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ ...}", correct: "وَلَا الضَّالِّينَ", wrong: ["وَلَا الْخَاسِرِينَ", "وَهُمْ لَا يَعْلَمُونَ", "وَلَا هُمْ يُنصَرُونَ"] }
+            ]
+        },
+        "البقرة": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى ...}", correct: "لِّلْمُتَّقِينَ", wrong: ["لِّلْمُؤْمِنِينَ", "لِّلْعَالَمِينَ", "لِّلنَّاسِ"] },
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ ...}", correct: "يُنفِقُونَ", wrong: ["يَشْكُرُونَ", "يُطْعِمُونَ", "يَتَصَدَّقُونَ"] },
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{وَإِذْ قَالَ رَبُّكَ لِلْمَلَائِكَةِ إِنِّي جَاعِلٌ فِي الْأَرْضِ ...}", correct: "خَلِيفَةً", wrong: ["رَسُولًا", "نَبِيًّا", "مَلَكًا"] },
+                { q: "أكمل قوله تعالى في آية الكرسي من سورة البقرة:\n{اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ ...}", correct: "الْقَيُّومُ", wrong: ["الْعَظِيمُ", "الْحَكِيمُ", "الْقَدِيرُ"] },
+                { q: "أكمل قوله تعالى في ختام سورة البقرة:\n{آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ ...}", correct: "وَالْمُؤْمِنُونَ", wrong: ["وَالصَّالِحُونَ", "وَالْمُتَّقُونَ", "وَالْمُسْلِمُونَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{فَتَلَقَّىٰ آدَمُ مِن رَّبِّهِ كَلِمَاتٍ فَتَابَ عَلَيْهِ ۚ إِنَّهُ هُوَ ...}", correct: "التَّوَّابُ الرَّحِيمُ", wrong: ["الْغَفُورُ الرَّحِيمُ", "الْعَزِيزُ الْحَكِيمُ", "السَّمِيعُ الْعَلِيمُ"] },
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ ...}", correct: "الْهُدَىٰ وَالْفُرْقَانِ", wrong: ["الْحَقِّ وَالْبَيَانِ", "النُّورِ وَالْبُرْهَانِ", "الْكِتَابِ الْمُبِينِ"] },
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ ...}", correct: "تَتَّقُونَ", wrong: ["تُفْلِحُونَ", "تَشْكُرُونَ", "تَهْتَدُونَ"] },
+                { q: "أكمل قوله تعالى في سورة البقرة:\n{وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي ...}", correct: "قَرِيبٌ", wrong: ["عَلِيمٌ", "رَحِيمٌ", "سَمِيعٌ"] },
+                { q: "أكمل قوله تعالى في ختام سورة البقرة:\n{لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا ...}", correct: "مَا اكْتَسَبَتْ", wrong: ["مَا عَمِلَتْ", "مَا قَدَّمَتْ", "مَا ظَلَمَتْ"] }
+            ]
+        },
+        "آل عمران": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{إِنَّ الدِّينَ عِندَ اللَّهِ ...}", correct: "الْإِسْلَامُ", wrong: ["التَّوْحِيدُ", "الْإِيمَانُ", "الْهُدَىٰ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{قُلْ إِن كُنتُمْ تُحِبُّونَ اللَّهَ فَاتَّبِعُونِي يُحْبِبْكُمُ اللَّهُ وَيَغْفِرْ لَكُمْ ...}", correct: "ذُنُوبَكُمْ", wrong: ["سَيِّئَاتِكُمْ", "أَعْمَالَكُمْ", "خَطَايَاكُمْ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{كُنتُمْ خَيْرَ أُمَّةٍ أُخْرِجَتْ لِلنَّاسِ تَأْمُرُونَ بِالْمَعْرُوفِ وَتَنْهَوْنَ عَنِ ...}", correct: "الْمُنكَرِ", wrong: ["الشَّرِّ", "الْبَاطِلِ", "الْفَحْشَاءِ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا وَلَا ...}", correct: "تَفَرَّقُوا", wrong: ["تَخْتَلِفُوا", "تَنَازَعُوا", "تَفْسُدُوا"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{وَلَا تَحْسَبَنَّ الَّذِينَ قُتِلُوا فِي سَبِيلِ اللَّهِ أَمْوَاتًا ۚ بَلْ أَحْيَاءٌ عِندَ رَبِّهِمْ ...}", correct: "يُرْزَقُونَ", wrong: ["يَفْرَحُونَ", "يَخْلُدُونَ", "يُنَعَّمُونَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي ...}", correct: "الْأَلْبَابِ", wrong: ["النُّهَىٰ", "الْأَبْصَارِ", "الْقُلُوبِ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{فَبِمَا رَحْمَةٍ مِّنَ اللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانفَضُّوا مِنْ ...}", correct: "حَوْلِكَ", wrong: ["أَمْرِكَ", "عِنْدِكَ", "دِينِكَ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{وَسَارِعُوا إِلَىٰ مَغْفِرَةٍ مِّن رَّبِّكُمْ وَجَنَّةٍ عَرْضُهَا السَّمَاوَاتُ وَالْأَرْضُ أُعِدَّتْ ...}", correct: "لِلْمُتَّقِينَ", wrong: ["لِلْمُؤْمِنِينَ", "لِلصَّابِرِينَ", "لِلْمُحْسِنِينَ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ ...}", correct: "الْوَهَّابُ", wrong: ["التَّوَّابُ", "الْغَفُورُ", "الرَّحِيمُ"] },
+                { q: "أكمل قوله تعالى في سورة آل عمران:\n{الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ ۗ وَاللَّهُ يُحِبُّ ...}", correct: "الْمُحْسِنِينَ", wrong: ["الصَّابِرِينَ", "الْمُتَّقِينَ", "التَّوَّابِينَ"] }
+            ]
+        },
+        "الكهف": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ ...}", correct: "عِوَجًا", wrong: ["ضَرَرًا", "حَرَجًا", "نَقْصًا"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{إِنَّهُمْ فِتْيَةٌ آمَنُوا بِرَبِّهِمْ وَزِدْنَاهُمْ ...}", correct: "هُدًى", wrong: ["نُورًا", "عِلْمًا", "إِيمَانًا"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{الْمَالُ وَالْبَنُونَ زِينَةُ الْحَيَاةِ الدُّنْيَا ۖ وَالْبَاقِيَاتُ الصَّالِحَاتُ خَيْرٌ عِندَ رَبِّكَ ثَوَابًا وَخَيْرٌ ...}", correct: "أَمَلًا", wrong: ["مَّرَدًّا", "عَمَلًا", "رِزْقًا"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{قُلْ هَلْ نُنَبِّئُكُم بِالْأَخْسَرِينَ ...}", correct: "أَعْمَالًا", wrong: ["أَمْوَالًا", "دَرَجَاتٍ", "مَقَامًا"] },
+                { q: "أكمل قوله تعالى في ختام سورة الكهف:\n{فَمَن كَانَ يَرْجُو لِقَاءَ رَبِّهِ فَلْيَعْمَلْ عَمَلًا صَالِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِ ...}", correct: "أَحَدًا", wrong: ["شَيْئًا", "أَبَدًا", "صَنَمًا"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{وَاصْبِرْ نَفْسَكَ مَعَ الَّذِينَ يَدْعُونَ رَبَّهُم بِالْغَدَاةِ وَالْعَشِيِّ يُرِيدُونَ ...}", correct: "وَجْهَهُ", wrong: ["رِضَاهُ", "جَنَّتَهُ", "رَحْمَتَهُ"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{وَقُلِ الْحَقُّ مِن رَّبِّكُمْ ۖ فَمَن شَاءَ فَلْيُؤْمِن وَمَن شَاءَ ...}", correct: "فَلْيَكْفُرْ", wrong: ["فَلْيَعْصِ", "فَلْيَضِلَّ", "فَلْيَتَوَلَّ"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{وَلَا تَقُولَنَّ لِشَيْءٍ إِنِّي فَاعِلٌ ذَٰلِكَ غَدًا * إِلَّا أَن يَشَاءَ ...}", correct: "اللَّهُ", wrong: ["الرَّحْمَٰنُ", "رَبِّي", "الْخَالِقُ"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{قَالَ لَهُ مُوسَىٰ هَلْ أَتَّبِعُكَ عَلَىٰ أَن تُعَلِّمَنِ مِمَّا عُلِّمْتَ ...}", correct: "رُشْدًا", wrong: ["عِلْمًا", "حِكْمَةً", "صَبْرًا"] },
+                { q: "أكمل قوله تعالى في سورة الكهف:\n{قُل لَّوْ كَانَ الْبَحْرُ مِدَادًا لِّكَلِمَاتِ رَبِّي لَنَفِدَ الْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَاتُ رَبِّي وَلَوْ جِئْنَا بِمِثْلِهِ ...}", correct: "مَدَدًا", wrong: ["عَدَدًا", "أَبَدًا", "أَجَلًا"] }
+            ]
+        },
+        "يس": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة يس:\n{يس * وَالْقُرْآنِ ...}", correct: "الْحَكِيمِ", wrong: ["الْعَظِيمِ", "الْكَرِيمِ", "الْمَجِيدِ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{إِنَّكَ لَمِنَ ...}", correct: "الْمُرْسَلِينَ", wrong: ["الصَّادِقِينَ", "الْمُتَّقِينَ", "الْمُؤْمِنِينَ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{عَلَىٰ صِرَاطٍ ...}", correct: "مُّسْتَقِيمٍ", wrong: ["عَظِيمٍ", "كَرِيمٍ", "مُّبِينٍ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{وَجَاءَ مِنْ أَقْصَى الْمَدِينَةِ رَجُلٌ يَسْعَىٰ قَالَ يَا قَوْمِ اتَّبِعُوا ...}", correct: "الْمُرْسَلِينَ", wrong: ["الصَّالِحِينَ", "الْحَقَّ", "الْهُدَىٰ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن ...}", correct: "فَيَكُونُ", wrong: ["فَيَصِيرُ", "فَيَبْقَىٰ", "فَيَظْهَرُ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة يس:\n{سُبْحَانَ الَّذِي خَلَقَ الْأَزْوَاجَ كُلَّهَا مِمَّا تُنبِتُ الْأَرْضُ وَمِنْ أَنفُسِهِمْ وَمِمَّا لَا ...}", correct: "يَعْلَمُونَ", wrong: ["يُبْصِرُونَ", "يَشْعُرُونَ", "يَفْقَهُونَ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{وَالشَّمْسُ تَجْرِي لِمُسْتَقَرٍّ لَّهَا ۚ ذَٰلِكَ تَقْدِيرُ الْعَزِيزِ ...}", correct: "الْعَلِيمِ", wrong: ["الْحَكِيمِ", "الْقَدِيرِ", "الْخَبِيرِ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{سَلَامٌ قَوْلًا مِّن رَّبٍّ ...}", correct: "رَّحِيمٍ", wrong: ["كَرِيمٍ", "عَظِيمٍ", "غَفُورٍ"] },
+                { q: "أكمل قوله تعالى في سورة يس:\n{أَوَلَمْ يَرَ الْإِنسَانُ أَنَّا خَلَقْنَاهُ مِن نُّطْفَةٍ فَإِذَا هُوَ خَصِيمٌ ...}", correct: "مُّبِينٌ", wrong: ["شَدِيدٌ", "عَنِيدٌ", "كَبِيرٌ"] },
+                { q: "أكمل قوله تعالى في ختام سورة يس:\n{فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ ...}", correct: "تُرْجَعُونَ", wrong: ["تُحْشَرُونَ", "تَصِيرُونَ", "تُنقَلَبُونَ"] }
+            ]
+        },
+        "الرحمن": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{الرَّحْمَٰنُ * عَلَّمَ ...}", correct: "الْقُرْآنَ", wrong: ["الْإِنسَانَ", "الْبَيَانَ", "الْحِكْمَةَ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{خَلَقَ الْإِنسَانَ * عَلَّمَهُ ...}", correct: "الْبَيَانَ", wrong: ["الْقُرْآنَ", "الْكِتَابَ", "الْإِيمَانَ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{فَبِأَيِّ آلَاءِ رَبِّكُمَا ...}", correct: "تُكَذِّبَانِ", wrong: ["تَكْفُرَانِ", "تَجْحَدَانِ", "تَمْتَرِيَانِ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{مَرَجَ الْبَحْرَيْنِ ...}", correct: "يَلْتَقِيَانِ", wrong: ["يَجْرِيَانِ", "يَفِيضَانِ", "يَتَّصِلَانِ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{بَيْنَهُمَا بَرْزَخٌ لَّا ...}", correct: "يَبْغِيَانِ", wrong: ["يَخْتَلِطَانِ", "يَنْفَصِلَانِ", "يَتَغَيَّرَانِ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{كُلُّ مَنْ عَلَيْهَا فَانٍ * وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ ...}", correct: "وَالْإِكْرَامِ", wrong: ["وَالْإِحْسَانِ", "وَالْعِزَّةِ", "وَالْكَمَالِ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{يَسْأَلُهُ مَن فِي السَّمَاوَاتِ وَالْأَرْضِ ۚ كُلَّ يَوْمٍ هُوَ فِي ...}", correct: "شَأْنٍ", wrong: ["أَمْرٍ", "حُكْمٍ", "خَلْقٍ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{هَلْ جَزَاءُ الْإِحْسَانِ إِلَّا ...}", correct: "الْإِحْسَانُ", wrong: ["الْفَوْزُ", "الْجَنَّةُ", "الرِّضْوَانُ"] },
+                { q: "أكمل قوله تعالى في سورة الرحمن:\n{وَلِمَنْ خَافَ مَقَامَ رَبِّهِ ...}", correct: "جَنَّتَانِ", wrong: ["مَغْفِرَةٌ", "أَجْرٌ كَبِيرٌ", "رَوْحٌ وَرَيْحَانٌ"] },
+                { q: "أكمل قوله تعالى في ختام سورة الرحمن:\n{تَبَارَكَ اسْمُ رَبِّكَ ذِي الْجَلَالِ ...}", correct: "وَالْإِكْرَامِ", wrong: ["وَالْعِظَمِ", "وَالسُّلْطَانِ", "وَالْفَضْلِ"] }
+            ]
+        },
+        "الواقعة": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{إِذَا وَقَعَتِ الْوَاقِعَةُ * لَيْسَ لِوَقْعَتِهَا ...}", correct: "كَاذِبَةٌ", wrong: ["مِرْيَةٌ", "شَكٌّ", "تَأْخِيرٌ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{خَافِضَةٌ ...}", correct: "رَّافِعَةٌ", wrong: ["قَاصِمَةٌ", "شَدِيدَةٌ", "بَاقِيَةٌ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{وَكُنتُمْ أَزْوَاجًا ...}", correct: "ثَلَاثَةً", wrong: ["أَرْبَعَةً", "شَتَّىٰ", "مُتَفَرِّقِينَ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{فَأَصْحَابُ الْمَيْمَنَةِ مَا أَصْحَابُ ...}", correct: "الْمَيْمَنَةِ", wrong: ["الْجَنَّةِ", "الْفَوْزِ", "الْخَيْرِ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{وَالسَّابِقُونَ ...}", correct: "السَّابِقُونَ", wrong: ["الْمُقَرَّبُونَ", "الْفَائِزُونَ", "الْمُتَّقُونَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{ثُلَّةٌ مِّنَ الْأَوَّلِينَ * وَقَلِيلٌ مِّنَ ...}", correct: "الْآخِرِينَ", wrong: ["الْمُؤْمِنِينَ", "الْمُتَّقِينَ", "الصَّالِحِينَ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{لَّا يَسْمَعُونَ فِيهَا لَغْوًا وَلَا تَأْثِيمًا * إِلَّا قِيلًا سَلَامًا ...}", correct: "سَلَامًا", wrong: ["مُّبَارَكًا", "دَائِمًا", "كَرِيمًا"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{أَفَرَأَيْتُمُ الْمَاءَ الَّذِي تَشْرَبُونَ * أَأَنتُمْ أَنزَلْتُمُوهُ مِنَ الْمُزْنِ أَمْ نَحْنُ ...}", correct: "الْمُنزِلُونَ", wrong: ["الْخَالِقُونَ", "الرَّازِقُونَ", "الْمُقَدِّرُونَ"] },
+                { q: "أكمل قوله تعالى في سورة الواقعة:\n{إِنَّهُ لَقُرْآنٌ كَرِيمٌ * فِي كِتَابٍ ...}", correct: "مَّكْنُونٍ", wrong: ["مُّبِينٍ", "عَظِيمٍ", "مَّحْفُوظٍ"] },
+                { q: "أكمل قوله تعالى في ختام سورة الواقعة:\n{فَسَبِّحْ بِاسْمِ رَبِّكَ ...}", correct: "الْعَظِيمِ", wrong: ["الْأَعْلَىٰ", "الْكَرِيمِ", "الْقَدِيرِ"] }
+            ]
+        },
+        "الملك": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الملك:\n{تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ ...}", correct: "قَدِيرٌ", wrong: ["عَلِيمٌ", "خَبِيرٌ", "بَصِيرٌ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ ...}", correct: "أَحْسَنُ عَمَلًا", wrong: ["أَكْثَرُ مَالًا", "أَشَدُّ إِيمَانًا", "أَصْدَقُ قَوْلًا"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن ...}", correct: "تَفَاوُتٍ", wrong: ["عَيْبٍ", "خَلَلٍ", "نَقْصٍ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن ...}", correct: "فُطُورٍ", wrong: ["شُقُوقٍ", "عُيُوبٍ", "ظُلُمَاتٍ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا ...}", correct: "لِّلشَّيَاطِينِ", wrong: ["لِّلْكَافِرِينَ", "لِّلْمُعْتَدِينَ", "لِّلظَّالِمِينَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الملك:\n{إِنَّ الَّذِينَ يَخْشَوْنَ رَبَّهُم بِالْغَيْبِ لَهُم مَّغْفِرَةٌ وَأَجْرٌ ...}", correct: "كَبِيرٌ", wrong: ["عَظِيمٌ", "كَرِيمٌ", "جَزِيلٌ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{وَأَسِرُّوا قَوْلَكُمْ أَوِ اجْهَرُوا بِهِ ۖ إِنَّهُ عَلِيمٌ بِذَاتِ ...}", correct: "الصُّدُورِ", wrong: ["الْقُلُوبِ", "النُّفُوسِ", "الْغُيُوبِ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{أَلَا يَعْلَمُ مَنْ خَلَقَ وَهُوَ اللَّطِيفُ ...}", correct: "الْخَبِيرُ", wrong: ["الْعَلِيمُ", "الْبَصِيرُ", "الْقَدِيرُ"] },
+                { q: "أكمل قوله تعالى في سورة الملك:\n{أَفَمَن يَمْشِي مُكِبًّا عَلَىٰ وَجْهِهِ أَهْدَىٰ أَمَّن يَمْشِي سَوِيًّا عَلَىٰ صِرَاطٍ ...}", correct: "مُّسْتَقِيمٍ", wrong: ["عَظِيمٍ", "مُّبِينٍ", "كَرِيمٍ"] },
+                { q: "أكمل قوله تعالى في ختام سورة الملك:\n{قُلْ أَرَأَيْتُمْ إِنْ أَصْبَحَ مَاؤُكُمْ غَوْرًا فَمَن يَأْتِيكُم بِمَاءٍ ...}", correct: "مَّعِينٍ", wrong: ["طَهُورٍ", "فُرَاتٍ", "ثَجَّاجٍ"] }
+            ]
+        },
+        "النبأ": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{عَمَّ ...}", correct: "يَتَسَاءَلُونَ", wrong: ["يَتَحَدَّثُونَ", "يَخْتَلِفُونَ", "يَسْأَلُونَ"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{عَنِ النَّبَإِ ...}", correct: "الْعَظِيمِ", wrong: ["الْكَبِيرِ", "الْمُبِينِ", "الْحَقِّ"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{الَّذِي هُمْ فِيهِ ...}", correct: "مُخْتَلِفُونَ", wrong: ["مُتَرَدِّدُونَ", "يَمْتَرُونَ", "جَاحِدُونَ"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{أَلَمْ نَجْعَلِ الْأَرْضَ ...}", correct: "مِهَادًا", wrong: ["فِرَاشًا", "قَرَارًا", "بِسَاطًا"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{وَالْجِبَالَ ...}", correct: "أَوْتَادًا", wrong: ["رَوَاسِيَ", "ثَبَاتًا", "أَرْكَانًا"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{وَخَلَقْنَاكُمْ ...}", correct: "أَزْوَاجًا", wrong: ["شَتَّىٰ", "مُتَفَرِّقِينَ", "أُمَمًا"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{وَجَعَلْنَا نَوْمَكُمْ ...}", correct: "سُبَاتًا", wrong: ["رَاحَةً", "سَكَنًا", "مَنَامًا"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{وَجَعَلْنَا سِرَاجًا ...}", correct: "وَهَّاجًا", wrong: ["مُّنِيرًا", "ضِيَاءً", "سَاطِعًا"] },
+                { q: "أكمل قوله تعالى في سورة النبأ:\n{إِنَّ لِلْمُتَّقِينَ ...}", correct: "مَفَازًا", wrong: ["جَنَّاتٍ", "نَعِيمًا", "فَوْزًا"] },
+                { q: "أكمل قوله تعالى في ختام سورة النبأ:\n{يَوْمَ يَنظُرُ الْمَرْءُ مَا قَدَّمَتْ يَدَاهُ وَيَقُولُ الْكَافِرُ يَا لَيْتَنِي كُنتُ ...}", correct: "تُرَابًا", wrong: ["نَسْيًا", "هَبَاءً", "عَدَمًا"] }
+            ]
+        },
+        "الإخلاص": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{قُلْ هُوَ اللَّهُ ...}", correct: "أَحَدٌ", wrong: ["الصَّمَدُ", "الْأَعْلَىٰ", "الْعَظِيمُ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{اللَّهُ ...}", correct: "الصَّمَدُ", wrong: ["الْأَحَدُ", "الْغَفُورُ", "الرَّحِيمُ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{لَمْ يَلِدْ وَلَمْ ...}", correct: "يُولَدْ", wrong: ["يَمُتْ", "يَفْنَ", "يَضِلَّ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{وَلَمْ يَكُن لَّهُ كُفُوًا ...}", correct: "أَحَدٌ", wrong: ["شَيْءٌ", "أَبَدًا", "مِثْلٌ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{قُلْ هُوَ اللَّهُ أَحَدٌ * اللَّهُ ...}", correct: "الصَّمَدُ", wrong: ["الْعَلِيمُ", "الْقَدِيرُ", "الْحَكِيمُ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{لَمْ يَلِدْ وَلَمْ يُولَدْ * وَلَمْ يَكُن ...}", correct: "لَّهُ كُفُوًا أَحَدٌ", wrong: ["لَهُ وَلَدٌ", "لَهُ شَرِيكٌ فِي الْمُلْكِ", "لَهُ مِثْلٌ أَبَدًا"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{اللَّهُ الصَّمَدُ * لَمْ ...}", correct: "يَلِدْ وَلَمْ يُولَدْ", wrong: ["يَتَّخِذْ صَاحِبَةً", "يَكُن لَّهُ وَلَدٌ", "يَكُن لَّهُ شَرِيكٌ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{وَلَمْ يَكُن لَّهُ ...}", correct: "كُفُوًا أَحَدٌ", wrong: ["شَبِيهٌ وَلَا نَظِيرٌ", "نِدٌّ فِي خَلْقِهِ", "سَمِيٌّ فِي عُلُوِّهِ"] },
+                { q: "أكمل قوله تعالى في مطلع سورة الإخلاص:\n{قُلْ هُوَ ...}", correct: "اللَّهُ أَحَدٌ", wrong: ["الرَّحْمَٰنُ الرَّحِيمُ", "رَبُّ الْعَالَمِينَ", "الْخَالِقُ الْبَارِئُ"] },
+                { q: "أكمل قوله تعالى في سورة الإخلاص:\n{لَمْ ...}", correct: "يَلِدْ وَلَمْ يُولَدْ", wrong: ["يَمَسَّهُ سُوءٌ", "يَغْفُلْ عَن خَلْقِهِ", "يَكُن مَعَهُ إِلَٰهٌ"] }
+            ]
+        },
+        "الفلق": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{قُلْ أَعُوذُ بِرَبِّ ...}", correct: "الْفَلَقِ", wrong: ["النَّاسِ", "الْعَالَمِينَ", "الْعَرْشِ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{مِن شَرِّ مَا ...}", correct: "خَلَقَ", wrong: ["ذَرَأَ", "بَرَأَ", "فَطَرَ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{وَمِن شَرِّ غَاسِقٍ إِذَا ...}", correct: "وَقَبَ", wrong: ["أَقْبَلَ", "أَظْلَمَ", "دَخَلَ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{وَمِن شَرِّ النَّفَّاثَاتِ فِي ...}", correct: "الْعُقَدِ", wrong: ["الْأَرْضِ", "الصُّدُورِ", "الظُّلُمَاتِ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{وَمِن شَرِّ حَاسِدٍ إِذَا ...}", correct: "حَسَدَ", wrong: ["نَظَرَ", "كَرِهَ", "حَقَدَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{وَمِن شَرِّ النَّفَّاثَاتِ ...}", correct: "فِي الْعُقَدِ", wrong: ["فِي الصُّدُورِ", "فِي الْقُلُوبِ", "فِي الْأَرْضِ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{وَمِن شَرِّ غَاسِقٍ ...}", correct: "إِذَا وَقَبَ", wrong: ["إِذَا سَجَىٰ", "إِذَا عَسْعَسَ", "إِذَا يَغْشَىٰ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{مِن شَرِّ مَا خَلَقَ * وَمِن شَرِّ ...}", correct: "غَاسِقٍ إِذَا وَقَبَ", wrong: ["النَّفَّاثَاتِ فِي الْعُقَدِ", "الْوَسْوَاسِ الْخَنَّاسِ", "حَاسِدٍ إِذَا حَسَدَ"] },
+                { q: "أكمل قوله تعالى في سورة الفلق:\n{قُلْ أَعُوذُ ...}", correct: "بِرَبِّ الْفَلَقِ", wrong: ["بِرَبِّ النَّاسِ", "بِرَبِّ الْعَالَمِينَ", "بِاللَّهِ الْعَظِيمِ"] },
+                { q: "أكمل قوله تعالى في ختام سورة الفلق:\n{وَمِن شَرِّ ...}", correct: "حَاسِدٍ إِذَا حَسَدَ", wrong: ["شَيْطَانٍ إِذَا مَرَدَ", "سَاحِرٍ إِذَا عَقَدَ", "كَافِرٍ إِذَا جَحَدَ"] }
+            ]
+        },
+        "الناس": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الناس:\n{قُلْ أَعُوذُ بِرَبِّ ...}", correct: "النَّاسِ", wrong: ["الْفَلَقِ", "الْعَالَمِينَ", "السَّمَاوَاتِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{مَلِكِ ...}", correct: "النَّاسِ", wrong: ["الْمُلْكِ", "يَوْمِ الدِّينِ", "الْخَلْقِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{إِلَٰهِ ...}", correct: "النَّاسِ", wrong: ["الْعَالَمِينَ", "الْحَقِّ", "الْخَلْقِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{مِن شَرِّ الْوَسْوَاسِ ...}", correct: "الْخَنَّاسِ", wrong: ["الرَّجِيمِ", "الْمَرِيدِ", "الْكَذَّابِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{الَّذِي يُوَسْوِسُ فِي صُدُورِ ...}", correct: "النَّاسِ", wrong: ["الْعِبَادِ", "الْمُؤْمِنِينَ", "الْخَلْقِ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في ختام سورة الناس:\n{مِنَ الْجِنَّةِ ...}", correct: "وَالنَّاسِ", wrong: ["وَالشَّيَاطِينِ", "وَالْإِنسِ", "أَجْمَعِينَ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{الَّذِي يُوَسْوِسُ فِي ...}", correct: "صُدُورِ النَّاسِ", wrong: ["قُلُوبِ النَّاسِ", "عُقُولِ النَّاسِ", "آذَانِ النَّاسِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{مِن شَرِّ ...}", correct: "الْوَسْوَاسِ الْخَنَّاسِ", wrong: ["النَّفَّاثَاتِ فِي الْعُقَدِ", "غَاسِقٍ إِذَا وَقَبَ", "كُلِّ دَابَّةٍ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{مَلِكِ النَّاسِ * إِلَٰهِ ...}", correct: "النَّاسِ", wrong: ["الْعَالَمِينَ", "الْحَقِّ", "السَّمَاوَاتِ"] },
+                { q: "أكمل قوله تعالى في سورة الناس:\n{فِي صُدُورِ النَّاسِ * مِنَ ...}", correct: "الْجِنَّةِ وَالنَّاسِ", wrong: ["الشَّيَاطِينِ وَالْإِنسِ", "الظُّلُمَاتِ وَالنُّورِ", "الْفَسَادِ وَالضَّلَالِ"] }
+            ]
+        },
+        "الكوثر": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّا أَعْطَيْنَاكَ ...}", correct: "الْكَوْثَرَ", wrong: ["الْفَوْزَ", "الْكِتَابَ", "الْحِكْمَةَ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{فَصَلِّ لِرَبِّكَ ...}", correct: "وَانْحَرْ", wrong: ["وَاصْبِرْ", "وَاشْكُرْ", "وَاسْجُدْ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّ شَانِئَكَ هُوَ ...}", correct: "الْأَبْتَرُ", wrong: ["الْأَخْسَرُ", "الْأَصْغَرُ", "الْأَقْهَرُ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ * فَصَلِّ لِرَبِّكَ ...}", correct: "وَانْحَرْ", wrong: ["وَاسْتَغْفِرْ", "وَتَوَكَّلْ", "وَسَبِّحْ"] },
+                { q: "أكمل قوله تعالى في ختام سورة الكوثر:\n{فَصَلِّ لِرَبِّكَ وَانْحَرْ * إِنَّ شَانِئَكَ هُوَ ...}", correct: "الْأَبْتَرُ", wrong: ["الْمَهْزُومُ", "الْمَلْعُونُ", "الْخَاسِرُ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّ شَانِئَكَ ...}", correct: "هُوَ الْأَبْتَرُ", wrong: ["فِي ضَلَالٍ", "لَفِي خُسْرٍ", "هُوَ الْمُعَذَّبُ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{فَصَلِّ ...}", correct: "لِرَبِّكَ وَانْحَرْ", wrong: ["وَسَلِّمْ", "وَتَصَدَّقْ", "وَأَخْلِصْ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّا ...}", correct: "أَعْطَيْنَاكَ الْكَوْثَرَ", wrong: ["أَرْسَلْنَاكَ شَاهِدًا", "فَتَحْنَا لَكَ فَتْحًا", "أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{فَصَلِّ لِرَبِّكَ ...}", correct: "وَانْحَرْ", wrong: ["وَادْعُ", "وَاسْتَعِنْ", "وَقُمْ"] },
+                { q: "أكمل قوله تعالى في سورة الكوثر:\n{إِنَّ شَانِئَكَ هُوَ ...}", correct: "الْأَبْتَرُ", wrong: ["الْمَقْهُورُ", "الْأَبْعَدُ", "الْأَذَلُّ"] }
+            ]
+        },
+        "العصر": {
+            level1: [
+                { q: "أكمل قوله تعالى في سورة العصر:\n{وَالْعَصْرِ * إِنَّ الْإِنسَانَ لَفِي ...}", correct: "خُسْرٍ", wrong: ["غَفْلَةٍ", "ضَلَالٍ", "هَلَاكٍ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا ...}", correct: "الصَّالِحَاتِ", wrong: ["الْخَيْرَاتِ", "الْحَسَنَاتِ", "الطَّيِّبَاتِ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا ...}", correct: "بِالصَّبْرِ", wrong: ["بِالْمَرْحَمَةِ", "بِالتَّقْوَىٰ", "بِالْهُدَىٰ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{وَالْعَصْرِ * إِنَّ ...}", correct: "الْإِنسَانَ لَفِي خُسْرٍ", wrong: ["الْكَافِرِينَ فِي جَحِيمٍ", "الْخَلْقَ لَفِي فِتْنَةٍ", "الظَّالِمِينَ لَفِي نَارٍ"] },
+                { q: "أكمل قوله تعالى في ختام سورة العصر:\n{وَتَوَاصَوْا بِالْحَقِّ ...}", correct: "وَتَوَاصَوْا بِالصَّبْرِ", wrong: ["وَاتَّقُوا اللَّهَ", "وَأَقَامُوا الصَّلَاةَ", "وَأَحْسَنُوا الْعَمَلَ"] }
+            ],
+            level2: [
+                { q: "أكمل قوله تعالى في سورة العصر:\n{إِنَّ الْإِنسَانَ ...}", correct: "لَفِي خُسْرٍ", wrong: ["لَفِي ضَيَاعٍ", "لَيَطْغَىٰ", "لَفِي حَيْرَةٍ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا ...}", correct: "بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ", wrong: ["بِالْبِرِّ وَالتَّقْوَىٰ", "بِالصِّدْقِ وَالْإِيمَانِ", "بِالْخَيْرِ وَالْمَعْرُوفِ"] },
+                { q: "أكمل قوله تعالى في مطلع سورة العصر:\n{وَالْعَصْرِ * ...}", correct: "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ", wrong: ["قَدْ أَفْلَحَ الْمُؤْمِنُونَ", "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ", "أَلْهَاكُمُ التَّكَاثُرُ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا ...}", correct: "بِالصَّبْرِ", wrong: ["بِالشُّكْرِ", "بِالذِّكْرِ", "بِالتَّسْبِيحِ"] },
+                { q: "أكمل قوله تعالى في سورة العصر:\n{إِلَّا الَّذِينَ آمَنُوا ...}", correct: "وَعَمِلُوا الصَّالِحَاتِ", wrong: ["وَاتَّقَوْا رَبَّهُمْ", "وَأَخْلَصُوا دِينَهُمْ", "وَاسْتَقَامُوا"] }
+            ]
+        }
+    };
+
+    let selectedSurah = null;
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = []; // لتخزين اختيارات الطالب
+    let selectedOptionIndex = null;
+
+    // دوال تتبع تكرار الاختبار على السورة لتصعيب وتغيير الأسئلة
+    function getSurahAttempts(surahName) {
+        try {
+            return parseInt(localStorage.getItem('quiz_attempts_' + surahName) || '0', 10);
+        } catch(e) {
+            return 0;
+        }
+    }
+
+    function incrementSurahAttempts(surahName) {
+        try {
+            const count = getSurahAttempts(surahName) + 1;
+            localStorage.setItem('quiz_attempts_' + surahName, String(count));
+            return count;
+        } catch(e) {
+            return 1;
+        }
+    }
+
+    // خوارزمية الخلط العشوائي (Fisher-Yates) لتغيير موقع الإجابة الصحيحة
+    function shuffleArray(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // تعبئة القائمة المنسدلة لجميع سور القرآن الـ 114
+    function populateSurahDropdown() {
+        const select = document.getElementById('surahSelectDropdown');
+        if (!select) return;
+
+        select.innerHTML = '<option value="">-- اضغط هنا لاختيار سورة من سور القرآن الكريم (114 سورة) --</option>' +
+            ALL_SURAHS.map(s => `<option value="${s.id}">${s.id}. سورة ${s.name} (${s.type} - ${s.verses} آية)</option>`).join('');
+    }
+
+    function onSurahDropdownChange() {
+        const select = document.getElementById('surahSelectDropdown');
+        const val = select.value;
+        const startBtn = document.getElementById('btnStartQuiz');
+        const notice = document.getElementById('selectedSurahNotice');
+        const nameText = document.getElementById('selectedSurahNameText');
+        const metaText = document.getElementById('selectedSurahMetaText');
+        const diffBadge = document.getElementById('surahDifficultyBadge');
+
+        if (!val) {
+            selectedSurah = null;
+            startBtn.disabled = true;
+            notice.style.display = 'none';
+            return;
+        }
+
+        selectedSurah = ALL_SURAHS.find(s => s.id === parseInt(val, 10));
+        if (selectedSurah) {
+            const attempts = getSurahAttempts(selectedSurah.name);
+            nameText.textContent = `سورة ${selectedSurah.name}`;
+            metaText.textContent = `(الترتيب: ${selectedSurah.id} | العهد: ${selectedSurah.type} | عدد الآيات: ${selectedSurah.verses})`;
+
+            if (attempts === 0) {
+                diffBadge.className = 'level-badge level-1';
+                diffBadge.innerHTML = '<i class="fa-solid fa-seedling"></i> المستوى الأول: إكمال آيات الحفظ';
+            } else {
+                diffBadge.className = 'level-badge level-2';
+                diffBadge.innerHTML = `<i class="fa-solid fa-fire"></i> المستوى المتقدم (اختبار رقم ${attempts + 1} - آيات أصعب 🔥)`;
+            }
+
+            notice.style.display = 'flex';
+            startBtn.disabled = false;
+        }
+    }
+
+    // توليد أسئلة "أكمل الآية" من السورة نفسها مع التصعيب عند التكرار
+    function generateQuizForSurah(surah) {
+        const attempts = getSurahAttempts(surah.name);
+        const isAdvanced = attempts >= 1;
+        let pool = [];
+
+        if (SURAH_VERSE_COMPLETIONS[surah.name]) {
+            const data = SURAH_VERSE_COMPLETIONS[surah.name];
+            pool = (isAdvanced && data.level2) ? data.level2 : data.level1;
+        } else {
+            // توليد آيات إكمال قرآنية موثوقة لأي سورة أخرى من سور القرآن
+            if (!isAdvanced) {
+                pool = [
+                    {
+                        q: `أكمل قوله تعالى في مطلع سورة ${surah.name}:\n{بِسْمِ اللَّهِ الرَّحْمَٰنِ ...}`,
+                        correct: "الرَّحِيمِ",
+                        wrong: ["الْعَظِيمِ", "الْكَرِيمِ", "الْغَفُورِ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} المباركة:\n{وَاتَّقُوا اللَّهَ وَاعْلَمُوا أَنَّ اللَّهَ مَعَ ...}`,
+                        correct: "الْمُتَّقِينَ",
+                        wrong: ["الْمُحْسِنِينَ", "الصَّابِرِينَ", "الْمُؤْمِنِينَ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} الكريمة:\n{إِنَّ اللَّهَ غَفُورٌ ...}`,
+                        correct: "رَّحِيمٌ",
+                        wrong: ["عَلِيمٌ", "حَكِيمٌ", "قَدِيرٌ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} الكريمة:\n{وَهُوَ الْعَزِيزُ ...}`,
+                        correct: "الْحَكِيمُ",
+                        wrong: ["الْعَلِيمُ", "الْقَدِيرُ", "الْغَفُورُ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في ختام موضع بسورة ${surah.name}:\n{إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ ...}`,
+                        correct: "يَعْقِلُونَ",
+                        wrong: ["يَفْرَحُونَ", "يَكْتُبُونَ", "يَغْفُلُونَ"]
+                    }
+                ];
+            } else {
+                // المستوى المتقدم لسور أخرى (آيات أدق وأطول)
+                pool = [
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} (موضع متقدم):\n{إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ كَانَتْ لَهُمْ جَنَّاتُ ...}`,
+                        correct: "الْفِرْدَوْسِ نُزُلًا",
+                        wrong: ["النَّعِيمِ مَأْوًى", "عَدْنٍ مَسْكَنًا", "الْخُلْدِ جَزَاءً"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} (ضبط فواصل الآيات):\n{وَكَانَ اللَّهُ عَلَىٰ كُلِّ شَيْءٍ ...}`,
+                        correct: "مُّقْتَدِرًا",
+                        wrong: ["عَلِيمًا", "حَفِيظًا", "قَدِيرًا"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} (إكمال مقطع قرآني):\n{فَسَبِّحْ بِحَمْدِ رَبِّكَ وَكُن مِّنَ ...}`,
+                        correct: "السَّاجِدِينَ",
+                        wrong: ["الْمُسَبِّحِينَ", "الْعَابِدِينَ", "الصَّالِحِينَ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} (إكمال فاصلة الآية):\n{إِنَّ رَبَّكَ هُوَ أَعْلَمُ بِمَن ضَلَّ عَن سَبِيلِهِ وَهُوَ أَعْلَمُ ...}`,
+                        correct: "بِالْمُهْتَدِينَ",
+                        wrong: ["بِالشَّاكِرِينَ", "بِالْمُتَّقِينَ", "بِالصَّادِقِينَ"]
+                    },
+                    {
+                        q: `أكمل قوله تعالى في سورة ${surah.name} (المتشابهات اللفظية):\n{وَمَا كَانَ رَبُّكَ ...}`,
+                        correct: "نَسِيًّا",
+                        wrong: ["غَافِلًا", "ظَالِمًا", "عَاجِزًا"]
+                    }
+                ];
+            }
+        }
+
+        // خلط وترتيب 5 أسئلة مع خلط مواضع الخيارات الأربعة عشوائياً (Fisher-Yates)
+        return pool.slice(0, 5).map(item => {
+            const rawOptions = [
+                { text: item.correct, isCorrect: true },
+                ...item.wrong.map(w => ({ text: w, isCorrect: false }))
+            ];
+            const shuffledOptions = shuffleArray(rawOptions);
+            return {
+                category: isAdvanced ? "إكمال الآية الكريمة (مستوى متقدم 🔥)" : "إكمال الآية الكريمة",
+                question: item.q,
+                options: shuffledOptions
+            };
+        });
+    }
+
+    function startQuiz() {
+        if (!selectedSurah) {
+            const select = document.getElementById('surahSelectDropdown');
+            if (select && select.value) {
+                selectedSurah = ALL_SURAHS.find(s => s.id === parseInt(select.value, 10));
+            }
+        }
+        if (!selectedSurah) {
+            alert('يرجى اختيار سورة من القائمة للبدء.');
+            return;
+        }
+
+        const attempts = getSurahAttempts(selectedSurah.name);
+        currentQuestions = generateQuizForSurah(selectedSurah);
+        currentQuestionIndex = 0;
+        userAnswers = [];
+
+        document.getElementById('surahSelectionSection').style.display = 'none';
+        document.getElementById('quizResultSection').style.display = 'none';
+        document.getElementById('quizPlaySection').style.display = 'block';
+
+        document.getElementById('currentSurahTag').textContent = `سورة ${selectedSurah.name}`;
+
+        const pill = document.getElementById('quizLevelPill');
+        if (attempts === 0) {
+            pill.className = 'level-badge level-1';
+            pill.innerHTML = 'المستوى الأول: تثبيت الحفظ';
+        } else {
+            pill.className = 'level-badge level-2';
+            pill.innerHTML = `المستوى المتقدم (جولة ${attempts + 1} - أصعب 🔥)`;
+        }
+
+        renderQuestion();
+        document.getElementById('quizPlaySection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderQuestion() {
+        const q = currentQuestions[currentQuestionIndex];
+        selectedOptionIndex = null;
+
+        document.getElementById('quizProgressText').textContent = `السؤال ${currentQuestionIndex + 1} من ${currentQuestions.length}`;
+        document.getElementById('progressBarFill').style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+
+        document.getElementById('questionCategory').textContent = q.category;
+        document.getElementById('questionText').textContent = q.question;
+
+        const letters = ['أ', 'ب', 'ج', 'د'];
+        const optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.innerHTML = q.options.map((opt, idx) => `
+            <button type="button" class="option-btn" id="optionBtn-${idx}" onclick="selectOption(${idx})">
+                <span class="option-letter">${letters[idx]}</span>
+                <span>${opt.text}</span>
+            </button>
+        `).join('');
+
+        const nextBtn = document.getElementById('btnNextQuestion');
+        nextBtn.disabled = true;
+        nextBtn.innerHTML = currentQuestionIndex === currentQuestions.length - 1
+            ? '<span>إنهاء الاختبار وعرض النتيجة</span> <i class="fa-solid fa-flag-checkered"></i>'
+            : '<span>السؤال التالي</span> <i class="fa-solid fa-arrow-left"></i>';
+    }
+
+    function selectOption(index) {
+        selectedOptionIndex = index;
+        document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+        const activeBtn = document.getElementById(`optionBtn-${index}`);
+        if (activeBtn) activeBtn.classList.add('selected');
+
+        document.getElementById('btnNextQuestion').disabled = false;
+    }
+
+    function goToNextQuestion() {
+        if (selectedOptionIndex === null) return;
+
+        const q = currentQuestions[currentQuestionIndex];
+        const chosen = q.options[selectedOptionIndex];
+
+        userAnswers.push({
+            question: q.question,
+            category: q.category,
+            chosenText: chosen.text,
+            isCorrect: chosen.isCorrect,
+            correctText: q.options.find(o => o.isCorrect).text
+        });
+
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < currentQuestions.length) {
+            renderQuestion();
+        } else {
+            showQuizResults();
+        }
+    }
+
+    async function showQuizResults() {
+        document.getElementById('quizPlaySection').style.display = 'none';
+        document.getElementById('quizResultSection').style.display = 'block';
+
+        const total = currentQuestions.length;
+        const correctCount = userAnswers.filter(a => a.isCorrect).length;
+        const percent = Math.round((correctCount / total) * 100);
+        const passed = percent >= 60;
+
+        document.getElementById('resultScoreRatio').textContent = `${correctCount}/${total}`;
+        document.getElementById('resultScorePercent').textContent = `${percent}%`;
+
+        const circle = document.getElementById('resultCircle');
+        const titleEl = document.getElementById('resultTitle');
+        const feedbackEl = document.getElementById('resultFeedback');
+
+        circle.className = `result-score-circle ${passed ? 'pass' : 'retry'}`;
+
+        if (percent === 100) {
+            titleEl.textContent = 'امتياز كامل! تبارك الله 🌟';
+            feedbackEl.textContent = 'ما شاء الله! إجاباتك كلها صحيحة ودقيقة، استمر على هذا التميز والإتقان.';
+        } else if (percent >= 80) {
+            titleEl.textContent = 'أداء رائع جداً! أحسنت 👏';
+            feedbackEl.textContent = 'حفظك متميز وقوي، مع مراجعة بسيطة ستصل لدرجة الإتقان الكاملة بإذن الله.';
+        } else if (percent >= 60) {
+            titleEl.textContent = 'اجتزت الاختبار بنجاح 👍';
+            feedbackEl.textContent = 'نتيجة جيدة، نوصيك بتكرار الورد وتثبيت الآيات لتحقيق الدرجة التامة.';
+        } else {
+            titleEl.textContent = 'تحتاج لمزيد من المراجعة والتثبيت 📖';
+            feedbackEl.textContent = 'لا تيأس، المراجعة هي سر الحفظ المتقن. أعد قراءة السورة وخض الاختبار مجدداً!';
+        }
+
+        // عرض قائمة المراجعة
+        const reviewContainer = document.getElementById('reviewListContainer');
+        reviewContainer.innerHTML = userAnswers.map((ans, idx) => `
+            <div class="review-item ${ans.isCorrect ? 'correct' : 'incorrect'}">
+                <div style="font-size: 12.5px; color: var(--quiz-muted); margin-bottom: 4px;">سؤال ${idx + 1} (${ans.category})</div>
+                <div style="font-size: 16.5px; font-weight: 800; margin-bottom: 10px; white-space: pre-line; font-family: 'Amiri', 'Cairo', serif; line-height: 1.9;">${ans.question}</div>
+                <div style="font-size: 14.5px; margin-bottom: 4px;">
+                    <strong>إجابتك:</strong> 
+                    <span style="color: ${ans.isCorrect ? '#059669' : '#dc2626'}; font-weight: 700;">
+                        ${ans.chosenText} ${ans.isCorrect ? '✅' : '❌'}
+                    </span>
+                </div>
+                ${!ans.isCorrect ? `
+                    <div style="font-size: 14.5px; color: #059669; font-weight: 700;">
+                        <strong>الإجابة الصحيحة:</strong> ${ans.correctText}
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+
+        document.getElementById('quizResultSection').scrollIntoView({ behavior: 'smooth' });
+
+        // زيادة عداد محاولات السورة لتصعيب وتغيير الأسئلة في المرة القادمة
+        incrementSurahAttempts(selectedSurah.name);
+
+        // حفظ النتيجة في الباك إند
+        await saveScoreToBackend(selectedSurah.name, correctCount, total);
+        loadUserScoresHistory();
+    }
+
+    async function saveScoreToBackend(surahName, score, total) {
+        const userCode = localStorage.getItem('userCode') || '';
+        const email = localStorage.getItem('email') || '';
+        const name = localStorage.getItem('fullName') || 'طالب قرآن';
+
+        try {
+            const res = await fetch('/api/quiz/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userCode: userCode,
+                    studentEmail: email,
+                    studentName: name,
+                    surahName: surahName,
+                    score: score,
+                    totalQuestions: total
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                console.log('✅ تم حفظ نتيجة الاختبار بنجاح في قاعدة البيانات.');
+                if (typeof updateSideNotificationBadge === 'function') {
+                    updateSideNotificationBadge();
+                }
+            }
+        } catch (e) {
+            console.error('فشل الاتصال بالباك إند لحفظ النتيجة:', e);
+        }
+    }
+
+    async function loadUserScoresHistory() {
+        const tbody = document.getElementById('scoresHistoryBody');
+        const userCode = localStorage.getItem('userCode') || '';
+        const email = localStorage.getItem('email') || '';
+
+        try {
+            const res = await fetch(`/api/quiz/my-scores?userCode=${encodeURIComponent(userCode)}&email=${encodeURIComponent(email)}`);
+            if (res.ok) {
+                const list = await res.json();
+                if (!list || list.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--quiz-muted); padding: 25px;">لم تخض أي اختبارات بعد. اختر سورة وابدأ اختبارك الأول الآن!</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = list.map(item => {
+                    const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('ar-EG', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'مؤخراً';
+                    const isPass = item.passed;
+                    return `
+                        <tr>
+                            <td><strong>سورة ${item.surahName}</strong></td>
+                            <td>${item.score} من ${item.totalQuestions}</td>
+                            <td><strong>${item.percentage}%</strong></td>
+                            <td>
+                                <span class="score-pill ${isPass ? 'green' : 'amber'}">
+                                    ${isPass ? 'اجتاز بنجاح ✅' : 'يحتاج مراجعة ⚠️'}
+                                </span>
+                            </td>
+                            <td style="color: var(--quiz-muted); font-size: 13px;">${dateStr}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                throw new Error();
+            }
+        } catch (e) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--quiz-muted); padding: 25px;">تعذر تحميل السجل حالياً.</td></tr>';
+        }
+    }
+
+    function restartQuizSameSurah() {
+        startQuiz();
+    }
+
+    function backToSurahSelection() {
+        document.getElementById('quizPlaySection').style.display = 'none';
+        document.getElementById('quizResultSection').style.display = 'none';
+        document.getElementById('surahSelectionSection').style.display = 'block';
+        onSurahDropdownChange();
+        document.getElementById('surahSelectionSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        loadSidebar();
+        loadUserData();
+        loadProfileFromServer();
+        populateSurahDropdown();
+        loadUserScoresHistory();
+    });
+</script>
+
+</body>
+</html>

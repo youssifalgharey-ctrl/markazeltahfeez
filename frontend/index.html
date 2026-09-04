@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          font-family: 'Cairo', 'Poppins', sans-serif;
+        }
+
+        body {
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: radial-gradient(circle at 85% 50%, rgba(220, 145, 50, 0.45) 0%, transparent 60%),
+                      radial-gradient(circle at 10% 20%, rgba(35, 80, 125, 0.6) 0%, transparent 50%),
+                      linear-gradient(135deg, #0d131a 0%, #151618 50%, #201a14 100%);
+          background-attachment: fixed;
+        }
+
+        .card {
+          background: rgba(25, 25, 25, 0.65);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          width: 100%;
+          max-width: 360px;
+          border-radius: 36px;
+          border: 2.5px solid #ffcc00;
+          box-shadow: 0 0 25px rgba(255, 204, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.5);
+          padding: 28px 22px 20px 22px;
+          text-align: center;
+        }
+
+        .card-header h2 {
+          color: #ffcc00;
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 18px;
+          letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 420px) {
+          body {
+            padding: 16px 12px;
+          }
+          .card {
+            padding: 24px 16px 18px 16px;
+            border-radius: 26px;
+            border-width: 2px;
+          }
+          .card-header h2 {
+            font-size: 22px;
+            margin-bottom: 14px;
+          }
+          .input-group input {
+            font-size: 14px;
+            padding: 9px 14px;
+          }
+          .submit-btn {
+            padding: 9px;
+            font-size: 15px;
+          }
+        }
+
+        .form-container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .input-group {
+          margin-bottom: 12px;
+        }
+
+        .input-group input {
+          width: 100%;
+          padding: 10px 18px;
+          background: #ffffff;
+          border: 2.5px solid #ffcc00;
+          border-radius: 30px;
+          font-size: 13.5px;
+          color: #333333;
+          outline: none;
+          text-align: right;
+          direction: rtl;
+          transition: all 0.2s ease-in-out;
+        }
+
+        .input-group input:focus {
+          box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+        }
+
+        .input-group input::placeholder {
+          color: #757575;
+          font-size: 13px;
+          text-align: right;
+        }
+
+        /* تنسيق الخطأ */
+        .input-group input.input-error {
+          border-color: #ff3333 !important;
+          box-shadow: 0 0 10px rgba(255, 51, 51, 0.6) !important;
+        }
+
+        .error-hint {
+          color: #ff4d4d;
+          font-size: 11.5px;
+          font-weight: bold;
+          margin-top: -6px;
+          margin-bottom: 8px;
+          text-align: right;
+          padding-right: 15px;
+          display: none;
+        }
+
+        /* ---------- إظهار/إخفاء كلمة المرور ---------- */
+        .password-wrapper {
+          position: relative;
+        }
+
+        .password-wrapper input {
+          padding-left: 42px;
+        }
+
+        .toggle-password-btn {
+          position: absolute;
+          left: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          color: #8a8a8a;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+        }
+
+        .toggle-password-btn:hover {
+          color: #333333;
+        }
+
+        .remember-group {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          margin: 6px 0 14px 0;
+          color: #ffcc00;
+          font-size: 13.5px;
+          font-weight: 500;
+        }
+
+        .remember-group input[type="checkbox"] {
+          accent-color: #ffcc00;
+          cursor: pointer;
+          width: 15px;
+          height: 15px;
+        }
+
+        .btn-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 10px;
+        }
+
+        .submit-btn {
+          padding: 9px 34px;
+          border: 2.5px solid #ffcc00;
+          border-radius: 30px;
+          background: #ffcc00;
+          color: #1a1a1a;
+          font-size: 14.5px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+        }
+
+        .submit-btn:hover {
+          background: #ffffff;
+          color: #e5a000;
+          border-color: #ffcc00;
+          transform: scale(1.04);
+          box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .submit-btn:active {
+          transform: scale(0.98);
+        }
+
+        .footer-text {
+          margin-top: 10px;
+          font-size: 12.5px;
+          color: #cccccc;
+        }
+
+        .footer-text a {
+          color: #ffcc00;
+          text-decoration: none;
+          font-weight: 600;
+          margin-right: 4px;
+          cursor: pointer;
+        }
+
+        .footer-text a:hover {
+          text-decoration: underline;
+        }
+
+        .alert-box {
+          margin-bottom: 12px;
+          padding: 10px 14px;
+          border-radius: 15px;
+          font-size: 13px;
+          font-weight: bold;
+          display: none;
+          text-align: center;
+          line-height: 1.5;
+        }
+
+        .alert-success {
+          background: rgba(34, 197, 94, 0.2);
+          color: #4ade80;
+          border: 1px solid #22c55e;
+        }
+
+        .alert-error {
+          background: rgba(239, 68, 68, 0.2);
+          color: #f87171;
+          border: 1px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-wrapper" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 360px;">
+    <div class="card">
+        <div class="card-header">
+            <h2 id="formTitle">تسجيل الدخول</h2>
+        </div>
+
+        <div id="alertBox" class="alert-box"></div>
+
+        <form id="authForm" class="form-container">
+            <!-- الاسم الكامل (خاص بالاشتراك فقط - إجباري) -->
+            <div class="input-group" id="fullNameGroup" style="display: none;">
+                <input type="text" id="fullNameInput" placeholder="ادخل اسمك">
+            </div>
+
+            <!-- رقم الهاتف (خاص بالاشتراك فقط - إجباري) -->
+            <div class="input-group" id="phoneGroup" style="display: none;">
+                <input type="tel" id="phoneInput" placeholder="رقم الهاتف">
+            </div>
+
+            <!-- حقل العمر (خاص بالاشتراك فقط - إجباري) -->
+            <div class="input-group" id="ageGroup" style="display: none;">
+                <input type="number" id="ageInput" placeholder="العمر" min="1" max="120">
+            </div>
+
+            <!-- حقل تسجيل الدخول المستقل (إجباري) -->
+            <div class="input-group" id="loginEmailGroup">
+                <input type="text" id="loginEmailInput" placeholder="الكود / رقم الهاتف / البريد" required>
+            </div>
+
+            <!-- حقل البريد الإلكتروني في الاشتراك (اختياري) -->
+            <div class="input-group" id="signupEmailGroup" style="display: none;">
+                <input type="email" id="signupEmailInput" placeholder="البريد الإلكتروني (اختياري)">
+            </div>
+
+            <!-- حقل إدخال الكود (خاص بالاشتراك فقط - اختياري) -->
+            <div class="input-group" id="inviteCodeGroup" style="display: none;">
+                <input type="text" id="inviteCodeInput" placeholder="ادخل الكود (إذا استلمته)">
+            </div>
+
+            <!-- كلمة المرور (إجباري) -->
+            <div class="input-group">
+                <div class="password-wrapper">
+                    <input type="password" id="passwordInput" placeholder="كلمة المرور" required>
+                    <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('passwordInput', this)">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- إعادة إدخال كلمة المرور (خاص بالاشتراك فقط - إجباري) -->
+            <div class="input-group" id="confirmPasswordGroup" style="display: none;">
+                <div class="password-wrapper">
+                    <input type="password" id="confirmPasswordInput" placeholder="إعادة إدخال كلمة المرور">
+                    <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('confirmPasswordInput', this)">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="passwordMismatchHint" class="error-hint">كلمتا المرور غير متطابقتين!</div>
+
+            <!-- تذكرني -->
+            <div class="remember-group" id="rememberGroup">
+                <label for="rememberMe" style="cursor: pointer;">تذكرني</label>
+                <input type="checkbox" id="rememberMe">
+            </div>
+
+            <div class="btn-wrapper">
+                <button type="submit" class="submit-btn" id="submitBtn">تسجيل الدخول</button>
+            </div>
+        </form>
+
+        <div class="footer-text">
+            <span id="footerDesc">هل أنت غير مشترك؟</span>
+            <a href="javascript:void(0)" id="toggleFormBtn">الإشتراك</a>
+        </div>
+    </div>
+
+    <!-- هل نسيت كلمة المرور؟ (أسفل المربع على طول) -->
+    <div id="forgotPasswordGroup" style="text-align: center; margin-top: 16px;">
+        <a href="javascript:void(0)" onclick="openForgotPasswordModal()" style="color: #ffcc00; font-size: 15px; font-weight: 700; text-decoration: none; transition: 0.2s; text-shadow: 0 0 10px rgba(255, 204, 0, 0.4); letter-spacing: 0.3px;">
+            هل نسيت كلمة المرور؟
+        </a>
+    </div>
+</div>
+
+<script>
+    // إظهار/إخفاء كلمة المرور عند الضغط على أيقونة العين
+    function togglePasswordVisibility(inputId, btnEl) {
+        const input = document.getElementById(inputId);
+        const icon = btnEl.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    let isLoginMode = true;
+    const formTitle = document.getElementById('formTitle');
+    const fullNameGroup = document.getElementById('fullNameGroup');
+    const fullNameInput = document.getElementById('fullNameInput');
+    const phoneGroup = document.getElementById('phoneGroup');
+    const phoneInput = document.getElementById('phoneInput');
+    const ageGroup = document.getElementById('ageGroup');
+    const ageInput = document.getElementById('ageInput');
+    const loginEmailGroup = document.getElementById('loginEmailGroup');
+    const signupEmailGroup = document.getElementById('signupEmailGroup');
+    const loginEmailInput = document.getElementById('loginEmailInput');
+    const signupEmailInput = document.getElementById('signupEmailInput');
+    const inviteCodeGroup = document.getElementById('inviteCodeGroup');
+    const inviteCodeInput = document.getElementById('inviteCodeInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+    const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+    const passwordMismatchHint = document.getElementById('passwordMismatchHint');
+    const rememberGroup = document.getElementById('rememberGroup');
+    const submitBtn = document.getElementById('submitBtn');
+    const footerDesc = document.getElementById('footerDesc');
+    const toggleFormBtn = document.getElementById('toggleFormBtn');
+    const alertBox = document.getElementById('alertBox');
+    const authForm = document.getElementById('authForm');
+
+    // إزالة علامة الخطأ عند بدء الكتابة في رقم الهاتف
+    phoneInput.addEventListener('input', () => {
+      phoneInput.classList.remove('input-error');
+    });
+
+    // إزالة علامة الخطأ عند بدء الكتابة في العمر
+    ageInput.addEventListener('input', () => {
+      ageInput.classList.remove('input-error');
+    });
+
+    // فحص تطابق كلمتي المرور فقط
+    function validatePasswordMatch() {
+      if (!isLoginMode && confirmPasswordInput.value.length > 0) {
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          confirmPasswordInput.classList.add('input-error');
+          passwordMismatchHint.style.display = 'block';
+          return false;
+        } else {
+          confirmPasswordInput.classList.remove('input-error');
+          passwordMismatchHint.style.display = 'none';
+          return true;
+        }
+      } else {
+        confirmPasswordInput.classList.remove('input-error');
+        passwordMismatchHint.style.display = 'none';
+        return true;
+      }
+    }
+
+    passwordInput.addEventListener('input', validatePasswordMatch);
+    confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+
+    // تبديل الواجهة بين تسجيل الدخول والاشتراك
+    toggleFormBtn.addEventListener('click', () => {
+      isLoginMode = !isLoginMode;
+      hideAlert();
+      authForm.reset();
+
+      phoneInput.classList.remove('input-error');
+      confirmPasswordInput.classList.remove('input-error');
+      passwordMismatchHint.style.display = 'none';
+
+      if (isLoginMode) {
+        formTitle.textContent = 'تسجيل الدخول';
+
+        fullNameGroup.style.display = 'none';
+        fullNameInput.required = false;
+
+        phoneGroup.style.display = 'none';
+        phoneInput.required = false;
+
+        ageGroup.style.display = 'none';
+        ageInput.required = false;
+        ageInput.value = '';
+
+        loginEmailGroup.style.display = 'block';
+        loginEmailInput.required = true;
+
+        signupEmailGroup.style.display = 'none';
+        signupEmailInput.required = false;
+
+        inviteCodeGroup.style.display = 'none';
+
+        confirmPasswordGroup.style.display = 'none';
+        confirmPasswordInput.required = false;
+
+        rememberGroup.style.display = 'flex';
+        const forgotGroup = document.getElementById('forgotPasswordGroup');
+        if (forgotGroup) forgotGroup.style.display = 'block';
+        submitBtn.textContent = 'تسجيل الدخول';
+        footerDesc.textContent = 'هل أنت غير مشترك؟';
+        toggleFormBtn.textContent = 'الإشتراك';
+      } else {
+        formTitle.textContent = 'الإشتراك';
+
+        fullNameGroup.style.display = 'block';
+        fullNameInput.required = true;
+
+        phoneGroup.style.display = 'block';
+        phoneInput.required = true;
+
+        ageGroup.style.display = 'block';
+        ageInput.required = false;
+
+        loginEmailGroup.style.display = 'none';
+        loginEmailInput.required = false;
+
+        signupEmailGroup.style.display = 'block';
+        signupEmailInput.required = false;
+
+        inviteCodeGroup.style.display = 'block';
+
+        confirmPasswordGroup.style.display = 'block';
+        confirmPasswordInput.required = true;
+
+        rememberGroup.style.display = 'none';
+        const forgotGroup = document.getElementById('forgotPasswordGroup');
+        if (forgotGroup) forgotGroup.style.display = 'none';
+        submitBtn.textContent = 'إشترك';
+        footerDesc.textContent = 'مشترك بالفعل؟';
+        toggleFormBtn.textContent = 'تسجيل الدخول';
+      }
+    });
+
+    // إرسال البيانات للـ Backend
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const identifier = isLoginMode
+        ? loginEmailInput.value.trim()
+        : signupEmailInput.value.trim();
+
+      const password = passwordInput.value.trim();
+      const fullName = fullNameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const age = ageInput.value.trim() ? parseInt(ageInput.value.trim()) : null;
+      const inviteCode = inviteCodeInput.value.trim();
+
+      // التحقق في وضع الاشتراك فقط
+      if (!isLoginMode) {
+        // التحقق من أن رقم الهاتف مكون من 11 رقماً بالضبط
+        const phoneRegex = /^[0-9]{11}$/;
+        if (!phoneRegex.test(phone)) {
+          phoneInput.classList.add('input-error');
+          showAlert('رقم الهاتف غير صحيح!', false);
+          return;
+        } else {
+          phoneInput.classList.remove('input-error');
+        }
+
+        // التحقق من العمر (إجباري)
+        if (!age || age < 1 || age > 120) {
+          ageInput.classList.add('input-error');
+          showAlert('يجب إدخال العمر', false);
+          return;
+        } else {
+          ageInput.classList.remove('input-error');
+        }
+
+        // التحقق من تطابق كلمتي المرور
+        const confirmPassword = confirmPasswordInput.value.trim();
+        if (password !== confirmPassword) {
+          confirmPasswordInput.classList.add('input-error');
+          passwordMismatchHint.style.display = 'block';
+          showAlert('كلمتا المرور غير متطابقتين!', false);
+          return;
+        }
+      }
+
+      const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
+      const payload = isLoginMode
+        ? { email: identifier, password }
+        : { fullName, phone, age, email: identifier, password, inviteCode };
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (isLoginMode) {
+            // حفظ بيانات المستخدم والتوكن في التخزين المحلي فوراً
+            if (data.token) localStorage.setItem('token', data.token);
+            if (data.fullName) localStorage.setItem('fullName', data.fullName);
+            if (data.userCode) localStorage.setItem('userCode', data.userCode);
+            if (data.phone) localStorage.setItem('phone', data.phone);
+            if (data.email) localStorage.setItem('email', data.email);
+            if (data.role) localStorage.setItem('role', data.role);
+            if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
+            localStorage.setItem('user', JSON.stringify(data));
+
+            const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
+            window.location.href = redirectUrl ? redirectUrl : '/home.html';
+            return;
+          } else {
+            // حفظ الهاتف والبريد اللي كتبهم المستخدم فوراً (معروفين عندنا من الفورم نفسه)
+            if (phone) localStorage.setItem('phone', phone);
+            if (identifier) localStorage.setItem('email', identifier);
+
+            // تفريغ الحقول وإبقاء رسالة النجاح والكود
+            authForm.reset();
+            const codeMsg = data.userCode ? ` الكود الخاص بك: ${data.userCode}` : '';
+            showAlert(`تم إنشاء الحساب بنجاح!${codeMsg}`, true);
+          }
+        } else {
+          showAlert(data.message || 'بيانات الدخول غير صحيحة!', false);
+        }
+      } catch (err) {
+        showAlert('خطأ في الاتصال: تعذر الوصول إلى الخادم', false);
+      }
+    });
+
+    function showAlert(msg, isSuccess) {
+      alertBox.textContent = msg;
+      alertBox.className = 'alert-box ' + (isSuccess ? 'alert-success' : 'alert-error');
+      alertBox.style.display = 'block';
+    }
+
+    function hideAlert() {
+      alertBox.style.display = 'none';
+    }
+
+    // ---------- نافذة استعادة كلمة المرور ----------
+    function openForgotPasswordModal() {
+      const modal = document.getElementById('forgotPasswordModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        const emailInput = document.getElementById('forgotEmailInput');
+        if (emailInput) {
+          const currentVal = loginEmailInput ? loginEmailInput.value.trim() : '';
+          if (currentVal.includes('@')) {
+            emailInput.value = currentVal;
+          }
+          setTimeout(() => emailInput.focus(), 100);
+        }
+      }
+    }
+
+    function closeForgotPasswordModal() {
+      const modal = document.getElementById('forgotPasswordModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    async function submitForgotPassword() {
+      const emailInput = document.getElementById('forgotEmailInput');
+      const email = emailInput ? emailInput.value.trim() : '';
+      const btn = document.getElementById('btnSendReset');
+
+      if (!email) {
+        closeForgotPasswordModal();
+        showAlert('يرجى إدخال البريد الإلكتروني أولاً!', false);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحقق...';
+
+      try {
+        const response = await fetch('/api/auth/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+
+        const data = await response.json();
+
+        // إغلاق النافذة المنبثقة فوراً والرجوع لشاشة الدخول في كل الحالات
+        closeForgotPasswordModal();
+        if (emailInput) emailInput.value = '';
+
+        if (response.ok) {
+          showAlert('تم إرسال كلمة المرور الجديدة إلى بريدك الإلكتروني بنجاح! يرجى فحص صندوق الوارد.', true);
+        } else {
+          // لو مش مسجل البريد بتاعه اصلا متفتحش اي حاجه ويخرجه برا ويرجعه علي خانه تسجيل الدخول
+          showAlert(data.message || 'عذراً، هذا البريد الإلكتروني غير مسجل لدينا في المنصة!', false);
+        }
+      } catch (err) {
+        closeForgotPasswordModal();
+        showAlert('خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً!', false);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إرسال كلمة المرور إلى بريدي';
+      }
+    }
+</script>
+
+<!-- نافذة استعادة كلمة المرور المنبثقة -->
+<div id="forgotPasswordModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #111827; border: 1px solid rgba(245, 158, 11, 0.45); border-radius: 18px; width: 100%; max-width: 420px; padding: 30px 24px; box-shadow: 0 20px 45px rgba(0,0,0,0.7); text-align: center; position: relative;">
+        <button type="button" onclick="closeForgotPasswordModal()" style="position: absolute; top: 14px; left: 16px; background: transparent; border: none; color: #94a3b8; font-size: 22px; cursor: pointer;">&times;</button>
+        
+        <div style="font-size: 40px; margin-bottom: 12px; color: #f59e0b;">
+            <i class="fa-solid fa-key"></i>
+        </div>
+        <h3 style="color: #f59e0b; margin: 0 0 8px 0; font-size: 20px; font-weight: 800;">استعادة كلمة المرور</h3>
+        <p style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; margin: 0 0 20px 0;">
+            أدخل البريد الإلكتروني المسجل في حسابك، وسنرسل لك كلمة المرور الجديدة على بريدك فوراً.
+        </p>
+
+        <div style="margin-bottom: 18px;">
+            <input type="email" id="forgotEmailInput" placeholder="أدخل البريد الإلكتروني الخاص بك..." style="width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1f2937; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; text-align: right; direction: rtl;">
+        </div>
+
+        <button type="button" id="btnSendReset" onclick="submitForgotPassword()" style="width: 100%; padding: 13px; border-radius: 10px; border: none; background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; font-weight: 800; font-size: 15px; cursor: pointer; transition: 0.2s;">
+            <i class="fa-solid fa-paper-plane"></i> إرسال كلمة المرور إلى بريدي
+        </button>
+        <div style="margin-top: 16px;">
+            <a href="javascript:void(0)" onclick="closeForgotPasswordModal()" style="color: #94a3b8; font-size: 13px; text-decoration: none;">
+                إلغاء والعودة لتسجيل الدخول
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

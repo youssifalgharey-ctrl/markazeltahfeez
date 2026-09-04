@@ -1,0 +1,711 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصار السور للمبتدئين - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="أجب على خمسة أسئلة بسيطة واحصل على خطة مرتبة لحفظ قصار السور تناسب سنك وقدرتك، وتابعها خطوة بخطوة مع الشيخ.">
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        .bt-wrapper {
+            min-height: calc(100vh - 74px);
+            padding: 40px 20px 60px;
+            position: relative;
+        }
+
+        .bt-container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===================== تنبيه لغير المسجلين دخول ===================== */
+        .bt-guest-notice {
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            border: 1.5px solid rgba(13, 107, 83, 0.2);
+            border-radius: 14px;
+            padding: 18px 22px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .bt-guest-notice a { color: var(--emerald); text-decoration: underline; }
+        [data-theme="dark"] .bt-guest-notice {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+
+        /* ===================== شاشة الترحيب ===================== */
+        .bt-welcome { text-align: center; animation: fadeSlideUp 0.6s ease both; }
+
+        .bt-icon-ring {
+            width: 92px; height: 92px;
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 38px; color: #fff;
+            box-shadow: 0 18px 45px rgba(13,107,83,0.35);
+        }
+
+        .bt-welcome h1 { font-size: 28px; font-weight: 800; color: var(--primary-green); margin-bottom: 12px; }
+        [data-theme="dark"] .bt-welcome h1 { color: #4ade80; }
+
+        .bt-welcome p { font-size: 15.5px; color: var(--text-muted); line-height: 1.9; max-width: 520px; margin: 0 auto 30px; }
+
+        .bt-feature-chips { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 32px; }
+        .bt-chip {
+            background: var(--light-emerald); color: var(--primary-green);
+            border: 1.5px solid rgba(13,107,83,0.2); border-radius: 50px;
+            padding: 7px 16px; font-size: 12.5px; font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
+        }
+        [data-theme="dark"] .bt-chip { background: rgba(74,222,128,0.1); color: #4ade80; border-color: rgba(74,222,128,0.25); }
+
+        .bt-btn-primary, .bt-btn-secondary {
+            border: none; padding: 15px 42px; border-radius: 50px;
+            font-size: 16px; font-weight: 800; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 10px;
+            transition: all .3s ease;
+        }
+        .bt-btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald)); color: #fff;
+            box-shadow: 0 8px 28px rgba(13,107,83,0.35);
+        }
+        .bt-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(13,107,83,0.45); }
+        .bt-btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+        .bt-btn-secondary { background: var(--light-emerald); color: var(--primary-green); }
+        [data-theme="dark"] .bt-btn-secondary { background: rgba(74,222,128,0.1); color: #4ade80; }
+
+        /* ===================== شاشة الأسئلة ===================== */
+        .bt-progress-track { height: 8px; background: var(--light-emerald); border-radius: 50px; overflow: hidden; margin-bottom: 10px; }
+        [data-theme="dark"] .bt-progress-track { background: rgba(74,222,128,0.1); }
+        .bt-progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary-green), var(--emerald)); border-radius: 50px; transition: width .4s ease; width: 0%; }
+
+        .bt-step-meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 26px; font-weight: 700; }
+
+        .bt-q-card {
+            background: #fff; border: 1.5px solid var(--card-border); border-radius: 20px;
+            padding: 30px 26px; text-align: center; animation: fadeSlideUp .4s ease both;
+        }
+        [data-theme="dark"] .bt-q-card { background: #16241f; border-color: #23352c; }
+
+        .bt-q-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--light-emerald); color: var(--primary-green);
+            display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 18px; }
+        [data-theme="dark"] .bt-q-icon { background: rgba(74,222,128,0.1); color: #4ade80; }
+
+        .bt-q-text { font-size: 19px; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
+        [data-theme="dark"] .bt-q-text { color: #e2e8f0; }
+        .bt-q-hint { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+
+        .bt-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (max-width: 560px) { .bt-options { grid-template-columns: 1fr; } }
+
+        .bt-option-btn {
+            border: 1.5px solid var(--card-border); background: #fff; border-radius: 14px;
+            padding: 14px 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: all .2s ease; font-family: inherit;
+        }
+        [data-theme="dark"] .bt-option-btn { background: #0f1a16; border-color: #23352c; }
+        .bt-option-btn:hover { border-color: var(--emerald); transform: translateY(-2px); }
+        .bt-option-btn.selected { border-color: var(--emerald); background: var(--light-emerald); box-shadow: 0 6px 18px rgba(13,107,83,0.15); }
+        [data-theme="dark"] .bt-option-btn.selected { background: rgba(74,222,128,0.12); }
+        .bt-option-emoji { font-size: 22px; }
+        .bt-option-label { font-weight: 800; font-size: 14.5px; color: var(--text-main); }
+        [data-theme="dark"] .bt-option-label { color: #e2e8f0; }
+        .bt-option-sub { font-size: 11.5px; color: var(--text-muted); }
+
+        .bt-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 26px; }
+        .bt-nav-btn { background: none; border: none; color: var(--text-muted); font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .bt-nav-btn:hover { color: var(--emerald); }
+
+        /* ===================== شاشة التوليد ===================== */
+        .bt-generating { text-align: center; padding: 50px 10px; animation: fadeSlideUp .5s ease both; }
+        .bt-spinner { width: 64px; height: 64px; border-radius: 50%; border: 5px solid var(--light-emerald); border-top-color: var(--emerald); margin: 0 auto 22px; animation: bt-spin 1s linear infinite; }
+        @keyframes bt-spin { to { transform: rotate(360deg); } }
+        .bt-gen-steps { max-width: 340px; margin: 22px auto 0; text-align: right; }
+        .bt-gen-step { font-size: 13.5px; color: var(--text-muted); opacity: 0; transform: translateY(6px); transition: all .4s ease; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .bt-gen-step.visible { opacity: 1; transform: translateY(0); }
+        .bt-gen-step i { color: var(--emerald); }
+
+        /* ===================== شاشة الخطة ===================== */
+        .bt-plan { animation: fadeSlideUp .5s ease both; }
+        .bt-plan-head { text-align: center; margin-bottom: 22px; }
+        .bt-plan-head h2 { font-size: 23px; font-weight: 800; color: var(--primary-green); margin-bottom: 6px; }
+        [data-theme="dark"] .bt-plan-head h2 { color: #4ade80; }
+        .bt-plan-head p { color: var(--text-muted); font-size: 14px; }
+
+        .bt-ai-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--light-emerald); color: var(--primary-green);
+            border-radius: 50px; padding: 5px 14px; font-size: 11.5px; font-weight: 800; margin-bottom: 12px; }
+        [data-theme="dark"] .bt-ai-badge { background: rgba(74,222,128,0.1); color: #4ade80; }
+
+        .bt-progress-summary { display: flex; align-items: center; gap: 14px; background: var(--light-emerald); border-radius: 16px; padding: 16px 20px; margin-bottom: 24px; }
+        [data-theme="dark"] .bt-progress-summary { background: rgba(74,222,128,0.08); }
+        .bt-progress-ring-text { font-weight: 800; color: var(--primary-green); font-size: 15px; white-space: nowrap; }
+        [data-theme="dark"] .bt-progress-ring-text { color: #4ade80; }
+        .bt-progress-summary .bt-progress-track { flex: 1; margin-bottom: 0; }
+
+        .bt-schedule-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+        .bt-schedule-item {
+            display: flex; align-items: flex-start; gap: 14px; background: #fff; border: 1.5px solid var(--card-border);
+            border-radius: 16px; padding: 16px 18px;
+        }
+        [data-theme="dark"] .bt-schedule-item { background: #16241f; border-color: #23352c; }
+        .bt-schedule-item.done { opacity: .6; }
+        .bt-schedule-item.current { border-color: var(--emerald); box-shadow: 0 6px 20px rgba(13,107,83,0.12); }
+        .bt-schedule-item.locked { opacity: .45; }
+
+        .bt-schedule-dot {
+            width: 40px; height: 40px; min-width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: var(--light-emerald); color: var(--primary-green); font-size: 16px;
+        }
+        [data-theme="dark"] .bt-schedule-dot { background: rgba(74,222,128,0.1); color: #4ade80; }
+        .bt-schedule-item.done .bt-schedule-dot { background: var(--emerald); color: #fff; }
+
+        .bt-schedule-text { flex: 1; }
+        .bt-schedule-text strong { display: block; font-size: 15px; color: var(--text-main); margin-bottom: 3px; }
+        [data-theme="dark"] .bt-schedule-text strong { color: #e2e8f0; }
+        .bt-schedule-text span { font-size: 12.5px; color: var(--text-muted); line-height: 1.7; }
+
+        .bt-complete-btn {
+            border: 1.5px solid var(--emerald); background: #fff; color: var(--emerald);
+            border-radius: 50px; padding: 8px 16px; font-size: 12.5px; font-weight: 800; cursor: pointer; white-space: nowrap;
+        }
+        .bt-complete-btn:hover { background: var(--emerald); color: #fff; }
+        .bt-complete-btn:disabled { cursor: not-allowed; opacity: .5; }
+        [data-theme="dark"] .bt-complete-btn { background: transparent; }
+
+        .bt-tips { background: var(--light-emerald); border-radius: 16px; padding: 18px 20px; margin-bottom: 26px; }
+        [data-theme="dark"] .bt-tips { background: rgba(74,222,128,0.08); }
+        .bt-tips h4 { font-size: 14px; color: var(--primary-green); margin-bottom: 10px; }
+        [data-theme="dark"] .bt-tips h4 { color: #4ade80; }
+        .bt-tip { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-main); margin-bottom: 8px; line-height: 1.7; }
+        [data-theme="dark"] .bt-tip { color: #cbd5e1; }
+        .bt-tip i { color: var(--gold); margin-top: 3px; }
+
+        .bt-plan-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+        .bt-finished-banner {
+            text-align: center; background: linear-gradient(135deg, rgba(13,107,83,0.08), rgba(212,175,55,0.06));
+            border: 1.5px solid rgba(13,107,83,0.2); border-radius: 16px; padding: 22px; margin-bottom: 24px;
+        }
+        .bt-finished-banner i { font-size: 30px; color: var(--gold); margin-bottom: 8px; display: block; }
+        .bt-finished-banner strong { display: block; font-size: 16px; color: var(--primary-green); }
+        [data-theme="dark"] .bt-finished-banner strong { color: #4ade80; }
+
+        .bt-toast {
+            position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+            background: var(--primary-green); color: #fff; padding: 12px 22px; border-radius: 50px;
+            font-size: 13.5px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none; z-index: 50;
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<section class="section-container" id="beginnersTrack">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-star-and-crescent"></i> قصار السور للمبتدئين</h3>
+    </div>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 10px; text-align: center; max-width: 700px; margin-inline: auto;">
+        برنامج تمهيدي ميسر للأطفال والملتحقين الجدد بالحفظ والتلقين، بترشيح سور مناسبة لسنك وقدرتك تتابعها خطوة بخطوة مع الشيخ.
+    </p>
+</section>
+
+<div class="bt-wrapper">
+    <div class="bt-container">
+
+        <!-- تنبيه لغير المسجلين دخول -->
+        <div class="bt-guest-notice" id="guestNotice" style="display:none;">
+            لازم تسجل الدخول الأول عشان تقدر تبدأ المسار وتتحفظلك الخطة وتقدمك. <a href="/index.html">تسجيل الدخول</a>
+        </div>
+
+        <div id="trackContent" style="display:none;">
+
+            <!-- شاشة التحميل الأولية لحد ما نعرف هل فيه خطة محفوظة أو لأ -->
+            <div id="loadingCheck" style="text-align:center; padding: 60px 0; color: var(--text-muted);">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 28px;"></i>
+            </div>
+
+            <!-- شاشة الترحيب -->
+            <div class="bt-welcome" id="welcomeScreen" style="display:none;">
+                <div class="bt-icon-ring"><i class="fa-solid fa-book-quran"></i></div>
+                <h1>ابدأ مسار قصار السور للمبتدئين</h1>
+                <p>هنسألك خمسة أسئلة بسيطة عن سنك ومقدار حفظك الحالي وقدرتك، وعلى أساسها هنرشحلك ترتيب سور مناسب تحفظه وتسمّعه للشيخ خطوة بخطوة، وهنتابعلك تقدمك أول بأول.</p>
+                <div class="bt-feature-chips">
+                    <span class="bt-chip"><i class="fa-solid fa-bullseye"></i> خطة مخصصة لسنك وقدرتك</span>
+                    <span class="bt-chip"><i class="fa-solid fa-user-graduate"></i> متابعة مع الشيخ</span>
+                    <span class="bt-chip"><i class="fa-solid fa-cloud"></i> تقدمك محفوظ دايماً</span>
+                </div>
+                <button class="bt-btn-primary" onclick="startQuestions()">ابدأ الآن <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+
+            <!-- شاشة الأسئلة -->
+            <div id="questionsScreen" style="display:none;">
+                <div class="bt-progress-track"><div class="bt-progress-fill" id="qProgressFill"></div></div>
+                <div class="bt-step-meta">
+                    <span id="qStepLabel">السؤال الأول</span>
+                    <span id="qStepCounter">1 / 5</span>
+                </div>
+                <div class="bt-q-card" id="qCard"></div>
+                <div class="bt-nav-row">
+                    <button class="bt-nav-btn" id="qPrevBtn" onclick="prevQuestion()" style="display:none;"><i class="fa-solid fa-arrow-right"></i> السابق</button>
+                    <span style="flex:1;"></span>
+                    <button class="bt-btn-primary" id="qNextBtn" onclick="nextQuestion()" disabled>التالي <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- شاشة التوليد -->
+            <div class="bt-generating" id="generatingScreen" style="display:none;">
+                <div class="bt-spinner"></div>
+                <h3 style="color: var(--primary-green); font-size: 18px;">جاري ترشيح خطتك...</h3>
+                <div class="bt-gen-steps">
+                    <div class="bt-gen-step" id="gStep1"><i class="fa-solid fa-check"></i> تحليل سنك وقدرتك على الحفظ</div>
+                    <div class="bt-gen-step" id="gStep2"><i class="fa-solid fa-check"></i> اختيار السور المناسبة لمستواك</div>
+                    <div class="bt-gen-step" id="gStep3"><i class="fa-solid fa-check"></i> ترتيبها من الأسهل للأصعب</div>
+                    <div class="bt-gen-step" id="gStep4"><i class="fa-solid fa-check"></i> إضافة نصائح لك وللشيخ ولأهلك</div>
+                </div>
+            </div>
+
+            <!-- شاشة الخطة -->
+            <div class="bt-plan" id="planScreen" style="display:none;">
+                <div class="bt-plan-head">
+                    <div class="bt-ai-badge" id="aiBadge" style="display:none;"><i class="fa-solid fa-wand-magic-sparkles"></i> مرشّحة بالذكاء الاصطناعي</div>
+                    <h2 id="planTitle">-</h2>
+                    <p id="planSubtitle">-</p>
+                </div>
+
+                <div id="finishedBanner" class="bt-finished-banner" style="display:none;">
+                    <i class="fa-solid fa-trophy"></i>
+                    <strong>مبروك! خلّصت كل سور هذه المرحلة بنجاح 🎉</strong>
+                    <span style="color: var(--text-muted); font-size: 13.5px; display:block; margin-top: 4px;">تقدر دلوقتي تنتقل للمرحلة التالية وتحصل على سور جديدة لحفظها خطوة بخطوة مع الشيخ.</span>
+                </div>
+
+                <div class="bt-progress-summary">
+                    <span class="bt-progress-ring-text" id="progressText">0 / 0</span>
+                    <div class="bt-progress-track"><div class="bt-progress-fill" id="planProgressFill"></div></div>
+                </div>
+
+                <div class="bt-schedule-list" id="scheduleList"></div>
+
+                <div class="bt-tips">
+                    <h4><i class="fa-solid fa-star"></i> نصائح لهذا المسار</h4>
+                    <div id="tipsList"></div>
+                </div>
+
+                <div class="bt-plan-actions">
+                    <button class="bt-btn-primary" id="btnNextStage" onclick="advanceStage()" style="display:none;">
+                        <i class="fa-solid fa-forward-step"></i> التالي (المرحلة القادمة) 🚀
+                    </button>
+                    <a href="/progress.html" class="bt-btn-primary" style="text-decoration:none;"><i class="fa-solid fa-chart-pie"></i> متابعة تقدمي</a>
+                    <button class="bt-btn-secondary" onclick="redoQuestions()"><i class="fa-solid fa-rotate"></i> إعادة الأسئلة وتوليد خطة جديدة</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="bt-toast" id="toast"></div>
+
+<script src="/js/app.js"></script>
+<script>
+/* ================================================================
+   مساعدات الاتصال بالباك إند (نفس أسلوب صفحة "مستوى التقدم")
+================================================================ */
+function authHeaders(extra) {
+    const headers = Object.assign({ 'Content-Type': 'application/json' }, extra || {});
+    const token = localStorage.getItem('token');
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return headers;
+}
+
+async function apiRequest(url, options) {
+    const response = await fetch(url, Object.assign({}, options, { headers: authHeaders() }));
+    let data = null;
+    try { data = await response.json(); } catch (e) { /* لا يوجد جسم استجابة */ }
+
+    if (response.status === 401) {
+        localStorage.removeItem('token');
+        document.getElementById('trackContent').style.display = 'none';
+        document.getElementById('guestNotice').style.display = 'block';
+        throw new Error('انتهت الجلسة، سجل الدخول تاني');
+    }
+    if (!response.ok) {
+        throw new Error((data && data.message) || 'حصل خطأ، حاول تاني');
+    }
+    return data;
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(function () { toast.style.display = 'none'; }, 2500);
+}
+
+/* ================================================================
+   بيانات الأسئلة الخمسة
+================================================================ */
+const QUESTIONS = [
+    {
+        icon: 'fa-solid fa-child-reaching',
+        label: 'السؤال الأول',
+        text: 'كم عمر الطالب؟',
+        hint: 'السن بيساعدنا نظبط أسلوب وسرعة الخطة',
+        field: 'ageGroup',
+        options: [
+            { emoji: '🧒', label: 'أقل من 7 سنوات', value: 'under7' },
+            { emoji: '👦', label: 'من 7 إلى 10 سنوات', value: '7to10' },
+            { emoji: '🧑', label: 'من 11 إلى 14 سنة', value: '11to14' },
+            { emoji: '👤', label: '15 سنة فأكثر', value: 'above14' }
+        ]
+    },
+    {
+        icon: 'fa-solid fa-book-quran',
+        label: 'السؤال الثاني',
+        text: 'كم يحفظ حالياً من قصار السور؟',
+        hint: 'عشان نبدأ الخطة من نقطة مناسبة وما نكررش اللي اتحفظ',
+        field: 'priorMemorization',
+        options: [
+            { emoji: '🌱', label: 'لسه هيبدأ من الصفر', value: 'none' },
+            { emoji: '📖', label: 'الفاتحة وشوية سور قصيرة', value: 'fatiha_few' },
+            { emoji: '📚', label: 'جزء من جزء عمّ', value: 'juz_amma_partial' },
+            { emoji: '🏆', label: 'جزء عمّ كاملاً تقريباً', value: 'juz_amma_full' }
+        ]
+    },
+    {
+        icon: 'fa-solid fa-brain',
+        label: 'السؤال الثالث',
+        text: 'إزاي تقدر قدرته على الحفظ؟',
+        hint: 'لا تقارنه بغيره، كل طفل له طريقته',
+        field: 'ability',
+        options: [
+            { emoji: '⚡', label: 'ممتازة', sub: 'يحفظ بسرعة وسهولة', value: 'excellent' },
+            { emoji: '✅', label: 'جيدة', sub: 'يحفظ بشكل معتاد', value: 'good' },
+            { emoji: '⚠️', label: 'محتاج وقت أطول', sub: 'بياخد وقته في الحفظ', value: 'slow' },
+            { emoji: '🆘', label: 'محتاج مساعدة أكبر', sub: 'بيلاقي صعوبة في الحفظ', value: 'help' }
+        ]
+    },
+    {
+        icon: 'fa-solid fa-clock',
+        label: 'السؤال الرابع',
+        text: 'كام دقيقة متاحة للحفظ والمراجعة يومياً؟',
+        hint: 'كن واقعياً، الاستمرار أهم من الكثرة',
+        field: 'minutesPerDay',
+        options: [
+            { emoji: '⏱️', label: 'أقل من 15 دقيقة', value: 10 },
+            { emoji: '🕐', label: 'من 15 إلى 30 دقيقة', value: 20 },
+            { emoji: '🕑', label: 'من 30 إلى 60 دقيقة', value: 45 },
+            { emoji: '🕒', label: 'أكثر من ساعة', value: 75 }
+        ]
+    },
+    {
+        icon: 'fa-solid fa-hands-holding-child',
+        label: 'السؤال الخامس',
+        text: 'إزاي هيتابع الحفظ؟',
+        hint: 'ده بيحدد طبيعة النصائح اللي هنقدمها في الخطة',
+        field: 'followUp',
+        options: [
+            { emoji: '👨‍🏫', label: 'مع الشيخ فقط', value: 'sheikh_only' },
+            { emoji: '🏠', label: 'مع الشيخ ومتابعة الأهل', value: 'sheikh_family' },
+            { emoji: '🎁', label: 'محتاج تحفيزاً ومكافآت', value: 'motivation' },
+            { emoji: '🧑‍💻', label: 'مستقل بذاته', value: 'independent' }
+        ]
+    }
+];
+
+let currentStep = 0;
+const answers = new Array(QUESTIONS.length).fill(null);
+
+function startQuestions() {
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('questionsScreen').style.display = 'block';
+    renderQuestion(0);
+}
+
+function renderQuestion(index) {
+    const q = QUESTIONS[index];
+    const pct = ((index + 1) / QUESTIONS.length) * 100;
+    document.getElementById('qProgressFill').style.width = pct + '%';
+    document.getElementById('qStepLabel').textContent = q.label;
+    document.getElementById('qStepCounter').textContent = (index + 1) + ' / ' + QUESTIONS.length;
+    document.getElementById('qPrevBtn').style.display = index > 0 ? 'flex' : 'none';
+
+    const nextBtn = document.getElementById('qNextBtn');
+    nextBtn.innerHTML = index === QUESTIONS.length - 1
+        ? 'ترشيح خطتي <i class="fa-solid fa-sparkles"></i>'
+        : 'التالي <i class="fa-solid fa-arrow-left"></i>';
+    nextBtn.disabled = answers[index] === null;
+
+    const card = document.getElementById('qCard');
+    const optionsHTML = q.options.map(function (opt, i) {
+        const selectedClass = answers[index] !== null && answers[index].value === opt.value ? ' selected' : '';
+        return '<button class="bt-option-btn' + selectedClass + '" onclick="selectOption(' + index + ',' + i + ')" id="bt_opt_' + index + '_' + i + '">' +
+                   '<span class="bt-option-emoji">' + opt.emoji + '</span>' +
+                   '<span class="bt-option-label">' + opt.label + '</span>' +
+                   (opt.sub ? '<span class="bt-option-sub">' + opt.sub + '</span>' : '') +
+               '</button>';
+    }).join('');
+
+    card.innerHTML =
+        '<div class="bt-q-icon"><i class="' + q.icon + '"></i></div>' +
+        '<p class="bt-q-text">' + q.text + '</p>' +
+        '<p class="bt-q-hint">' + q.hint + '</p>' +
+        '<div class="bt-options">' + optionsHTML + '</div>';
+
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'fadeSlideUp 0.4s ease both';
+}
+
+function selectOption(qIndex, optIndex) {
+    answers[qIndex] = QUESTIONS[qIndex].options[optIndex];
+    QUESTIONS[qIndex].options.forEach(function (_, i) {
+        const btn = document.getElementById('bt_opt_' + qIndex + '_' + i);
+        if (btn) btn.classList.toggle('selected', i === optIndex);
+    });
+    document.getElementById('qNextBtn').disabled = false;
+}
+
+function nextQuestion() {
+    if (answers[currentStep] === null) return;
+    if (currentStep < QUESTIONS.length - 1) {
+        currentStep++;
+        renderQuestion(currentStep);
+    } else {
+        generatePlan();
+    }
+}
+
+function prevQuestion() {
+    if (currentStep > 0) {
+        currentStep--;
+        renderQuestion(currentStep);
+    }
+}
+
+function redoQuestions() {
+    currentStep = 0;
+    answers.fill(null);
+    document.getElementById('planScreen').style.display = 'none';
+    document.getElementById('questionsScreen').style.display = 'none';
+    document.getElementById('generatingScreen').style.display = 'none';
+    const ws = document.getElementById('welcomeScreen');
+    ws.style.display = 'block';
+}
+
+/* ================================================================
+   توليد الخطة عبر الباك إند وحفظها
+================================================================ */
+function generatePlan() {
+    document.getElementById('questionsScreen').style.display = 'none';
+    const gen = document.getElementById('generatingScreen');
+    gen.style.display = 'block';
+
+    const steps = ['gStep1', 'gStep2', 'gStep3', 'gStep4'];
+    steps.forEach(function (id, i) {
+        setTimeout(function () { document.getElementById(id).classList.add('visible'); }, 500 + i * 700);
+    });
+
+    const payload = {};
+    QUESTIONS.forEach(function (q, i) {
+        payload[q.field] = answers[i] ? answers[i].value : null;
+    });
+
+    const animationDone = new Promise(function (resolve) { setTimeout(resolve, 3600); });
+    const planRequest = apiRequest('/api/beginner-plan/generate', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+    });
+
+    Promise.all([planRequest, animationDone]).then(function (results) {
+        renderPlan(results[0]);
+    }).catch(function (err) {
+        document.getElementById('generatingScreen').style.display = 'none';
+        document.getElementById('welcomeScreen').style.display = 'block';
+        showToast(err.message || 'تعذر توليد الخطة، حاول تاني');
+    });
+}
+
+/* ================================================================
+   عرض الخطة وحالة التقدم
+================================================================ */
+let currentPlanState = null;
+
+function renderPlan(plan) {
+    currentPlanState = plan;
+    document.getElementById('generatingScreen').style.display = 'none';
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('questionsScreen').style.display = 'none';
+    document.getElementById('planScreen').style.display = 'block';
+
+    document.getElementById('planTitle').textContent = plan.title;
+    document.getElementById('planSubtitle').textContent = plan.subtitle;
+    document.getElementById('aiBadge').style.display = plan.aiGenerated ? 'inline-flex' : 'none';
+
+    document.getElementById('progressText').textContent = plan.completedCount + ' / ' + plan.totalItems;
+    const pct = plan.totalItems > 0 ? Math.round((plan.completedCount / plan.totalItems) * 100) : 0;
+    document.getElementById('planProgressFill').style.width = pct + '%';
+
+    const finishedBanner = document.getElementById('finishedBanner');
+    const nextStageBtn = document.getElementById('btnNextStage');
+    if (finishedBanner) finishedBanner.style.display = plan.finished ? 'block' : 'none';
+    if (nextStageBtn) nextStageBtn.style.display = plan.finished ? 'inline-flex' : 'none';
+
+    const list = document.getElementById('scheduleList');
+    list.innerHTML = plan.schedule.map(function (item) {
+        const isDone = item.completed;
+        const isCurrent = !isDone && item.order === plan.currentIndex;
+        const isLocked = !isDone && !isCurrent;
+        let cls = 'bt-schedule-item';
+        if (isDone) cls += ' done';
+        else if (isCurrent) cls += ' current';
+        else cls += ' locked';
+
+        const dotIcon = isDone ? 'fa-solid fa-check' : (item.icon || 'fa-solid fa-book-quran');
+        const actionHtml = isCurrent
+            ? '<button class="bt-complete-btn" onclick="completeItem(' + item.order + ')">سمّعتها للشيخ ✅</button>'
+            : '';
+
+        return '<div class="' + cls + '">' +
+                   '<div class="bt-schedule-dot"><i class="' + dotIcon + '"></i></div>' +
+                   '<div class="bt-schedule-text">' +
+                       '<strong>' + (item.order + 1) + '. ' + item.surahName + '</strong>' +
+                       '<span>' + item.description + '</span>' +
+                   '</div>' +
+                   actionHtml +
+               '</div>';
+    }).join('');
+
+    const tipsList = document.getElementById('tipsList');
+    tipsList.innerHTML = plan.tips.map(function (tip) {
+        return '<div class="bt-tip"><i class="fa-solid fa-star"></i><span>' + tip + '</span></div>';
+    }).join('');
+}
+
+function completeItem(order) {
+    apiRequest('/api/beginner-plan/complete', {
+        method: 'POST',
+        body: JSON.stringify({ order: order })
+    }).then(function (plan) {
+        renderPlan(plan);
+        if (plan.finished) {
+            showToast('مبروك! أنهيت كل سور هذه المرحلة، اضغط التالي للمرحلة القادمة 🎉');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            showToast('تم تسجيل التسميع بنجاح ✅');
+        }
+    }).catch(function (err) {
+        showToast(err.message || 'تعذر تسجيل التقدم، حاول تاني');
+    });
+}
+
+function advanceStage() {
+    const btn = document.getElementById('btnNextStage');
+    if (btn) btn.disabled = true;
+
+    document.getElementById('planScreen').style.display = 'none';
+    const gen = document.getElementById('generatingScreen');
+    gen.style.display = 'block';
+
+    const steps = ['gStep1', 'gStep2', 'gStep3', 'gStep4'];
+    steps.forEach(function (id, i) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.remove('visible');
+            setTimeout(function () { el.classList.add('visible'); }, 300 + i * 500);
+        }
+    });
+
+    const animationDone = new Promise(function (resolve) { setTimeout(resolve, 2400); });
+
+    // استدعاء الذكاء الاصطناعي لتوليد قائمة السور للمرحلة التالية
+    const stageRequest = apiRequest('/api/beginner-plan/next-stage', {
+        method: 'POST'
+    });
+
+    Promise.all([stageRequest, animationDone]).then(function (results) {
+        renderPlan(results[0]);
+        showToast('مبروك! تم فتح المرحلة التالية وقائمة سور جديدة 🎉');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }).catch(function (err) {
+        document.getElementById('generatingScreen').style.display = 'none';
+        document.getElementById('planScreen').style.display = 'block';
+        showToast(err.message || 'تعذر الانتقال للمرحلة التالية، حاول تاني');
+    }).finally(function () {
+        if (btn) btn.disabled = false;
+    });
+}
+
+/* ================================================================
+   نقطة البداية: تحقق من تسجيل الدخول ثم من وجود خطة سابقة
+================================================================ */
+(function init() {
+    if (!localStorage.getItem('token')) {
+        document.getElementById('guestNotice').style.display = 'block';
+        document.getElementById('trackContent').style.display = 'none';
+        return;
+    }
+    document.getElementById('guestNotice').style.display = 'none';
+    document.getElementById('trackContent').style.display = 'block';
+
+    apiRequest('/api/beginner-plan/mine', { method: 'GET' }).then(function (plan) {
+        document.getElementById('loadingCheck').style.display = 'none';
+        if (plan.hasPlan) {
+            document.getElementById('planScreen').style.display = 'block';
+            renderPlan(plan);
+        } else {
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+    }).catch(function () {
+        document.getElementById('loadingCheck').style.display = 'none';
+        document.getElementById('welcomeScreen').style.display = 'block';
+    });
+})();
+</script>
+</body>
+</html>

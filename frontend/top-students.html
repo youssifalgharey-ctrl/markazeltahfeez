@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أوائل الطلاب - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- مقدمة الصفحة -->
+<section class="section-container" id="top-students">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-award"></i> أوائل الطلاب</h3>
+    </div>
+    <p class="honor-intro">
+        لوحة شرف تكرّم الطلاب الأكثر تميزًا في الحفظ والتجويد والالتزام بالمسار، بناءً على مجموع نقاطهم في المركز.
+    </p>
+</section>
+
+<!-- منصة التتويج (المراكز الثلاثة الأولى) -->
+<section class="section-container" id="top-students-podium">
+    <div class="honor-podium" id="loading-podium">
+        <div class="loading-spinner">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>جاري تحميل بيانات الترتيب...</p>
+        </div>
+    </div>
+    
+    <div class="honor-podium" id="actual-podium" style="display: none;">
+        <!-- المركز الثالث -->
+        <div class="podium-card rank-3">
+            <div class="podium-rank-badge">3</div>
+            <img class="podium-avatar" src="/images/brand/default-avatar.png" alt="المركز الثالث">
+            <div class="podium-name">--</div>
+            <div class="podium-path">--</div>
+            <div class="podium-points">0 <span>نقطة</span></div>
+        </div>
+
+        <!-- المركز الأول -->
+        <div class="podium-card rank-1">
+            <i class="fa-solid fa-crown podium-crown"></i>
+            <div class="podium-rank-badge">1</div>
+            <img class="podium-avatar" src="/images/brand/default-avatar.png" alt="المركز الأول">
+            <div class="podium-name">--</div>
+            <div class="podium-path">--</div>
+            <div class="podium-points">0 <span>نقطة</span></div>
+        </div>
+
+        <!-- المركز الثاني -->
+        <div class="podium-card rank-2">
+            <div class="podium-rank-badge">2</div>
+            <img class="podium-avatar" src="/images/brand/default-avatar.png" alt="المركز الثاني">
+            <div class="podium-name">--</div>
+            <div class="podium-path">--</div>
+            <div class="podium-points">0 <span>نقطة</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- باقي الترتيب -->
+<section class="section-container" id="top-students-list">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-list-ol"></i> باقي الترتيب</h3>
+    </div>
+
+    <div class="rank-list" id="rank-list">
+        <div class="loading-spinner" id="loading-rank">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>جاري تحميل بيانات الترتيب...</p>
+        </div>
+        <!-- العناصر الديناميكية ستضاف هنا عبر JavaScript -->
+    </div>
+
+    <div class="honor-note">
+        <i class="fa-regular fa-clock"></i>
+        يتم تحديث الترتيب أسبوعيًا بناءً على نقاط الحفظ (5 نقاط لكل صفحة).
+    </div>
+</section>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

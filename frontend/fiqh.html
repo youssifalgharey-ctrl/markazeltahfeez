@@ -1,0 +1,2013 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار الفقه الإسلامي والأحكام الشرعية - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="دليل ومسار شامل وتأصيلي في الفقه الإسلامي: 25 مسألة وموضوعاً فقهياً مفصلاً يجمع العبادات، الأسرة والنكاح، المعاملات المالية، الأخلاق، الأيمان والنذور، الجنايات والحدود، والمسائل المعاصرة.">
+
+    <!-- تطبيق الثيم فوراً لمنع الوميض -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        /* أنماط صفحة الفقه المتناسقة مع هوية المنصة */
+        .fiqh-hero {
+            background: linear-gradient(135deg, rgba(10, 77, 60, 0.95), rgba(13, 107, 83, 0.9)), url('/images/pattern.png');
+            background-size: cover;
+            border-radius: 24px;
+            padding: 38px 28px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(10, 77, 60, 0.2);
+        }
+        [data-theme="dark"] .fiqh-hero {
+            background: linear-gradient(135deg, #0f2c23 0%, #164234 100%);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1f4a3b;
+        }
+
+        .fiqh-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 950px;
+        }
+        .fiqh-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold);
+            color: #ffe89e;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .fiqh-hero-title {
+            font-size: 30px;
+            font-weight: 900;
+            line-height: 1.35;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .fiqh-hero-desc {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #e2f1ec;
+            margin-bottom: 22px;
+        }
+
+        /* 4 خانات إحصائية رئيسية */
+        .fiqh-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+        .fiqh-stat-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .fiqh-stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--gold);
+            color: #0a4d3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .fiqh-stat-info h5 {
+            font-size: 15.5px;
+            font-weight: 800;
+            margin-bottom: 2px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .fiqh-stat-info span {
+            font-size: 11.5px;
+            color: #d1fae5;
+            display: block;
+            line-height: 1.4;
+        }
+
+        /* شريط التصفية والبحث */
+        .fiqh-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+        .fiqh-search-box {
+            position: relative;
+            flex: 1;
+            max-width: 380px;
+            min-width: 250px;
+        }
+        .fiqh-search-box input {
+            width: 100%;
+            padding: 12px 42px 12px 16px;
+            border-radius: 50px;
+            border: 1.5px solid var(--card-border);
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: all .25s ease;
+            font-family: inherit;
+        }
+        [data-theme="dark"] .fiqh-search-box input {
+            background: #16241f;
+            border-color: #23352c;
+            color: #e2e8f0;
+        }
+        .fiqh-search-box input:focus {
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 3px rgba(13, 107, 83, 0.15);
+        }
+        .fiqh-search-box i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .fiqh-filter-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .fiqh-filter-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 30px;
+            padding: 7px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all .25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .fiqh-filter-btn {
+            background: #16241f;
+            border-color: #24382f;
+            color: #94a3b8;
+        }
+        .fiqh-filter-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+        }
+        .fiqh-filter-btn.active {
+            background: var(--emerald);
+            color: #ffffff;
+            border-color: var(--emerald);
+            box-shadow: 0 4px 14px rgba(13, 107, 83, 0.25);
+        }
+
+        /* شبكة موضوعات الفقه */
+        .fiqh-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 22px;
+            margin-bottom: 50px;
+        }
+
+        .fiqh-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 22px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        [data-theme="dark"] .fiqh-card {
+            background: #15221d;
+            border-color: #24362e;
+        }
+        .fiqh-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(10, 77, 60, 0.12);
+            border-color: var(--emerald);
+        }
+        [data-theme="dark"] .fiqh-card:hover {
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
+            border-color: #34d399;
+        }
+
+        .fiqh-card-header {
+            padding: 20px 20px 16px;
+            position: relative;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .fiqh-category-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+        .tag-ibadat { background: rgba(16, 185, 129, 0.12); color: #059669; }
+        .tag-family { background: rgba(168, 85, 247, 0.12); color: #7c3aed; }
+        .tag-akhlaq { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
+        .tag-muamalat { background: rgba(217, 119, 6, 0.12); color: #d97706; }
+        .tag-hudud { background: rgba(220, 38, 38, 0.12); color: #dc2626; }
+
+        [data-theme="dark"] .tag-ibadat { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+        [data-theme="dark"] .tag-family { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+        [data-theme="dark"] .tag-akhlaq { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        [data-theme="dark"] .tag-muamalat { background: rgba(217, 119, 6, 0.2); color: #fcd34d; }
+        [data-theme="dark"] .tag-hudud { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
+
+        .fiqh-card-title {
+            font-size: 17.5px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        [data-theme="dark"] .fiqh-card-title { color: #f1f5f9; }
+        .fiqh-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(13, 107, 83, 0.1);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .fiqh-card-icon { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+
+        .fiqh-card-body {
+            padding: 16px 20px;
+            flex-grow: 1;
+        }
+        .fiqh-card-desc {
+            font-size: 13.5px;
+            line-height: 1.65;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .fiqh-subtopics-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .fiqh-subtopic-item {
+            font-size: 12.5px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .fiqh-subtopic-item { color: #cbd5e1; }
+        .fiqh-subtopic-item i { color: var(--emerald); font-size: 11px; }
+
+        .fiqh-card-footer {
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        [data-theme="dark"] .fiqh-card-footer { background: #182821; }
+
+        .btn-view-topic {
+            background: var(--emerald);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 18px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-view-topic:hover {
+            background: #0a4d3c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(10, 77, 60, 0.25);
+        }
+
+        /* نافذة العرض التفصيلية Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .fiqh-modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 950px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1.5px solid var(--card-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+            position: relative;
+        }
+        [data-theme="dark"] .fiqh-modal-content {
+            background: #14221d;
+            border-color: #23372f;
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 10;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.06); color: #e11d48; }
+
+        .modal-body {
+            padding: 26px 28px;
+            line-height: 1.95;
+            font-size: 15px;
+        }
+        .modal-body h4 {
+            color: var(--emerald);
+            font-size: 18px;
+            font-weight: 800;
+            margin: 24px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1.5px solid rgba(13, 107, 83, 0.15);
+            padding-bottom: 8px;
+        }
+        [data-theme="dark"] .modal-body h4 { color: #34d399; border-bottom-color: rgba(52, 211, 153, 0.2); }
+
+        .fiqh-dalil-box {
+            background: rgba(13, 107, 83, 0.05);
+            border-right: 4px solid var(--emerald);
+            border-radius: 0 14px 14px 0;
+            padding: 18px 22px;
+            font-family: 'Amiri', serif;
+            font-size: 19px;
+            line-height: 2.2;
+            color: #064e3b;
+            margin: 16px 0;
+            text-align: center;
+        }
+        [data-theme="dark"] .fiqh-dalil-box {
+            background: rgba(52, 211, 153, 0.08);
+            color: #a7f3d0;
+            border-right-color: #34d399;
+        }
+
+        .fiqh-masael-box {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            margin: 14px 0;
+            line-height: 1.9;
+        }
+        [data-theme="dark"] .fiqh-masael-box {
+            background: #182821;
+            border-color: #283e33;
+        }
+        .fiqh-masael-box p {
+            margin-bottom: 12px;
+        }
+        .fiqh-masael-box p:last-child {
+            margin-bottom: 0;
+        }
+        .fiqh-masael-box strong {
+            color: var(--emerald);
+        }
+        [data-theme="dark"] .fiqh-masael-box strong {
+            color: #6ee7b7;
+        }
+
+        .fiqh-fawaed-box {
+            background: rgba(212, 175, 55, 0.08);
+            border-right: 4px solid var(--gold);
+            border-radius: 0 14px 14px 0;
+            padding: 18px 22px;
+            margin: 18px 0;
+            line-height: 1.9;
+        }
+
+        .modal-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: inherit;
+        }
+
+        @media (max-width: 992px) {
+            .fiqh-stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .fiqh-hero { padding: 24px 16px; }
+            .fiqh-hero-title { font-size: 22px; }
+            .fiqh-stats-grid { grid-template-columns: 1fr; }
+            .fiqh-controls-bar { flex-direction: column; align-items: stretch; }
+            .fiqh-search-box { max-width: 100%; }
+            .fiqh-grid { grid-template-columns: 1fr; }
+            .modal-overlay { padding: 8px; align-items: flex-end; }
+            .fiqh-modal-content { max-height: 92vh; border-radius: 20px 20px 10px 10px; }
+            .modal-body { padding: 18px 16px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/home.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-house"></i> الرئيسية
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span>
+        </a>
+    </div>
+</nav>
+
+<div class="section-container" style="max-width: 1280px; padding: 25px 20px 60px;">
+
+    <!-- بنر رأس صفحة الفقه -->
+    <section class="fiqh-hero">
+        <div class="fiqh-hero-content">
+            <div class="fiqh-badge">
+                <i class="fa-solid fa-scale-balanced"></i> مسار الفقه الإسلامي الميسر
+            </div>
+            <h1 class="fiqh-hero-title">دليل الأحكام الشرعية والمسائل الفقهية المعاصرة</h1>
+            <p class="fiqh-hero-desc">
+                شرح تأصيلي وشامل في 25 مسألة وباباً فقهياً يجمع العبادات، فقه الأسرة والنكاح، المعاملات المالية، الأخلاق والآداب، الأيمان والنذور، والجنايات والحدود بما يعين المسلم على تصحيح عبادته وسلوكه.
+            </p>
+
+            <!-- 4 خانات إحصائية رئيسية للأقسام -->
+            <div class="fiqh-stats-grid">
+                <!-- خانة 1 -->
+                <div class="fiqh-stat-card">
+                    <div class="fiqh-stat-icon"><i class="fa-solid fa-hand-holding-droplet"></i></div>
+                    <div class="fiqh-stat-info">
+                        <h5>فقه العبادات</h5>
+                        <span>الطهارة، الصلاة، الجنائز، الزكاة، الصوم، الحج</span>
+                    </div>
+                </div>
+
+                <!-- خانة 2 -->
+                <div class="fiqh-stat-card">
+                    <div class="fiqh-stat-icon"><i class="fa-solid fa-people-roof"></i></div>
+                    <div class="fiqh-stat-info">
+                        <h5>فقه الأسرة والنكاح</h5>
+                        <span>عقد الزواج، حقوق الزوجين، الطلاق، العِدد، الحجاب</span>
+                    </div>
+                </div>
+
+                <!-- خانة 3 -->
+                <div class="fiqh-stat-card">
+                    <div class="fiqh-stat-icon"><i class="fa-solid fa-hands-holding-child"></i></div>
+                    <div class="fiqh-stat-info">
+                        <h5>الأخلاق والآداب</h5>
+                        <span>بر الوالدين، حسن الخلق، الأطعمة، التداوي، الرقية</span>
+                    </div>
+                </div>
+
+                <!-- خانة 4 -->
+                <div class="fiqh-stat-card">
+                    <div class="fiqh-stat-icon"><i class="fa-solid fa-scale-unbalanced-flip"></i></div>
+                    <div class="fiqh-stat-info">
+                        <h5>المعاملات والحدود</h5>
+                        <span>الأيمان، البيوع، الربا، حفظ الأعراض والأموال</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- شريط البحث والتصفية -->
+    <div class="fiqh-controls-bar">
+        <div class="fiqh-search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="fiqhSearchInput" oninput="filterFiqhCards()" placeholder="ابحث في المسائل والموضوعات الفقهية...">
+        </div>
+
+        <div class="fiqh-filter-btns">
+            <button class="fiqh-filter-btn active" onclick="setFiqhFilter('all', this)">
+                <i class="fa-solid fa-layer-group"></i> جميع الموضوعات
+            </button>
+            <button class="fiqh-filter-btn" onclick="setFiqhFilter('ibadat', this)">
+                <i class="fa-solid fa-mosque"></i> فقه العبادات
+            </button>
+            <button class="fiqh-filter-btn" onclick="setFiqhFilter('family', this)">
+                <i class="fa-solid fa-people-roof"></i> فقه الأسرة والنكاح
+            </button>
+            <button class="fiqh-filter-btn" onclick="setFiqhFilter('akhlaq', this)">
+                <i class="fa-solid fa-heart"></i> الأخلاق والآداب
+            </button>
+            <button class="fiqh-filter-btn" onclick="setFiqhFilter('muamalat', this)">
+                <i class="fa-solid fa-handshake"></i> المعاملات والأيمان
+            </button>
+            <button class="fiqh-filter-btn" onclick="setFiqhFilter('hudud', this)">
+                <i class="fa-solid fa-shield-halved"></i> الجنايات والحدود
+            </button>
+        </div>
+    </div>
+
+    <!-- شبكة بطاقات الموضوعات الفقهية -->
+    <div class="fiqh-grid" id="fiqhCardsGrid">
+
+        <!-- 1: فقه الطهارة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الطهارة الوضوء الغسل التيمم النجاسات المياه المسح على الخفين">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-droplet"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-hand-holding-droplet"></i></div>
+                    <span>فـقـه الـطـهـارة والـوضـوء</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">أحكام المياه، سنن الفطرة، صفة الوضوء التام، نواقض الوضوء، أحكام الغسل الأكبر، والتيمم والمسح على الخفين والجوربين.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط وصحة الوضوء ونواقضه المجمع عليها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> موجبات الغسل وصفته التامة والمجزئة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أحكام التيمم والمسح على الجوربين والجبيرة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('taharah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 2: فقه الصلاة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الصلاة أركان الصلاة شروط الصلاة سنن الصلاة سجود السهو">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-mosque"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-person-praying"></i></div>
+                    <span>فـقـه الـصَّـلاة وأركـانـهـا</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">عماد الدين والركن الثاني؛ شروط وجوبها وصحتها الـ 9، أركانها الـ 14، واجباتها، سننها، وأحكام سجود السهو ومواضعه.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أركان الصلاة الأربعة عشر وواجباتها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> مواضع سجود السهو الثلاثة (الزيادة، النقص، الشك)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> مبطلات الصلاة ومكروهاتها</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('salah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 3: فقه صلاة الجماعة والجمعة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="صلاة الجماعة صلاة الجمعة الإمامة المسبوق الاستخلاف الأعذار">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-users"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <span>صـلاة الـجـمـاعـة والـجـمـعـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">فضل صلاة الجماعة، شروط الإمامة، فقه المسبوق وكيفية إتمام الصلاة، شروط وسنن صلاة الجمعة، والأعذار المبيحة لتركها.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> حكم صلاة الجماعة وفضلها وموقف المأموم</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فقه إدراك الركعة وأحكام المسبوق</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط الجمعة وسننها وآداب الخطبة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('jamaah_jumuah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 4: صلاة المسافر والقصر والجمع -->
+        <div class="fiqh-card" data-category="ibadat" data-title="صلاة المسافر القصر الجمع رخص السفر مسافة القصر التيمم في السفر">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-plane-departure"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-route"></i></div>
+                    <span>صـلاة الـمـسـافـر والـقـصـر</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">رخص السفر في الشريعة؛ مسافة القصر الشرعية، ضوابط الجمع بين الظهر والعصر والمغرب والعشاء، وأحكام صلاة المسافر خلف المقيم.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> مسافة القصر (نحو 80 كم) ومدد الإقامة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الجمع تقديماً وتأخيراً وأسبابه (سفر، مطر، مرض)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أحكام اقتداء المسافر بالمقيم والمقيم بالمسافر</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('qasr_jam')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 5: صلاة التطوع وقيام الليل والاستخارة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="صلاة التطوع قيام الليل التهجد الوتر صلاة الاستخارة صلاة الضحى">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-cloud-moon"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-moon"></i></div>
+                    <span>صـلاة الـتـطـوع والـقـيـام</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">السنن الرواتب الـ 12 المؤكدة، صفة صلاة الوتر وقيام الليل والتهجد، صلاة الضحى، وصفة ودعاء صلاة الاستخارة وأوقات النهي عن الصلاة.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> السنن الرواتب التابعة للفرائض وفضلها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة صلاة الوتر ودعاء القنوت والتهجد</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة صلاة الاستخارة والأوقات المنهي عن الصلاة فيها</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('nawafil_tahajjud')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 6: فقه الجنائز والتعزية -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الجنائز صلاة الجنازة غسل الميت التكفين الدفن التعزية زيارة القبور">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-ribbon"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-monument"></i></div>
+                    <span>فـقـه الـجـنـائـز والـتـعـزيـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">تغسيل الميت وتكفينه، صفة صلاة الجنازة وتكبيراتها الأربع، آداب الدفن، أحكام التعزية المشروعة، وضوابط زيارة القبور.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فرض الكفاية في تجهيز وتكفين الميت</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة وتكبيرات وأدعية صلاة الجنازة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فقه التعزية والمحرمات (النياحة واللطم)</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('janaiz')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 7: فقه الزكاة والأنصبة الشرعية -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الزكاة النصاب مصارف الزكاة زكاة المال زكاة الذهب الصدقة">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-coins"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <span>فـقـه الـزكـاة والأنـصـبـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">الركن الثالث؛ شروط وجوب الزكاة وحولان الحول، نصاب الذهب والفضة والعملات وعروض التجارة، ومصارف الزكاة الثمانية في القرآن.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> حساب نصاب الذهب (85 غرام) ومقدار 2.5%</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الأصناف الثمانية المستحقة للزكاة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> من لا تجوز لهم الزكاة (الأصول والفروع والزوجة)</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('zakah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 8: فقه الصوم والمفطرات المعاصرة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الصوم الصيام رمضان المفطرات المعاصرة زكاة الفطر الكفارة القضاء">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-moon"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-star-and-crescent"></i></div>
+                    <span>فـقـه الـصـوم والـمـفـطـرات</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">أحكام صيام شهر رمضان، مفسدات الصوم والمفطرات المعاصرة، رخص الفطر والقضاء والفدية، والكفارة المغلظة، وأحكام زكاة الفطر.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> المفطرات المفسدة للصوم القطعية والطبية</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> ما لا يفسد الصيام (القطرة، الإبر غير المغذية)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> زكاة الفطر ومقدارها ووقت إخراجها</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('sawm')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 9: فقه الاعتكاف وصلاة العيدين والأضحية -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الاعتكاف صلاة العيدين الأضحية العقيقة تكبيرات العيد العشر الأوائل">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-kaaba"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-mosque"></i></div>
+                    <span>الاعـتـكـاف والـعـيـدان والأضـحـيـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">شروط وسنن ومبطلات الاعتكاف في المسجد، صفة صلاة العيدين وتكبيراتها، أحكام وشروط الأضحية وتوزيعها، وأحكام العقيقة للمولود.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> ضوابط وسنن الاعتكاف في العشر الأواخر</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة صلاة العيد (7 تكبيرات بالأولى و5 بالثانية)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط الأضحية وسنها وتوقيت ذبحها والعقيقة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('iytikaf_eid')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 10: فقه الحج والعمرة -->
+        <div class="fiqh-card" data-category="ibadat" data-title="الحج العمرة الإحرام الطواف السعي عرفات الميقات منى الرمي">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-ibadat"><i class="fa-solid fa-kaaba"></i> فقه العبادات</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-kaaba"></i></div>
+                    <span>فـقـه الـحـج والـعُـمـرة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">أركان الحج والعمرة وواجباتها، شروط الاستطاعة، المواقيت، محظورات الإحرام، وخطوات المناسك يوماً بيوم بالتفصيل.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أركان الحج الأربعة (الإحرام، الطواف، السعي، عرفة)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> محظورات الإحرام وفديتها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة أداء مناسك العمرة خطوة بخطوة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('hajj')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 11: فقه النكاح والخطبة -->
+        <div class="fiqh-card" data-category="family" data-title="النكاح الزواج الخطبة عقد القران المهر الولي الشاهدان المحرمات">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-family"><i class="fa-solid fa-ring"></i> فقه الأسرة والنكاح</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-people-arrows"></i></div>
+                    <span>فـقـه الـنـكـاح والـخـطـبـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">فقه بناء البيت المسلم؛ ضوابط الخطبة والرؤية الشرعية، أركان وشروط عقد النكاح (الولي، الشاهدان، التراضي)، والمهر والمحرمات.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> ضوابط الرؤية الشرعية وحدود الخطبة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أركان وشروط عقد الزواج وصحة التراضي</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> المحرمات من النساء بالنسب والرضاع والمصاهرة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('nikah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 12: حقوق الزوجين والمعاشرة بالمعروف -->
+        <div class="fiqh-card" data-category="family" data-title="حقوق الزوجين المعاشرة بالمعروف النفقة القوامة طاعة الزوج رعاية الأبناء">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-family"><i class="fa-solid fa-heart-pulse"></i> فقه الأسرة والنكاح</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-house-chimney-user"></i></div>
+                    <span>حـقـوق الـزوجـيـن والـمـعـاشـرة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">المعاشرة بالمعروف، حقوق الزوجة (المهر، النفقة، المسكن، وحسن العشرة)، حقوق الزوج (القوامة، الطاعة بالمعروف)، وفقه حل الخلافات الزوجية.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الحقوق المشتركة والخاصة لكل من الزوجين</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> ضوابط النفقة والمسكن والكسوة بالمعروف</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> المراحل الشرعية لعلاج النشوز والنزاع الأسري</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('zawaj_huqooq')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 13: فقه الطلاق والخلع والفسخ -->
+        <div class="fiqh-card" data-category="family" data-title="الطلاق الخلع الفسخ الطلاق السني الطلاق البدعي الطلقات الثلاث">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-family"><i class="fa-solid fa-scale-balanced"></i> فقه الأسرة والنكاح</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <span>فـقـه الـطـلاق والـخُـلـع والـفـسـخ</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">أحكام الطلاق السني والبدعي، الطلاق الرجعي والبائن بينونة صغرى وكبرى، أحكام الخلع عند تعذر العشرة، والفسخ بحكم القاضي للضرر.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صفة الطلاق السني المشروع والتحذير من البدعي</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الفرق بين الطلاق الرجعي والبائن بينونة صغرى وكبرى</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط وإجراءات الخلع وإرجاع المهر</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('talaq_khul')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 14: فقه العِدد والنفقة وحضانة الأطفال -->
+        <div class="fiqh-card" data-category="family" data-title="العدة الحضانة النفقة عدة المطلقة عدة الوفاة عدة الحامل الإحداد">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-family"><i class="fa-solid fa-children"></i> فقه الأسرة والنكاح</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-people-roof"></i></div>
+                    <span>فـقـه الـعِـدَد والـحـضـانـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">مدد العِدد الشرعية لأنواع المفارقات (المطلقة، المتوفى عنها، الحامل)، أحكام الإحداد، نفقة المعتدة، وترتيب مستحقي حضانة الأطفال.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> تفصيل مدد العِدد وضوابط الإحداد للمتوفى عنها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> حقوق النفقة والكسوة والسكنى أثناء العدة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط وترتيب الحضانة بما يحفظ مصلحة الطفل</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('iddah_hadanah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 15: فقه اللباس والحجاب والزينة -->
+        <div class="fiqh-card" data-category="family" data-title="الحجاب اللباس الزينة عورة المرأة عورة الرجل التبرج الستر">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-family"><i class="fa-solid fa-shirt"></i> فقه الأسرة والنكاح</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-vest"></i></div>
+                    <span>فـقـه الـلـبـاس والـحـجـاب والـزيـنـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">شروط الحجاب الشرعي الفضفاض، عورة الرجل والمرأة أمام المحارم والأجانب، أحكام الزينة والتجمل، والمحرمات في اللباس والتشبه.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط الحجاب الشرعي الساتر غير الواصف</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> حدود عورة الرجل والمرأة في الصلاة وخارجها</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> المحرمات (الإسبال، الحرير والذهب للرجال، الوشم)</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('hijab_libas')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 16: بر الوالدين وصلة الأرحام -->
+        <div class="fiqh-card" data-category="akhlaq" data-title="بر الوالدين عقوق الوالدين صلة الرحم الإحسان طاعة الوالدين">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-akhlaq"><i class="fa-solid fa-heart"></i> الأخلاق والآداب</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-hands-holding-child"></i></div>
+                    <span>بِـرُّ الـوالِـدَيـن وصـلـة الـرَّحـم</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">وجوب البر وحرمة العقوق القطعية، صور الإحسان لهما حيين وميتين، طاعتهما في المعروف، وأحكام وفضل صلة الأرحام ودفع القطيعة.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> تأصيل وجوب البر وتحريم العقوق بنصوص الشرع</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> بر الوالدين بعد وفاتهما (الدعاء والصدقة والصلة)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فقه وضوابط صلة الرحم ومراتب الأقارب</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('birr_walidayn')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 17: حسن الخلق وحفظ اللسان -->
+        <div class="fiqh-card" data-category="akhlaq" data-title="حسن الخلق المروءة الحياء الصدق حفظ اللسان الغيبة النميمة">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-akhlaq"><i class="fa-solid fa-seedling"></i> الأخلاق والآداب</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-gem"></i></div>
+                    <span>حُـسـن الـخُـلـق وحـفـظ الـلـسـان</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">ثقل حسن الخلق في الميزان، تحريم الغيبة والنميمة والبهتان، أدب الحديث والمعاشرة، الحياء والمروءة، والمواضع المستثناة شرعاً.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فضل حسن الخلق ومقامه الأعلى في الشريعة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> محرمات اللسان الكبرى وضوابط الكلمة الطيبة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> المواضع الستة المستثناة من الغيبة شرعاً</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('akhlaq_lisan')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 18: فقه الأطعمة والأشربة والذكاة الشرعية -->
+        <div class="fiqh-card" data-category="akhlaq" data-title="الأطعمة الأشربة الذكاة الذبح الحلال الحرام الخمر الخنزير الميتة">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-akhlaq"><i class="fa-solid fa-utensils"></i> الأخلاق والآداب</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-bowl-food"></i></div>
+                    <span>فـقـه الأطـعـمـة والـذَّكـاة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">الأصل في الأطعمة الإباحة، المحرمات من الميتة والخنزير والمسكرات، شروط الذكاة والذبح الشرعي، والحيوانات المحرمة من ذوات الأنياب والمخالب.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الضوابط الشرعية للأطعمة الحلال والمحرمات الخبيثة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط الذبح الشرعي (التسمية، قطع الحلقوم والودجين)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أحكام ذبائح أهل الكتاب واللحوم المستوردة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('adab_taam')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 19: فقه التداوي والمسائل الطبية المعاصرة -->
+        <div class="fiqh-card" data-category="akhlaq" data-title="التداوي الطب نقل الأعضاء التبرع بالدم التجميل بنوك الأجنة الإجهاض">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-akhlaq"><i class="fa-solid fa-notes-medical"></i> الأخلاق والآداب</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-syringe"></i></div>
+                    <span>فـقـه الـتـداوي والـمـسـائـل الـطـبـيـة</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">حكم التداوي والأخذ بالأسباب، ضوابط نقل وزراعة الأعضاء والتبرع بالدم، أحكام الجراحات التجميلية التحسينية والعلاجية، وضوابط الإجهاض.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> حكم التداوي وضوابط استخدام الأدوية المحتوية على كحول</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الضوابط الشرعية لنقل الأعضاء والتبرع بالدم</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> التمييز بين جراحات التجميل العلاجية والمحرمة</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('tadawi_tib')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 20: فقه الرقية الشرعية والأذكار -->
+        <div class="fiqh-card" data-category="akhlaq" data-title="الرقية الشرعية الأذكار الدعاء العين الحسد السحر التمائم الشعوذة">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-akhlaq"><i class="fa-solid fa-book-sparkles"></i> الأخلاق والآداب</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                    <span>فـقـه الـرقـيـة الـشـرعـيـة والأذكـار</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">شروط الرقية الشرعية الصحيحة، التحذير من السحرة والمشعوذين والتمائم الشركية، فقه علاج العين والحسد، وأذكار الصباح والمساء والتحصين.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الشروط الثلاثة للرقية الشرعية الجائزة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> علامات المشعوذ والدجال والتحذير من إتيانه</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فقه التحصينات النبوية وأذكار الصباح والمساء</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('adab_ruqya')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 21: فقه الأيمان والنذور -->
+        <div class="fiqh-card" data-category="muamalat" data-title="الأيمان النذور اليمين اللغو اليمين المنعقدة اليمين الغموس كفارة اليمين">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-muamalat"><i class="fa-solid fa-signature"></i> المعاملات والأيمان</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-signature"></i></div>
+                    <span>فـقـه الأيـمـان والـنُّـذور</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">أقسام الأيمان (اللغو، المنعقدة، والغموس)، شروط انعقاد اليمين، كفارة اليمين وترتيبها الشرعي، وأحكام الوفاء بالنذر وأنواعه.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> التمييز بين يمين اللغو والمنعقدة والغموس</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> كفارة اليمين وترتيبها (الإطعام أو الصيام)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> نذر الطاعة ونذر المعصية وما يجب الوفاء به</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('ayman_nudhoor')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 22: فقه البيوع والتجارة والتقسيط -->
+        <div class="fiqh-card" data-category="muamalat" data-title="البيوع التجارة الإلكترونية الشراء البيع بالتقسيط الخيارات الغرر">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-muamalat"><i class="fa-solid fa-cart-shopping"></i> المعاملات والأيمان</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <span>فـقـه الـبـيـوع والـتـقـسـيـط</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">شروط صحة البيع، المحرمات في البيوع (الغرر، الغش، وبيع ما لا يملك)، ضوابط البيع بالتقسيط، والتجارة الإلكترونية والدفع الرقمي.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أركان وشروط البيع الصحيح الرابح</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> ضوابط البيع بالتقسيط وخيارات العيب والشرط</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أحكام التجارة عبر الإنترنت وحماية المستهلك</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('buyu_tijarah')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 23: تحريم الربا والمعاملات البنكية -->
+        <div class="fiqh-card" data-category="muamalat" data-title="الربا ربا الفضل ربا النسيئة البنوك الفوائد القروض الودائع">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-muamalat"><i class="fa-solid fa-building-columns"></i> المعاملات والأيمان</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    <span>تـحـريـم الـربـا والـبـنـوك</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">خطورة الربا والوعيد فيه، التمييز بين ربا الفضل وربا النسيئة، حكم فوائد القروض البنكية التقليدية، والبدائل المصرفية الإسلامية.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> الأصناف الربوية الستة وقاعدة (الجنس والعلة)</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> فوائد القروض والاستثمار البنكي التقليدي</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> صيغ التمويل الإسلامي (المرابحة والمشاركة)</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('riba_bunuk')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 24: حفظ الأعراض وتحريم الزنا والقذف -->
+        <div class="fiqh-card" data-category="hudud" data-title="الزنا حفظ الأعراض غض البصر الفواحش حد الزنا القذف اللواط">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-hudud"><i class="fa-solid fa-shield-halved"></i> الجنايات والحدود</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    <span>حـفـظ الأعـراض وتـحـريـم الـزنـا</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">مقصد حفظ النسل والعرض، التحذير من قربان الزنا ومقدماته، غض البصر، عقوبة الزنا في الدنيا والآخرة، وحد القذف وصيانة المجتمع.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> تحريم الزنا ودواعيه ووسائل الوقاية والستر</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أحكام غض البصر والابتعاد عن مواطن الريبة</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> خطورة القذف والطعن في أنساب وأعراض المسلمين</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('zina_hifz_ird')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+        <!-- 25: حفظ الأموال والأنفس (السرقة والقصاص) -->
+        <div class="fiqh-card" data-category="hudud" data-title="السرقة حفظ المال القتل القصاص الدية الجنايات الغصب الاختلاس">
+            <div class="fiqh-card-header">
+                <span class="fiqh-category-tag tag-hudud"><i class="fa-solid fa-sack-dollar"></i> الجنايات والحدود</span>
+                <h3 class="fiqh-card-title">
+                    <div class="fiqh-card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <span>حـفـظ الأمـوال والأنـفـس (الـسـرقـة والـقـصـاص)</span>
+                </h3>
+            </div>
+            <div class="fiqh-card-body">
+                <p class="fiqh-card-desc">حرمة مال ودم المسلم، شروط حد السرقة ودرء الحدود بالشبهات، أقسام القتل، حكمة تشريع القصاص والديات، ووجوب رد المظالم والحقوق.</p>
+                <ul class="fiqh-subtopics-list">
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> شروط إقامة حد السرقة والاحترازات الفقهية</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> أقسام القتل (العمد، شبه العمد، والخطأ) والدية</li>
+                    <li class="fiqh-subtopic-item"><i class="fa-solid fa-check"></i> كيفية التوبة من أكل الحرام وفضل العفو في الدماء</li>
+                </ul>
+            </div>
+            <div class="fiqh-card-footer">
+                <button class="btn-view-topic" onclick="openFiqhModal('sariqah_jinayat')"><span>مطالعة الحكم الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- نافذة عرض تفاصيل الموضوع والمسائل الفقهية Modal -->
+<div class="modal-overlay" id="fiqhModal" onclick="closeFiqhModal(event)">
+    <div class="fiqh-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="fiqh-category-tag tag-ibadat" id="modalCategoryBadge" style="margin-bottom: 4px;">فقه العبادات</span>
+                <h3 id="modalTopicTitle" style="font-size: 20px; font-weight: 800; margin: 0; color: var(--emerald);">عنوان المسألة الفقهية</h3>
+            </div>
+            <button class="modal-close-btn" onclick="closeFiqhModal()" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalTopicBody"></div>
+        <div class="modal-footer">
+            <button class="btn-view-topic" onclick="closeFiqhModal()" style="font-size: 14px; padding: 10px 28px; width: auto;">
+                إغلاق النافذة
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // قاعدة بيانات موضوعات الفقه الـ 25 — موسوعة فقهية متكاملة ومفصلة بكل حكم وأدلته وفروعه المعاصرة
+    var fiqhData = {
+        taharah: {
+            title: "فقه الطهارة والوضوء والغسل والتيمم — الدليل الشامل والمفصل",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية والتأصيل القرآني والنبوي:</h4>
+                <div class="fiqh-dalil-box">
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ وَامْسَحُوا بِرُءُوسِكُمْ وَأَرْجُلَكُمْ إِلَى الْكَعْبَيْنِ ۚ وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا ۚ وَإِن كُنتُم مَّرْضَىٰ أَوْ عَلَىٰ سَفَرٍ أَوْ جَاءَ أَحَدٌ مِّنكُم مِّنَ الْغَائِطِ أَوْ لَامَسْتُمُ النِّسَاءَ فَلَمْ تَجِدُوا مَاءً فَتَيَمَّمُوا صَعِيدًا طَيِّبًا» [المائدة: 6]<br>
+                    وقال ﷺ: «الطُّهُورُ شَطْرُ الإِيمَانِ» [رواه مسلم]، وقال: «لَا يَقْبَلُ اللَّهُ صَلَاةَ أَحَدِكُمْ إِذَا أَحْدَثَ حَتَّى يَتَوَضَّأَ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام الفقهية التفصيلية والشروط والأركان:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. أقسام المياه وأحكامها:</strong>
+                        <br>• <strong>الماء الطهور:</strong> وهو الباقي على خلقته الأصلية (كماء المطر، العيون، الآبار، والبحار)؛ وهو طاهر في نفسه مطهر لغيره رافع للحدث ومزيل للخبث بلا كراهة.
+                        <br>• <strong>الماء الطاهر:</strong> ما خالطه طاهر غير اسمه أو غلب على صفاته (كالماء المخلوط بصابون أو شاي أو ورد)؛ طاهر في نفسه لكنه لا يرفع الحدث ولا يصح الوضوء به.
+                        <br>• <strong>الماء النجس:</strong> ما وقعت فيه نجاسة فغيرت طعمه أو لونه أو ريحه؛ يحرم استعماله في الطهارة بالإجماع سواء كان قليلاً أو كثيراً.
+                    </p>
+                    <p><strong>2. أركان (فروض) الوضوء الستة التي لا يصح إلا بها:</strong>
+                        <br>• <strong>النية:</strong> محلها القلب ومقارنتها لأول غسل الوجه.
+                        <br>• <strong>غسل الوجه كاملاً:</strong> من منابت شعر الرأس المعتاد إلى أسفل الذقن طولاً، ومن شحمة الأذن إلى شحمة الأذن عرضاً (ومنه المضمضة والاستنشاق).
+                        <br>• <strong>غسل اليدين مع المرفقين:</strong> إدخال المرفقين في الغسل شرط.
+                        <br>• <strong>مسح الرأس كله:</strong> ومنه الأذنان (الأذنان من الرأس).
+                        <br>• <strong>غسل الرجلين مع الكعبين:</strong> وإدخال الكعبين في الغسل.
+                        <br>• <strong>الترتيب والموالاة:</strong> الترتيب كما ورد في الآية، والموالاة بألا يؤخر غسل عضو حتى يجف العضو الذي قبله في الزمن المعتدل.
+                    </p>
+                    <p><strong>3. سنن ومستحبات الوضوء:</strong>
+                        <br>التسمية، السواك، غسل الكفين ثلاثاً قبل البدء، تخليل اللحية الكثة والأصابع، التثليث (غسل كل عضو ثلاثاً)، التيامن، والدعاء بعد الفراغ منه: «أشهد أن لا إله إلا الله وحده لا شريك له وأشهد أن محمداً عبده ورسوله، اللهم اجعلني من التوابين واجعلني من المتطهرين».
+                    </p>
+                    <p><strong>4. نواقض الوضوء المتفق عليها:</strong>
+                        <br>• الخارج من السبيلين: بول، غائط، ريح، مذي، ودي، أو مني.
+                        <br>• النوم المستغرق الذي يزول معه الشعور والإدراك (أما النوم اليسير جالساً فلا ينقض).
+                        <br>• زوال العقل بسكر أو إغماء أو جنون أو تخدير كامل.
+                        <br>• مس الفرج باليد مباشرة بشهوة وبلا حائل.
+                        <br>• أكل لحم الإبل؛ لحديث جابر بن سمرة الصحيح في صحيح مسلم: «تَوَضَّئُوا مِنْ لُحُومِ الإِبِلِ».
+                    </p>
+                    <p><strong>5. موجبات الغسل وصفته التامة:</strong>
+                        <br>يجب الغسل بخروج المني بلذة، بالتقاء الختانين (الجماع ولو لم ينزل)، بانقطاع دم الحيض والنفاس، وبالموت.
+                        <br>• <strong>الصفة التامة:</strong> النية، ثم غسل الفرج، ثم الوضوء الأصغر كاملاً، ثم حثي الماء على الرأس ثلاثاً حتى يصل لأصول الشعر، ثم إفاضة الماء على الشق الأيمن ثم الأيسر وتعميم سائر الجسد بالماء مع تدليكه.
+                    </p>
+                    <p><strong>6. أحكام المسح على الخفين والجوربين والجبيرة:</strong>
+                        <br>• يشترط لبسهما على طهارة كاملة سابقة بالماء، وأن يكونا ساترين لمحل الفرض، وطاهرين.
+                        <br>• <strong>المدة:</strong> للمقيم يوم وليلة (24 ساعة)، وللمسافر 3 أيام بلياليهن (72 ساعة) تبدأ من أول مسحة بعد الحدث.
+                        <br>• <strong>المسح على الجبيرة:</strong> يمسح على الجبيرة أو اللصقة الطبية عند الكسر أو الجرح طالما بقيت الحاجة إليها بلا توقيت زمني حتى الشفاء.
+                    </p>
+                </div>
+
+                <h4><i class="fa-solid fa-circle-question"></i> الفتاوى والمسائل الطبية والمعاصرة:</h4>
+                <div class="fiqh-fawaed-box">
+                    <ul>
+                        <li>• <strong>طلاء الأظافر (المناكير) واللاصقات العازلة:</strong> تمنع وصول ماء الوضوء إلى الظفر فيبطل الوضوء ويجب نزعها قبل الطهارة. أما الحناء فلا تشكل طبقة عازلة وطهارتها صحيحة.</li>
+                        <li>• <strong>الإفرازات الطبيعية وسلس البول:</strong> أصحاب السلس والعلل يتوضؤون لكل صلاة بعد دخول وقتها، ولا يضرهم ما خرج أثناء الصلاة بعد التحفظ.</li>
+                        <li>• <strong>سحب الدم والتحاليل والقطرة وبخاخ الربو:</strong> لا تنقض الوضوء ولا تبطله إطلاقاً.</li>
+                    </ul>
+                </div>
+            `
+        },
+
+        salah: {
+            title: "فقه الصلاة — الشروط والأركان والواجبات وسجود السهو بالتفصيل",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية والتأصيل:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ» [البقرة: 43]<br>
+                    «إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا» [النساء: 103]<br>
+                    وقال ﷺ: «بُنِيَ الإِسْلَامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلَاةِ...» [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام الفقهية التفصيلية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. شروط صحة الصلاة التسعة (ما يسبق الصلاة):</strong>
+                        <br>الإسلام، العقل، التمييز، دخول الوقت يقيناً أو غلبة ظن، الطهارة من الحدث الأصغر والأكبر، طهارة الثوب والبدن والمكان من النجاسات العينية، ستر العورة المغلظة، استقبال القبلة (الكعبة المشرفة)، والنية الجازمة.
+                    </p>
+                    <p><strong>2. أركان الصلاة الـ 14 (لا تسقط عمداً ولا سهواً ولا جهلاً وتبطل الركعة بفواتها):</strong>
+                        <br>1. القيام في الفرض مع القدرة.
+                        <br>2. تكبيرة الإحرام بلفظ (الله أكبر).
+                        <br>3. قراءة سورة الفاتحة في كل ركعة للإمام والمنفرد.
+                        <br>4. الركوع بقدر انحناء الظهر ووضع الكفين على الركبتين.
+                        <br>5. الرفع والاعتدال من الركوع.
+                        <br>6. السجود على الأعضاء السبعة (الجبهة مع الأنف، الكفان، الركبتان، وأطراف أصابع القدمين).
+                        <br>7. الرفع من السجود.
+                        <br>8. الجلوس بين السجدتين.
+                        <br>9. الطمأنينة (وهي السكون بقدر التسبيحة الواجبة في كل ركن فعلي).
+                        <br>10. التشهد الأخير.
+                        <br>11. الجلوس للتشهد الأخير.
+                        <br>12. الصلاة على النبي ﷺ في التشهد الأخير.
+                        <br>13. التسليمتان (السلام عليكم ورحمة الله).
+                        <br>14. الترتيب بين هذه الأركان.
+                    </p>
+                    <p><strong>3. واجبات الصلاة الثمانية (تجبر بسجود السهو إن تركت نسياناً وتبطل بتركها عمداً):</strong>
+                        <br>تكبيرات الانتقال، قول: «سمع الله لمن حمده» للإمام والمنفرد، قول: «ربنا ولك الحمد» للكل، تسبيحة الركوع «سبحان ربي العظيم» مرة واحدة، تسبيحة السجود «سبحان ربي الأعلى» مرة، قول «رب اغفر لي» بين السجدتين، التشهد الأول، والجلوس له.
+                    </p>
+                    <p><strong>4. التفصيل الجامع لسجود السهو وأسبابه ومواضعه:</strong>
+                        <br>• <strong>الزيادة (كركوع أو قيام زائد):</strong> يسجد سجدتين <em>بعد السلام</em> ثم يسلم ثانية.
+                        <br>• <strong>النقص (كنسيان التشهد الأول أو تسبيحة واجبة):</strong> يسجد سجدتين <em>قبل السلام</em>.
+                        <br>• <strong>الشك:</strong> إذا شك فلم يترجح له شيء يبني على اليقين وهو (الأقل) ويسجد <em>قبل السلام</em>، وإن ترجح عنده أحد الأمرين بنى على ما ترجح وسجد <em>بعد السلام</em>.
+                    </p>
+                </div>
+
+                <h4><i class="fa-solid fa-circle-exclamation"></i> مبطلات الصلاة:</h4>
+                <div class="fiqh-fawaed-box">
+                    <ul>
+                        <li>• الكلام العمد لغير مصلحة الصلاة، الأكل أو الشرب عمداً ولو يسيراً.</li>
+                        <li>• الضحك والقهقهة بصوت، الحدث أثناء الصلاة، كشف العورة عمداً، الانحراف عن القبلة بالبدن كله.</li>
+                        <li>• الحركة الكثيرة المتوالية لغير ضرورة، وترك ركن أو شرط عمداً.</li>
+                    </ul>
+                </div>
+            `
+        },
+
+        jamaah_jumuah: {
+            title: "فقه صلاة الجماعة والجمعة — الإمامة والمسبوق والخطبة والأعذار",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية:</h4>
+                <div class="fiqh-dalil-box">
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ ۚ ذَٰلِكُمْ خَيْرٌ لَّكُمْ إِن كُنتُمْ تَعْلَمُونَ» [الجمعة: 9]<br>
+                    وقال ﷺ: «صَلَاةُ الجَمَاعَةِ تَفْضُلُ صَلَاةَ الفَذِّ بِسَبْعٍ وَعِشْرِينَ دَرَجَةً» [متفق عليه]، وقال: «لَقَدْ هَمَمْتُ أَنْ آمُرَ بِالصَّلَاةِ فَتُقَامَ، ثُمَّ أُخَالِفَ إِلَى رِجَالٍ لَا يَشْهَدُونَ الصَّلَاةَ فَأُحَرِّقَ عَلَيْهِمْ بُيُوتَهُمْ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام الفقهية والتفاصيل:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. حكم صلاة الجماعة:</strong> فرض عين على الرجال المكلفين القادرين في المساجد للصلوات الخمس الخمس المفروضة.</p>
+                    <p><strong>2. ترتيب الأحق بالإمامة:</strong> الأقرأ لكتاب الله (الأعلم بأحكامه)، ثم الأعلم بالسنة، ثم الأقدم هجرة، ثم الأكبر سناً، وصاحب البيت أو الإمام الراتب أولى من غيره.</p>
+                    <p><strong>3. فقه المسبوق وإدراك الركعة:</strong>
+                        <br>• يدرك المأموم الركعة إذا أدرك الإمام راكعاً واطمأن معه في الركوع قبل أن يرفع الإمام صلبه.
+                        <br>• إذا دخل المسبوق مع الإمام بعد الركوع الأخير يدخل معه ولا تحسب له ركعة، ويقوم بعد تسليم الإمام لقضاء ما فاته مرتباً.
+                    </p>
+                    <p><strong>4. أحكام صلاة الجمعة وشروطها:</strong>
+                        <br>• تجب على كل مسلم، ذكر، حر، بالغ، عاقل، مقيم، قادر لا عذر له.
+                        <br>• يشترط لصحتها: دخول وقت الظهر، الاستيطان، وحضور خطبتين قبلهما تشتملان على حمد الله والصلاة على نبيه والوصية بالتقوى وقراءة آيات من القرآن والدعاء.
+                        <br>• يحرم الكلام أثناء خطبة الجمعة حرمة قطعية لقوله ﷺ: «إِذَا قُلْتَ لِصَاحِبِكَ يَوْمَ الجُمُعَةِ: أَنْصِتْ، وَالإِمَامُ يَخْطُبُ، فَقَدْ لَغَوْتَ».
+                    </p>
+                </div>
+            `
+        },
+
+        qasr_jam: {
+            title: "فقه صلاة المسافر والقصر والجمع ورخص السفر والمشقة",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأصل والدليل:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَإِذَا ضَرَبْتُمْ فِي الْأَرْضِ فَلَيْسَ عَلَيْكُمْ جُنَاحٌ أَن تَقْصُرُوا مِنَ الصَّلَاةِ» [النساء: 101]<br>
+                    وقال يعلى بن أمية: قلت لعمر بن الخطاب: فليس عليكم جناح أن تقصروا؟ فقال عمر: عجبت مما عجبت منه، فسألت رسول الله ﷺ فقال: «صَدَقَةٌ تَصَدَّقَ اللَّهُ بِهَا عَلَيْكُمْ فَاقْبَلُوا صَدَقَتَهُ». [رواه مسلم]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام الفقهية التفصيلية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. ضابط مسافة القصر الشرعية:</strong> تقصر الصلوات الرباعية (الظهر، العصر، والعشاء) إلى ركعتين في السفر المباح الذي تبلغ مسافته نحو 80 إلى 85 كم فأكثر بمجرد مفارقة بيوت وعمران البلدة.</p>
+                    <p><strong>2. مدة الإقامة المبيحة للقصر:</strong> إذا نوى المسافر الإقامة في بلدة 4 أيام فأقل قصر الصلاة، وإن نوى أكثر من 4 أيام أتم صلاته كالمقيمين من حين وصوله عند جمهور الفقهاء.</p>
+                    <p><strong>3. الجمع بين الصلاتين وأنواعه:</strong>
+                        <br>• <strong>الصلوات التي يجمع بينها:</strong> الظهر مع العصر، والمغرب مع العشاء فقط (ولا يصح جمع الصبح مع غيرها ولا العصر مع المغرب).
+                        <br>• <strong>جمع التقديم:</strong> أداء الصلاتين في وقت الأولى (كالظهر والعصر في وقت الظهر).
+                        <br>• <strong>جمع التأخير:</strong> أداء الصلاتين في وقت الثانية (كالظهر والعصر في وقت العصر).
+                        <br>• <strong>أسباب الجمع المبيحة:</strong> السفر، المطر الشديد والوحل والبرد القارس الذي يشق معه الخروج للمسجد، والمرض والمشقة البالغة والحرج (كإجراء العمليات الجراحية الممتدة للأطباء والمرضى).
+                    </p>
+                </div>
+            `
+        },
+
+        nawafil_tahajjud: {
+            title: "فقه صلاة التطوع والسنن الرواتب وقيام الليل وصلاة الاستخارة",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-scroll"></i> الأحاديث النبوية الصحيحة:</h4>
+                <div class="fiqh-dalil-box">
+                    قَالَ ﷺ: «مَنْ صَلَّى فِي يَوْمٍ وَلَيْلَةٍ ثِنْتَيْ عَشْرَةَ رَكْعَةً بُنِيَ لَهُ بَيْتٌ فِي الجَنَّةِ: أَرْبَعًا قَبْلَ الظُّهْرِ، وَرَكْعَتَيْنِ بَعْدَهَا، وَرَكْعَتَيْنِ بَعْدَ المَغْرِبِ، وَرَكْعَتَيْنِ بَعْدَ العِشَاءِ، وَرَكْعَتَيْنِ قَبْلَ صَلَاةِ الفَجْرِ» [رواه مسلم]<br>
+                    وقال ﷺ: «أَفْضَلُ الصَّلَاةِ بَعْدَ الفَرِيضَةِ صَلَاةُ اللَّيْلِ». [رواه مسلم]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفريعات:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. السنن الرواتب المؤكدة (12 ركعة):</strong> ركعتان قبل الفجر (خير من الدنيا وما فيها)، 4 ركعات قبل الظهر وركعتان بعدها، ركعتان بعد المغرب، وركعتان بعد العشاء.</p>
+                    <p><strong>2. فقه صلاة الوتر وقيام الليل:</strong>
+                        <br>• وقته: من بعد صلاة العشاء وسنتها إلى طلوع الفجر الثاني، وأفضله في الثلث الأخير من الليل.
+                        <br>• أقله ركعة واحدة، وأدنى الكمال 3 ركعات (يقرأ في الأولى بالأعلى، وفي الثانية بالكافرون، وفي الثالثة بالإخلاص والمعوذتين)، ويقنت فيها بعد الركوع.
+                    </p>
+                    <p><strong>3. صلاة الاستخارة ودعاؤها:</strong> ركعتان من غير الفريضة يقرأ فيهما بالفاتحة وما تيسر، فإذا سلم حمد الله وأثنى عليه وصلى على النبي ﷺ ودعا بدعاء الاستخارة النبوي المعروف، ثم يمضي فيما انشرح له صدره وتيسرت أسبابه.</p>
+                    <p><strong>4. الأوقات الثلاثة المنهي عن صلاة النفل المطلق فيها:</strong>
+                        <br>• من بعد صلاة الفجر حتى تطلع الشمس وترتفع قيد رمح (نحو 15 دقيقة بعد الشروق).
+                        <br>• عند قيام الشمس في كبد السماء حتى تزول (قبل أذان الظهر بـ 10 دقائق).
+                        <br>• من بعد صلاة العصر حتى تغرب الشمس تماماً. (وتستثنى ذوات الأسباب كتحية المسجد وسنة الوضوء وركعتي الطواف وصلاة الجنازة).
+                    </p>
+                </div>
+            `
+        },
+
+        janaiz: {
+            title: "فقه الجنائز والتعزية — التغسيل والتكفين وصلاة الجنازة وآداب القبور",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة النبوية:</h4>
+                <div class="fiqh-dalil-box">
+                    قَالَ رَسُولُ اللهِ ﷺ: «مَنْ شَهِدَ الجَنَازَةَ حَتَّى يُصَلَّى عَلَيْهَا فَلَهُ قِيرَاطٌ، وَمَنْ شَهِدَهَا حَتَّى تُدْفَنَ فَلَهُ قِيرَاطَانِ، قِيلَ: وَمَا القِيرَاطَانِ؟ قَالَ: مِثْلُ الجَبَلَيْنِ العَظِيمَيْنِ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الكاملة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. تغسيل الميت وتكفينه:</strong> فرض كفاية، يبدأ المغسل بتجريد الميت مع ستر عورته، ثم يوضئه وضوء الصلاة بلا إدخال ماء في فمه وأنفه بل يمسح أسنانه بخرقة، ثم يغسل رأسه وجسده بالسدر والماء 3 أو 5 أو 7 مرات، ويجعل في الغسلة الأخيرة كافوراً. ويكفن الرجل في 3 لفائف بيض، والمرأة في 5 أثواب.</p>
+                    <p><strong>2. صفة صلاة الجنازة (أربع تكبيرات قائمة بلا ركوع ولا سجود):</strong>
+                        <br>• <strong>التكبيرة الأولى:</strong> الاستعاذة والبسملة وقراءة سورة الفاتحة سراً.
+                        <br>• <strong>التكبيرة الثانية:</strong> الصلاة الإبراهيمية على النبي ﷺ.
+                        <br>• <strong>التكبيرة الثالثة:</strong> الدعاء للميت: «اللهم اغفر له وارحمه وعافه واعف عنه وأكرم نزله ووسع مدخله واغسله بالماء والثلج والبرد ونقه من الخطايا كما ينقى الثوب الأبيض من الدنس...».
+                        <br>• <strong>التكبيرة الرابعة:</strong> الدعاء لعامة المسلمين ثم التسليم عن اليمين تسليمة واحدة أو تسليمتين.
+                    </p>
+                    <p><strong>3. الدفن والتعزية وزيارة القبور:</strong> يدفن الميت في لحد أو شق مستقبلاً القبلة على جنبه الأيمن، ويسن الوقوف عند القبر بعد الدفن والاستغفار له وسؤال التثبيت له. وتسن التعزية لأهله 3 أيام وصنع الطعام لهم. ويحرم النياحة، ولطم الخدود، وشق الثياب.</p>
+                </div>
+            `
+        },
+
+        zakah: {
+            title: "فقه الزكاة والصدقات — شروط الوجوب والأنصبة ومصارف الزكاة الثمانية",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأصل القرآني لمصارف الزكاة:</h4>
+                <div class="fiqh-dalil-box">
+                    «إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا وَالْمُؤَلَّفَةِ قُلُوبُهُمْ وَفِي الرِّقَابِ وَالْغَارِمِينَ وَفِي سَبِيلِ اللَّهِ وَابْنِ السَّبِيلِ ۖ فَرِيضَةً مِّنَ اللَّهِ ۗ وَاللَّهُ عَلِيمٌ حَكِيمٌ» [التوبة: 60]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفريعات المحاسبية الشرعية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. شروط وجوب الزكاة:</strong> الإسلام، الحرية، ملك النصاب ملكاً تاماً زائداً عن الحوائج الأصلية، وحولان الحول (مرور سنة هجرية كاملة) في النقود وعروض التجارة والأنعام، أما الزروع والثمار فتجب زكاتها يوم حصادها لقوله: «وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ».</p>
+                    <p><strong>2. حساب الأنصبة الشرعية ومقدار الواجب:</strong>
+                        <br>• <strong>نصاب الذهب:</strong> 85 غراماً من الذهب الخالص (عيار 24).
+                        <br>• <strong>نصاب الفضة:</strong> 595 غراماً من الفضة النقية.
+                        <br>• <strong>النقود وعروض التجارة:</strong> تقوم بقيمة 85 غراماً من الذهب بسعر السوق يوم إخراج الزكاة، فإذا بلغ المال النصاب وحال عليه الحول وجب إخراج ربع العشر (2.5%).
+                    </p>
+                    <p><strong>3. تفصيل المصارف الثمانية المستحقة للزكاة:</strong>
+                        <br>1. الفقراء (من لا يجدون شيئاً أو أقل من نصف الكفاية).
+                        <br>2. المساكين (من يجدون نصف الكفاية أو أكثر ولا تكفيهم).
+                        <br>3. العاملون عليها (الجباة والسعاة المفرغون لجمعها).
+                        <br>4. المؤلفة قلوبهم (ترغيباً في الإسلام أو تثبيتاً للإيمان).
+                        <br>5. في الرقاب (عتق العبيد وفك الأسرى).
+                        <br>6. الغارمون (من تحملوا ديوناً في غير معصية وعجزوا عن سدادها، أو أصلحوا بين الناس بديون).
+                        <br>7. في سبيل الله (المجاهدون والدعوة لنصرة دين الله).
+                        <br>8. ابن السبيل (المسافر المنقطع عن بلده ونفقته).
+                    </p>
+                    <p><strong>4. من تحرم عليهم الزكاة:</strong> الغني القادر على الكسب، الكافر المحارب، آل بيت النبي ﷺ، والأصول (الآباء والأمهات والأجداد) والفروع (الأبناء والبنات) والزوجة الذين تجب على المزكي نفقتهم شرعاً.</p>
+                </div>
+            `
+        },
+
+        sawm: {
+            title: "فقه الصوم والمفطرات المعاصرة — الرخص والقضاء والكفارات وزكاة الفطر",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية:</h4>
+                <div class="fiqh-dalil-box">
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ» [البقرة: 183]<br>
+                    وقال ﷺ: «مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الكاملة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. تعريف الصوم وأركانه:</strong> الإمساك بنية التعبد عن جميع المفطرات من طلوع الفجر الصادق إلى غروب الشمس كاملاً. وركناه: النية الجازمة المبيتة ليلاً قبل الفجر في الفرض، والإمساك عن المفطرات.</p>
+                    <p><strong>2. المفطرات المفسدة للصوم:</strong>
+                        <br>• الأكل والشرب عمداً، الجماع عمداً (ويوجب القضاء والكفارة المغلظة: عتق رقبة، فإن لم يجد فصيام شهرين متتابعين، فإن لم يستطع فإطعام 60 مسكيناً).
+                        <br>• الاستقاءة عمداً (إخراج القيء عمداً)، خروج دم الحيض أو النفاس، والحقن الوريدية والمغذيات التي تقوم مقام الأكل والشرب.
+                    </p>
+                    <p><strong>3. ما لا يفطر في الصيام (الفتاوى المعاصرة والطبية):</strong>
+                        <br>الأكل والشرب ناسياً، قطرة العين والأذن، الحقن العلاجية العضلية والجلدية غير المغذية، بخاخ الربو، تحليل وسحب عينات الدم اليسيرة، معجون الأسنان والسواك (مع التحرز من البلع)، والتبرد بالماء والغوص.
+                    </p>
+                    <p><strong>4. الرخص وأحكام القضاء والفدية:</strong>
+                        <br>• يباح الفطر للمريض والمسافر مع وجوب القضاء: «فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ».
+                        <br>• العاجز لكبر سن أو مرض مزمن لا يرجى برؤه يفطر ويطعم عن كل يوم مسكيناً نصف صاع من طعام (1.5 كغ).
+                        <br>• الحامل والمرضع إن خافتا على نفسيهما أو ولديهما أفطرتا وقضتا.
+                    </p>
+                    <p><strong>5. زكاة الفطر:</strong> فرض واجب على كل مسلم يملك قوت يومه وليلته صاعاً من غالب قوت البلد (تمر، أرز، قمح = نحو 2.5 إلى 3 كغ) تخرج قبل صلاة العيد ويجوز تقديمها بيوم أو يومين.</p>
+                </div>
+            `
+        },
+
+        iytikaf_eid: {
+            title: "فقه الاعتكاف وصلاة العيدين وأحكام الأضحية والعقيقة",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-scroll"></i> الأحاديث النبوية الشريفة:</h4>
+                <div class="fiqh-dalil-box">
+                    «كَانَ رَسُولُ اللهِ ﷺ يَعْتَكِفُ العَشْرَ الأَوَاخِرَ مِنْ رَمَضَانَ» [متفق عليه]<br>
+                    «ضَحَّى النَّبِيُّ ﷺ بِكَبْشَيْنِ أَمْلَحَيْنِ أَقْرَنَيْنِ، ذَبَحَهُمَا بِيَدِهِ، وَسَمَّى وَكَبَّرَ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الفقهية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. فقه الاعتكاف:</strong> لزوم مسجد تقام فيه صلاة الجماعة للتفرغ لطاعة الله وذكره وقراءة القرآن والتماس ليلة القدر. ويبطل الاعتكاف بالخروج من المسجد لغير حاجة ضرورية لا بد منها (كقضاء الحاجة وإحضار طعام ضروري)، ويبطل بالجماع ومباشرة النساء.</p>
+                    <p><strong>2. صفة صلاة العيدين وسننها:</strong> ركعتان من غير أذان ولا إقامة؛ يكبر في الركعة الأولى 7 تكبيرات بعد تكبيرة الإحرام، وفي الثانية 5 تكبيرات بعد تكبيرة القيام، ويقرأ فيهما بالأعلى والغاشية أو ق والقمر، ويسن الاستماع للخطبة بعدها والتوسعة على الأهل وصلة الرحم.</p>
+                    <p><strong>3. أحكام وشروط الأضحية:</strong> سنة مؤكدة؛ يشترط أن تكون من بهيمة الأنعام (الإبل: 5 سنين، البقر: سنتان، المعز: سنة، والضأن: 6 أشهر)، خالية من العيوب المانعة (العوراء البين عورها، العرجاء البين عرجها، المريضة البين مرضها، والعجفاء الهزيلة). ويبدأ وقتها من بعد صلاة عيد الأضحى إلى غروب شمس يوم 13 ذي الحجة (آخر أيام التشريق). وتجزئ الشاة عن الرجل وأهل بيته.</p>
+                    <p><strong>4. فقه العقيقة:</strong> شاتان متقاربتان عن المولود الذكر وشاة واحدة عن الأنثى، تذبح يوم السابع لولادته ويحلق شعره ويتصدق بوزنه فضة ويسن تسميته بالاسم الحسن.</p>
+                </div>
+            `
+        },
+
+        hajj: {
+            title: "فقه الحج والعمرة — الأركان والواجبات والمناسك ومحظورات الإحرام",
+            category: "فقه العبادات",
+            tagClass: "tag-ibadat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> التأصيل القرآني والنبوي:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا» [آل عمران: 97]<br>
+                    وقال ﷺ: «خُذُوا عَنِّي مَنَاسِكَكُمْ» [رواه مسلم]، وقال: «العُمْرَةُ إِلَى العُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا، وَالحَجُّ المَبْرُورُ لَيْسَ لَهُ جَزَاءٌ إِلَّا الجَنَّةُ». [متفق عليه]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> المناسك التفصيلية وأركان الحج والعمرة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. أركان العمرة الثلاثة:</strong> الإحرام (النية)، الطواف بالبيت 7 أشواط، والسعي بين الصفا والمروة 7 أشواط، وواجبها الحلق أو التقصير.</p>
+                    <p><strong>2. أركان الحج الأربعة (لا يصح الحج إلا بها ولا يجبرها دم):</strong>
+                        <br>1. الإحرام (نية الدخول في النسك).
+                        <br>2. الوقوف بعرفة (من زوال شمس 9 ذي الحجة إلى فجر يوم النحر، وأعظمها جزء من الليل).
+                        <br>3. طواف الإفاضة.
+                        <br>4. السعي بين الصفا والمروة.
+                    </p>
+                    <p><strong>3. واجبات الحج السبعة (من ترك واجباً لزمه دم ذبيحة بمكة للمساكين):</strong>
+                        <br>الإحرام من الميقات المكاني المعتبر، الوقوف بعرفة إلى الغروب، المبيت بمزدلفة ليلة النحر، المبيت بمنى ليالي أيام التشريق، رمي الجمرات مرتبة، الحلق أو التقصير، وطواف الوداع لغير الحائض والنفساء.
+                    </p>
+                    <p><strong>4. محظورات الإحرام التسعة:</strong>
+                        <br>حلق شعر الرأس والبدن، تقليم الأظافر، مس الطيب والتطيب، تغطية الرأس للرجل بملاصق كالقبعة، لبس المخيط المفصل للرجل كالثوب والسراويل، قتل صيد البر، عقد النكاح، المباشرة بشهوة، والجماع (وهو المفسد للحج إن وقع قبل التحلل الأول).</p>
+                </div>
+            `
+        },
+
+        nikah: {
+            title: "فقه النكاح والخطبة — أركان عقد الزواج والشروط والمهر والمحرمات",
+            category: "فقه الأسرة والنكاح",
+            tagClass: "tag-family",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً» [الروم: 21]<br>
+                    وقال ﷺ: «يَا مَعْشَرَ الشَّبَابِ مَنِ اسْتَطَاعَ مِنْكُمُ البَاءَةَ فَلْيَتَزَوَّجْ؛ فَإِنَّهُ أَغَضُّ لِلْبَصَرِ وَأَحْصَنُ لِلْفَرْجِ» [متفق عليه]، وقال: «لَا نِكَاحَ إِلَّا بِوَلِيٍّ وَشَاهِدَيْ عَدْلٍ». [صحيح أبي داود والترمذي]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والشروط التفصيلية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. ضوابط الخطبة والرؤية الشرعية:</strong> تسن الرؤية الشرعية للمخطوبة بحضور محرم بلا خلوة ولا لمس، والخطبة وعد بالزواج لا يترتب عليها أي أثر من آثار عقد النكاح، وتبقى المخطوبة أجنبية عن الخاطب حتى يتم العقد الشرعي التام.</p>
+                    <p><strong>2. أركان عقد النكاح الثلاثة:</strong>
+                        <br>• الزوجان الخاليان من الموانع الشرعية التي تمنع صحة النكاح.
+                        <br>• <strong>الإيجاب:</strong> اللفظ الصادر من الولي كقوله: «زوجتك أو أنكحتك ابنتي أو موكلتي».
+                        <br>• <strong>القبول:</strong> اللفظ الصادر من الزوج أو وكيله كقوله: «قبلت هذا النكاح أو تزوجتها».
+                    </p>
+                    <p><strong>3. شروط صحة عقد الزواج الأربعة:</strong>
+                        <br>1. تعيين الزوجين بالاسم أو الإشارة المميزة.
+                        <br>2. الرضا التام الصريح من الزوجين دون إكراه.
+                        <br>3. إذن الولي الشرعي للمرأة (الأب ثم الجد ثم الابن ثم الأخ الشقيق ثم الأخ لأب ثم العصبة).
+                        <br>4. الشهادة وحضور شاهدي عدل مسلمين بالغين عاقلين سامعين للإيجاب والقبول.
+                    </p>
+                    <p><strong>4. أحكام الصداق (المهر):</strong> واجب على الزوج خالص للمرأة لا يجوز لأبيها ولا زوجها أخذ شيء منه إلا بطيب نفس منها، وتسن التيسير فيه وعدم المغالاة.</p>
+                    <p><strong>5. المحرمات من النساء:</strong>
+                        <br>• <strong>تحريم مؤبد بالنسب:</strong> الأمهات، البنات، الأخوات، العمات، الخالات، وبنات الأخ وبنات الأخت.
+                        <br>• <strong>تحريم مؤبد بالرضاع:</strong> يحرم من الرضاع ما يحرم من النسب (بشرط 5 رضعات معلومات في الحولين).
+                        <br>• <strong>تحريم مؤبد بالمصاهرة:</strong> زوجة الأب، زوجة الابن، أم الزوجة، وبنت الزوجة المدخول بأمها.
+                        <br>• <strong>تحريم مؤقت:</strong> الجمع بين الأختين، والجمع بين المرأة وعمتها أو خالتها، والمرأة المتزوجة أو المعتدة حتى تنقضي عدتها.</p>
+                </div>
+            `
+        },
+
+        zawaj_huqooq: {
+            title: "حقوق الزوجين والمعاشرة بالمعروف ورعاية الأسرة وحل النزاع",
+            category: "فقه الأسرة والنكاح",
+            tagClass: "tag-family",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> التأصيل القرآني:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَعَاشِرُوهُنَّ بِالْمَعْرُوفِ ۚ فَإِن كَرِهْتُمُوهُنَّ فَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَيَجْعَلَ اللَّهُ فِيهِ خَيْرًا كَثِيرًا» [النساء: 19]<br>
+                    «وَلَهُنَّ مِثْلُ الَّذِي عَلَيْهِنَّ بِالْمَعْرُوفِ ۚ وَلِلرِّجَالِ عَلَيْهِنَّ دَرَجَةٌ ۗ وَاللَّهُ عَزِيزٌ حَكِيمٌ» [البقرة: 228]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الواجبات والحقوق الشرعية المتبادلة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. الحقوق الخاصة بالزوجة على زوجها:</strong>
+                        <br>• <strong>النفقة والكسوة والسكن:</strong> بالمعروف وبما يليق بمثلها وحال الزوج يسراً وعسراً.
+                        <br>• <strong>حسن المعاشرة:</strong> المعاملة الكريمة، الكف عن الإيذاء اللفظي والجسدي، التلطف، والمشاورة والمودة.
+                        <br>• <strong>العدل بين الزوجات:</strong> في المبيت والنفقة والمعاملة الظاهرة في حال التعدد.
+                    </p>
+                    <p><strong>2. الحقوق الخاصة بالزوج على زوجته:</strong>
+                        <br>• <strong>القوامة والطاعة في المعروف:</strong> بما لا معصية فيه لله ورسوله.
+                        <br>• <strong>حفظ سره وماله وعرضه وبيته:</strong> وألا تدخل بيته من يكرهه إلا بإذنه، وألا تخرج من بيته إلا بإذنه.
+                        <br>• رعاية الأبناء وحسن التبعل وإدخال السرور على قلبه.
+                    </p>
+                    <p><strong>3. المراحل الشرعية لعلاج النشوز والنزاع الأسري:</strong>
+                        <br>1. الموعظة الحسنة والتذكير بحق الله وحدوده ولين الكلام.
+                        <br>2. الهجر في المضجع داخل البيت دون هجر الكلام أكثر من 3 أيام.
+                        <br>3. الضرب غير المبرح التأديبي اللطيف كالسواك (الذي لا يكسر عظماً ولا يشين عضواً ويحرم ضرب الوجه قطعاً).
+                        <br>4. بعث حكمين عدلين: «وَإِنْ خِفْتُمْ شِقَاقَ بَيْنِهِمَا فَابْعَثُوا حَكَمًا مِّنْ أَهْلِهِ وَحَكَمًا مِّنْ أَهْلِهَا إِن يُرِيدَا إِصْلَاحًا يُوَفِّقِ اللَّهُ بَيْنَهُمَا».</p>
+                </div>
+            `
+        },
+
+        talaq_khul: {
+            title: "فقه الطلاق والخلع والفسخ — السني والبدعي والرجعي والبائن بالتفصيل",
+            category: "فقه الأسرة والنكاح",
+            tagClass: "tag-family",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية:</h4>
+                <div class="fiqh-dalil-box">
+                    «الطَّلَاقُ مَرَّتَانِ ۖ فَإِمْسَاكٌ بِمَعْرُوفٍ أَوْ تَسْرِيحٌ بِإِحْسَانٍ» [البقرة: 229]<br>
+                    «يَا أَيُّهَا النَّبِيُّ إِذَا طَلَّقْتُمُ النِّسَاءَ فَطَلِّقُوهُنَّ لِعِدَّتِهِنَّ وَأَحْصُوا الْعِدَّةَ» [الطلاق: 1]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام الفقهية والتفريعات:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. أقسام الطلاق من حيث الموافقة للسنة:</strong>
+                        <br>• <strong>الطلاق السني المشروع:</strong> أن يطلقها طلقة واحدة في طهر لم يجامعها فيه ولم تكن حائضاً ولا نفساء.
+                        <br>• <strong>الطلاق البدعي المحرم:</strong> أن يطلقها وهي حائض أو نفساء، أو في طهر جامعها فيه، أو يطلقها ثلاثاً بلفظ واحد (كقوله: أنت طالق بالثلاث)؛ ويأثم فاعله إثماً عظيماً.
+                    </p>
+                    <p><strong>2. أقسام الطلاق من حيث الأثر وحق الرجعة:</strong>
+                        <br>• <strong>الطلاق الرجعي (الطلقة الأولى أو الثانية بعد الدخول):</strong> تظل الزوجة في عصمة زوجها وفي بيته أثناء العدة، ويرث كل منهما الآخر إن مات، ويملك الزوج إرجاعها في العدة بقوله «راجعتك» بلا عقد جديد ولا مهر ولا يشترط رضاها.
+                        <br>• <strong>الطلاق البائن بينونة صغرى:</strong> انقضاء عدة الطلقة الأولى أو الثانية دون مراجعة، أو الطلاق قبل الدخول، أو الخلع؛ تبين به الزوجة ولا تحل له إلا بعقد ومهر جديدين ورضاها التام.
+                        <br>• <strong>الطلاق البائن بينونة كبرى (الطلقة الثالثة):</strong> تحرم عليه حرمة مؤقتة ولا تحل له بحال حتى تنكح زوجاً غيره نكاح رغبة شرعي ويدخل بها حقيقة، ثم يفارقها بموت أو طلاق اختياري من غير اتفاق ولا تحليل.
+                    </p>
+                    <p><strong>3. فقه الخلع والفسخ:</strong>
+                        <br>• <strong>الخلع:</strong> فراق الزوجة لزوجها بعوض مالي تدفعه له (كرد المهر) عند كراهيتها له وخوفها التقصير في حقوقه، ولا ينقص من عدد الطلقات الثلاث.
+                        <br>• <strong>الفسخ:</strong> نقض العقد بحكم القاضي الشرعي لوجود عيب منفر أو إعسار الزوج بالنفقة أو غيبته الطويلة والضرر البالغ.</p>
+                </div>
+            `
+        },
+
+        iddah_hadanah: {
+            title: "فقه العِدد والنفقة وحضانة الأطفال بعد الفرقة والوفاة",
+            category: "فقه الأسرة والنكاح",
+            tagClass: "tag-family",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة القرآنية:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَالْمُطَلَّقَاتُ يَتَرَبَّصْنَ بِأَنفُسِهِنَّ ثَلَاثَةَ قُرُوءٍ» [البقرة: 228]<br>
+                    «وَالَّذِينَ يُتَوَفَّوْنَ مِنكُمْ وَيَذَرُونَ أَزْوَاجًا يَتَرَبَّصْنَ بِأَنفُسِهِنَّ أَرْبَعَةَ أَشْهُرٍ وَعَشْرًا» [البقرة: 234]<br>
+                    «وَأُولَاتُ الْأَحْمَالِ أَجَلُهُنَّ أَن يَضَعْنَ حَمْلَهُنَّ» [الطلاق: 4]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الفقهية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. تفصيل مدد العِدد الشرعية:</strong>
+                        <br>• <strong>المطلقة ذوات الحيض:</strong> ثلاثة قروء (ثلاث حيضات كاملات).
+                        <br>• <strong>الآيسة والصغيرة التي لا تحيض:</strong> ثلاثة أشهر قمرية.
+                        <br>• <strong>الحامل (مطلقة أو متوفى عنها):</strong> تنتهي عدتها بوضع الحمل كاملاً ولو بعد ساعات من الفرقة.
+                        <br>• <strong>المتوفى عنها زوجها غير الحامل:</strong> أربعة أشهر وعشرة أيام قمرية مع وجوب الإحداد.
+                        <br>• <strong>المطلقة قبل الدخول والخلوة:</strong> لا عدة عليها إطلاقاً لقوله تعالى: «فَمَا لَكُمْ عَلَيْهِنَّ مِنْ عِدَّةٍ تَعْتَدُّونَهَا».
+                    </p>
+                    <p><strong>2. أحكام الإحداد للمتوفى عنها زوجها:</strong> ترك الزينة في البدن، والكحل، والحلي، والطيب، ولبس الثياب اللافتة للأنظار، والمبيت في غير بيتها لغير ضرورة.</p>
+                    <p><strong>3. فقه حضانة الأطفال وترتيب المستحقين:</strong>
+                        <br>• الحضانة حفظ الصغير وتربيته والقيام بمصالحه، وأولى الناس بها الأم بالإجماع لقوله ﷺ: «أَنْتِ أَحَقُّ بِهِ مَا لَمْ تَنْكِحِي».
+                        <br>• ترتيب المستحقين عند سقوط حق الأم: أم الأم، ثم الأب، ثم أمهات الأب، ثم الأخوات، ثم الخالات. ونفقة المحضون وسكنه وأجرته على والده الواجبة عليه شرعاً.</p>
+                </div>
+            `
+        },
+
+        hijab_libas: {
+            title: "فقه اللباس والحجاب والزينة الشرعية — شروط الستر وضوابط التجمل",
+            category: "فقه الأسرة والنكاح",
+            tagClass: "tag-family",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة والتأصيل:</h4>
+                <div class="fiqh-dalil-box">
+                    «يَا أَيُّهَا النَّبِيُّ قُل لِّأَزْوَاجِكَ وَبَنَاتِكَ وَنِسَاءِ الْمُؤْمِنِينَ يُدْنِينَ عَلَيْهِنَّ مِن جَلَابِيبِهِنَّ ۚ ذَٰلِكَ أَدْنَىٰ أَن يُعْرَفْنَ فَلَا يُؤْذَيْنَ» [الأحزاب: 59]<br>
+                    «وَقُل لِّلْمُؤْمِنَاتِ يَغْضُضْنَ مِنْ أَبْصَارِهِنَّ وَيَحْفَظْنَ فُرُوجَهُنَّ وَلَا يُبْدِينَ زِينَتَهُنَّ إِلَّا مَا ظَهَرَ مِنْهَا» [النور: 31]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الشرعية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. شروط الحجاب الشرعي الكامل:</strong>
+                        <br>1. استيعاب جميع بدن المرأة أمام الرجال الأجانب.
+                        <br>2. ألا يكون الحجاب زينة في نفسه تلفت أنظار الرجال.
+                        <br>3. أن يكون صفيقاً ثخيناً لا يشف عما تحته.
+                        <br>4. أن يكون واسعاً فضفاضاً غير ضيق يصف أو يجسم تقاطيع البدن.
+                        <br>5. ألا يكون مبخراً ولا مطيباً أمام الأجانب.
+                        <br>6. ألا يشبه لباس الرجال ولا لباس الكافرات الخاص بهن.
+                    </p>
+                    <p><strong>2. حدود عورة الرجل وعورة المرأة:</strong>
+                        <br>• <strong>عورة الرجل:</strong> من السرة إلى الركبة في الصلاة وأمام الرجال والمحارم.
+                        <br>• <strong>عورة المرأة أمام الأجانب:</strong> سائر جسدها، وأمام محارمها والنساء ما عدا مواضع الزينة المعتادة (الوجه، الشعر، الرقبة، الذراعين، وأسفل الساقين).
+                    </p>
+                    <p><strong>3. المحرمات في اللباس والزينة:</strong>
+                        <br>• الإسبال للرجال بقصد الخيلاء والكبر، ولبس الذهب والحرير الطبيعي للذكور.
+                        <br>• الوشم، النمص (نتف شعر الحاجبين)، تفليج الأسنان للحسن، ووصل الشعر بالشعر الطبيعي.</p>
+                </div>
+            `
+        },
+
+        birr_walidayn: {
+            title: "بِرُّ الوالدين وصلة الأرحام — الأحكام والواجبات والحقوق الشرعية",
+            category: "الأخلاق والآداب",
+            tagClass: "tag-akhlaq",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> التأصيل القرآني والنبوي:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ الْكِبَرَ أَحَدُهُمَا أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَا أُفٍّ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًا كَرِيمًا» [الإسراء: 23]<br>
+                    وقَالَ ﷺ: «رَغِمَ أَنْفُهُ، ثُمَّ رَغِمَ أَنْفُهُ، ثُمَّ رَغِمَ أَنْفُهُ؛ مَنْ أَدْرَكَ وَالِدَيْهِ عِنْدَ الكِبَرِ أَحَدَهُمَا أَوْ كِلَيْهِمَا ثُمَّ لَمْ يَدْخُلِ الجَنَّةَ». [رواه مسلم]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والواجبات الفقهية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. الحكم التكليفي:</strong> بر الوالدين فرض عين قطعي مجمع عليه، وعقوقهما من أكبر الكبائر السبع الموبقة.</p>
+                    <p><strong>2. ضوابط طاعة الوالدين:</strong>
+                        <br>• تجب طاعتهما في كل ما يأمران به من المباحات والمستحبات، ولا يجوز نهرهما ولا التضجر منهما.
+                        <br>• إذا أمرا بمعصية لله فلا طاعة لهما في المعصية، مع استمرار وجوب الإحسان والنفقة والمصاحبة بالمعروف لقوله تعالى: «وَإِن جَاهَدَاكَ عَلَىٰ أَن تُشْرِكَ بِي مَا لَيْسَ لَكَ بِهِ عِلْمٌ فَلَا تُطِعْهُمَا ۖ وَصَاحِبْهُمَا فِي الدُّنْيَا مَعْرُوفًا».
+                    </p>
+                    <p><strong>3. وجوب النفقة عليهما:</strong> تجب نفقة الوالدين الفقيرين المحتاجين على ابنهما الموسر بالإجماع.</p>
+                    <p><strong>4. صور البر بعد الوفاة:</strong> الدعاء والاستغفار لهما، إنفاذ وصيتهما وعهودهما المباحة، قضاء ديونهما وحج ونذر الطاعة عنهما، صلة رحمهما، وإكرام صديقهما ومعارفهما.</p>
+                    <p><strong>5. فقه صلة الرحم:</strong> تجب صلة الأقارب وذوي الأرحام بالزيارة والاتصال والصلة بالمال والمواساة، وتحرم قطيعة الرحم قطيعة تامة لقوله ﷺ: «لَا يَدْخُلُ الجَنَّةَ قَاطِعُ رَحِمٍ».</p>
+                </div>
+            `
+        },
+
+        akhlaq_lisan: {
+            title: "حُسن الخلق والمروءة وآفات اللسان الكبرى في ميزان الشريعة",
+            category: "الأخلاق والآداب",
+            tagClass: "tag-akhlaq",
+            content: `
+                <h4><i class="fa-solid fa-scroll"></i> الأدلة النبوية الصحيحة:</h4>
+                <div class="fiqh-dalil-box">
+                    قَالَ ﷺ: «إِنَّ مِنْ أَحَبِّكُمْ إِلَيَّ وَأَقْرَبِكُمْ مِنِّي مَجْلِسًا يَوْمَ القِيَامَةِ أَحَاسِنَكُمْ أَخْلَاقًا» [رواه الترمذي]<br>
+                    وقال ﷺ: «مَا مِنْ شَيْءٍ أَثْقَلُ فِي مِيزَانِ المُؤْمِنِ يَوْمَ القِيَامَةِ مِنْ حُسْنِ الخُلُقِ» [صحيح الترمذي]، وقال لمعاذ: «وَهَلْ يَكُبُّ النَّاسَ فِي النَّارِ عَلَى وُجُوهِهِمْ إِلَّا حَصَائِدُ أَلْسِنَتِهِمْ؟».
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الشرعية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. مقام حسن الخلق:</strong> جماع حسن الخلق في بذل الندى، وكف الأذى، وطلاقة الوجه، ومقابلة الإساءة بالإحسان، وكظم الغيظ والحلم والعفو عند المقدرة.</p>
+                    <p><strong>2. محرمات اللسان الكبرى:</strong>
+                        <br>• <strong>الغيبة:</strong> ذكرك أخاك المسلم في غيبته بما يكرهه لو سمعه (في بدنه أو خلقه أو نسبه أو دينه).
+                        <br>• <strong>النميمة:</strong> نقل الكلام بين الناس بقصد الإفساد والتفريق وقطع أواصر المودة.
+                        <br>• <strong>البهتان:</strong> افتراء الكذب والباطل على البريء وهو أعظم إثماً من الغيبة.
+                        <br>• شهادة الزور، اليمين الكاذبة، اللعن، السخرية والاستهزاء، والتنابز بالألقاب السيئة.
+                    </p>
+                    <p><strong>3. المواضع الستة التي تباح فيها الغيبة للمصلحة الشرعية الراجحة:</strong>
+                        <br>1. التظلم أمام القاضي والسلطان لأخذ الحق.
+                        <br>2. الاستعانة على تغيير المنكر ورد العاصي إلى الصواب.
+                        <br>3. الاستفتاء عند المفتي لبيان الواقعة دون زيادة.
+                        <br>4. تحذير المسلمين من الشرور (كالنصيحة في الخطبة، الشراكة المالية، وجرح وتعديل الرواة والشهود).
+                        <br>5. المجاهر بالفسق والبدعة المعلنة فيما جاهر به فقط.
+                        <br>6. التعريف بلقب لا يقصد به العيب والتنقص لمن لا يعرف إلا به (كالأعمش والأعرج).</p>
+                </div>
+            `
+        },
+
+        adab_taam: {
+            title: "فقه الأطعمة والأشربة والذكاة الشرعية وأحكام الصيد والضيافة",
+            category: "الأخلاق والآداب",
+            tagClass: "tag-akhlaq",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة القرآنية:</h4>
+                <div class="fiqh-dalil-box">
+                    «حُرِّمَتْ عَلَيْكُمُ الْمَيْتَةُ وَالدَّمُ وَلَحْمُ الْخِنزِيرِ وَمَا أُهِلَّ لِغَيْرِ اللَّهِ بِهِ وَالْمُنْخَنِقَةُ وَالْمَوْقُوذَةُ وَالْمُتَرَدِّيَةُ وَالنَّطِيحَةُ وَمَا أَكَلَ السَّبُعُ إِلَّا مَا ذَكَّيْتُمْ» [المائدة: 3]<br>
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا كُلُوا مِن طَيِّبَاتِ مَا رَزَقْنَاكُمْ وَاشْكُرُوا لِلَّهِ» [البقرة: 172]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفريعات:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. القاعدة الشرعية في الأطعمة:</strong> الأصل في جميع الأطعمة والأشربة والحيوانات والطيور الإباحة والحل إلا ما ورد نص صريح بتحريمه لخبثه وضرره.</p>
+                    <p><strong>2. المحرمات من الأطعمة والحيوانات:</strong>
+                        <br>• الميتة بجميع صورها (المنخنقة، الموقوذة، المتردية، النطيحة).
+                        <br>• الدم المسفوح الجاري، ولحم الخنزير وشحمه وعظمه.
+                        <br>• الخمر والمسكرات والمخدرات والسموم الضارة بالبدن والعقل.
+                        <br>• كل ذي ناب من السباع يفترس به (كالأسد والنمر والذئب والكلب)، وكل ذي مخلب من الطير يصيد به (كالصقر والنسر والعقاب).
+                        <br>• الحمر الأهلية، والحيوانات التي أمر الشرع بقتلها (كالحية والعقرب والفأرة) أو نهى عن قتلها (كالنملة والنحلة والهدهد والصرد).
+                    </p>
+                    <p><strong>3. شروط الذكاة الشرعية الصحيحة:</strong>
+                        <br>1. أهلية الذابح بأن يكون مسلماً أو كتابياً (يهودياً أو نصرانياً) عاقلاً مميزاً.
+                        <br>2. الآلة الحادة المحددة القاطعة غير السن والظفر.
+                        <br>3. التسمية عند الذبح بقول: «بسم الله والله أكبر».
+                        <br>4. قطع الحلقوم (مجرى النفس)، والمريء (مجرى الطعام)، والودجين (عِرقي الدم في العنق).</p>
+                </div>
+            `
+        },
+
+        tadawi_tib: {
+            title: "فقه التداوي والمسائل الطبية المعاصرة ونقل الأعضاء والإجهاض",
+            category: "الأخلاق والآداب",
+            tagClass: "tag-akhlaq",
+            content: `
+                <h4><i class="fa-solid fa-scroll"></i> الأدلة النبوية والقواعد الفقهية:</h4>
+                <div class="fiqh-dalil-box">
+                    قَالَ ﷺ: «تَدَاوَوْا فَإِنَّ اللهَ عَزَّ وَجَلَّ لَمْ يَضَعْ دَاءً إِلَّا وَضَعَ لَهُ دَوَاءً غَيْرَ دَاءٍ وَاحِدٍ: الهَرَمُ» [صحيح الترمذي]<br>
+                    وقاعدة: «الضَّرَرُ يُزَالُ»، وقاعدة: «الضَّرُورَاتُ تُبِيحُ المَحْظُورَاتِ بِقَدْرِهَا».
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> قرارات المجامع الفقهية المعاصرة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. حكم التداوي:</strong> مشروع ومستحب ومأمور به شرعاً بالأدوية الطاهرة المباحة ولا ينافي التوكل على الله بحال.</p>
+                    <p><strong>2. ضوابط نقل وزراعة الأعضاء والتبرع بالدم:</strong>
+                        <br>• <strong>نقل العضو من حي:</strong> يجوز إذا كان عضواً يتجدد (كالدم ونخاع العظم) أو لا تتوقف عليه الحياة (كإحدى الكليتين أو فص كبد) بشرط موافقته وألا يلحق به ضرر فادح، ويحرم بيع الأعضاء حرمة قطعية.
+                        <br>• <strong>نقل العضو بعد الوفاة:</strong> يجوز بعد ثبوت الموت الدماغي التام بتقرير لجنة طبية موثوقة وبإذن الميت قبل وفاته أو إذن ورثته الشرعيين.
+                    </p>
+                    <p><strong>3. الجراحات التجميلية:</strong>
+                        <br>• <strong>التجميل العلاجي (الجائز):</strong> لإزالة العيوب الخلقية الطارئة كعلاج الحروق وإصلاح التشوهات والحوادث ورد العضو لصورته المعتادة.
+                        <br>• <strong>التجميل التحسيني (المحرم):</strong> لتغيير خلق الله المعتاد طلباً للحسن الزائد ومضاهاة خلق الله.
+                    </p>
+                    <p><strong>4. أحكام الإجهاض الطبي:</strong> يحرم إسقاط الجنين بعد نفخ الروح (120 يوماً) إلا لإنقاذ حياة الأم المحققة بتقرير طبي. وقبل نفخ الروح لا يجوز إلا لتقرير طبي يؤكد تشوهات جسيمة لا يمكن علاجها أو خطر صحي مؤكد.</p>
+                </div>
+            `
+        },
+
+        adab_ruqya: {
+            title: "فقه الرقية الشرعية والأذكار والدعاء وعلاج العين والسحر والتحصين",
+            category: "الأخلاق والآداب",
+            tagClass: "tag-akhlaq",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> التأصيل والأدلة:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ» [الإسراء: 82]<br>
+                    وقال ﷺ: «اعْرِضُوا عَلَيَّ رُقَاكُمْ، لَا بَأْسَ بِالرُّقَى مَا لَمْ يَكُنْ فِيهِ شِرْكٌ» [رواه مسلم]، وقال: «العَيْنُ حَقٌّ، وَلَوْ كَانَ شَيْءٌ سَابَقَ القَدَرَ لَسَبَقَتْهُ العَيْنُ». [رواه مسلم]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والشروط التفصيلية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. شروط الرقية الشرعية الثلاثة المتفق عليها:</strong>
+                        <br>1. أن تكون بكلام الله تعالى وآياته، أو بأسمائه وصفاته، أو بالأدعية النبوية المأثورة.
+                        <br>2. أن تكون باللسان العربي أو بما يفهم معناه بوضوح.
+                        <br>3. أن يعتقد الراقي والمرقي أن الرقية سبب لا تؤثر بذاتها وإنما الشفاء بتقدير الله وإذنه.
+                    </p>
+                    <p><strong>2. علامات المشعوذين والدجالين والتحذير منهم:</strong>
+                        <br>سؤال المريض عن اسم أمه أو أثر من ثيابه، التمتمة بطلاسم غير مفهومة، كتابة جداول وحروف مقطعة، الذبح لغير الله، وطلب النجاسات؛ ويحرم إتيانهم وتصديقهم لقوله ﷺ: «مَنْ أَتَى كَاهِنًا أَوْ عَرَّافًا فَصَدَّقَهُ بِمَا يَقُولُ فَقَدْ كَفَرَ بِمَا أُنْزِلَ عَلَى مُحَمَّدٍ».
+                    </p>
+                    <p><strong>3. الأدعية والتحصينات النبوية المأثورة:</strong>
+                        <br>قراءة آية الكرسي، والإخلاص والمعوذتين ثلاثاً صباحاً ومساءً وعند النوم، وخواتيم سورة البقرة، وقول: «باسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم» ثلاثاً، و«أعوذ بكلمات الله التامات من شر ما خلق» ثلاثاً.</p>
+                </div>
+            `
+        },
+
+        ayman_nudhoor: {
+            title: "فقه الأيمان والنذور — أقسامها وشروط انعقادها وترتيب الكفارات",
+            category: "المعاملات والأيمان",
+            tagClass: "tag-muamalat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة القرآنية في كفارة اليمين:</h4>
+                <div class="fiqh-dalil-box">
+                    «لَا يُؤَاخِذُكُمُ اللَّهُ بِاللَّغْوِ فِي أَيْمَانِكُمْ وَلَٰكِن يُؤَاخِذُكُم بِمَا عَقَّدتُّمُ الْأَيْمَانَ ۖ فَكَفَّارَتُهُ إِطْعَامُ عَشَرَةِ مَسَاكِينَ مِنْ أَوْسَطِ مَا تُطْعِمُونَ أَهْلِيكُمْ أَوْ كِسْوَتُهُمْ أَوْ تَحْرِيرُ رَقَبَةٍ ۖ فَمَن لَّمْ يَجِدْ فَصِيَامُ ثَلَاثَةِ أَيَّامٍ ۚ ذَٰلِكَ كَفَّارَةُ أَيْمَانِكُمْ إِذَا حَلَفْتُمْ ۚ وَاحْفَظُوا أَيْمَانَكُمْ» [المائدة: 89]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفريعات الفقهية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. أقسام الأيمان الثلاثة وأحكامها:</strong>
+                        <br>• <strong>يمين اللغو:</strong> ما يجري على اللسان بغير قصد الحلف كـ «لا والله، وبلى والله» في الحديث العادي؛ لا إثم فيه ولا كفارة.
+                        <br>• <strong>اليمين المنعقدة:</strong> الحلف بالله أو بصفة من صفاته قاصداً عقد اليمين على أمر مستقبل ممكن ثم يحنث فيه؛ تجب فيه الكفارة بالإجماع.
+                        <br>• <strong>اليمين الغموس:</strong> الحلف بالله كاذباً عامداً لاقتطاع حق امرئ مسلم أو ترويج باطل؛ سميت غموساً لأنها تغمس صاحبها في الإثم ثم في النار، وهي من الكبائر العظمى وتوبتها رد المظالم والحقوق.
+                    </p>
+                    <p><strong>2. ترتيب كفارة اليمين الشرعي الدقيق:</strong>
+                        <br>• <strong>مرحلة التخيير أولاً (بين ثلاثة أمور):</strong> إطعام 10 مساكين (وجبة مشبعة أو 1.5 كغ أرز لكل مسكين)، أو كسوتهم، أو تحرير رقبة.
+                        <br>• <strong>مرحلة الترتيب ثانياً (صيام 3 أيام):</strong> لا يجزئ الصيام إطلاقاً لمن كان قادراً مالياً على الإطعام أو الكسوة، ولا ينتقل للصيام إلا عند العجز المالي التام.
+                    </p>
+                    <p><strong>3. أحكام النذر وأنواعه:</strong>
+                        <br>• <strong>نذر الطاعة:</strong> كنذر صلاة أو صيام أو صدقة لله؛ يجب الوفاء به لقوله ﷺ: «مَنْ نَذَرَ أَنْ يُطِيعَ اللَّهَ فَلْيُطِعْهُ».
+                        <br>• <strong>نذر المعصية:</strong> كنذر قطيعة رحم أو شرب محرم؛ يحرم الوفاء به وتجب فيه كفارة يمين.
+                        <br>• <strong>نذر اللجاج والغضب:</strong> يعامل معاملة اليمين ويخير بين الوفاء أو الكفارة.</p>
+                </div>
+            `
+        },
+
+        buyu_tijarah: {
+            title: "فقه البيوع والمعاملات — أركان التجارة والتقسيط والتجارة الرقمية",
+            category: "المعاملات والأيمان",
+            tagClass: "tag-muamalat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا» [البقرة: 275]<br>
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ» [النساء: 29]<br>
+                    وقال ﷺ: «التَّاجِرُ الصَّدُوقُ الأَمِينُ مَعَ النَّبِيِّينَ وَالصِّدِّيقِينَ وَالشُّهَدَاءِ». [رواه الترمذي]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الشروط والبيوع المعاصرة:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. شروط صحة البيع السبعة:</strong>
+                        <br>1. التراضي الصريح بين المتبايعين.
+                        <br>2. أهلية التصرف (بالغ عاقل رشيد).
+                        <br>3. أن تكون العين المبيعة مباحة المنفعة شرعاً (فلا يصح بيع الخمر والخنزير وآلات اللهو المحرمة).
+                        <br>4. أن يكون المبيع مملوكاً للبائع وقت العقد أو مأذوناً له ببيعه.
+                        <br>5. القدرة على تسليم المبيع (فلا يصح بيع المغصوب أو الطير في الهواء).
+                        <br>6. معرفة المبيع برؤية أو وصف منضبط مانع للجهالة والغرر.
+                        <br>7. معرفة الثمن والمثمن وتحديدهما بدقة عند العقد.
+                    </p>
+                    <p><strong>2. ضوابط البيع بالتقسيط:</strong> يجوز زيادة السعر في البيع المؤجل بالتقسيط عن السعر الفوري (الكاش) بشرط تحديد الأقساط والمبلغ الإجمالي النهائي في صلب العقد دون اشتراط غرامات تأخير ربوية عند تعثر السداد.</p>
+                    <p><strong>3. التجارة الإلكترونية والدفع الرقمي:</strong> تصح المعاملات والشراء عبر الإنترنت مع اشتراط دقة الوصف، وثبوت خيار الرؤية وخيار العيب للمشتري وحقه في الاسترجاع إن خالف المبيع الوصف أو كان معيباً.</p>
+                </div>
+            `
+        },
+
+        riba_bunuk: {
+            title: "تحريم الربا والمعاملات البنكية — ربا الفضل والنسيئة والبدائل المصرفية",
+            category: "المعاملات والأيمان",
+            tagClass: "tag-muamalat",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> التحذير والوعيد القرآني الشديد:</h4>
+                <div class="fiqh-dalil-box">
+                    «يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَذَرُوا مَا بَقِيَ مِنَ الرِّبَا إِن كُنتُم مُّؤْمِنِينَ * فَإِن لَّمْ تَفْعَلُوا فَأْذَنُوا بِحَرْبٍ مِّنَ اللَّهِ وَرَسُولِهِ ۖ وَإِن تُبْتُمْ فَلَكُمْ رُءُوسُ أَمْوَالِكُمْ لَا تَظْلِمُونَ وَلَا تُظْلَمُونَ» [البقرة: 278-279]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الفقهية المصرفية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. أنواع الربا في الشريعة الإسلامية:</strong>
+                        <br>• <strong>ربا النسيئة (ربا الديون):</strong> الزيادة المشروطة مقابل الأجل والتأخير في سداد الدين؛ وهو أصل ربا الجاهلية وهو عين فوائد القروض البنكية التقليدية وبطاقات الائتمان الربوية.
+                        <br>• <strong>ربا الفضل (ربا البيوع):</strong> بيع المال الربوي بجنسه متفاضلاً وزناً أو كيلاً (كالذهب بالذهب أو الفضة بالفضة مع اختلاف الوزن)، وقاعدته النبوية: «الذَّهَبُ بِالذَّهَبِ، وَالفِضَّةُ بِالفِضَّةِ، وَالبُرُّ بِالبُرِّ... مِثْلًا بِمِثْلٍ، يَدًا بِيَدٍ».
+                    </p>
+                    <p><strong>2. حكم فوائد البنوك والودائع التقليدية:</strong> أجمعت المجامع الفقهية (مجمع الفقه الإسلامي الدولي، وهيئة كبار العلماء، ومجمع البحوث الإسلامية) على أن فوائد القروض والودائع البنكية المحددة بنسبة مئوية مضمونة من رأس المال هي ربا محرم قطعاً.</p>
+                    <p><strong>3. البدائل المصرفية والاستثمارية الإسلامية:</strong>
+                        <br>• <strong>المرابحة للآمر بالشراء:</strong> شراء البنك للسلعة حقيقة وتملكها ثم بيعها للعميل بالتقسيط بربح معلوم.
+                        <br>• <strong>المضاربة الشرعية:</strong> دفع المال لمن يستثمره في تجارة مباحة مع اقتسام الأرباح بنسبة شائعة (كنصف أو ثلث الربح) وتحمل الخسارة في رأس المال دون ضمان ربح ثابت.
+                        <br>• <strong>عقود السلم والاستصناع والإجارة المنتهية بالتمليك.</strong></p>
+                </div>
+            `
+        },
+
+        zina_hifz_ird: {
+            title: "حفظ الأعراض ومقصد النسل — تحريم الزنا والفواحش وحد القذف وصيانة المجتمع",
+            category: "الجنايات والحدود",
+            tagClass: "tag-hudud",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة الشرعية والتحريم القطعي:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَلَا تَقْرَبُوا الزِّنَا ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا» [الإسراء: 32]<br>
+                    «وَالَّذِينَ يَرْمُونَ الْمُحْصَنَاتِ ثُمَّ لَمْ يَأْتُوا بِأَرْبَعَةِ شُهَدَاءَ فَاجْلِدُوهُمْ ثَمَانِينَ جَلْدَةً وَلَا تَقْبَلُوا لَهُمْ شَهَادَةً أَبَدًا ۚ وَأُولَٰئِكَ هُمُ الْفَاسِقُونَ» [النور: 4]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والمقاصد الشرعية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. مقصد حفظ النسل والعرض:</strong> العرض من الكليات الخمس التي اتفقت الشرائع على صونها، وحرم الإسلام الزنا وكل وسيلة وذريعة تفضي إليه: كالخلوة بالأجنبية، النظر المحرم، التبرج، والاختلاط المريب.</p>
+                    <p><strong>2. غض البصر والعفاف:</strong> فرض عين على الرجال والنساء لقوله تعالى: «قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ ۚ ذَٰلِكَ أَزْكَىٰ لَهُمْ».</p>
+                    <p><strong>3. حد القذف وصيانة الألسن:</strong>
+                        <br>• رمي المسلم أو المسلمة العفيفة بالفاحشة دون إقامة 4 شهود عدول رأوا الواقعة عياناً جريمة كبرى تستوجب حد القذف.
+                        <br>• <strong>عقوبة القاذف الثلاثية:</strong> الجلد 80 جلدة، رد شهادته في القضاء والمعاملات أبداً، والحكم عليه بالفسق حتى يتوب ويصلح.</p>
+                </div>
+            `
+        },
+
+        sariqah_jinayat: {
+            title: "حفظ الأموال والأنفس — فقه السرقة والقصاص والدية ورد المظالم",
+            category: "الجنايات والحدود",
+            tagClass: "tag-hudud",
+            content: `
+                <h4><i class="fa-solid fa-book-quran"></i> الأدلة القرآنية:</h4>
+                <div class="fiqh-dalil-box">
+                    «وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ لَعَلَّكُمْ تَتَّقُونَ» [البقرة: 179]<br>
+                    «وَالسَّارِقُ وَالسَّارِقَةُ فَاقْطَعُوا أَيْدِيَهُمَا جَزَاءً بِمَا كَسَبَا نَكَالًا مِّنَ اللَّهِ ۗ وَاللَّهُ عَزِيزٌ حَكِيمٌ» [المائدة: 38]
+                </div>
+
+                <h4><i class="fa-solid fa-scale-balanced"></i> الأحكام والتفاصيل الفقهية:</h4>
+                <div class="fiqh-masael-box">
+                    <p><strong>1. مقصد حفظ المال وحد السرقة:</strong>
+                        <br>• السرقة أخذ مال الغير المحترم خفية من حرز مثله بغير وجه حق.
+                        <br>• <strong>شروط إقامة حد السرقة والاحترازات الفقهية:</strong> التكليف، بلوغ المسروق النصاب (ربع دينار ذهب أو 3 دراهم فضة)، أن يؤخذ من حرز، ثبوت السرقة بإقرار أو شهادة، وعدم وجود شبهة ملك أو قرابة قوية، وعدم وجود اضطرار لجوع ومجاعة مهلكة (كما درأ عمر بن الخطاب الحد عام الرمادة).
+                    </p>
+                    <p><strong>2. مقصد حفظ النفس وأقسام القتل:</strong>
+                        <br>• <strong>القتل العمد:</strong> ما يقصد فيه القاتل قتل الشخص بما يقتل غالباً؛ وعقوبته القصاص (إلا إذا عفا أولياء المقتول إلى الدية أو عفوا مجاناً).
+                        <br>• <strong>القتل شبه العمد:</strong> قصد الجناية بما لا يقتل غالباً (كالضرب بعصا خفيفة)؛ وفيه الدية المغلظة على العاقلة مع الكفارة.
+                        <br>• <strong>القتل الخطأ:</strong> ما يقع بلا قصد كحوادث السير؛ وفيه الدية المخففة على العاقلة والكفارة (صيام شهرين متتابعين).
+                    </p>
+                    <p><strong>3. التوبة من المظالم وأكل أموال الناس:</strong> لا تصح التوبة من السرقة والغصب والاختلاس بالاستغفار وحده، بل يشترط رد المال كاملاً لأصحابه أو طلب المسامحة والإبراء منهم.</p>
+                </div>
+            `
+        }
+    };
+
+    function setFiqhFilter(category, btn) {
+        document.querySelectorAll('.fiqh-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+
+        var cards = document.querySelectorAll('.fiqh-card');
+        cards.forEach(function(card) {
+            var cat = card.getAttribute('data-category');
+            if (category === 'all' || cat === category) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function filterFiqhCards() {
+        var query = document.getElementById('fiqhSearchInput').value.trim().toLowerCase();
+        var cards = document.querySelectorAll('.fiqh-card');
+        cards.forEach(function(card) {
+            var title = card.getAttribute('data-title').toLowerCase();
+            var text = card.innerText.toLowerCase();
+            if (title.indexOf(query) !== -1 || text.indexOf(query) !== -1) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function openFiqhModal(topicKey) {
+        var data = fiqhData[topicKey];
+        if (!data) return;
+
+        var badgeEl = document.getElementById('modalCategoryBadge');
+        badgeEl.innerText = data.category;
+        badgeEl.className = 'fiqh-category-tag ' + (data.tagClass || 'tag-ibadat');
+        document.getElementById('modalTopicTitle').innerText = data.title;
+        document.getElementById('modalTopicBody').innerHTML = data.content;
+
+        document.getElementById('fiqhModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFiqhModal(e) {
+        if (e && e.target && e.target.id !== 'fiqhModal' && !e.target.closest('.modal-close-btn') && !e.target.closest('.btn-view-topic')) {
+            return;
+        }
+        var modal = document.getElementById('fiqhModal');
+        if (modal) modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeFiqhModal();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

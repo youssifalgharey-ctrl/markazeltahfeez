@@ -1,0 +1,54 @@
+<div class="side-menu-overlay" id="sideMenuOverlay" onclick="toggleSideMenu()"></div>
+
+<aside class="side-menu" id="sideMenu">
+    <div class="side-menu-header">
+        <div class="side-menu-header-actions">
+            <button class="btn-close-side" onclick="toggleSideMenu()" title="إغلاق القائمة">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <a href="/notifications.html" class="side-menu-icon-btn side-notifications-btn" title="صندوق الإشعارات والتنبيهات">
+                <i class="fa-solid fa-bell"></i>
+                <span class="side-notif-badge" id="sideNotifBadge" style="display: none;">0</span>
+            </a>
+        </div>
+        <h4><i class="fa-solid fa-compass"></i> القائمة الرئيسية</h4>
+    </div>
+
+    <!-- بطاقة الملف الشخصي -->
+    <div class="side-menu-profile">
+        <div class="profile-avatar-wrap">
+            <img id="sideMenuAvatarImg" class="profile-avatar-img" alt="صورة المستخدم" style="display:none;">
+            <i class="fa-solid fa-user profile-avatar-placeholder" id="sideMenuAvatarPlaceholder"></i>
+        </div>
+
+        <div class="profile-name-link" id="sideMenuUserNameLink">
+            <span id="sideMenuUserName">اسم المستخدم</span>
+        </div>
+        <a href="/account.html" class="profile-edit-link">
+            <i class="fa-solid fa-pen-to-square"></i> تعديل الملف الشخصي
+        </a>
+
+    </div>
+
+    <ul class="side-nav-links">
+        <li id="sideAdminLink" style="display: none;">
+            <a href="/admin.html" onclick="toggleSideMenu()" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.25)); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.35); font-weight: 800; border-radius: 10px; margin: 4px 0;">
+                <i class="fa-solid fa-shield-halved" style="color: #f59e0b;"></i> لوحة تحكم الإدارة
+            </a>
+        </li>
+        <li><a href="/home.html" onclick="toggleSideMenu()"><i class="fa-solid fa-house"></i> الرئيسية</a></li>
+        <li><a href="/quiz.html" onclick="toggleSideMenu()"><i class="fa-solid fa-clipboard-question"></i> إختبرني</a></li>
+        <li><a href="/courses.html" onclick="toggleSideMenu()"><i class="fa-solid fa-graduation-cap"></i> كورسات</a></li>
+        <li><a href="/progress.html" onclick="toggleSideMenu()"><i class="fa-solid fa-chart-pie"></i>مستوي التقدم</a></li>
+        <li><a href="/result.html" onclick="toggleSideMenu()"><i class="fa-solid fa-clipboard-check"></i> نتيجتي</a></li>
+        <li><a href="/community.html" onclick="toggleSideMenu()"><i class="fa-solid fa-users"></i> المجتمع والتفاعل</a></li>
+        <li><a href="/top-students.html" onclick="toggleSideMenu()"><i class="fa-solid fa-award"></i> أوائل الطلاب</a></li>
+    </ul>
+    <div class="side-menu-footer">
+        <button class="btn-side-logout" onclick="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+        </button>
+    </div>
+</aside>
+
+

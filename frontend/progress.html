@@ -1,0 +1,1020 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستوى التقدم - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';س
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- إعادة استخدام نفس ملف الأنماط الرئيسي للموقع بدل تكرار المتغيرات والخطوط -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* أنماط خاصة بصفحة مستوى التقدم فقط */
+
+        /* --- بطاقات الإحصائيات --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+
+        .stat-icon-box {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: 14px;
+            background: var(--light-emerald);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .stat-card.stat-streak .stat-icon-box {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent-gold);
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a202c;
+            line-height: 1.3;
+        }
+
+        .stat-label {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* --- بطاقة تسجيل حفظ اليوم --- */
+        .log-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(10, 77, 60, 0.06);
+            max-width: 760px;
+            margin: 0 auto 45px auto;
+        }
+
+        .log-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .log-card-header h4 {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .log-card-header h4 i {
+            color: var(--emerald);
+        }
+
+        .form-group {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .form-group textarea,
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--card-border);
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-main);
+            background: #fafcfb;
+            resize: vertical;
+        }
+
+        .form-group textarea {
+            min-height: 90px;
+        }
+
+        .form-group textarea:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--emerald);
+        }
+
+        .form-group textarea.input-error,
+        .form-group input.input-error {
+            border-color: #e74c3c !important;
+        }
+
+        .form-group .error-hint {
+            display: none;
+            color: #e74c3c;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .btn-save {
+            width: 100%;
+            background: var(--primary-green);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-save:hover {
+            background: var(--emerald);
+        }
+
+        .btn-save:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .save-confirm {
+            display: none;
+            margin-top: 14px;
+            color: var(--emerald);
+            font-weight: 700;
+            font-size: 13.5px;
+            text-align: center;
+        }
+
+        /* --- سجل الحفظ --- */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .history-item {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 14px;
+            transition: all 0.25s;
+        }
+
+        .history-item:hover {
+            border-color: var(--emerald);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .history-item-main {
+            flex: 1;
+        }
+
+        .history-date-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .history-date {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--emerald);
+        }
+
+        .history-today-tag {
+            background: var(--gold);
+            color: #1a202c;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 9px;
+            border-radius: 10px;
+        }
+
+        .history-content {
+            font-size: 14px;
+            color: var(--text-main);
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .history-pages {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .already-logged-view {
+            text-align: center;
+            padding: 6px 0 2px;
+        }
+
+        /* --- شارة "مسجل اليوم" في نموذج التعديل --- */
+        .logged-today-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--light-emerald);
+            color: var(--emerald);
+            font-size: 12px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .edit-hint {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin: -6px 0 16px;
+        }
+
+        .already-logged-icon {
+            font-size: 40px;
+            color: var(--emerald);
+            margin-bottom: 10px;
+        }
+
+        .already-logged-text {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 14px;
+        }
+
+        .already-logged-content {
+            background: #fafcfb;
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 14px;
+            color: var(--text-main);
+            line-height: 1.7;
+            text-align: right;
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+
+        .already-logged-pages {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .already-logged-hint {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 34px;
+            color: var(--card-border);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .guest-notice {
+            max-width: 560px;
+            margin: 0 auto 40px auto;
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            border: 1.5px solid rgba(13, 107, 83, 0.2);
+            border-radius: 14px;
+            padding: 18px 22px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .guest-notice a {
+            color: var(--emerald);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 992px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .log-card {
+                padding: 20px;
+            }
+        }
+
+        /* --- الوضع الليلي --- */
+        [data-theme="dark"] .stat-card,
+        [data-theme="dark"] .log-card,
+        [data-theme="dark"] .history-item {
+            background: #16241f;
+            border-color: #23352c;
+        }
+
+        [data-theme="dark"] .stat-value,
+        [data-theme="dark"] .log-card-header h4,
+        [data-theme="dark"] .history-content {
+            color: #e2e8f0;
+        }
+
+        [data-theme="dark"] .stat-icon-box {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+        }
+
+        [data-theme="dark"] .stat-card.stat-streak .stat-icon-box {
+            background: rgba(240, 193, 75, 0.15);
+            color: #f0c14b;
+        }
+
+        [data-theme="dark"] .form-group textarea,
+        [data-theme="dark"] .form-group input {
+            background: #0f1a16;
+            border-color: #23352c;
+            color: #e2e8f0;
+        }
+
+        [data-theme="dark"] .already-logged-text {
+            color: #e2e8f0;
+        }
+
+        [data-theme="dark"] .already-logged-content {
+            background: #0f1a16;
+            border-color: #23352c;
+            color: #e2e8f0;
+        }
+
+        [data-theme="dark"] .history-item:hover {
+            border-color: #34d399;
+        }
+
+        [data-theme="dark"] .history-date {
+            color: #34d399;
+        }
+
+        [data-theme="dark"] .guest-notice {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+
+        /* --- خطة الحفظ الشخصية في مستوى التقدم --- */
+        .my-plan-card {
+            background: linear-gradient(135deg, rgba(13,107,83,0.06) 0%, rgba(212,175,55,0.04) 100%);
+            border: 2px solid rgba(13,107,83,0.2);
+            border-radius: 20px;
+            padding: 24px 28px;
+            max-width: 760px;
+            margin: 0 auto 28px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .my-plan-card::before {
+            content: "";
+            position: absolute; top: 0; right: 0;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(13,107,83,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .my-plan-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+        }
+        .my-plan-title-wrap { display: flex; align-items: center; gap: 10px; }
+        .my-plan-icon {
+            width: 44px; height: 44px; background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 18px;
+        }
+        .my-plan-title { font-size: 16px; font-weight: 800; color: #1a202c; }
+        [data-theme="dark"] .my-plan-title { color: #e2e8f0; }
+        .my-plan-subtitle { font-size: 12.5px; color: var(--text-muted); }
+        .btn-cancel-plan {
+            background: rgba(220,53,69,0.08); color: #dc3545;
+            border: 1.5px solid rgba(220,53,69,0.25); border-radius: 10px;
+            padding: 8px 14px; font-size: 13px; font-weight: 700;
+            cursor: pointer; font-family: inherit; transition: all 0.2s;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-cancel-plan:hover { background: rgba(220,53,69,0.15); border-color: #dc3545; }
+        .my-plan-stats {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .my-plan-stat {
+            background: #fff; border: 1.5px solid var(--card-border); border-radius: 12px;
+            padding: 10px 16px; text-align: center; min-width: 80px; flex: 1;
+        }
+        [data-theme="dark"] .my-plan-stat { background: #0f1a16; border-color: #23352c; }
+        .my-plan-stat-value { font-size: 20px; font-weight: 800; color: var(--primary-green); display: block; }
+        [data-theme="dark"] .my-plan-stat-value { color: #4ade80; }
+        .my-plan-stat-label { font-size: 11.5px; color: var(--text-muted); }
+        .my-plan-no-plan {
+            text-align: center; padding: 24px; color: var(--text-muted);
+            font-size: 14px; border: 1.5px dashed var(--card-border);
+            border-radius: 16px; max-width: 760px; margin: 0 auto 28px auto;
+        }
+        .my-plan-no-plan a { color: var(--emerald); font-weight: 700; text-decoration: none; }
+        .my-plan-no-plan a:hover { text-decoration: underline; }
+        [data-theme="dark"] .my-plan-card {
+            background: linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(212,175,55,0.04) 100%);
+            border-color: rgba(74,222,128,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- مقدمة الصفحة -->
+<section class="section-container" id="progress">
+    <div class="section-header">
+        <h3 class="section-title"><i class="fa-solid fa-chart-pie"></i> مستوى التقدم</h3>
+    </div>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 10px; text-align: center; max-width: 700px; margin-inline: auto;">
+        سجّل حفظك أول ما تخلص تسميع عند الشيخ وترجع البيت، وتابع تتابع أيامك وإجمالي تقدمك أول بأول.
+    </p>
+</section>
+
+<!-- تنبيه لغير المسجلين دخول -->
+<div class="guest-notice" id="guestNotice" style="display:none;">
+    لازم تسجل الدخول الأول عشان تقدر تسجل حفظك وتتابع تقدمك. <a href="/index.html">تسجيل الدخول</a>
+</div>
+
+<!-- محتوى الصفحة (يظهر بعد التأكد من تسجيل الدخول) -->
+<div id="progressContent" style="display:none;">
+
+
+    <!-- خطتي الشخصية -->
+    <section class="section-container">
+        <!-- مع خطة -->
+        <div class="my-plan-card" id="myPlanCard" style="display:none;">
+            <div class="my-plan-header">
+                <div class="my-plan-title-wrap">
+                    <div class="my-plan-icon"><i class="fa-solid fa-route"></i></div>
+                    <div>
+                        <div class="my-plan-title" id="myPlanTitle">خطتي الشخصية</div>
+                        <div class="my-plan-subtitle" id="myPlanDate">بدأت في: -</div>
+                    </div>
+                </div>
+                <button class="btn-cancel-plan" onclick="cancelMyPlan()" title="إلغاء الخطة">
+                    <i class="fa-solid fa-xmark"></i> إلغاء الخطة
+                </button>
+            </div>
+            <div class="my-plan-stats">
+                <div class="my-plan-stat">
+                    <span class="my-plan-stat-value" id="myPlanPages">-</span>
+                    <span class="my-plan-stat-label">صفحة / يوم</span>
+                </div>
+                <div class="my-plan-stat">
+                    <span class="my-plan-stat-value" id="myPlanMinutes">-</span>
+                    <span class="my-plan-stat-label">دقيقة / يوم</span>
+                </div>
+                <div class="my-plan-stat">
+                    <span class="my-plan-stat-value" id="myPlanMonths">-</span>
+                    <span class="my-plan-stat-label">أشهر للختم</span>
+                </div>
+            </div>
+        </div>
+        <!-- بدون خطة -->
+        <div class="my-plan-no-plan" id="myNoPlanCard" style="display:none;">
+            <i class="fa-solid fa-map-location-dot" style="font-size:28px;color:var(--emerald);display:block;margin-bottom:10px;"></i>
+            لم تضع خطة حفظ شخصية بعد.
+            <br><a href="/start.html">ابدأ خطتك الآن</a>
+        </div>
+    </section>
+    <!-- بطاقات الإحصائيات -->
+    <section class="section-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon-box"><i class="fa-solid fa-calendar-check"></i></div>
+                <div>
+                    <div class="stat-value" id="statTotalDays">0</div>
+                    <div class="stat-label">إجمالي أيام الحفظ</div>
+                </div>
+            </div>
+            <div class="stat-card stat-streak">
+                <div class="stat-icon-box"><i class="fa-solid fa-fire"></i></div>
+                <div>
+                    <div class="stat-value" id="statStreak">0</div>
+                    <div class="stat-label">التتابع الحالي (يوم)</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-box"><i class="fa-solid fa-trophy"></i></div>
+                <div>
+                    <div class="stat-value" id="statLongestStreak">0</div>
+                    <div class="stat-label">أطول تتابع وصلته</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-box"><i class="fa-solid fa-book-quran"></i></div>
+                <div>
+                    <div class="stat-value" id="statTotalPages">0</div>
+                    <div class="stat-label">إجمالي الصفحات المحفوظة</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تسجيل حفظ اليوم -->
+    <section class="section-container">
+        <div class="log-card">
+            <div class="log-card-header">
+                <h4><i class="fa-solid fa-pen-to-square"></i> تسجيل حفظ اليوم</h4>
+            </div>
+
+            <!-- نموذج التسجيل: يظهر لو الطالب لسه ما سجلش النهاردة -->
+            <div id="logFormFields">
+                <div class="form-group">
+                    <label for="contentInput">ايه اللي حفظته النهاردة؟</label>
+                    <textarea id="contentInput" placeholder="مثال: حفظت سورة البقرة من آية 1 إلى 20، وراجعت جزء عم"></textarea>
+                    <span class="error-hint" id="contentErrorHint">لازم تكتب وصف الحفظ</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="pagesInput">عدد الصفحات</label>
+                    <input type="number" id="pagesInput" min="0.1" step="0.25" placeholder="مثال: 1.5" required>
+                    <span class="error-hint" id="pagesErrorHint">يرجى كتابة عدد الصفحات</span>
+                </div>
+
+                <button class="btn-save" id="saveLogBtn" onclick="submitTodayLog()">
+                    <i class="fa-solid fa-check"></i> حفظ التسجيل
+                </button>
+                <div class="save-confirm" id="saveConfirm"><i class="fa-solid fa-circle-check"></i> تم حفظ تسجيل اليوم بنجاح</div>
+            </div>
+
+            <!-- نموذج التعديل: يظهر لو الطالب سجل النهاردة بس لسه ما استخدمش فرصة التعديل.
+                 متاحة مرة واحدة بس، لو سجل غلط أول مرة. -->
+            <div id="editFormFields" style="display:none;">
+                <span class="logged-today-badge"><i class="fa-solid fa-circle-check"></i> مسجل اليوم</span>
+
+                <div class="form-group">
+                    <label for="editContentInput">ايه اللي حفظته النهاردة؟</label>
+                    <textarea id="editContentInput" placeholder="مثال: حفظت سورة البقرة من آية 1 إلى 20، وراجعت جزء عم"></textarea>
+                    <span class="error-hint" id="editContentErrorHint">لازم تكتب وصف الحفظ</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPagesInput">عدد الصفحات</label>
+                    <input type="number" id="editPagesInput" min="0.1" step="0.25" placeholder="مثال: 1.5" required>
+                    <span class="error-hint" id="editPagesErrorHint">يرجى كتابة عدد الصفحات</span>
+                </div>
+
+                <p class="edit-hint"><i class="fa-solid fa-circle-info"></i> فرصة التعديل دي بتتاح مرة واحدة بس، لو سجلت غلط أول مرة.</p>
+
+                <button class="btn-save" id="updateLogBtn" onclick="submitTodayUpdate()">
+                    <i class="fa-solid fa-rotate"></i> تحديث تسجيل اليوم
+                </button>
+                <div class="save-confirm" id="updateConfirm"><i class="fa-solid fa-circle-check"></i> تم تحديث تسجيل اليوم بنجاح</div>
+            </div>
+
+            <!-- حالة القفل: تظهر بعد ما الطالب يستخدم فرصة التعديل، ومينفعش يعدل عليها تاني -->
+            <div id="alreadyLoggedView" class="already-logged-view" style="display:none;">
+                <div class="already-logged-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <p class="already-logged-text">تم تسجيل حفظ اليوم بنجاح</p>
+                <div class="already-logged-content" id="alreadyLoggedContent"></div>
+                <div class="already-logged-pages" id="alreadyLoggedPages">
+                    <i class="fa-solid fa-book-open"></i> <span id="alreadyLoggedPagesText"></span>
+                </div>
+                <p class="already-logged-hint">تقدر تسجل حفظ يوم جديد بكرة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- سجل الحفظ السابق -->
+    <section class="section-container" id="history-section">
+        <div class="section-header" style="margin-bottom: 20px;">
+            <h3 class="section-title"><i class="fa-solid fa-list-ul"></i> سجل الحفظ</h3>
+        </div>
+        <div class="history-list" id="historyList">
+            <!-- بيتم تعبئتها ديناميكياً من السيرفر -->
+        </div>
+        <div class="empty-state" id="historyEmptyState" style="display:none;">
+            <i class="fa-solid fa-book"></i>
+            لسه معندكش أي تسجيل حفظ. ابدأ بتسجيل حفظ النهاردة!
+        </div>
+    </section>
+</div>
+
+<script src="/js/app.js"></script>
+<script>
+    function authHeaders(extra) {
+        const headers = Object.assign({ 'Content-Type': 'application/json' }, extra || {});
+        const token = localStorage.getItem('token');
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+        return headers;
+    }
+
+    async function apiRequest(url, options) {
+        const response = await fetch(url, Object.assign({}, options, { headers: authHeaders() }));
+        let data = null;
+        try { data = await response.json(); } catch (e) { /* لا يوجد جسم استجابة */ }
+
+        // انتهاء صلاحية الجلسة أو توكن غير صالح: رجّع المستخدم لتسجيل الدخول برسالة واضحة
+        if (response.status === 401) {
+            localStorage.clear();
+            alert((data && data.message) ? data.message : 'انتهت صلاحية جلستك، من فضلك سجل الدخول مرة أخرى.');
+            window.location.href = '/index.html';
+            throw new Error('unauthorized');
+        }
+
+        if (!response.ok) {
+            const message = (data && data.message) ? data.message : 'حدث خطأ، حاول مرة أخرى.';
+            throw new Error(message);
+        }
+        return data;
+    }
+
+    const ARABIC_WEEKDAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+    function formatEntryDate(isoDate) {
+        // isoDate بيجي بصيغة YYYY-MM-DD من السيرفر
+        const parts = isoDate.split('-').map(Number);
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+        const weekday = ARABIC_WEEKDAYS[date.getDay()];
+        return weekday + ' - ' + parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+
+    function todayIso() {
+        const now = new Date();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return now.getFullYear() + '-' + month + '-' + day;
+    }
+
+    // ============================================================
+    //  خطة الحفظ الشخصية - تحميل وإلغاء
+    // ============================================================
+    function loadMyPlan() {
+        var planCard   = document.getElementById('myPlanCard');
+        var noPlanCard = document.getElementById('myNoPlanCard');
+
+        apiRequest('/api/plan/mine', { method: 'GET' }).then(function (plan) {
+            if (!plan.hasPlan) {
+                if (planCard)   planCard.style.display   = 'none';
+                if (noPlanCard) noPlanCard.style.display = 'block';
+                return;
+            }
+
+            if (planCard)   planCard.style.display   = 'block';
+            if (noPlanCard) noPlanCard.style.display = 'none';
+
+            var titleEl = document.getElementById('myPlanTitle');
+            var dateEl  = document.getElementById('myPlanDate');
+            var pagesEl = document.getElementById('myPlanPages');
+            var minsEl  = document.getElementById('myPlanMinutes');
+            var monthEl = document.getElementById('myPlanMonths');
+
+            if (titleEl) titleEl.textContent = plan.title || 'خطتي الشخصية';
+            if (pagesEl) pagesEl.textContent = plan.pagesPerDay  || '?';
+            if (minsEl)  minsEl.textContent  = plan.minutesPerDay || '?';
+            if (monthEl) monthEl.textContent = plan.monthsToKhatm || '?';
+
+            if (dateEl && plan.createdAt) {
+                var d = new Date(plan.createdAt);
+                dateEl.textContent = 'بدأت في: ' + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+            }
+        }).catch(function () {
+            if (planCard)   planCard.style.display   = 'none';
+            if (noPlanCard) noPlanCard.style.display = 'block';
+        });
+    }
+
+    function cancelMyPlan() {
+        if (!confirm('هل أنت متأكد من إلغاء خطة الحفظ؟ يمكنك إنشاء خطة جديدة في أي وقت.')) return;
+        apiRequest('/api/plan/mine', { method: 'DELETE' }).then(function () {
+            loadMyPlan();
+        }).catch(function (err) {
+            alert(err.message || 'تعذر إلغاء الخطة، حاول تاني');
+        });
+    }
+
+    async function loadStats() {
+        const stats = await apiRequest('/api/progress/stats', { method: 'GET' });
+        document.getElementById('statTotalDays').textContent = stats.totalDays;
+        document.getElementById('statStreak').textContent = stats.currentStreakDays;
+        document.getElementById('statLongestStreak').textContent = stats.longestStreakDays;
+        document.getElementById('statTotalPages').textContent = stats.totalPages;
+    }
+
+    function renderHistory(entries) {
+        const list = document.getElementById('historyList');
+        const emptyState = document.getElementById('historyEmptyState');
+        list.innerHTML = '';
+
+        if (!entries.length) {
+            emptyState.style.display = 'block';
+            return;
+        }
+        emptyState.style.display = 'none';
+
+        const today = todayIso();
+        entries.forEach(function (entry) {
+            const item = document.createElement('div');
+            item.className = 'history-item';
+
+            const isToday = entry.entryDate === today;
+            const pagesHtml = (entry.pagesCount !== null && entry.pagesCount !== undefined)
+                ? '<div class="history-pages"><i class="fa-solid fa-book-open"></i> ' + entry.pagesCount + ' صفحة</div>'
+                : '';
+
+            item.innerHTML =
+                '<div class="history-item-main">' +
+                    '<div class="history-date-row">' +
+                        '<span class="history-date">' + formatEntryDate(entry.entryDate) + '</span>' +
+                        (isToday ? '<span class="history-today-tag">اليوم</span>' : '') +
+                    '</div>' +
+                    '<div class="history-content"></div>' +
+                    pagesHtml +
+                '</div>';
+
+            // استخدام textContent عشان نمنع أي مشكلة XSS من محتوى كتبه المستخدم
+            item.querySelector('.history-content').textContent = entry.content;
+
+            list.appendChild(item);
+        });
+    }
+
+    async function loadHistory() {
+        const entries = await apiRequest('/api/progress/history', { method: 'GET' });
+        renderHistory(entries);
+
+        const today = todayIso();
+        const todayEntry = entries.find(function (e) { return e.entryDate === today; });
+
+        const formFields = document.getElementById('logFormFields');
+        const editFields = document.getElementById('editFormFields');
+        const lockedView = document.getElementById('alreadyLoggedView');
+
+        if (todayEntry && !todayEntry.edited) {
+            // سجل النهاردة بس لسه ما استخدمش فرصة التعديل: نعرض نموذج التحديث معبأ ببياناته
+            formFields.style.display = 'none';
+            editFields.style.display = 'block';
+            lockedView.style.display = 'none';
+
+            document.getElementById('editContentInput').value = todayEntry.content;
+            document.getElementById('editPagesInput').value =
+                (todayEntry.pagesCount !== null && todayEntry.pagesCount !== undefined) ? todayEntry.pagesCount : '';
+        } else if (todayEntry && todayEntry.edited) {
+            // الطالب استخدم فرصة التعديل بالفعل: نقفل التسجيل نهائياً
+            formFields.style.display = 'none';
+            editFields.style.display = 'none';
+            lockedView.style.display = 'block';
+
+            document.getElementById('alreadyLoggedContent').textContent = todayEntry.content;
+
+            const pagesRow = document.getElementById('alreadyLoggedPages');
+            if (todayEntry.pagesCount !== null && todayEntry.pagesCount !== undefined) {
+                document.getElementById('alreadyLoggedPagesText').textContent = todayEntry.pagesCount + ' صفحة';
+                pagesRow.style.display = 'flex';
+            } else {
+                pagesRow.style.display = 'none';
+            }
+        } else {
+            formFields.style.display = 'block';
+            editFields.style.display = 'none';
+            lockedView.style.display = 'none';
+        }
+    }
+
+    async function submitTodayLog() {
+        const contentInput = document.getElementById('contentInput');
+        const contentErrorHint = document.getElementById('contentErrorHint');
+        const content = contentInput.value.trim();
+
+        if (!content) {
+            contentInput.classList.add('input-error');
+            contentErrorHint.style.display = 'block';
+            return;
+        } else {
+            contentInput.classList.remove('input-error');
+            contentErrorHint.style.display = 'none';
+        }
+
+        const pagesInput = document.getElementById('pagesInput');
+        const pagesErrorHint = document.getElementById('pagesErrorHint');
+        const pagesRaw = pagesInput.value.trim();
+
+        if (pagesRaw === '') {
+            pagesInput.classList.add('input-error');
+            pagesErrorHint.textContent = 'يرجى كتابة عدد الصفحات';
+            pagesErrorHint.style.display = 'block';
+            return;
+        }
+
+        const pagesCount = Number(pagesRaw);
+        if (isNaN(pagesCount) || pagesCount <= 0) {
+            pagesInput.classList.add('input-error');
+            pagesErrorHint.textContent = 'عدد الصفحات لازم يكون رقم أكبر من صفر';
+            pagesErrorHint.style.display = 'block';
+            return;
+        }
+        pagesInput.classList.remove('input-error');
+        pagesErrorHint.style.display = 'none';
+
+        const saveBtn = document.getElementById('saveLogBtn');
+        saveBtn.disabled = true;
+
+        try {
+            await apiRequest('/api/progress/log', {
+                method: 'POST',
+                body: JSON.stringify({ content: content, pagesCount: pagesCount })
+            });
+
+            const confirmMsg = document.getElementById('saveConfirm');
+            confirmMsg.style.display = 'block';
+            setTimeout(function () { confirmMsg.style.display = 'none'; }, 2500);
+
+            contentInput.value = '';
+            pagesInput.value = '';
+
+            await Promise.all([loadStats(), loadHistory()]);
+        } catch (err) {
+            alert(err.message);
+        } finally {
+            saveBtn.disabled = false;
+        }
+    }
+
+    async function submitTodayUpdate() {
+        const contentInput = document.getElementById('editContentInput');
+        const contentErrorHint = document.getElementById('editContentErrorHint');
+        const content = contentInput.value.trim();
+
+        if (!content) {
+            contentInput.classList.add('input-error');
+            contentErrorHint.style.display = 'block';
+            return;
+        } else {
+            contentInput.classList.remove('input-error');
+            contentErrorHint.style.display = 'none';
+        }
+
+        const pagesInput = document.getElementById('editPagesInput');
+        const pagesErrorHint = document.getElementById('editPagesErrorHint');
+        const pagesRaw = pagesInput.value.trim();
+
+        if (pagesRaw === '') {
+            pagesInput.classList.add('input-error');
+            pagesErrorHint.textContent = 'يرجى كتابة عدد الصفحات';
+            pagesErrorHint.style.display = 'block';
+            return;
+        }
+
+        const pagesCount = Number(pagesRaw);
+        if (isNaN(pagesCount) || pagesCount <= 0) {
+            pagesInput.classList.add('input-error');
+            pagesErrorHint.textContent = 'عدد الصفحات لازم يكون رقم أكبر من صفر';
+            pagesErrorHint.style.display = 'block';
+            return;
+        }
+        pagesInput.classList.remove('input-error');
+        pagesErrorHint.style.display = 'none';
+
+        const updateBtn = document.getElementById('updateLogBtn');
+        updateBtn.disabled = true;
+
+        try {
+            await apiRequest('/api/progress/log', {
+                method: 'PUT',
+                body: JSON.stringify({ content: content, pagesCount: pagesCount })
+            });
+
+            const confirmMsg = document.getElementById('updateConfirm');
+            confirmMsg.style.display = 'block';
+            setTimeout(function () { confirmMsg.style.display = 'none'; }, 2000);
+
+            // بعد التحديث، السيرفر بيرجع edited = true، فنموذج التعديل هيتشال
+            // تلقائياً ويتقفل التسجيل في loadHistory()
+            await Promise.all([loadStats(), loadHistory()]);
+        } catch (err) {
+            alert(err.message);
+        } finally {
+            updateBtn.disabled = false;
+        }
+    }
+
+    document.getElementById('contentInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('contentErrorHint').style.display = 'none';
+    });
+
+    document.getElementById('pagesInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('pagesErrorHint').style.display = 'none';
+    });
+
+    document.getElementById('editContentInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('editContentErrorHint').style.display = 'none';
+    });
+
+    document.getElementById('editPagesInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('editPagesErrorHint').style.display = 'none';
+    });
+
+    // تحميل بيانات الصفحة بعد التأكد من وجود توكن صالح
+    (function initProgressPage() {
+        if (!localStorage.getItem('token')) {
+            document.getElementById('guestNotice').style.display = 'block';
+            document.getElementById('progressContent').style.display = 'none';
+            return;
+        }
+        document.getElementById('guestNotice').style.display = 'none';
+        document.getElementById('progressContent').style.display = 'block';
+
+        loadMyPlan();
+
+        Promise.all([loadStats(), loadHistory()]).catch(function (err) {
+            console.error('تعذر تحميل بيانات مستوى التقدم:', err);
+        });
+    })();
+</script>
+</body>
+</html>

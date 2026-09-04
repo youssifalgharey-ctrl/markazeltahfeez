@@ -1,0 +1,2007 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>علم التجويد وإتقان الترتيل - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="موسوعة علم التجويد التأصيلي والشامل (50 موضوعاً من الصفر إلى الإتقان)، مخارج الحروف وصفاتها، أحكام النون والميم والمدود والوقف والابتداء.">
+
+    <!-- تطبيق الثيم فوراً لمنع الوميض -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        :root {
+            --tajweed-primary: #062b21;
+            --tajweed-accent: #10b981;
+            --tajweed-gold: #d4af37;
+        }
+
+        /* التصميم الجديد والفخم لبنر التجويد */
+        .tajweed-hero-modern {
+            position: relative;
+            background: linear-gradient(135deg, #05241b 0%, #0a3d30 50%, #06261d 100%);
+            border-radius: 28px;
+            padding: 38px 34px;
+            margin-bottom: 26px;
+            overflow: hidden;
+            border: 1.5px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 20px 45px rgba(5, 36, 27, 0.35);
+        }
+        [data-theme="dark"] .tajweed-hero-modern {
+            background: linear-gradient(135deg, #071913 0%, #0d271f 60%, #091d17 100%);
+            border-color: rgba(212, 175, 55, 0.25);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .tajweed-hero-modern::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -15%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .tajweed-hero-modern::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            right: -10%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .tajweed-hero-layout {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .hero-info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .hero-top-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            color: #fef08a;
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 800;
+            width: fit-content;
+            backdrop-filter: blur(4px);
+        }
+        .hero-top-pill i {
+            color: var(--tajweed-gold);
+        }
+
+        .hero-modern-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.35;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .hero-modern-title span {
+            background: linear-gradient(135deg, #fef08a 0%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-ayah-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-right: 4px solid var(--tajweed-gold);
+            border-radius: 16px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .ayah-glow-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--tajweed-gold), #b45309);
+            color: #0f2c23;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .ayah-content-text {
+            font-family: 'Amiri', serif;
+            font-size: 19px;
+            line-height: 1.5;
+            color: #fef08a;
+            margin: 0;
+            font-weight: 700;
+        }
+        .ayah-content-sub {
+            font-size: 12px;
+            color: #d1fae5;
+            display: block;
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .hero-quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .btn-hero-action {
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            font-family: 'Cairo', sans-serif;
+            text-decoration: none;
+            border: none;
+        }
+        .btn-hero-primary {
+            background: linear-gradient(135deg, var(--emerald), #059669);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+        }
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.45);
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(6px);
+        }
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: var(--tajweed-gold);
+            color: #fef08a;
+            transform: translateY(-2px);
+        }
+
+        /* الجانب الأيسر - شبكة البطاقات المصغرة التفاعلية */
+        .hero-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .hero-feature-box {
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 18px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .hero-feature-box:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+        }
+        .feature-box-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-icon-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--tajweed-gold);
+            color: #fef08a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .feature-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #fef08a;
+            line-height: 1.3;
+        }
+        .feature-desc {
+            font-size: 12px;
+            color: #f1f5f9;
+            line-height: 1.5;
+        }
+
+        /* تحسين شريط البحث والفلترة */
+        .tajweed-controls-modern {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 22px;
+            padding: 16px 20px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        [data-theme="dark"] .tajweed-controls-modern {
+            background: #11201a;
+            border-color: #1e382b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .controls-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .search-bar-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+        .search-bar-wrap input {
+            width: 100%;
+            padding: 11px 44px 11px 18px;
+            border-radius: 14px;
+            border: 1.5px solid var(--card-border);
+            background: #f8fafc;
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            font-size: 13.5px;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+        [data-theme="dark"] .search-bar-wrap input {
+            background: #081510;
+            border-color: #1e382b;
+            color: #ffffff;
+        }
+        .search-bar-wrap input:focus {
+            border-color: var(--emerald);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+        }
+        [data-theme="dark"] .search-bar-wrap input:focus {
+            background: #11201a;
+            border-color: #34d399;
+        }
+        .search-icon-inside {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--emerald);
+            font-size: 15px;
+        }
+        [data-theme="dark"] .search-icon-inside { color: #34d399; }
+
+        .results-count-chip {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .results-count-chip {
+            background: #081510;
+            color: #e2e8f0;
+            border: 1px solid #1e382b;
+        }
+
+        .filter-tabs-modern {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #f1f5f9;
+            border: 1.5px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+        [data-theme="dark"] .tab-btn {
+            background: #081510;
+            color: #cbd5e1;
+            border-color: #1e382b;
+        }
+        .tab-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+            transform: translateY(-1px);
+        }
+        [data-theme="dark"] .tab-btn:hover {
+            border-color: #34d399;
+            color: #34d399;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--emerald), #059669) !important;
+            color: #ffffff !important;
+            border-color: var(--emerald) !important;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+        }
+        [data-theme="dark"] .tab-btn.active {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            color: #ffffff !important;
+            border-color: #34d399 !important;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4) !important;
+        }
+        .tab-btn.btn-tab-completed {
+            border-color: rgba(16, 185, 129, 0.45);
+            color: var(--emerald);
+        }
+        [data-theme="dark"] .tab-btn.btn-tab-completed {
+            border-color: rgba(52, 211, 153, 0.4);
+            color: #34d399;
+        }
+
+        .tajweed-empty-state {
+            grid-column: 1 / -1;
+            padding: 44px 20px;
+            text-align: center;
+            background: #ffffff;
+            border: 1.5px dashed var(--card-border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--text-muted);
+            margin: 10px 0 30px;
+        }
+        [data-theme="dark"] .tajweed-empty-state {
+            background: #11201a;
+            border-color: #1e382b;
+            color: #cbd5e1;
+        }
+        .empty-state-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+        [data-theme="dark"] .empty-state-icon {
+            background: rgba(52, 211, 153, 0.18);
+            color: #34d399;
+        }
+        .tajweed-empty-state h4 {
+            font-size: 17.5px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .tajweed-empty-state h4 {
+            color: #ffffff;
+        }
+        .tajweed-empty-state p {
+            font-size: 13.5px;
+            max-width: 460px;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* شبكة بطاقات مواضيع التجويد */
+        .tajweed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tajweed-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .tajweed-card {
+            background: #11201a;
+            border-color: #1e382b;
+        }
+        .tajweed-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--emerald);
+            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.12);
+        }
+        [data-theme="dark"] .tajweed-card:hover {
+            border-color: #34d399;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .tajweed-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        .tajweed-cat-tag {
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tag-basics { background: rgba(16, 185, 129, 0.12); color: var(--emerald); }
+        .tag-makhaarij { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+        .tag-ahkam { background: rgba(212, 175, 55, 0.15); color: #b45309; }
+        [data-theme="dark"] .tag-basics { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+        [data-theme="dark"] .tag-makhaarij { background: rgba(96, 165, 250, 0.15); color: #93c5fd; }
+        [data-theme="dark"] .tag-ahkam { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .tag-tafkheem { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+        .tag-waqf { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
+        [data-theme="dark"] .tag-tafkheem { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+        [data-theme="dark"] .tag-waqf { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
+
+        .tajweed-card-title {
+            font-size: 17.5px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.45;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .tajweed-card-title {
+            color: #ffffff !important;
+        }
+
+        .tajweed-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .tajweed-card-icon {
+            background: rgba(52, 211, 153, 0.18);
+            color: #34d399;
+        }
+
+        .tajweed-card-desc {
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        [data-theme="dark"] .tajweed-card-desc {
+            color: #cbd5e1 !important;
+        }
+
+        .tajweed-subtopics-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 18px 0;
+        }
+        .tajweed-subtopics-list li {
+            font-size: 12.5px;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .tajweed-subtopics-list li {
+            color: #f1f5f9 !important;
+        }
+        .tajweed-subtopics-list li i {
+            color: var(--emerald);
+            font-size: 11px;
+        }
+        [data-theme="dark"] .tajweed-subtopics-list li i {
+            color: #34d399;
+        }
+        .tajweed-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .tajweed-card-icon {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .tajweed-card-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .tajweed-subtopics-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 18px 0;
+        }
+        .tajweed-subtopics-list li {
+            font-size: 12px;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tajweed-subtopics-list li i {
+            color: var(--emerald);
+            font-size: 11px;
+        }
+
+        .btn-view-tajweed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: var(--emerald);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-view-tajweed:hover {
+            background: #0d9668;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        /* نافذة المودال التفصيلية */
+        .tajweed-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .tajweed-modal-overlay.open {
+            display: flex;
+        }
+
+        .tajweed-modal-box {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 780px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            animation: modalFadeIn 0.25s ease-out;
+        }
+        [data-theme="dark"] .tajweed-modal-box {
+            background: #15221d;
+            border-color: #24362e;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .tajweed-modal-header {
+            padding: 20px 26px;
+            border-bottom: 1.5px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        [data-theme="dark"] .tajweed-modal-header { border-bottom-color: #24362e; }
+
+        .tajweed-modal-title {
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--emerald);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        [data-theme="dark"] .tajweed-modal-title { color: #34d399; }
+        .btn-close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        .btn-close-modal:hover {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .tajweed-modal-body {
+            padding: 26px;
+            overflow-y: auto;
+            font-size: 14.5px;
+            line-height: 1.9;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .tajweed-modal-body { color: #f1f5f9; }
+
+        .tajweed-modal-footer {
+            padding: 16px 26px;
+            border-top: 1.5px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: #f8fafc;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+        [data-theme="dark"] .tajweed-modal-footer {
+            background: #0d1a15;
+            border-top-color: #1e382b;
+        }
+
+        .btn-toggle-complete {
+            background: linear-gradient(135deg, #094030, #052a20);
+            border: 1.5px solid #10b981;
+            color: #ffffff;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 14.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 4px 12px rgba(6, 42, 32, 0.25);
+        }
+        .btn-toggle-complete:hover {
+            transform: translateY(-2px);
+            border-color: #34d399;
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+        }
+        .btn-toggle-complete.is-completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #34d399;
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        /* شارة إتمام الباب على البطاقة في الشبكة */
+        .card-completed-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid var(--emerald);
+            color: var(--emerald);
+            font-size: 11px;
+            font-weight: 900;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        [data-theme="dark"] .card-completed-badge {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+            color: #34d399;
+        }
+
+        .tajweed-card.is-done {
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.08);
+        }
+        [data-theme="dark"] .tajweed-card.is-done {
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 6px 22px rgba(16, 185, 129, 0.15);
+        }
+
+        .tajweed-matn-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(16, 185, 129, 0.08));
+            border-right: 4px solid var(--tajweed-gold);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 16px 0 20px;
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            line-height: 2;
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .tajweed-matn-box { color: #fef08a; }
+
+        .tajweed-example-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .tajweed-rule-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--emerald);
+            margin: 20px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .tajweed-rule-title { color: #34d399; }
+
+        .tajweed-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13.5px;
+        }
+        .tajweed-table th, .tajweed-table td {
+            border: 1px solid var(--card-border);
+            padding: 10px 14px;
+            text-align: right;
+        }
+        [data-theme="dark"] .tajweed-table th, [data-theme="dark"] .tajweed-table td {
+            border-color: #24362e;
+        }
+        .tajweed-table th {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--emerald);
+            font-weight: 800;
+        }
+        [data-theme="dark"] .tajweed-table th { color: #34d399; }
+
+        @media (max-width: 950px) {
+            .tajweed-hero-layout { grid-template-columns: 1fr; gap: 24px; }
+            .hero-features-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-modern-title { font-size: 26px; }
+        }
+        @media (max-width: 550px) {
+            .hero-features-grid { grid-template-columns: 1fr; }
+            .tajweed-hero-modern { padding: 24px 18px; }
+            .hero-quick-actions { flex-direction: column; align-items: stretch; }
+            .controls-top-row { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/home.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-house"></i> الرئيسية
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<div class="section-container" style="padding-top: 15px;">
+
+    <!-- بنر علم التجويد التأصيلي الفخم الجديد -->
+    <div class="tajweed-hero-modern">
+        <div class="tajweed-hero-layout">
+            <!-- الجانب الأيمن: العناوين والآية والأزرار السريعة -->
+            <div class="hero-info-side">
+                <div class="hero-top-pill">
+                    <i class="fa-solid fa-gem"></i> المسار العلمي المنهجي المتكامل • علم التجويد وإتقان الترتيل
+                </div>
+                <h1 class="hero-modern-title">
+                    مَوْسُوعَةُ عِلْمِ التَّجْوِيدِ <span>وَإِتْقَانِ التَّرْتِيلِ</span>
+                </h1>
+                
+                <div class="hero-ayah-card">
+                    <div class="ayah-glow-icon"><i class="fa-solid fa-quran"></i></div>
+                    <div>
+                        <p class="ayah-content-text">﴿ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴾</p>
+                        <span class="ayah-content-sub">«وَالأَخْذُ بِالتَّجْوِيدِ حَتْمٌ لاَزِمُ • مَنْ لَمْ يُجَوِّدِ الْقُرْآنَ آثِمُ»</span>
+                    </div>
+                </div>
+
+                <div class="hero-quick-actions">
+                    <a href="#tajweedControls" class="btn-hero-action btn-hero-primary" onclick="document.getElementById('tajweedSearchInput').focus()">
+                        <i class="fa-solid fa-magnifying-glass"></i> استكشف جميع الأبواب
+                    </a>
+                    <button class="btn-hero-action btn-hero-secondary" onclick="openRandomTajweedTopic()">
+                        <i class="fa-solid fa-dice"></i> مراجعة باب عشوائي 🎲
+                    </button>
+                </div>
+            </div>
+
+            <!-- الجانب الأيسر: بطاقات الميزات التفاعلية المتألقة -->
+            <div class="hero-features-grid">
+                <div class="hero-feature-box">
+                    <div class="feature-box-header">
+                        <div class="feature-icon-badge"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="feature-label">أبواب ومسائل التجويد</div>
+                    </div>
+                    <div class="feature-desc">تغطية شاملة وتأصيلية من الصفر حتى الإتقان</div>
+                </div>
+
+                <div class="hero-feature-box">
+                    <div class="feature-box-header">
+                        <div class="feature-icon-badge" style="background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; color: #93c5fd;"><i class="fa-solid fa-head-side-cough"></i></div>
+                        <div class="feature-label">مخارج الحروف وصفاتها</div>
+                    </div>
+                    <div class="feature-desc">ضبط صوتي دقيق لجميع مخارج الحروف</div>
+                </div>
+
+                <div class="hero-feature-box">
+                    <div class="feature-box-header">
+                        <div class="feature-icon-badge" style="background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fde68a;"><i class="fa-solid fa-book-journal-whills"></i></div>
+                        <div class="feature-label">شواهد المنظومات</div>
+                    </div>
+                    <div class="feature-desc">أدلة التحفة والجزرية والشاطبية</div>
+                </div>
+
+                <div class="hero-feature-box">
+                    <div class="feature-box-header">
+                        <div class="feature-icon-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;"><i class="fa-solid fa-certificate"></i></div>
+                        <div class="feature-label">السند المتصل والإجازة</div>
+                    </div>
+                    <div class="feature-desc">ضوابط الختمة والإقراء والمشافهة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط البحث والفلترة المطور -->
+    <div class="tajweed-controls-modern" id="tajweedControls">
+        <div class="controls-top-row">
+            <div class="search-bar-wrap">
+                <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
+                <input type="text" id="tajweedSearchInput" placeholder="ابحث فورياً في أبواب التجويد (مثال: الإظهار، القلقلة، الراء، الروم، المد اللازم...)" oninput="filterTajweedTopics()">
+            </div>
+            <div class="results-count-chip" id="resultsCountChip">
+                <i class="fa-solid fa-book-open"></i> يتم عرض <strong id="activeTopicsCount" style="color: var(--emerald); margin: 0 4px;">50</strong> باباً
+            </div>
+        </div>
+
+        <div class="filter-tabs-modern">
+            <button class="tab-btn active" onclick="setTajweedCategory('all', this)"><i class="fa-solid fa-border-all"></i> جميع الأبواب</button>
+            <button class="tab-btn btn-tab-completed" onclick="setTajweedCategory('completed', this)" id="tabCompletedTopics"><i class="fa-solid fa-circle-check"></i> الأبواب المكتملة</button>
+            <button class="tab-btn" onclick="setTajweedCategory('basics', this)"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</button>
+            <button class="tab-btn" onclick="setTajweedCategory('makhaarij', this)"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</button>
+            <button class="tab-btn" onclick="setTajweedCategory('ahkam', this)"><i class="fa-solid fa-shapes"></i> الأحكام والمدود</button>
+            <button class="tab-btn" onclick="setTajweedCategory('tafkheem', this)"><i class="fa-solid fa-scale-balanced"></i> التفخيم والترقيق</button>
+            <button class="tab-btn" onclick="setTajweedCategory('waqf', this)"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</button>
+        </div>
+    </div>
+
+    <!-- شبكة بطاقات الأبواب الـ 50 -->
+    <div class="tajweed-grid" id="tajweedGrid">
+
+        <!-- 1: مبادئ علم التجويد -->
+        <div class="tajweed-card" data-category="basics" data-title="مبادئ علم التجويد تعريفه حكمه فضله غايته استمداده مسائله">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-book-open"></i></div><span>مـبـادئ عـلـم الـتـجـويـد وحـكـمـه</span></h3>
+                <p class="tajweed-card-desc">المبادئ العشرة لعلم التجويد؛ تعريفه لغة واصطلاحاً، حكمه الشرعي (فرض عين عملاً وفرض كفاية علماً)، وفضله وغايته العظمى.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف التجويد وإعطاء الحروف حقها ومستحقها</li>
+                    <li><i class="fa-solid fa-check"></i> حكم العمل بالتجويد للأمة وفرضيته العينية</li>
+                    <li><i class="fa-solid fa-check"></i> شواهد المقدمة الجزرية في وجوب التجويد</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('basics_tajweed')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 2: اللحن في القرآن -->
+        <div class="tajweed-card" data-category="basics" data-title="اللحن الجلي اللحن الخفي أخطاء القراءة حكم اللحن الجلي">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><span>الـلَّـحْـنُ فـي الـقـرآن (الـجـلـي والـخـفـي)</span></h3>
+                <p class="tajweed-card-desc">التمييز بين اللحن الجلي (الخطأ في المبنى والحركات وحكمه التحريم) واللحن الخفي (الخطأ في كمال الصفات وحكمه الكراهة).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> اللحن الجلي وتبديل الحروف أو الحركات وأثره في الصلاة</li>
+                    <li><i class="fa-solid fa-check"></i> اللحن الخفي ونقصان مقادير المد والغنن</li>
+                    <li><i class="fa-solid fa-check"></i> جدول مقارنة شامل بين النوعين وحكم كل منهما</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('lahn_quran')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 3: الاستعاذة والبسملة -->
+        <div class="tajweed-card" data-category="basics" data-title="أحكام الاستعاذة البسملة أوجه الابتداء أوجه الوصل سورة التوبة براءة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-shield-halved"></i></div><span>أحـكـام الاسـتـعـاذة والـبـسـمـلـة</span></h3>
+                <p class="tajweed-card-desc">صيغ الاستعاذة، مواطن الجهر والإسرار بها، الأوجه الأربعة الجائزة عند الابتداء بالسورة، وأوجه الوصل بين السورتين وحكم سورة التوبة.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الأوجه الأربعة للابتداء (قطع الجميع، وصل الجميع...)</li>
+                    <li><i class="fa-solid fa-check"></i> الأوجه الجائزة بين السورتين والوجه الممنوع شرعاً</li>
+                    <li><i class="fa-solid fa-check"></i> علة ترك البسملة في مفتتح سورة براءة (التوبة)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('istiatha_basmalah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 4: مراتب القراءة -->
+        <div class="tajweed-card" data-category="basics" data-title="مراتب القراءة التحقيق التدوير الحدر الترتيل سرعة القراءة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-gauge-high"></i></div><span>مـراتـب الـقـراءة والـتـلاوة</span></h3>
+                <p class="tajweed-card-desc">سرعات وضوابط الأداء القرآني المعتمدة: التحقيق للتعليم والتأمل، التدوير لعامة القراءات، والحدر للحفظ والمراجعة مع الترتيل العام.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> التحقيق وضوابطه مع تجنب التمطيط والزيادة</li>
+                    <li><i class="fa-solid fa-check"></i> التدوير ومرتبته الوسطى في عموم التلاوة</li>
+                    <li><i class="fa-solid fa-check"></i> الحدر وشروطه لمنع إسقاط الحروف والمدود</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('maratib_qiraah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 5: تاريخ الرسم وضبط المصحف -->
+        <div class="tajweed-card" data-category="basics" data-title="تاريخ كتابة المصحف جمع القرآن الرسم العثماني النقط والإعجام">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-scroll"></i></div><span>تـاريـخ تـدويـن الـمـصـحـف وضـبـطـه</span></h3>
+                <p class="tajweed-card-desc">مراحل جمع القرآن الكريم في العهد النبوي وعهد أبي بكر وعثمان رضي الله عنهم، وتجريد المصاحف من النقط والشكل لحمل القراءات المتواترة.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> جمع القرآن بين العهد النبوي والخلافة الراشدة</li>
+                    <li><i class="fa-solid fa-check"></i> حكمة تجرد الرسم العثماني لاحتمال وجوه القراءات</li>
+                    <li><i class="fa-solid fa-check"></i> تطور نقط الإعجام والشكل وحركات الضبط</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('history_rasm')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 6: آداب تلاوة القرآن -->
+        <div class="tajweed-card" data-category="basics" data-title="آداب التلاوة حامل القرآن الخشوع البكاء الاستماع والإنصات تعاهد القرآن">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-basics"><i class="fa-solid fa-seedling"></i> المبادئ والأساسيات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-heart-pulse"></i></div><span>آداب تـلاوة الـقـرآن وتـدبـره</span></h3>
+                <p class="tajweed-card-desc">الآداب الظاهرة والباطنة عند التلاوة، تحسين الصوت دون تكلف، تدبر الآيات والتأثر بها، وحرمة تفلت القرآن وهجرانه.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الآداب الظاهرة (الطهارة، السواك، واستقبال القبلة)</li>
+                    <li><i class="fa-solid fa-check"></i> الآداب الباطنة (الإخلاص، حضور القلب، والخشوع)</li>
+                    <li><i class="fa-solid fa-check"></i> التحذير النبوي من تفلت القرآن ونسيانه</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('adab_tilawah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 7: المخارج العامة والخاصة -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="مخارج الحروف المخارج العامة المخارج الخاصة 17 مخرج الجوف الحلق اللسان الشفتان الخيشوم">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-diagram-project"></i></div><span>الـمـخـارج الـعـامـة والـخـاصـة (17)</span></h3>
+                <p class="tajweed-card-desc">التقسيم المعتمد عند ابن الجزري والخليل بن أحمد لـ 17 مخرجاً خاصاً تتوزع على 5 مخارج عامة كبرى في جهاز النطق الإنساني.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> المخارج العامة الخمسة: الجوف، الحلق، اللسان، الشفتان، الخيشوم</li>
+                    <li><i class="fa-solid fa-check"></i> توزيع المخارج الـ 17 الخاصة بالتفصيل</li>
+                    <li><i class="fa-solid fa-check"></i> كيفية معرفة مخرج أي حرف بتسكينه والهمز قبله</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhaarij_intro')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 8: مخرج الجوف -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="مخرج الجوف حروف المد الألف الواو الياء نوحيها المخرج المقدر">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-wind"></i></div><span>مـخـرج الـجـوف وحـروف الـمـد</span></h3>
+                <p class="tajweed-card-desc">مخرج الجوف المقدر الذي يمتد فيه الصوت بحروف المد الثلاثة (الألف، الواو الساكنة المضموم ما قبلها، والياء الساكنة المكسور ما قبلها).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف الجوف لغة واصطلاحاً وطبيعة المخرج المقدر</li>
+                    <li><i class="fa-solid fa-check"></i> شروط حروف المد الثلاثة واجتماعها في ﴿نُوحِيهَا﴾</li>
+                    <li><i class="fa-solid fa-check"></i> الفرق بين حروف المد وحروف اللين</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_jawf')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 9: مخارج الحلق -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="مخارج الحلق أقصى الحلق وسط الحلق أدنى الحلق الهمزة الهاء العين الحاء الغين الخاء">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-lungs"></i></div><span>مـخـارج الـحـلـق الـسـتـة (3 مخارج)</span></h3>
+                <p class="tajweed-card-desc">المخارج الثلاثة بالحلق: أقصى الحلق (الهمزة والهاء)، وسط الحلق (العين والحاء)، وأدنى الحلق (الغين والخاء)، وهي حروف الإظهار الحلقي.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> أقصى الحلق مما يلي الصدر: (ء، هـ)</li>
+                    <li><i class="fa-solid fa-check"></i> وسط الحلق عند لسان المزمار: (ع، ح)</li>
+                    <li><i class="fa-solid fa-check"></i> أدنى الحلق مما يلي اللهاة: (غ، خ)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_halq')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 10: أقصى ووسط وحافتي اللسان -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="أقصى اللسان وسط اللسان حافة اللسان القاف الكاف الجيم الشين الياء الضاد شجر اللسان">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-microphone-lines"></i></div><span>أقـصـى ووسـط وحـافـتـي الـلـسـان</span></h3>
+                <p class="tajweed-card-desc">مخارج القاف والكاف من أقصى اللسان، وحروف الشجر (الجيم والشين والياء) من وسطه، ومخرج حرف الضاد المستطيل من حافتي اللسان والأضراس.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> أقصى اللسان فوق وتحت (القاف والكاف)</li>
+                    <li><i class="fa-solid fa-check"></i> شجر اللسان (ج، ش، ي غير المدية)</li>
+                    <li><i class="fa-solid fa-check"></i> مخرج واستطالة الضاد مع الأضراس العليا</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_lisan_1')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 11: طرف اللسان مع الحنك -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="طرف اللسان اللام النون الراء أدنى الحافة ذلق اللسان لثة الثنايا">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-language"></i></div><span>مـخـارج أدنى الـحـافـة والـطـرف (ل، ن، ر)</span></h3>
+                <p class="tajweed-card-desc">تفصيل مخرج اللام من أدنى حافة اللسان إلى منتهى طرفه، ومخرج النون تحت اللام قليلاً، ومخرج الراء أدخل لظهر اللسان مع لثة الثنايا.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مخرج اللام واتساع رقعته مع لثة الأسنان العليا</li>
+                    <li><i class="fa-solid fa-check"></i> مخرج النون الساكنة والمتحركة من طرف اللسان</li>
+                    <li><i class="fa-solid fa-check"></i> مخرج الراء وضبط انحرافها وتجنب التكرير الزائد</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_lisan_2')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 12: النطعية والأسلية واللثوية -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الحروف النطعية الطاء الدال التاء الحروف الأسلية الصاد الزاي السين الحروف اللثوية الظاء الذال الثاء">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-teeth"></i></div><span>الـنـطـعـيـة والأسـلـيـة والـلـثـويـة (9 أحرف)</span></h3>
+                <p class="tajweed-card-desc">الحروف النطعية (ط، د، ت) مع أصول الثنايا، حروف الصفير الأسلية (ص، ز، س) فوق الثنايا السفلى، والحروف اللثوية (ظ، ذ، ث) مع أطراف الثنايا.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الحروف النطعية الثلاثة (ط، د، ت) وأصول الثنايا العليا</li>
+                    <li><i class="fa-solid fa-check"></i> حروف الصفير (ص، ز، س) وخروجها كصوت الطائر</li>
+                    <li><i class="fa-solid fa-check"></i> الحروف اللثوية (ظ، ذ، ث) وخروج طرف اللسان</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_lisan_3')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 13: الشفتان والخيشوم -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="مخرج الشفتين مخرج الخيشوم الفاء الباء الميم الواو الغنة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-lips"></i></div><span>مـخـارج الـشـفـتـيـن والـخـيـشـوم (ف، ب، م، و)</span></h3>
+                <p class="tajweed-card-desc">الفاء من بطن الشفة، الباء والميم بانطباق الشفتين، الواو غير المدية باستدارتهما، ومخرج الخيشوم لصوت الغنة المركب في النون والميم.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مخرج الفاء مع أطراف الثنايا العليا المشرفة</li>
+                    <li><i class="fa-solid fa-check"></i> مخرج الباء والميم بانطباق الشفتين والواو بانضمامهما</li>
+                    <li><i class="fa-solid fa-check"></i> الخيشوم ومخرج الغنة الرنان في التجويف الأنفي</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('makhraj_shafatayn_khayshoom')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 14: الهمس والجهر -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="صفات الحروف الهمس الجهر فحثه شخص سكت جريان النفس انحباس النفس">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-sliders"></i></div><span>صـفـات الـحـروف: الـهـمـس والـجـهـر</span></h3>
+                <p class="tajweed-card-desc">ميزان جريان النفس مع حروف الهمس الـ 10 (فحثه شخص سكت) لضعف الاعتماد على المخرج، وانحباس النفس مع حروف الجهر الـ 19 لقوة المخرج.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حروف الهمس العشرة وضبط جريان النفس فيها</li>
+                    <li><i class="fa-solid fa-check"></i> حروف الجهر وانحباس النفس لقوة الاعتماد</li>
+                    <li><i class="fa-solid fa-check"></i> كيفية ضبط همس الكاف والتاء الساكنتين دون تمطيط</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_hams_jahr')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 15: الشدة والرخاوة والتوسط -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الشدة الرخاوة التوسط البينية أجد قط بكت لن عمر جريان الصوت">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-compress"></i></div><span>الـشـدة والـرخـاوة والـتـوسـط (الـبـيـنـيـة)</span></h3>
+                <p class="tajweed-card-desc">ميزان جريان الصوت: حروف الشدة (أجد قط بكت)، حروف التوسط البينية (لن عمر)، وحروف الرخاوة الـ 16 التي يجري معها الصوت جرياناً تاماً.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حروف الشدة وانحباس الصوت وفكها بالقلقلة أو الهمس</li>
+                    <li><i class="fa-solid fa-check"></i> حروف التوسط البينية (لن عمر) وزمنها المعتدل</li>
+                    <li><i class="fa-solid fa-check"></i> حروف الرخاوة وجريان الصوت وأزمنة الحروف الساكنة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_shidda_rakhawa')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 16: الاستعلاء والاستفال والإطباق -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الاستعلاء الاستفال الإطباق الانفتاح خص ضغط قظ ص ض ط ظ التفخيم والترقيق">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-arrow-up-right-dots"></i></div><span>الاسـتـعـلاء والاسـتـفـال والإطـبـاق والـانـفـتـاح</span></h3>
+                <p class="tajweed-card-desc">ارتفاع اللسان بحروف الاستعلاء (خص ضغط قظ)، وانحصار الصوت بحروف الإطباق الأربعة (ص، ض، ط، ظ)، وانخفاضه بحروف الاستفال والانفتاح.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حروف الاستعلاء السبعة وأثرها في تفخيم الصوت</li>
+                    <li><i class="fa-solid fa-check"></i> حروف الإطباق الأربعة وهي أقوى وأفخم الحروف</li>
+                    <li><i class="fa-solid fa-check"></i> الاستفال والانفتاح وترقيق الحروف المستفلة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_istila_itbaq')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 17: الإذلاق والإصمات -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الإذلاق الإصمات فر من لب خفة الحروف ثقل الحروف">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-feather"></i></div><span>صـفـات الـحـروف: الإذلاق والإصـمـات</span></h3>
+                <p class="tajweed-card-desc">خفة النطق بحروف الإذلاق الستة (فر من لب) لخروجها من ذلق اللسان والشفة، وثقل حروف الإصمات الـ 23 وامتناع انفراد أصولها في الرباعي والخماسي.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حروف الإذلاق الستة (فر من لب) وسرعة نطقها</li>
+                    <li><i class="fa-solid fa-check"></i> حروف الإصمات وثقلها في الميزان الصرفي</li>
+                    <li><i class="fa-solid fa-check"></i> أثر الصفتين في فصاحة الكلمات العربية</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_idhlaq_ismat')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 18: الصفير والقلقلة واللين -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الصفير القلقلة اللين قطب جد الصاد الزاي السين مراتب القلقلة أكبر كبرى صغرى">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><span>الـصـفـيـر والـقـلـقـلـة والـلـيـن</span></h3>
+                <p class="tajweed-card-desc">صفة الصفير في (ص، ز، س)، القلقلة ومراتبها الثلاث (أكبر، كبرى، صغرى) في (قطب جد)، وصفة اللين في الواو والياء الساكنتين المفتوح ما قبلهما.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حروف الصفير الثلاثة وحدتها الصوتية المميزة</li>
+                    <li><i class="fa-solid fa-check"></i> مراتب القلقلة (المشدد الموقوف عليه، المخفف الموقوف، الساكن الموصول)</li>
+                    <li><i class="fa-solid fa-check"></i> حرفا اللين (الواو والياء) وضوابط أدائهما</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_la_didd_1')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 19: الانحراف والتكرير والتفشي والاستطالة -->
+        <div class="tajweed-card" data-category="makhaarij" data-title="الانحراف التكرير التفشي الاستطالة اللام الراء الشين الضاد">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-makhaarij"><i class="fa-solid fa-head-side-cough"></i> المخارج والصفات</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-wave-square"></i></div><span>الانـحـراف والـتـكـريـر والـتـفـشـي والاسـتـطـالـة</span></h3>
+                <p class="tajweed-card-desc">الانحراف في (اللام والراء)، التكرير في (الراء) ووجوب إخفائه، التفشي في (الشين) وانتشار الريح، والاستطالة الفريدة في حرف (الضاد).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> انحراف صوت اللام والراء وميل مخرجهما</li>
+                    <li><i class="fa-solid fa-check"></i> صفة التكرير في الراء والتحرز من المبالغة فيها</li>
+                    <li><i class="fa-solid fa-check"></i> تفشي الشين واستطالة الضاد ورخاوتها التامة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('sifat_la_didd_2')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 20: الإظهار الحلقي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="الإظهار الحلقي النون الساكنة التنوين حروف الحلق الهمزة الهاء العين الحاء الغين الخاء">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-eye"></i></div><span>الإظـهـار الـحـلـقـي وحـروفـه الـسـتـة</span></h3>
+                <p class="tajweed-card-desc">الحكم الأول للنون الساكنة والتنوين؛ إخراج النون من مخرجها بغير غنة زائدة عند ملاقاتها أحد حروف الحلق الستة (ء، هـ، ع، ح، غ، خ).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف الإظهار وعلته بسبب تباعد المخارج</li>
+                    <li><i class="fa-solid fa-check"></i> أمثلة الإظهار في كلمة وكلمتين ومع التنوين</li>
+                    <li><i class="fa-solid fa-check"></i> شواهد تحفة الأطفال في الإظهار الحلقي</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('noon_izhhar_halqi')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 21: الإدغام والإظهار المطلق -->
+        <div class="tajweed-card" data-category="ahkam" data-title="الإدغام يرملون ينمو إدغام بغنة إدغام بغير غنة الإظهار المطلق دنيا بنيان قنوان صنوان">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-diagram-project"></i></div><span>الإدغـام بـقـسـمـيـه والإظـهـار الـمـطـلـق</span></h3>
+                <p class="tajweed-card-desc">إدغام النون الساكنة والتنوين في حروف (يرملون): بغنة في (ينمو)، وبغير غنة في (اللام والراء)، والإظهار المطلق في الكلمات الأربع (دنيا، بنيان، قنوان، صنوان).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الإدغام بغنة والفرق بين الإدغام الكامل والناقص</li>
+                    <li><i class="fa-solid fa-check"></i> الإدغام بغير غنة عند اللام والراء وكماله</li>
+                    <li><i class="fa-solid fa-check"></i> كلمات الإظهار المطلق الأربع بالمصحف وعلة امتناع إدغامها</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('noon_idgham')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 22: الإقلاب -->
+        <div class="tajweed-card" data-category="ahkam" data-title="الإقلاب النون الساكنة التنوين حرف الباء قلب النون ميما ميم الإقلاب علامة الإقلاب">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-right-left"></i></div><span>حـكـم الإقـلاب عـنـد حـرف الـبـاء</span></h3>
+                <p class="tajweed-card-desc">قلب النون الساكنة أو التنوين ميماً مخفاة بغنة حركتين عند ملاقاة حرف الباء (﴿مِن بَعْدِ﴾، ﴿أَنبِئْهُم﴾، ﴿سَمِيعٌ بَصِيرٌ﴾) مع تلامس الشفتين بلطف.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> خطوات أداء الإقلاب الثلاث: القلب، الإخفاء، والغنة</li>
+                    <li><i class="fa-solid fa-check"></i> ضوابط تلامس الشفتين ومنع الكز أو ترك فرجة واسعة</li>
+                    <li><i class="fa-solid fa-check"></i> علامة الميم القائمة المبتورة (مـ) في ضبط المصحف</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('noon_iqlab')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 23: الإخفاء الحقيقي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="الإخفاء الحقيقي 15 حرف صف ذا ثنا مراتب الإخفاء تفخيم الغنة ترقيق الغنة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-mask"></i></div><span>الإخـفـاء الـحـقـيـقـي ومـراتـبـه</span></h3>
+                <p class="tajweed-card-desc">ستر النون الساكنة عند الحروف الـ 15، مراتبه الثلاث (أعلى عند الطاء والدال والتاء، أدنى عند القاف والكاف، ووسطى عند الباقي)، وتفخيم وترقيق الغنة.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> بيت حروف الإخفاء (صف ذا ثنا كم جاد شخص قد سما...)</li>
+                    <li><i class="fa-solid fa-check"></i> مراتب الإخفاء الثلاث بحسب قرب وبعد المخرج</li>
+                    <li><i class="fa-solid fa-check"></i> تبعية غنة الإخفاء لما بعدها تفخيماً وترقيقاً</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('noon_ikhfa_haqiqi')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 24: أحكام الميم الساكنة -->
+        <div class="tajweed-card" data-category="ahkam" data-title="الميم الساكنة الإخفاء الشفوي إدغام المتماثلين الصغير الإظهار الشفوي التحذير عند الواو والفاء">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-circle-dot"></i></div><span>أحـكـام الـمـيـم الـسـاكـنـة الـثـلاثـة</span></h3>
+                <p class="tajweed-card-desc">الأحكام الثلاثة: الإخفاء الشفوي عند (الباء)، إدغام المتماثلين الصغير عند (الميم)، والإظهار الشفوي عند بقية الـ 26 حرفاً مع الحذر الشديد عند الواو والفاء.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الإخفاء الشفوي عند الباء (﴿تَرْمِيهِم بِحِجَارَةٍ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> إدغام المتماثلين الصغير (﴿لَهُم مَّا يَشَاءُونَ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> الإظهار الشفوي وشدة الحذر عند الواو والفاء</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('meem_sakinah_ahkam')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 25: النون والميم المشددتان ومراتب الغنة -->
+        <div class="tajweed-card" data-category="ahkam" data-title="النون المشددة الميم المشددة مراتب الغنة الخمس أكمل ما تكون كاملة ناقصة أنقص ما تكون">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-music"></i></div><span>الـنـون والـمـيـم الـمـشـددتـان ومـراتـب الـغُـنَّـة</span></h3>
+                <p class="tajweed-card-desc">وجوب غن النون والميم المشددتين حركتين كاملتين، ومراتب الغنة الخمس بالترتيب: أكمل ما تكون، كاملة، ناقصة، وأنقص ما تكون في المتحرك الخفيف.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حكم النون والميم المشددتين وتسميتهما حرفي غنة</li>
+                    <li><i class="fa-solid fa-check"></i> مراتب الغنة الخمس ومقادير أزمنتها</li>
+                    <li><i class="fa-solid fa-check"></i> ضبط الغنة من الخيشوم وتجنب إشراك الفم</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('noon_meem_mushaddadah_ghunnah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 26: لام التعريف -->
+        <div class="tajweed-card" data-category="ahkam" data-title="لام التعريف اللام الشمسية اللام القمرية ابغ حجك وخف عقيمه طب ثم صل رحما">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-sun"></i></div><span>أحـكـام لام الـتـعـريـف (الـشـمـسـيـة والـقـمـريـة)</span></h3>
+                <p class="tajweed-card-desc">إظهار اللام القمرية عند 14 حرفاً (ابغ حجك وخف عقيمه)، وإدغام اللام الشمسية في الـ 14 حرفاً الباقية مع ضبط علامة رأس الخاء الصغيرة والشدة.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> اللام القمرية وحروف (ابغ حجك وخف عقيمه)</li>
+                    <li><i class="fa-solid fa-check"></i> اللام الشمسية والإدغام الشمسي في أوائل بيت التحفة</li>
+                    <li><i class="fa-solid fa-check"></i> علامة الضبط المصحفي للام القمرية والشمسية</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('lam_tareef')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 27: لامات الفعل والاسم والحرف والأمر -->
+        <div class="tajweed-card" data-category="ahkam" data-title="لام الفعل لام الاسم لام الحرف لام الأمر هل وبل قل نعم قل رب ألسنتكم">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-i-cursor"></i></div><span>لامـات الـفـعـل والاسـم والـحـرف والأمـر</span></h3>
+                <p class="tajweed-card-desc">أحكام اللامات السواكن الأربع: لام الفعل (إظهار وإدغام عند اللام والراء)، لام الاسم (إظهار دائماً)، لام الحرف (هل وبل)، ولام الأمر الساكنة.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> لام الفعل وإدغامها في اللام والراء (﴿قُل لَّكُمْ﴾، ﴿وَقُل رَّبِّ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> لام الاسم ولام الأمر وحكم الإظهار الدائم فيهما</li>
+                    <li><i class="fa-solid fa-check"></i> لام الحرف (هل وبل) واستثناء سكت ﴿بَلْ ۜ رَانَ﴾</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('lamat_sawakin_all')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 28: المتماثلان والمتباعدان -->
+        <div class="tajweed-card" data-category="ahkam" data-title="علاقات الحروف المتماثلان المتباعدان الصغير الكبير المطلق اضرب بعصاك مناسككم">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-clone"></i></div><span>الـمـتـمـاثـلان والـمـتـبـاعـدان</span></h3>
+                <p class="tajweed-card-desc">أقسام علاقات الحروف الأربعة؛ المتماثلان (صغير مدغم، كبير ومطلق مظهران لحفص)، والمتباعدان ووجوب الإظهار إجماعاً في جميع أقسامه.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> المتماثلان الصغير ووجوب إدغامه واستثناء واو المد</li>
+                    <li><i class="fa-solid fa-check"></i> المتماثلان الكبير والمطلق وحكم الإظهار عند حفص</li>
+                    <li><i class="fa-solid fa-check"></i> المتباعدان وعلة وجوب الإظهار لبعد المخرج والصفة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('tamathul_tabaud')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 29: المتجانسان والمتقاربان -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المتجانسان المتقاربان إدغام المتجانسين قد تبين بسطت يلهث ذلك اركب معنا ألم نخلقكم">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-network-wired"></i></div><span>الـمـتـجـانـسـان والـمـتـقـاربـان لـحـفـص</span></h3>
+                <p class="tajweed-card-desc">مواضع إدغام المتجانسين الصغير لحفص (الدال في التاء، التاء في الطاء، الطاء في التاء ناقصاً، الثاء في الذال، والباء في الميم)، وإدغام المتقاربين.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مواضع إدغام المتجانسين الكامل والناقص (﴿بَسَطتَ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> إدغام (﴿يَلْهَث ذَّلِكَ﴾) و(﴿ارْكَب مَّعَنَا﴾) لحفص</li>
+                    <li><i class="fa-solid fa-check"></i> إدغام المتقاربين في اللام مع الراء والقاف مع الكاف</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('tajānus_taqarub')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 30: المد الأصلي الطبيعي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المد الأصلي المد الطبيعي حروف المد حركتان نوحيها">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-wave-square"></i></div><span>الـمـد الأصـلـي (الـطـبـيـعـي) وضـوابـطـه</span></h3>
+                <p class="tajweed-card-desc">المد الذي لا تقوم ذات الحرف إلا به ولا يتوقف على سبب من همز أو سكون، ومقداره حركتان وصلاً ووقفاً مع التحرز من الزيادة أو الإنقاص.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف المد الطبيعي لغة واصطلاحاً وعلة تسميته طبيعياً</li>
+                    <li><i class="fa-solid fa-check"></i> ميزان الحركتين ومقدارهما الزمني الدقيق</li>
+                    <li><i class="fa-solid fa-check"></i> أحوال ثبوت وسقوط المد الطبيعي وصلاً ووقفاً</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_tabiee_asli')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 31: ملحقات المد الطبيعي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="ملحقات المد الطبيعي مد العوض مد التمكين مد الصلة الصغرى حركتان">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-puzzle-piece"></i></div><span>مـلـحـقـات الـمـد الـطـبـيـعـي (الـعـوض والـتـمـكـيـن والـصـلـة)</span></h3>
+                <p class="tajweed-card-desc">المدود الثلاثة الملحقة بالطبيعي وتمد حركتين: مد العوض عند تنوين الفتح وقفاً، مد التمكين في الياءين، ومد الصلة الصغرى لهاء الضمير.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مد العوض وقفاً على تنوين النصب واستثناء هاء التأنيث</li>
+                    <li><i class="fa-solid fa-check"></i> مد التمكين في (﴿حُيِّيْتُم﴾، ﴿النَّبِيِّينَ﴾) لتمكين الساكنة</li>
+                    <li><i class="fa-solid fa-check"></i> مد الصلة الصغرى وشروط وقوع هاء الكناية بين متحركين</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('mulhaqat_madd_tabiee')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 32: المد المتصل والمنفصل -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المد المتصل المد المنفصل المد الواجب المد الجائز 4 أو 5 حركات الهمز السماء يا أيها">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-bolt"></i></div><span>الـمـد الـواجـب الـمـتـصـل والـجـائـز الـمـنـفـصـل</span></h3>
+                <p class="tajweed-card-desc">المد بسبب الهمز؛ الواجب المتصل (4-5 حركات في كلمة واحدة)، والجائز المنفصل (4-5 حركات من الشاطبية في كلمتين) مع أحكام الوقف.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> المد الواجب المتصل وحكم مده 6 حركات عند تطرف الهمز وقفاً</li>
+                    <li><i class="fa-solid fa-check"></i> المد الجائز المنفصل الحقيقي والحكمي (﴿هَٰؤُلَاءِ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> ضوابط تسوية مقادير المدود أثناء التلاوة الواحدة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_muttasil_munfasil')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 33: الصلة الكبرى والبدل -->
+        <div class="tajweed-card" data-category="ahkam" data-title="مد الصلة الكبرى مد البدل الشبيه بالبدل ءامنوا إيمانا أوتوا">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-link"></i></div><span>مـد الـصـلـة الـكـبـرى ومـد الـبـدل</span></h3>
+                <p class="tajweed-card-desc">صلة هاء الضمير بمد 4-5 حركات عند ملاقاة همزة قطع، مد البدل بتقدم الهمز على حرف المد بحركتين لحفص، والفرق بين البدل والشبيه بالبدل.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مد الصلة الكبرى وإلحاقه بالمد المنفصل في المقدار</li>
+                    <li><i class="fa-solid fa-check"></i> مد البدل الأصلي (﴿ءَامَنُوا﴾، ﴿إِيمَانًا﴾) ومقداره حركتان</li>
+                    <li><i class="fa-solid fa-check"></i> الشبيه بالبدل وحكمه (﴿إِسْرَائِيلَ﴾، ﴿الْقُرْآنَ﴾)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_silah_badal')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 34: العارض للسكون واللين -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المد العارض للسكون مد اللين أوجه الوقف القصر التوسط الإشباع 2 4 6 حركات">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-stopwatch"></i></div><span>الـمـد الـعـارض لـلـسـكـون ومـد الـلـيـن</span></h3>
+                <p class="tajweed-card-desc">سكون الوقف العارض بعد حرف مد أو حرف لين؛ الأوجه الثلاثة الجائزة للقارئ: القصر (حركتان)، التوسط (4 حركات)، والإشباع (6 حركات).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> المد العارض للسكون وأوجهه الثلاثة في القراءة</li>
+                    <li><i class="fa-solid fa-check"></i> مد اللين وقفاً والفرق بينه وبين العارض في الوصل</li>
+                    <li><i class="fa-solid fa-check"></i> قاعدة أقوى السببين في اجتماع المدود</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_aaridh_leen')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 35: المد اللازم الكلمي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المد اللازم الكلمي كلمي مثقل كلمي مخفف الضالين الحاقة آلآن 6 حركات">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-layer-group"></i></div><span>الـمـد الـلازم الـكـلـمـي (الـمـثـقـل والـمـخـفـف)</span></h3>
+                <p class="tajweed-card-desc">لزوم مده 6 حركات إشباعاً وجوباً؛ الكلمي المثقل بعده حرف مشدد (﴿الضَّالِّينَ﴾)، والمخفف بعده حرف ساكن غير مشدد في موضعي (﴿ءَآلْآنَ﴾).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف المد اللازم وعلة لزوم مده 6 حركات إجماعاً</li>
+                    <li><i class="fa-solid fa-check"></i> المد اللازم الكلمي المثقل ونبر الحرف المشدد بعده</li>
+                    <li><i class="fa-solid fa-check"></i> المد اللازم الكلمي المخفف في موضعي سورة يونس</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_lazim_kalimi')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 36: المد اللازم الحرفي -->
+        <div class="tajweed-card" data-category="ahkam" data-title="المد اللازم الحرفي الحروف المقطعة فواتح السور نقص عسلكم حي طهر الم ص ق">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-ahkam"><i class="fa-solid fa-shapes"></i> أحكام النون والميم والمدود</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-font"></i></div><span>الـمـد الـلازم الـحـرفـي والـحـروف الـمـقـطـعـة</span></h3>
+                <p class="tajweed-card-desc">الحروف المقطعة الـ 14 في فواتح السور؛ ما يمد 6 حركات (نقص عسلكم)، ما يمد حركتين (حي طهر)، ما لا مد فيه (ألف)، وحكم عين في مريم والشورى.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الحرفي المثقل والمخفف وأمثلتها في (الم، الر، حم، طسم)</li>
+                    <li><i class="fa-solid fa-check"></i> حروف (حي طهر) والمد الطبيعي الحرفي فيها</li>
+                    <li><i class="fa-solid fa-check"></i> وجهي التوسط والإشباع في حرف (العين) في مريم والشورى</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('madd_lazim_harfi')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 37: مراتب التفخيم -->
+        <div class="tajweed-card" data-category="tafkheem" data-title="مراتب التفخيم الخمس حروف الاستعلاء خص ضغط قظ التفخيم النسبي ابن الجزري">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-tafkheem"><i class="fa-solid fa-scale-balanced"></i> التفخيم والترقيق</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-scale-balanced"></i></div><span>مـراتـب الـتـفـخـيـم الـخـمـس لـحـروف الاسـتـعـلاء</span></h3>
+                <p class="tajweed-card-desc">المراتب الخمس عند ابن الجزري: المفتوح وبعده ألف، المفتوح، المضموم، الساكن، والمكسور (التفخيم النسبي لحروف الغين والخاء والقاف).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> ترتيب المراتب الخمس بالأمثلة القرآنية المشكولة</li>
+                    <li><i class="fa-solid fa-check"></i> التفخيم النسبي في المكسور والساكن بعد كسر</li>
+                    <li><i class="fa-solid fa-check"></i> الفرق بين تفخيم حروف الإطباق والاستعلاء المنفتحة</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('maratib_tafkheem')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 38: تفخيم الألف واللام -->
+        <div class="tajweed-card" data-category="tafkheem" data-title="تفخيم الألف ترقيق الألف لام لفظ الجلالة الله اللهم فتح ضم كسر">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-tafkheem"><i class="fa-solid fa-scale-balanced"></i> التفخيم والترقيق</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-signature"></i></div><span>تـفـخـيـم وتـرقـيـق الألـف ولام لـفـظ الـجـلالـة</span></h3>
+                <p class="tajweed-card-desc">تبعية الألف لما قبلها تفخيماً وترقيقاً، وتفخيم لام اسم الجلالة (الله) بعد الفتح والضم، وترقيقها بعد الكسر الأصلي والعارض والتنوين.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> قاعدة تبعية الألف لما قبلها في التفخيم والترقيق</li>
+                    <li><i class="fa-solid fa-check"></i> تفخيم لام اسم الجلالة بعد الفتح والضم (﴿شَهِدَ اللَّهُ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> ترقيق لام اسم الجلالة بعد الكسر والتنوين (﴿قُلِ اللَّهُمَّ﴾)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('tafkheem_alif_lam')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 39: تفخيم الراء -->
+        <div class="tajweed-card" data-category="tafkheem" data-title="تفخيم الراء حالات تفخيم الراء الثمانية المفتوحة المضمومة الساكنة بعد فتح كسر عارض قرطاس">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-tafkheem"><i class="fa-solid fa-scale-balanced"></i> التفخيم والترقيق</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-arrow-up"></i></div><span>أحـكـام الـراء: حـالات الـتـفـخـيـم الـثـمـانـيـة</span></h3>
+                <p class="tajweed-card-desc">الحالات الثمانية لتفخيم الراء وصلاً ووقفاً: المفتوحة، المضمومة، الساكنة بعد فتح أو ضم، الساكنة بعد كسر عارض، والساكنة قبل حرف استعلاء.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تفخيم الراء المتحركة بالفتح أو الضم</li>
+                    <li><i class="fa-solid fa-check"></i> تفخيم الراء الساكنة بعد كسر عارض (﴿ارْجِعِي﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> شروط تفخيم الراء قبل حرف استعلاء مفتوح (﴿قِرْطَاسٍ﴾)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('tafkheem_raa')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 40: ترقيق الراء وجواز الوجهين -->
+        <div class="tajweed-card" data-category="tafkheem" data-title="ترقيق الراء حالات ترقيق الراء جواز الوجهين فرق مصر القطر يسر نذر">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-tafkheem"><i class="fa-solid fa-scale-balanced"></i> التفخيم والترقيق</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-arrow-down"></i></div><span>تـرقـيـق الـراء وحـالات جـواز الـوجـهـيـن</span></h3>
+                <p class="tajweed-card-desc">حالات ترقيق الراء الأربع (المكسورة، الساكنة بعد كسر أصلي، الساكنة بعد ياء لينة أو مدية)، ومواضع جواز الوجهين وصلاً ووقفاً (فِرق، مصر، القِطر).</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حالات ترقيق الراء الأربع بالتفصيل والأمثلة</li>
+                    <li><i class="fa-solid fa-check"></i> جواز الوجهين وصلاً في كلمة (﴿فِرْقٍ﴾) بسورة الشعراء</li>
+                    <li><i class="fa-solid fa-check"></i> جواز الوجهين وقفاً في كلمات (مصر، القطر، يسر، نذر)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('tarqeeq_raa_wajhayn')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 41: أقسام الوقف الاختياري -->
+        <div class="tajweed-card" data-category="waqf" data-title="الوقف الاختياري الوقف التام الوقف الكافي الوقف الحسن الوقف القبيح علامات الوقف">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-pause"></i></div><span>أقـسـام الـوقـف الاخـتـيـاري (الـتـام والـكـافـي والـحـسـن والـقـبـيـح)</span></h3>
+                <p class="tajweed-card-desc">أقسام الوقف الأربعة من حيث تمام المعنى والتعلق اللفظي والمعنوي، وحكم الوقف والابتداء بكل قسم، والتحذير من الوقف القبيح المفسد للمعنى.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الوقف التام والكافي وحسن الابتداء بما بعدهما</li>
+                    <li><i class="fa-solid fa-check"></i> الوقف الحسن وجوازه على رؤوس الآي</li>
+                    <li><i class="fa-solid fa-check"></i> الوقف القبيح وحرمة تعمده وأمثلته في القرآن</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('waqf_anwaa')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 42: الوقف الاضطراري والاختباري والانتظاري -->
+        <div class="tajweed-card" data-category="waqf" data-title="الوقف الاضطراري الوقف الاختباري الوقف الانتظاري جمع القراءات ضيق النفس">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-circle-pause"></i></div><span>الـوقـف الاضـطـراري والـاخـتـبـاري والـانـتـظـاري</span></h3>
+                <p class="tajweed-card-desc">الوقوف غير الاختيارية: الاضطراري لضيق النفس أو العطاس، الاختباري لامتحان الطالب في الرسم، والانتظاري لعطف أوجه القراءات العشر.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الوقف الاضطراري وكيفية استئناف القراءة الصحيحة</li>
+                    <li><i class="fa-solid fa-check"></i> الوقف الاختباري في المقطوع والموصول والتاءات</li>
+                    <li><i class="fa-solid fa-check"></i> الوقف الانتظاري في مجالس جمع القراءات العشر</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('waqf_idhtirari_ikhtibari')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 43: الوقف على أواخر الكلم -->
+        <div class="tajweed-card" data-category="waqf" data-title="الوقف على أواخر الكلم السكون المحض الروم الإشمام نستعين 7 أوجه">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-volume-low"></i></div><span>الـوقـف عـلـى أواخـر الـكـلـم (الـسـكـون والـرَّوْم والإشـمـام)</span></h3>
+                <p class="tajweed-card-desc">كيفية الوقف بالسكون المحض، الروم (إضعاف الصوت في المجرور والمرفوع)، والإشمام (ضم الشفتين في المرفوع)، وتطبيق الأوجه السبعة على ﴿نَسْتَعِينُ﴾.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> السكون المحض والروم والإشمام وشروط دخولها في الحركات</li>
+                    <li><i class="fa-solid fa-check"></i> تطبيق أوجه الوقف السبعة على كلمة (﴿نَسْتَعِينُ﴾)</li>
+                    <li><i class="fa-solid fa-check"></i> ما يمتنع فيه الروم والإشمام (المفتوح، المنصوب، وهاء التأنيث)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('waqf_rawm_ishmam')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 44: المقطوع والموصول -->
+        <div class="tajweed-card" data-category="waqf" data-title="المقطوع والموصول رسم المصحف أن لا إن ما عن ما يوم هم كي لا">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-scissors"></i></div><span>قـواعـد الـمـقـطـوع والـمـوصـول فـي الـرسـم</span></h3>
+                <p class="tajweed-card-desc">معرفة الكلمات المقطوعة والموصولة في مصحف الإمام عثمان رضي الله عنه (أن لا، إن ما، عن ما، يوم هم) وجواز الوقف على إحداهما اختباراً واضطراراً.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مواضع قطع ووصل (أن لا) العشرة في القرآن</li>
+                    <li><i class="fa-solid fa-check"></i> أحكام قطع ووصل (إن ما، عن ما، مما، أينما، كلما)</li>
+                    <li><i class="fa-solid fa-check"></i> شواهد الجزرية في باب المقطوع والموصول</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('maqtoo_mawsool_detailed')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 45: تاءات التأنيث -->
+        <div class="tajweed-card" data-category="waqf" data-title="تاءات التأنيث التاء المفتوحة المبسوطة رحمت نعمت امرأت شجرت سنت قرت جنت فطرت">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-t"></i></div><span>تـاءات الـتـأنـيـث الـمـفـتـوحـة والـمـربـوطـة</span></h3>
+                <p class="tajweed-card-desc">الكلمات التي رُسمت بالتاء المفتوحة (المبسوطة) ويوقف عليها بالتاء لحفص: رحمت (7 مواضع)، نعمت (11 موضعاً)، امرأت (7 مواضع)، وسنت، وشجرت.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حصر كلمات التاء المفتوحة ومواضعها القرآنية</li>
+                    <li><i class="fa-solid fa-check"></i> الفرق بين الوقف على التاء المربوطة بالهاء والمفتوحة بالتاء</li>
+                    <li><i class="fa-solid fa-check"></i> منظومة ابن الجزري في حصر مواضع التاءات</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('taat_taaneeth_detailed')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 46: همزة الوصل والقطع -->
+        <div class="tajweed-card" data-category="waqf" data-title="همزة الوصل همزة القطع الابتداء بالأفعال الابتداء بالأسماء الضم الكسر الفتح ادع اضرب ابن">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-font"></i></div><span>أحـكـام هـمـزة الـوصـل والـقـطـع وحـركـات الـابـتـداء</span></h3>
+                <p class="tajweed-card-desc">قواعد حركة الابتداء بهمزة الوصل: بالضم وجوباً إذا كان ثالث الفعل مضموماً ضماً أصلياً، وبالكسر في المفتوح والمكسور والأسماء، وبالفتح في لام التعريف.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> حركة الابتداء بهمزة الوصل في الأفعال الماضية والأمر</li>
+                    <li><i class="fa-solid fa-check"></i> الأسماء القياسية والسماعية السبعة وحكم كسر همزتها</li>
+                    <li><i class="fa-solid fa-check"></i> الفرق بين همزة الوصل وهمزة القطع وصلاً وابتداءً</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('hamzat_wasl_qat_detailed')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 47: السكتات الأربع الواجبة -->
+        <div class="tajweed-card" data-category="waqf" data-title="السكتات الأربع السكت الواجب لحفص عوجا قيما مرقدنا من راق بل ران الفرق بين الوقف والسكت">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-hand"></i></div><span>الـسـكـتـات الأربـع الـواجـبـة لـحـفـص</span></h3>
+                <p class="tajweed-card-desc">السكتات الأربع الواجبة لحفص من الشاطبية (عوجاً قيماً بالكهف، مرقدنا بيس، مَن راق بالقيامة، وبل ران بالمطففين) والفرق بين الوقف والسكت والقطع.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> تعريف السكت ومقداره حركتان بدون تنفس</li>
+                    <li><i class="fa-solid fa-check"></i> مواضع السكتات الأربع وعلة كل سكتة لصيانة المعنى</li>
+                    <li><i class="fa-solid fa-check"></i> السكت الجائز بين الأنفال وبراءة وفي (﴿مَالِيَهْ ۜ هَلَكَ﴾)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('saktat_arbaah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 48: الكلمات المخصوصة لحفص -->
+        <div class="tajweed-card" data-category="waqf" data-title="الكلمات المخصوصة لحفص الإمالة مجراها التسهيل ءأعجمي الإشمام تأمنا نقل بئس الاسم يبسط مصيطرون ضعف">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-gem"></i></div><span>الـكـلـمـات الـمـخـصـوصـة بـروايـة حـفـص</span></h3>
+                <p class="tajweed-card-desc">الأصول الفريدة لحفص: الإمالة في (مجراها)، التسهيل في (ءأعجمي)، الإشمام والروم في (تأمنّا)، النقل في (بئس الاسم)، وحروف الصاد والسين وضعف بالروم.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> الإمالة الكبرى الوحيدة في ﴿مَجْر۪ىٰهَا﴾ بهود</li>
+                    <li><i class="fa-solid fa-check"></i> التسهيل الواجب في ﴿ءَا۬عْجَمِيٌّ﴾ والإشمام في ﴿لَا تَأْمَ۫نَّا﴾</li>
+                    <li><i class="fa-solid fa-check"></i> كلمات السين والصاد (يبسط، بصطة، المصيطرون، بمصيطر)</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('kalimat_makhsoosah_hafs')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 49: النبر والتقاء الساكنين والألفات السبع -->
+        <div class="tajweed-card" data-category="waqf" data-title="النبر التقاء الساكنين الألفات السبع أنا لكنا الظنونا الرسولا السبيلا سلاسلا قواريرا دابة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-music"></i></div><span>الـنَّـبْـر والـتـقـاء الـسـاكـنـيـن والألـفـات الـسَّـبـع</span></h3>
+                <p class="tajweed-card-desc">ثلاث قواعد صوتية متقدمة: مواضع النبر الخمسة، التخلص من التقاء الساكنين بالحذف أو التحريك، وأحكام الألفات السبع وثبوتها وقفاً وحذفها وصلاً.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> مواضع النبر الخمسة في التلاوة الصحيحة</li>
+                    <li><i class="fa-solid fa-check"></i> التخلص من التقاء الساكنين بالحذف والتحريك (كسر، فتح، ضم)</li>
+                    <li><i class="fa-solid fa-check"></i> الألفات السبع وضوابط الوقف عليها بحركتين</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('nabr_sakinin_alifat')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <!-- 50: الفاتحة وسجدات التلاوة والإجازة -->
+        <div class="tajweed-card" data-category="waqf" data-title="تجويد الفاتحة سجدات التلاوة 15 سجدة الإجازة القرآنية السند المتصل شروط الإقراء والمشافهة">
+            <div>
+                <div class="tajweed-card-top"><span class="tajweed-cat-tag tag-waqf"><i class="fa-solid fa-hand"></i> الوقف والابتداء والإتقان</span></div>
+                <h3 class="tajweed-card-title"><div class="tajweed-card-icon"><i class="fa-solid fa-certificate"></i></div><span>تـطـبـيـقـات الـفـاتـحـة والـسـجـدات والإجـازة بـالـسـنـد</span></h3>
+                <p class="tajweed-card-desc">ختام المسار العلمي؛ ضبط تشديدات الفاتحة الـ 14، أحكام سجدات التلاوة الـ 15 بالمصحف، وشروط نيل الإجازة القرآنية بالسند المتصل إلى رسول الله ﷺ.</p>
+                <ul class="tajweed-subtopics-list">
+                    <li><i class="fa-solid fa-check"></i> ضبط حروف وتشديدات سورة الفاتحة لمنع بطلان الصلاة</li>
+                    <li><i class="fa-solid fa-check"></i> سجدات التلاوة الـ 15 وأدعيتها المأثورة</li>
+                    <li><i class="fa-solid fa-check"></i> شروط الختمة الكاملة غيباً ونيل الإجازة بالسند المتصل</li>
+                </ul>
+            </div>
+            <button class="btn-view-tajweed" onclick="openTajweedModal('fatihah_sujood_ijazah')"><span>مطالعة الباب الشرعي</span> <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- نافذة المودال التفصيلية -->
+<div class="tajweed-modal-overlay" id="tajweedModal" onclick="closeTajweedModalOnOverlay(event)">
+    <div class="tajweed-modal-box">
+        <div class="tajweed-modal-header">
+            <h3 class="tajweed-modal-title" id="tajweedModalTitle">
+                <i class="fa-solid fa-book-open"></i> تفاصيل الحكم والقاعدة التجويدية
+            </h3>
+            <button class="btn-close-modal" onclick="closeTajweedModal()" title="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tajweed-modal-body" id="tajweedModalBody">
+            <!-- سيتم تعبئة المحتوى ديناميكياً بدقة وتأصيل شرعي كامل من tajweed-data.js -->
+        </div>
+        <div class="tajweed-modal-footer">
+            <button class="btn-toggle-complete" id="btnToggleComplete" onclick="toggleCurrentTopicComplete()">
+                <i class="fa-solid fa-check" id="toggleCompleteIcon"></i>
+                <span id="toggleCompleteText">تعليم كـ «مكتمل» ✔</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ملف قاعدة بيانات التجويد الشاملة لـ 50 موضوعاً -->
+<script src="/js/tajweed-data.js"></script>
+
+<script>
+    var userCompletedTopics = new Set();
+    var activeModalTopicKey = null;
+
+    // جلب تقدم الطالب المحفوظ في الباك إند
+    async function loadTajweedProgress() {
+        var token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            var response = await fetch('/api/tajweed-progress', {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                var data = await response.json();
+                userCompletedTopics = new Set(data.completedTopics || []);
+                renderAllCompletedBadges();
+            }
+        } catch (err) {
+            console.error('Error loading tajweed progress:', err);
+        }
+    }
+
+    // تحديث شارات الإتمام لجميع البطاقات في الصفحة
+    function renderAllCompletedBadges() {
+        document.querySelectorAll('.tajweed-card').forEach(function(card) {
+            var btn = card.querySelector('.btn-view-tajweed');
+            if (btn) {
+                var match = (btn.getAttribute('onclick') || '').match(/openTajweedModal\(['"]([^'"]+)['"]\)/);
+                if (match && match[1] && userCompletedTopics.has(match[1])) {
+                    updateCardCompletionUI(match[1], true);
+                }
+            }
+        });
+        filterTajweedTopics();
+    }
+
+    // تحديث مظهر بطاقة معينة في الشبكة
+    function updateCardCompletionUI(topicKey, isDone) {
+        var btn = document.querySelector(`.btn-view-tajweed[onclick*="'${topicKey}'"]`);
+        if (!btn) return;
+
+        var card = btn.closest('.tajweed-card');
+        if (!card) return;
+
+        var cardTop = card.querySelector('.tajweed-card-top');
+        var existingBadge = cardTop ? cardTop.querySelector('.card-completed-badge') : null;
+
+        if (isDone) {
+            card.classList.add('is-done');
+            if (!existingBadge && cardTop) {
+                var badge = document.createElement('span');
+                badge.className = 'card-completed-badge';
+                badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> مكتمل';
+                cardTop.appendChild(badge);
+            }
+        } else {
+            card.classList.remove('is-done');
+            if (existingBadge) {
+                existingBadge.remove();
+            }
+        }
+
+        if (currentCat === 'completed') {
+            filterTajweedTopics();
+        }
+    }
+
+    // تحديث حالة زر الإتمام داخل المودال
+    function updateModalButtonState(topicKey) {
+        var btn = document.getElementById('btnToggleComplete');
+        var icon = document.getElementById('toggleCompleteIcon');
+        var text = document.getElementById('toggleCompleteText');
+        if (!btn || !text) return;
+
+        var isDone = userCompletedTopics.has(topicKey);
+        if (isDone) {
+            btn.classList.add('is-completed');
+            icon.className = 'fa-solid fa-circle-check';
+            text.innerText = '✔ مكتمل (تمت المذاكرة)';
+        } else {
+            btn.classList.remove('is-completed');
+            icon.className = 'fa-solid fa-check';
+            text.innerText = 'تعليم كـ «مكتمل» ✔';
+        }
+    }
+
+    // تبديل حالة إتمام الباب وحفظها في الباك إند
+    async function toggleCurrentTopicComplete() {
+        if (!activeModalTopicKey) return;
+
+        var token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+            alert('يرجى تسجيل الدخول لحفظ تقدمك في موسوعة التجويد.');
+            window.location.href = '/index.html';
+            return;
+        }
+
+        var btn = document.getElementById('btnToggleComplete');
+        btn.style.opacity = '0.7';
+        btn.style.pointerEvents = 'none';
+
+        try {
+            var response = await fetch('/api/tajweed-progress/toggle', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ topicKey: activeModalTopicKey })
+            });
+
+            if (response.ok) {
+                var data = await response.json();
+                userCompletedTopics = new Set(data.completedTopics || []);
+                var isDone = userCompletedTopics.has(activeModalTopicKey);
+                
+                updateModalButtonState(activeModalTopicKey);
+                updateCardCompletionUI(activeModalTopicKey, isDone);
+            } else {
+                alert('تعذر حفظ التقدم حالياً، يرجى المحاولة لاحقاً.');
+            }
+        } catch (err) {
+            console.error('Error toggling tajweed progress:', err);
+        } finally {
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
+        }
+    }
+
+    // فتح المودال التفصيلي
+    function openTajweedModal(topicKey) {
+        if (typeof tajweedData === 'undefined') {
+            console.error('tajweedData is not loaded yet');
+            return;
+        }
+        var data = tajweedData[topicKey];
+        if (!data) return;
+
+        activeModalTopicKey = topicKey;
+
+        document.getElementById('tajweedModalTitle').innerHTML = '<i class="fa-solid ' + data.icon + '"></i> ' + data.title;
+        document.getElementById('tajweedModalBody').innerHTML = data.content;
+
+        updateModalButtonState(topicKey);
+
+        var modal = document.getElementById('tajweedModal');
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // إغلاق المودال
+    function closeTajweedModal() {
+        var modal = document.getElementById('tajweedModal');
+        modal.classList.remove('open');
+        document.body.style.overflow = 'auto';
+        activeModalTopicKey = null;
+    }
+
+    function closeTajweedModalOnOverlay(e) {
+        if (e.target.id === 'tajweedModal') {
+            closeTajweedModal();
+        }
+    }
+
+    // فلترة الأبواب حسب الفئة
+    var currentCat = 'all';
+    function setTajweedCategory(cat, btn) {
+        currentCat = cat;
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+        filterTajweedTopics();
+    }
+
+    // فلترة الأبواب حسب البحث والفئة مع تحديث العداد المباشر
+    function filterTajweedTopics() {
+        var query = (document.getElementById('tajweedSearchInput').value || '').trim().toLowerCase();
+        var cards = document.querySelectorAll('.tajweed-card');
+        var count = 0;
+
+        cards.forEach(function(card) {
+            var cardCat = card.getAttribute('data-category');
+            var cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+            var cardText = card.innerText.toLowerCase();
+            var isDone = card.classList.contains('is-done');
+
+            var matchCat = false;
+            if (currentCat === 'all') {
+                matchCat = true;
+            } else if (currentCat === 'completed') {
+                matchCat = isDone;
+            } else {
+                matchCat = (cardCat === currentCat);
+            }
+
+            var matchQuery = (!query || cardTitle.includes(query) || cardText.includes(query));
+
+            if (matchCat && matchQuery) {
+                card.style.display = 'flex';
+                count++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // رسالة في حالة عدم وجود أبواب مكتملة
+        var emptyEl = document.getElementById('tajweedEmptyCompleted');
+        if (currentCat === 'completed' && count === 0) {
+            if (!emptyEl) {
+                emptyEl = document.createElement('div');
+                emptyEl.id = 'tajweedEmptyCompleted';
+                emptyEl.className = 'tajweed-empty-state';
+                emptyEl.innerHTML = `
+                    <div class="empty-state-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h4>لم تُكمل أي باب بعد</h4>
+                    <p>قم بفتح أي باب من أبواب التجويد واضغط على زر «تعليم كـ مكتمل ✔» لحفظ إنجازك وتجميعه في هذه الخانة.</p>
+                `;
+                document.getElementById('tajweedGrid').appendChild(emptyEl);
+            }
+            emptyEl.style.display = 'flex';
+        } else if (emptyEl) {
+            emptyEl.style.display = 'none';
+        }
+
+        var countEl = document.getElementById('activeTopicsCount');
+        if (countEl) countEl.innerText = count;
+    }
+
+    // فتح موضوع عشوائي للمراجعة السريعة
+    function openRandomTajweedTopic() {
+        if (typeof tajweedData === 'undefined') return;
+        var keys = Object.keys(tajweedData);
+        if (!keys.length) return;
+        var randomKey = keys[Math.floor(Math.random() * keys.length)];
+        openTajweedModal(randomKey);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof loadSidebar === 'function') loadSidebar();
+        filterTajweedTopics();
+        loadTajweedProgress();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

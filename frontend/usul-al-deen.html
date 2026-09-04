@@ -1,0 +1,629 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار أصول الدين والعلوم الشرعية - مركز تحفيظ القرآن الكريم بأسريجه</title>
+    <meta name="description" content="مسار تأصيلي ميسر يجمع أركان العلوم الشرعية الكبرى: التوحيد، الحديث الشريف، التفسير، والسيرة النبوية العطرة.">
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة لمنع الوميض -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        .usul-hero {
+            background: linear-gradient(135deg, rgba(10, 77, 60, 0.95), rgba(13, 107, 83, 0.9)), url('/images/pattern.png');
+            background-size: cover;
+            border-radius: 24px;
+            padding: 40px 30px;
+            color: #ffffff;
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(10, 77, 60, 0.2);
+        }
+        [data-theme="dark"] .usul-hero {
+            background: linear-gradient(135deg, #0f2c23 0%, #164234 100%);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1f4a3b;
+        }
+        .usul-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+        .usul-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold);
+            color: #ffe89e;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .usul-hero-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .usul-hero-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #e2f1ec;
+            margin-bottom: 22px;
+        }
+        .usul-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .usul-stat-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .usul-stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--gold);
+            color: #0a4d3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .usul-stat-info h5 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 2px;
+            color: #fff;
+        }
+        .usul-stat-info span {
+            font-size: 12px;
+            color: #d1fae5;
+        }
+
+        /* فلاتر وبحث */
+        .usul-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 380px;
+            min-width: 250px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 42px 12px 16px;
+            border-radius: 50px;
+            border: 1.5px solid var(--card-border);
+            background: #fff;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: all .25s ease;
+        }
+        [data-theme="dark"] .search-box input {
+            background: #16241f;
+            border-color: #23352c;
+            color: #e2e8f0;
+        }
+        .search-box input:focus {
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 3px rgba(13, 107, 83, 0.15);
+        }
+        .search-box i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* شبكة الأقسام الأربعة */
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 26px;
+            margin-bottom: 50px;
+        }
+
+        .branch-card {
+            background: #ffffff;
+            border: 1.5px solid var(--card-border);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        [data-theme="dark"] .branch-card {
+            background: #15221d;
+            border-color: #24362e;
+        }
+        .branch-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(10, 77, 60, 0.15);
+            border-color: var(--emerald);
+        }
+        [data-theme="dark"] .branch-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: #34d399;
+        }
+
+        .branch-card-banner {
+            padding: 28px 24px 22px;
+            position: relative;
+            overflow: hidden;
+            color: #ffffff;
+        }
+        .branch-card-banner.tawheed {
+            background: linear-gradient(135deg, #0a4d3c 0%, #0d6b53 50%, #15803d 100%);
+        }
+        .branch-card-banner.hadeeth {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0284c7 100%);
+        }
+        .branch-card-banner.tafseer {
+            background: linear-gradient(135deg, #78350f 0%, #b45309 50%, #d97706 100%);
+        }
+        .branch-card-banner.seerah {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 50%, #8b5cf6 100%);
+        }
+
+        .branch-banner-bg-icon {
+            position: absolute;
+            left: -15px;
+            bottom: -20px;
+            font-size: 110px;
+            opacity: 0.12;
+            color: #ffffff;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+
+        .branch-badge-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .branch-badge-pill {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .branch-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+        }
+        .branch-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+        .branch-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .branch-card-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        .branch-desc {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 18px;
+        }
+        [data-theme="dark"] .branch-desc {
+            color: #cbd5e1;
+        }
+
+        /* تفاصيل الأقسام الفرعية */
+        .subtopics-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .subtopic-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            background: var(--light-emerald);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .subtopic-item {
+            background: rgba(13, 107, 83, 0.15);
+            color: #a7f3d0;
+        }
+        .subtopic-item i {
+            color: var(--emerald);
+            font-size: 14px;
+        }
+        [data-theme="dark"] .subtopic-item i {
+            color: #34d399;
+        }
+
+        .branch-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px dashed var(--card-border);
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .branch-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-enter-branch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 20px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(10, 77, 60, 0.25);
+        }
+        .btn-enter-branch:hover {
+            background: linear-gradient(135deg, #083c2f, #0b5945);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(10, 77, 60, 0.35);
+            color: #ffffff;
+        /* تحسينات التوافق التام مع شاشات الهواتف والأجهزة الذكية */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 10px 14px;
+            }
+            .logo span {
+                font-size: 13.5px;
+                max-width: 150px;
+                line-height: 1.3;
+            }
+            .logo-img {
+                height: 38px;
+                width: auto;
+            }
+            .user-nav-actions .btn-card-details {
+                padding: 6px 10px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .user-badge {
+                display: none !important;
+            }
+
+            .section-container {
+                padding: 15px 12px 60px !important;
+            }
+            .branches-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .branch-card {
+                border-radius: 20px;
+            }
+            .branch-card-banner {
+                padding: 22px 18px 18px;
+            }
+            .branch-title {
+                font-size: 20px;
+            }
+            .branch-subtitle {
+                font-size: 12px;
+            }
+            .branch-card-body {
+                padding: 18px 16px;
+            }
+            .branch-desc {
+                font-size: 13.5px;
+                margin-bottom: 14px;
+            }
+            .subtopic-item {
+                font-size: 12.5px;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- القائمة الجانبية -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <a href="/home.html" class="btn-card-details" style="padding: 8px 14px; font-size: 13px;">
+            <i class="fa-solid fa-house"></i> الرئيسية
+        </a>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- المحتوى الرئيسي للمسار -->
+<main class="section-container" style="max-width: 1240px; padding: 25px 20px 60px;">
+
+    <!-- شبكة العلوم الأربعة -->
+    <div class="branches-grid" id="branchesGrid">
+
+        <!-- بطاقة 1: التوحيد والعقيدة -->
+        <div class="branch-card" data-title="التوحيد العقيدة الإلهيات النبوات السمعيات أركان الإيمان">
+            <div class="branch-card-banner tawheed">
+                <i class="fa-solid fa-shield-halved branch-banner-bg-icon"></i>
+                <div class="branch-badge-top">
+                    <span class="branch-badge-pill"><i class="fa-solid fa-star"></i> المسار الأساسي</span>
+                </div>
+                <div class="branch-icon-box">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <h3 class="branch-title">عِـلْـمُ الـتَّـوْحِـيـد</h3>
+                <div class="branch-subtitle">الإلهيات — النبوات — السمعيات</div>
+            </div>
+            <div class="branch-card-body">
+                <p class="branch-desc">
+                    دراسة تأصيلية ميسرة لأركان العقيدة الإسلامية الصافية، والتعرف على دلائل التوحيد، ونبوة الرسل ومعجزاتهم، وحقائق الغيبيات واليوم الآخر بالأدلة العقلية والنقلية.
+                </p>
+
+                <ul class="subtopics-list">
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>الإلهيات:</strong> أدلة وجود الله، الوحدانية، والأسماء والصفات</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>النبوات:</strong> عصمة الأنبياء، المعجزات، وخاتمية النبوة</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>السمعيات:</strong> الملائكة، البرزخ، الحساب، والجنة والنار</span>
+                    </li>
+                </ul>
+
+                <div>
+                    <div class="branch-meta-row">
+                        <div class="branch-meta-item"><i class="fa-regular fa-clock"></i> 3 أقسام رئيسية</div>
+                        <div class="branch-meta-item"><i class="fa-solid fa-file-lines"></i> 30 درساً واختباراً</div>
+                    </div>
+                    <a href="/tawheed.html" class="btn-enter-branch">
+                        <span>الدخول لمسار التوحيد</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 2: الحديث الشريف وعلومه -->
+        <div class="branch-card" data-title="الحديث الشريف علوم الحديث الأربعين النووية مصطلح الحديث السنة">
+            <div class="branch-card-banner hadeeth">
+                <i class="fa-solid fa-scroll branch-banner-bg-icon"></i>
+                <div class="branch-badge-top">
+                    <span class="branch-badge-pill"><i class="fa-solid fa-book-bookmark"></i> السنة النبوية</span>
+                </div>
+                <div class="branch-icon-box">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <h3 class="branch-title">الـحَـدِيـثُ الـشَّـرِيـف</h3>
+                <div class="branch-subtitle">شرح الأحاديث — مصطلح الحديث — الآداب</div>
+            </div>
+            <div class="branch-card-body">
+                <p class="branch-desc">
+                    مدارسة أحاديث النبي ﷺ وحفظ جوامع كلمه من الأربعين النووية، مع مدخل ميسر لمصطلح الحديث لمعرفة الصحيح والضعيف وقواعد قبول الأخبار.
+                </p>
+
+                <ul class="subtopics-list">
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>الأربعين النووية:</strong> شرح المتن وحفظ قواعد الدين الكبرى</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>مصطلح الحديث:</strong> السند والمتن، الصحيح والحسن والضعيف</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>رياض الصالحين:</strong> آداب وأخلاق وسنن يومية نبوية</span>
+                    </li>
+                </ul>
+
+                <div>
+                    <div class="branch-meta-row">
+                        <div class="branch-meta-item"><i class="fa-regular fa-clock"></i> 3 أبواب رئيسية</div>
+                        <div class="branch-meta-item"><i class="fa-solid fa-file-lines"></i> 30 حديثاً ودرساً</div>
+                    </div>
+                    <a href="/hadeeth.html" class="btn-enter-branch">
+                        <span>الدخول لمسار الحديث</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 3: التفسير وعلوم القرآن -->
+        <div class="branch-card" data-title="التفسير علوم القرآن تدبر القرآن أسباب النزول غريب القرآن">
+            <div class="branch-card-banner tafseer">
+                <i class="fa-solid fa-book-quran branch-banner-bg-icon"></i>
+                <div class="branch-badge-top">
+                    <span class="branch-badge-pill"><i class="fa-solid fa-feather-pointed"></i> كلام الله المعجز</span>
+                </div>
+                <div class="branch-icon-box">
+                    <i class="fa-solid fa-feather-pointed"></i>
+                </div>
+                <h3 class="branch-title">الـتَّـفْـسِـيـرُ </h3>
+                <div class="branch-subtitle">بيان الآيات — أسباب النزول — الهدايات</div>
+            </div>
+            <div class="branch-card-body">
+                <p class="branch-desc">
+                    البيان الميسر لمعاني كلام الله عز وجل وتدبر قصصه وأحكامه، مع دراسة أسباب النزول وغريب ألفاظ القرآن لاستشعار عظمة التنزيل.
+                </p>
+
+                <ul class="subtopics-list">
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>تفسير قصار السور:</strong> تدبر السور وقصار المفصل</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>علوم القرآن:</strong> سياقات نزول الآيات والمكي والمدني</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>قواعد التدبر:</strong> مفاتيح فهم القرآن والعمل به</span>
+                    </li>
+                </ul>
+
+                <div>
+                    <div class="branch-meta-row">
+                        <div class="branch-meta-item"><i class="fa-regular fa-clock"></i> 3 أبواب رئيسية</div>
+                        <div class="branch-meta-item"><i class="fa-solid fa-file-lines"></i> 30 درساً تأصيلياً</div>
+                    </div>
+                    <a href="/tafseer.html" class="btn-enter-branch">
+                        <span>الدخول لمسار التفسير</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 4: السيرة النبوية والتاريخ -->
+        <div class="branch-card" data-title="السيرة النبوية حياة النبي محمد العهد المكي العهد المدني الغزوات الشمائل">
+            <div class="branch-card-banner seerah">
+                <i class="fa-solid fa-mosque branch-banner-bg-icon"></i>
+                <div class="branch-badge-top">
+                    <span class="branch-badge-pill"><i class="fa-solid fa-kaaba"></i> القدوة والأسوة</span>
+                </div>
+                <div class="branch-icon-box">
+                    <i class="fa-solid fa-kaaba"></i>
+                </div>
+                <h3 class="branch-title">الـسِّـيـرَةُ الـنَّـبَـوِيَّـة</h3>
+                <div class="branch-subtitle">العهد المكي — الهجرة والعهد المدني — الشمائل</div>
+            </div>
+            <div class="branch-card-body">
+                <p class="branch-desc">
+                    معايشة المحطات الخالدة في حياة الحبيب المصطفى ﷺ منذ مولده وبعثته حتى وفاته، واستخلاص العِبر التربوية والدروس الإيمانية لترسيخ محبته واتباعه.
+                </p>
+
+                <ul class="subtopics-list">
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>المولد والنشأة والبعثة:</strong> مرحلة الدعوة المكية</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>الهجرة وبناء الدولة:</strong> الغزوات والعهود المدنية</span>
+                    </li>
+                    <li class="subtopic-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span><strong>الشمائل والأخلاق:</strong> صفات النبي ﷺ ووصاياه الخاتمة</span>
+                    </li>
+                </ul>
+
+                <div>
+                    <div class="branch-meta-row">
+                        <div class="branch-meta-item"><i class="fa-regular fa-clock"></i> 3 محاور كبرى</div>
+                        <div class="branch-meta-item"><i class="fa-solid fa-file-lines"></i> 30 محطة ودرساً</div>
+                    </div>
+                    <a href="/seerah.html" class="btn-enter-branch">
+                        <span>الدخول لمسار السيرة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof loadSidebar === 'function') loadSidebar();
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

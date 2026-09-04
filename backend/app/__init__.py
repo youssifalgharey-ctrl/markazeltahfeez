@@ -1,0 +1,1 @@
+"""Quran Platform Backend Package"""

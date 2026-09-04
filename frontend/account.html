@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- منع المتصفح من تخزين الصفحة القديمة في الكاش -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>الملف الشخصي - مكتب تحفيظ القرآن بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- إعادة استخدام نفس ملف الأنماط الرئيسي للموقع بدل تكرار المتغيرات والخطوط -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* أنماط خاصة بصفحة الملف الشخصي فقط */
+        body {
+            min-height: 100vh;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 5%;
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .topbar h2 {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .page-wrap {
+            max-width: 520px;
+            margin: 36px auto;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            background: #fff;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px 26px;
+            box-shadow: 0 8px 30px rgba(10, 77, 60, 0.08);
+            text-align: center;
+        }
+
+        .avatar-editor {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: var(--light-emerald);
+            border: 3px solid var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* ---------- قائمة "تغيير / إزالة" الصورة ---------- */
+        .avatar-menu-wrap {
+            position: relative;
+            width: fit-content;
+            margin: 0 auto 18px;
+        }
+
+        .avatar-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg, #ffffff);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 20;
+            min-width: 170px;
+        }
+
+        .avatar-menu.active {
+            display: block;
+        }
+
+        .avatar-menu button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            text-align: right;
+        }
+
+        .avatar-menu button:hover {
+            background: var(--light-emerald);
+        }
+
+        .avatar-menu button.danger {
+            color: #e74c3c;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .avatar-menu button.danger:hover {
+            background: rgba(231, 76, 60, 0.08);
+        }
+
+        .avatar-menu button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .avatar-editor img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .avatar-editor i.placeholder {
+            font-size: 46px;
+            color: var(--emerald);
+        }
+
+        .avatar-editor .camera-badge {
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            background: var(--gold);
+            color: #1a1a1a;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            border: 2px solid #fff;
+        }
+
+        .btn-change-photo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light-emerald);
+            color: var(--primary-green);
+            border: 1px solid rgba(13,107,83,0.25);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 28px;
+            transition: all 0.2s;
+        }
+
+        .btn-change-photo:hover {
+            background: var(--emerald);
+            color: #fff;
+        }
+
+        .form-group {
+            text-align: right;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--card-border);
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-main);
+            background: #fafcfb;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--emerald);
+        }
+
+        .form-group input[readonly] {
+            color: var(--text-muted);
+            background: #f0f2f1;
+        }
+
+        .form-group input.input-error {
+            border-color: #e74c3c !important;
+        }
+
+        .form-group .error-hint {
+            display: none;
+            color: #e74c3c;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        /* ---------- إظهار/إخفاء كلمة المرور ---------- */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-left: 42px;
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password-btn:hover {
+            color: var(--emerald);
+        }
+
+        .btn-save {
+            width: 100%;
+            background: var(--primary-green);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-save:hover {
+            background: var(--emerald);
+        }
+
+        .save-confirm {
+            display: none;
+            margin-top: 14px;
+            color: var(--emerald);
+            font-weight: 700;
+            font-size: 13.5px;
+        }
+
+        /* ---------- زر تغيير كلمة السر ---------- */
+        .btn-change-password {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: none;
+            border: 1.5px dashed var(--card-border);
+            color: var(--primary-green);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .btn-change-password:hover {
+            background: var(--light-emerald);
+            border-color: var(--emerald);
+        }
+
+        /* ---------- نافذة تغيير كلمة السر ---------- */
+        .password-modal {
+            max-width: 360px;
+            text-align: right;
+        }
+
+        .password-modal h3,
+        .password-modal > p {
+            text-align: center;
+        }
+
+        .password-modal .form-group {
+            margin-bottom: 14px;
+        }
+
+        .password-message {
+            display: none;
+            text-align: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            margin: -6px 0 12px;
+        }
+
+        .password-message.error {
+            display: block;
+            color: #e74c3c;
+        }
+
+        .password-message.success {
+            display: block;
+            color: var(--emerald);
+        }
+
+        /* ---------- نافذة ضبط أبعاد الصورة ---------- */
+        .crop-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .crop-modal-overlay.active {
+            display: flex;
+        }
+
+        .crop-modal {
+            background: var(--card-bg, #ffffff);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+        }
+
+        .crop-modal h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .crop-modal p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .crop-box {
+            width: min(70vw, 240px);
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            cursor: grab;
+            border: 3px solid var(--emerald);
+            touch-action: none;
+        }
+
+        .crop-box.dragging {
+            cursor: grabbing;
+        }
+
+        .crop-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-width: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .crop-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .crop-controls input[type="range"] {
+            flex: 1;
+            accent-color: var(--emerald);
+        }
+
+        .crop-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-crop-cancel, .btn-crop-save {
+            flex: 1;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-crop-cancel {
+            background: #f0f2f1;
+            color: var(--text-main);
+        }
+
+        .btn-crop-cancel:hover {
+            background: #e2e6e4;
+        }
+
+        .btn-crop-save {
+            background: var(--primary-green);
+            color: #fff;
+        }
+
+        .btn-crop-save:hover {
+            background: var(--emerald);
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/home.html" class="btn-back" title="رجوع"><i class="fa-solid fa-arrow-right"></i></a>
+    <h2>تعديل الملف الشخصي</h2>
+</div>
+
+<div class="page-wrap">
+    <div class="profile-card">
+        <div class="avatar-menu-wrap">
+            <div class="avatar-editor" id="avatarEditor" title="خيارات الصورة">
+                <img id="avatarPreview" alt="صورة المستخدم">
+                <i class="fa-solid fa-user placeholder" id="avatarPlaceholder"></i>
+                <span class="camera-badge"><i class="fa-solid fa-camera"></i></span>
+            </div>
+            <div class="avatar-menu" id="avatarMenu">
+                <button type="button" id="avatarMenuChange">
+                    <i class="fa-solid fa-camera"></i> تغيير الصورة
+                </button>
+                <button type="button" id="avatarMenuRemove" class="danger">
+                    <i class="fa-solid fa-trash"></i> إزالة الصورة
+                </button>
+            </div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="handleAvatarChange(event)">
+        <button class="btn-change-photo" onclick="document.getElementById('avatarInput').click()">
+            <i class="fa-solid fa-camera"></i> تغيير الصورة
+        </button>
+
+        <div class="form-group">
+            <label>الاسم الكامل</label>
+            <input type="text" id="fullNameInput" placeholder="اكتب اسمك الكامل">
+            <span class="error-hint" id="fullNameErrorHint">لا يمكن تركها فارغه</span>
+        </div>
+
+        <div class="form-group">
+            <label>كود الطالب</label>
+            <input type="text" id="userCodeInput" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>رقم الهاتف</label>
+            <input type="tel" id="phoneInput">
+            <span class="error-hint" id="phoneErrorHint">رقم الهاتف لا يمكن أن يكون فارغاً!</span>
+        </div>
+
+        <div class="form-group">
+            <label>العمر</label>
+            <input type="number" id="ageInput" placeholder="اكتب عمرك" min="1" max="120" required>
+            <span class="error-hint" id="ageErrorHint">العمر مطلوب ويجب أن يكون بين 1 و 120!</span>
+        </div>
+
+        <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" id="emailInput" placeholder="اكتب بريدك الإلكتروني (اختياري)">
+        </div>
+
+        <div class="form-group">
+            <label>العنوان</label>
+            <input type="text" id="addressInput" placeholder="اكتب عنوانك">
+        </div>
+
+        <div class="form-group">
+            <label>اسم السورة</label>
+            <input type="text" id="surahInput" placeholder="مثال: سورة البقرة">
+        </div>
+
+        <button type="button" class="btn-change-password" id="openChangePasswordBtn">
+            <i class="fa-solid fa-key"></i> تغيير كلمة السر
+        </button>
+
+        <button class="btn-save" onclick="saveProfile()">
+            <i class="fa-solid fa-check"></i> حفظ التعديلات
+        </button>
+
+        <p class="save-confirm" id="saveConfirm"><i class="fa-solid fa-circle-check"></i> تم حفظ بياناتك بنجاح</p>
+    </div>
+</div>
+
+<!-- نافذة ضبط أبعاد الصورة قبل الحفظ -->
+<div class="crop-modal-overlay" id="cropModalOverlay">
+    <div class="crop-modal">
+        <h3><i class="fa-solid fa-crop-simple"></i> اضبط الصورة</h3>
+        <p>حرّك الصورة وكبّرها/صغّرها لتظبط بالشكل اللي هتظهر بيه</p>
+        <div class="crop-box" id="cropBox">
+            <img id="cropImage" alt="ضبط الصورة" draggable="false">
+        </div>
+        <div class="crop-controls">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+            <input type="range" id="cropZoomRange" min="100" max="300" value="100">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </div>
+        <div class="crop-modal-actions">
+            <button class="btn-crop-cancel" id="cropCancelBtn">إلغاء</button>
+            <button class="btn-crop-save" id="cropSaveBtn">حفظ</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة تغيير كلمة السر -->
+<div class="crop-modal-overlay" id="passwordModalOverlay">
+    <div class="crop-modal password-modal">
+        <h3><i class="fa-solid fa-key"></i> تغيير كلمة السر</h3>
+        <p>من فضلك أدخل كلمة المرور الحالية، ثم كلمة المرور الجديدة وتأكيدها</p>
+
+        <div class="form-group">
+            <label>كلمة المرور الحالية</label>
+            <div class="password-wrapper">
+                <input type="password" id="oldPasswordInput" placeholder="اكتب كلمة المرور الحالية">
+                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('oldPasswordInput', this)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+            <span class="error-hint" id="oldPasswordErrorHint">كلمة المرور الحالية مطلوبة</span>
+        </div>
+
+        <div class="form-group">
+            <label>كلمة المرور الجديدة</label>
+            <div class="password-wrapper">
+                <input type="password" id="newPasswordInput" placeholder="اكتب كلمة المرور الجديدة">
+                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('newPasswordInput', this)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+            <span class="error-hint" id="newPasswordErrorHint">يجب ألا تقل عن 6 أحرف</span>
+        </div>
+
+        <div class="form-group">
+            <label>إعادة كتابة كلمة المرور الجديدة</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmPasswordInput" placeholder="أعد كتابة كلمة المرور الجديدة">
+                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('confirmPasswordInput', this)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+            <span class="error-hint" id="confirmPasswordErrorHint">كلمة المرور غير متطابقة</span>
+        </div>
+
+        <p class="password-message" id="passwordMessage"></p>
+
+        <div class="crop-modal-actions">
+            <button class="btn-crop-cancel" id="passwordCancelBtn">إلغاء</button>
+            <button class="btn-crop-save" id="passwordSaveBtn" onclick="submitChangePassword()">
+                <i class="fa-solid fa-pen"></i> تعديل
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ====== نافذة تجديد الجلسة (بديل عن alert المزعج) ====== -->
+<div id="reAuthOverlay" style="
+    display:none; position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,0.75); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center;
+">
+  <div style="
+    background:#1a1a2e; border-radius:20px; padding:36px 30px;
+    max-width:360px; width:90%; text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5); color:#fff; font-family:inherit;
+  ">
+    <div style="font-size:48px; margin-bottom:12px;">🔐</div>
+    <h3 style="margin:0 0 8px; font-size:20px; font-weight:800;">انتهت صلاحية الجلسة</h3>
+    <p style="margin:0 0 20px; color:#aaa; font-size:14px; line-height:1.6;">
+      أدخل كلمة المرور لتجديد جلستك والمتابعة من حيث توقفت
+    </p>
+    <input id="reAuthPassword" type="password" placeholder="كلمة المرور"
+      style="width:100%; padding:13px 16px; border-radius:12px; border:1.5px solid #333;
+             background:#111; color:#fff; font-size:15px; box-sizing:border-box;
+             font-family:inherit; margin-bottom:10px; direction:rtl;"
+    />
+    <p id="reAuthError" style="color:#ff6b6b; font-size:13px; margin:0 0 14px; display:none; text-align:right;"></p>
+    <div style="display:flex; gap:10px;">
+      <button onclick="submitReAuth()" id="reAuthBtn"
+        style="flex:1; padding:13px; background:linear-gradient(135deg,#1db954,#16a085);
+               border:none; border-radius:12px; color:#fff; font-size:15px;
+               font-family:inherit; font-weight:700; cursor:pointer;">
+        تجديد الجلسة
+      </button>
+      <button onclick="forceLogout()"
+        style="padding:13px 18px; background:#2a2a2a; border:none; border-radius:12px;
+               color:#aaa; font-size:14px; font-family:inherit; cursor:pointer;">
+        خروج
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+    // إظهار/إخفاء كلمة المرور عند الضغط على أيقونة العين
+    function togglePasswordVisibility(inputId, btnEl) {
+        const input = document.getElementById(inputId);
+        const icon = btnEl.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    // ---------- استدعاء الباك إند مع توكن الدخول ----------
+    function authHeaders(extra) {
+        const headers = Object.assign({ 'Content-Type': 'application/json' }, extra || {});
+        const token = localStorage.getItem('token');
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+        return headers;
+    }
+
+    // ── إصلاح: بدل Alert المزعج، نعرض modal تجديد الجلسة ──
+    let _reAuthResolve = null;
+
+    function showReAuthModal() {
+        return new Promise(function(resolve) {
+            _reAuthResolve = resolve;
+            const overlay = document.getElementById('reAuthOverlay');
+            overlay.style.display = 'flex';
+            document.getElementById('reAuthPassword').value = '';
+            document.getElementById('reAuthError').style.display = 'none';
+            setTimeout(function() {
+                document.getElementById('reAuthPassword').focus();
+            }, 100);
+
+            // السماح بالضغط على Enter
+            document.getElementById('reAuthPassword').onkeydown = function(e) {
+                if (e.key === 'Enter') submitReAuth();
+            };
+        });
+    }
+
+    async function submitReAuth() {
+        const passwordInput = document.getElementById('reAuthPassword');
+        const errorEl = document.getElementById('reAuthError');
+        const btn = document.getElementById('reAuthBtn');
+        const password = passwordInput.value;
+
+        if (!password) {
+            errorEl.textContent = 'من فضلك أدخل كلمة المرور';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        // محاولة تسجيل الدخول بنفس البيانات المحفوظة
+        const loginId = localStorage.getItem('phone') || localStorage.getItem('userCode') || localStorage.getItem('email') || '';
+        btn.disabled = true;
+        btn.textContent = 'جارٍ التحقق...';
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: loginId, password: password })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                errorEl.textContent = data.detail || data.message || 'كلمة المرور غير صحيحة';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            // حفظ التوكن الجديد والمتابعة
+            localStorage.setItem('token', data.token);
+            document.getElementById('reAuthOverlay').style.display = 'none';
+            if (_reAuthResolve) { _reAuthResolve(true); _reAuthResolve = null; }
+
+        } catch (err) {
+            errorEl.textContent = 'حدث خطأ في الاتصال، حاول مجدداً';
+            errorEl.style.display = 'block';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'تجديد الجلسة';
+        }
+    }
+
+    function forceLogout() {
+        localStorage.clear();
+        window.location.href = '/index.html';
+    }
+
+    // إعادة المحاولة تلقائياً بعد تجديد الجلسة
+    async function apiRequest(url, options) {
+        let response = await fetch(url, Object.assign({}, options, { headers: authHeaders() }));
+        let data = null;
+        try { data = await response.json(); } catch (e) { /* لا يوجد جسم استجابة */ }
+
+        if (response.status === 401) {
+            // بدل redirect مباشر: اعرض modal تجديد الجلسة وانتظر الرد
+            const refreshed = await showReAuthModal();
+            if (!refreshed) throw new Error('unauthorized');
+
+            // أعد الطلب الأصلي بالتوكن الجديد
+            response = await fetch(url, Object.assign({}, options, { headers: authHeaders() }));
+            data = null;
+            try { data = await response.json(); } catch (e) {}
+
+            if (response.status === 401) {
+                // فشل مرة ثانية → خروج اجباري
+                forceLogout();
+                throw new Error('unauthorized');
+            }
+        }
+
+        if (!response.ok) {
+            const message = (data && (data.message || data.detail)) ? (data.message || data.detail) : 'حدث خطأ، حاول مرة أخرى.';
+            throw new Error(message);
+        }
+        return data;
+    }
+
+    function renderAvatarPreview(dataUrl) {
+        const img = document.getElementById('avatarPreview');
+        const placeholder = document.getElementById('avatarPlaceholder');
+        const removeBtn = document.getElementById('avatarMenuRemove');
+        if (dataUrl) {
+            img.src = dataUrl;
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+            if (removeBtn) removeBtn.disabled = false;
+        } else {
+            img.style.display = 'none';
+            img.removeAttribute('src');
+            placeholder.style.display = 'block';
+            if (removeBtn) removeBtn.disabled = true;
+        }
+    }
+
+    // ---------- قائمة "تغيير / إزالة" الصورة ----------
+    const avatarEditor = document.getElementById('avatarEditor');
+    const avatarMenu = document.getElementById('avatarMenu');
+
+    function openAvatarMenu() {
+        avatarMenu.classList.add('active');
+    }
+
+    function closeAvatarMenu() {
+        avatarMenu.classList.remove('active');
+    }
+
+    avatarEditor.addEventListener('click', function (e) {
+        e.stopPropagation();
+        avatarMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function (e) {
+        if (avatarMenu.classList.contains('active') && !avatarMenu.contains(e.target) && e.target !== avatarEditor) {
+            closeAvatarMenu();
+        }
+    });
+
+    document.getElementById('avatarMenuChange').addEventListener('click', function () {
+        closeAvatarMenu();
+        document.getElementById('avatarInput').click();
+    });
+
+    document.getElementById('avatarMenuRemove').addEventListener('click', async function () {
+        if (this.disabled) return;
+        closeAvatarMenu();
+        try {
+            await apiRequest('/api/auth/profile/avatar', { method: 'DELETE' });
+            renderAvatarPreview(null);
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+
+    function handleAvatarChange(event) {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            alert('من فضلك اختر ملف صورة صالح.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            openCropModal(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ---------- نافذة ضبط أبعاد الصورة ----------
+    const cropOverlay = document.getElementById('cropModalOverlay');
+    const cropBox = document.getElementById('cropBox');
+    const cropImage = document.getElementById('cropImage');
+    const cropZoomRange = document.getElementById('cropZoomRange');
+
+    let cropState = {
+        naturalW: 0, naturalH: 0, baseScale: 1, zoom: 1,
+        offsetLeft: 0, offsetTop: 0, boxSize: 0,
+        dragging: false, startX: 0, startY: 0, startLeft: 0, startTop: 0
+    };
+
+    function openCropModal(dataUrl) {
+        const img = new Image();
+        img.onload = function () {
+            cropState.naturalW = img.naturalWidth;
+            cropState.naturalH = img.naturalHeight;
+            cropImage.src = dataUrl;
+            cropOverlay.classList.add('active');
+
+            // بعد ظهور النافذة نقيس حجم الدائرة فعلياً (بتختلف حسب حجم الشاشة)
+            cropState.boxSize = cropBox.getBoundingClientRect().width;
+            cropState.baseScale = Math.max(
+                cropState.boxSize / cropState.naturalW,
+                cropState.boxSize / cropState.naturalH
+            );
+            cropState.zoom = 1;
+            cropZoomRange.value = 100;
+
+            const displayedW = cropState.naturalW * cropState.baseScale;
+            const displayedH = cropState.naturalH * cropState.baseScale;
+            cropState.offsetLeft = (cropState.boxSize - displayedW) / 2;
+            cropState.offsetTop = (cropState.boxSize - displayedH) / 2;
+
+            applyCropTransform();
+        };
+        img.src = dataUrl;
+    }
+
+    function closeCropModal() {
+        cropOverlay.classList.remove('active');
+        document.getElementById('avatarInput').value = '';
+    }
+
+    function applyCropTransform() {
+        const displayedW = cropState.naturalW * cropState.baseScale * cropState.zoom;
+        const displayedH = cropState.naturalH * cropState.baseScale * cropState.zoom;
+
+        // منع ظهور فراغات: الصورة لازم تغطي الدائرة بالكامل دايماً
+        const minLeft = Math.min(0, cropState.boxSize - displayedW);
+        const minTop = Math.min(0, cropState.boxSize - displayedH);
+        cropState.offsetLeft = Math.max(minLeft, Math.min(0, cropState.offsetLeft));
+        cropState.offsetTop = Math.max(minTop, Math.min(0, cropState.offsetTop));
+
+        cropImage.style.width = displayedW + 'px';
+        cropImage.style.height = displayedH + 'px';
+        cropImage.style.left = cropState.offsetLeft + 'px';
+        cropImage.style.top = cropState.offsetTop + 'px';
+    }
+
+    function cropDragStart(clientX, clientY) {
+        cropState.dragging = true;
+        cropState.startX = clientX;
+        cropState.startY = clientY;
+        cropState.startLeft = cropState.offsetLeft;
+        cropState.startTop = cropState.offsetTop;
+        cropBox.classList.add('dragging');
+    }
+
+    function cropDragMove(clientX, clientY) {
+        if (!cropState.dragging) return;
+        cropState.offsetLeft = cropState.startLeft + (clientX - cropState.startX);
+        cropState.offsetTop = cropState.startTop + (clientY - cropState.startY);
+        applyCropTransform();
+    }
+
+    function cropDragEnd() {
+        cropState.dragging = false;
+        cropBox.classList.remove('dragging');
+    }
+
+    cropBox.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        cropDragStart(e.clientX, e.clientY);
+    });
+    window.addEventListener('mousemove', function (e) {
+        cropDragMove(e.clientX, e.clientY);
+    });
+    window.addEventListener('mouseup', cropDragEnd);
+
+    cropBox.addEventListener('touchstart', function (e) {
+        const t = e.touches[0];
+        cropDragStart(t.clientX, t.clientY);
+    }, { passive: true });
+    window.addEventListener('touchmove', function (e) {
+        if (!cropState.dragging) return;
+        const t = e.touches[0];
+        cropDragMove(t.clientX, t.clientY);
+    }, { passive: true });
+    window.addEventListener('touchend', cropDragEnd);
+
+    cropZoomRange.addEventListener('input', function () {
+        cropState.zoom = Number(this.value) / 100;
+        applyCropTransform();
+    });
+
+    document.getElementById('cropCancelBtn').addEventListener('click', closeCropModal);
+
+    document.getElementById('cropSaveBtn').addEventListener('click', function () {
+        const outputSize = 320;
+        const canvas = document.createElement('canvas');
+        canvas.width = outputSize;
+        canvas.height = outputSize;
+        const ctx = canvas.getContext('2d');
+
+        const displayedW = cropState.naturalW * cropState.baseScale * cropState.zoom;
+        const factor = cropState.naturalW / displayedW;
+
+        const sx = -cropState.offsetLeft * factor;
+        const sy = -cropState.offsetTop * factor;
+        const sSize = cropState.boxSize * factor;
+
+        const sourceImg = new Image();
+        sourceImg.onload = async function () {
+            ctx.drawImage(sourceImg, sx, sy, sSize, sSize, 0, 0, outputSize, outputSize);
+            const finalDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+
+            const saveBtn = document.getElementById('cropSaveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'جارِ الحفظ...';
+            try {
+                const profile = await apiRequest('/api/auth/profile/avatar', {
+                    method: 'PUT',
+                    body: JSON.stringify({ image: finalDataUrl })
+                });
+                renderAvatarPreview(profile.profileImage);
+                if (profile.profileImage) {
+                    localStorage.setItem('profileImage', profile.profileImage);
+                    if (typeof renderAvatar === 'function') renderAvatar(profile.profileImage);
+                }
+                closeCropModal();
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'حفظ';
+            }
+        };
+        sourceImg.src = cropImage.src;
+    });
+
+    async function saveProfile() {
+        const fullNameInput = document.getElementById('fullNameInput');
+        const fullNameErrorHint = document.getElementById('fullNameErrorHint');
+        const name = fullNameInput.value.trim();
+
+        // الاسم الكامل إجباري ومينفعش يتسيب فاضي
+        if (!name) {
+            fullNameInput.classList.add('input-error');
+            fullNameErrorHint.style.display = 'block';
+            return;
+        } else {
+            fullNameInput.classList.remove('input-error');
+            fullNameErrorHint.style.display = 'none';
+        }
+
+        const phoneInput = document.getElementById('phoneInput');
+        const phoneErrorHint = document.getElementById('phoneErrorHint');
+        const phone = phoneInput.value.trim();
+
+        // رقم الهاتف إجباري ومينفعش يتسيب فاضي
+        if (!phone) {
+            phoneInput.classList.add('input-error');
+            phoneErrorHint.style.display = 'block';
+            return;
+        } else {
+            phoneInput.classList.remove('input-error');
+            phoneErrorHint.style.display = 'none';
+        }
+
+        const ageInput = document.getElementById('ageInput');
+        const ageErrorHint = document.getElementById('ageErrorHint');
+        const age = ageInput.value.trim() ? parseInt(ageInput.value.trim()) : null;
+
+        // العمر إجباري ومينفعش يتسيب فاضي
+        if (!age || age < 1 || age > 120) {
+            ageInput.classList.add('input-error');
+            ageErrorHint.style.display = 'block';
+            return;
+        } else {
+            ageInput.classList.remove('input-error');
+            ageErrorHint.style.display = 'none';
+        }
+
+        const email = document.getElementById('emailInput').value.trim();
+        const address = document.getElementById('addressInput').value.trim();
+        const surah = document.getElementById('surahInput').value.trim();
+
+        const saveBtn = document.querySelector('.btn-save');
+        saveBtn.disabled = true;
+
+        try {
+            const profile = await apiRequest('/api/auth/profile', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    fullName: name,
+                    phone: phone,
+                    age: age,
+                    email: email,
+                    address: address,
+                    currentSurah: surah
+                })
+            });
+
+            // مزامنة سريعة للاسم مع القائمة الجانبية في باقي الصفحات
+            localStorage.setItem('fullName', profile.fullName);
+            localStorage.setItem('phone', profile.phone);
+            if (profile.email) localStorage.setItem('email', profile.email);
+
+            // ── إصلاح: لو تغيّر الإيميل أو الهاتف، احفظ التوكن الجديد حتى تفضل الجلسة شغالة ──
+            if (profile.token) {
+                localStorage.setItem('token', profile.token);
+            }
+
+            const confirmMsg = document.getElementById('saveConfirm');
+            confirmMsg.style.display = 'block';
+            setTimeout(function () {
+                confirmMsg.style.display = 'none';
+            }, 2500);
+        } catch (err) {
+            alert(err.message);
+        } finally {
+            saveBtn.disabled = false;
+        }
+    }
+
+    // ---------- نافذة تغيير كلمة السر ----------
+    const passwordModalOverlay = document.getElementById('passwordModalOverlay');
+    const oldPasswordInput = document.getElementById('oldPasswordInput');
+    const newPasswordInput = document.getElementById('newPasswordInput');
+    const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+    const passwordMessage = document.getElementById('passwordMessage');
+
+    function clearPasswordErrors() {
+        [oldPasswordInput, newPasswordInput, confirmPasswordInput].forEach(function (input) {
+            input.classList.remove('input-error');
+        });
+        document.getElementById('oldPasswordErrorHint').style.display = 'none';
+        document.getElementById('newPasswordErrorHint').style.display = 'none';
+        document.getElementById('confirmPasswordErrorHint').style.display = 'none';
+        passwordMessage.className = 'password-message';
+        passwordMessage.textContent = '';
+    }
+
+    function openPasswordModal() {
+        oldPasswordInput.value = '';
+        newPasswordInput.value = '';
+        confirmPasswordInput.value = '';
+        clearPasswordErrors();
+        passwordModalOverlay.classList.add('active');
+    }
+
+    function closePasswordModal() {
+        passwordModalOverlay.classList.remove('active');
+    }
+
+    document.getElementById('openChangePasswordBtn').addEventListener('click', openPasswordModal);
+    document.getElementById('passwordCancelBtn').addEventListener('click', closePasswordModal);
+
+    [oldPasswordInput, newPasswordInput, confirmPasswordInput].forEach(function (input) {
+        input.addEventListener('input', function () {
+            this.classList.remove('input-error');
+        });
+    });
+
+    async function submitChangePassword() {
+        clearPasswordErrors();
+
+        const oldPassword = oldPasswordInput.value;
+        const newPassword = newPasswordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        let hasError = false;
+
+        if (!oldPassword) {
+            oldPasswordInput.classList.add('input-error');
+            document.getElementById('oldPasswordErrorHint').style.display = 'block';
+            hasError = true;
+        }
+
+        if (!newPassword || newPassword.length < 6) {
+            newPasswordInput.classList.add('input-error');
+            document.getElementById('newPasswordErrorHint').style.display = 'block';
+            hasError = true;
+        }
+
+        // تأكيد كلمة المرور لازم يكون مطابق تماماً للجديدة قبل الإرسال للسيرفر
+        if (!confirmPassword || confirmPassword !== newPassword) {
+            confirmPasswordInput.classList.add('input-error');
+            document.getElementById('confirmPasswordErrorHint').style.display = 'block';
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        const saveBtn = document.getElementById('passwordSaveBtn');
+        saveBtn.disabled = true;
+
+        try {
+            const result = await apiRequest('/api/auth/profile/password', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    oldPassword: oldPassword,
+                    newPassword: newPassword,
+                    confirmPassword: confirmPassword
+                })
+            });
+
+            // ── إصلاح: احفظ التوكن الجديد حتى تفضل الجلسة شغالة بعد تغيير كلمة السر ──
+            if (result && result.token) {
+                localStorage.setItem('token', result.token);
+            }
+
+            passwordMessage.className = 'password-message success';
+            passwordMessage.textContent = (result && result.message) ? result.message : 'تم تغيير كلمة المرور بنجاح';
+
+            setTimeout(closePasswordModal, 1500);
+        } catch (err) {
+            passwordMessage.className = 'password-message error';
+            passwordMessage.textContent = err.message;
+        } finally {
+            saveBtn.disabled = false;
+        }
+    }
+
+    // إزالة علامة الخطأ فور ما المستخدم يبدأ يكتب في الاسم الكامل
+    document.getElementById('fullNameInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('fullNameErrorHint').style.display = 'none';
+    });
+
+    // إزالة علامة الخطأ فور ما المستخدم يبدأ يكتب في رقم الهاتف
+    document.getElementById('phoneInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('phoneErrorHint').style.display = 'none';
+    });
+
+    // إزالة علامة الخطأ فور ما المستخدم يبدأ يكتب في العمر
+    document.getElementById('ageInput').addEventListener('input', function () {
+        this.classList.remove('input-error');
+        document.getElementById('ageErrorHint').style.display = 'none';
+    });
+
+    // تحميل بيانات الملف الشخصي (والصورة) من السيرفر مباشرة عند فتح الصفحة،
+    // عشان تكون نفس البيانات المحفوظة لحساب المستخدم بالظبط وملهاش علاقة بمتصفح
+    // أو جهاز معين.
+    (async function loadProfile() {
+        // عرض مبدئي سريع من آخر تسجيل دخول لحد ما رد السيرفر يوصل
+        const cachedName = localStorage.getItem('fullName');
+        const cachedCode = localStorage.getItem('userCode');
+        const cachedPhone = localStorage.getItem('phone');
+        if (cachedName) document.getElementById('fullNameInput').value = cachedName;
+        if (cachedCode) document.getElementById('userCodeInput').value = cachedCode;
+        if (cachedPhone) document.getElementById('phoneInput').value = cachedPhone;
+
+        if (!localStorage.getItem('token')) return;
+
+        try {
+            const profile = await apiRequest('/api/auth/profile', { method: 'GET' });
+            if (profile.fullName) document.getElementById('fullNameInput').value = profile.fullName;
+            if (profile.userCode) document.getElementById('userCodeInput').value = profile.userCode;
+            if (profile.phone) document.getElementById('phoneInput').value = profile.phone;
+            if (profile.age) document.getElementById('ageInput').value = profile.age;
+            if (profile.email) document.getElementById('emailInput').value = profile.email;
+            if (profile.address) document.getElementById('addressInput').value = profile.address;
+            if (profile.currentSurah) document.getElementById('surahInput').value = profile.currentSurah;
+            renderAvatarPreview(profile.profileImage);
+            if (profile.profileImage) {
+                localStorage.setItem('profileImage', profile.profileImage);
+                if (typeof renderAvatar === 'function') renderAvatar(profile.profileImage);
+            }
+        } catch (err) {
+            console.error('تعذر تحميل الملف الشخصي:', err);
+        }
+    })();
+</script>
+<script src="/js/ai-chat.js" defer></script>
+</body>
+</html>

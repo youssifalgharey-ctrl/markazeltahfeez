@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دورات وباقات التجويد - مركز تحفيظ القرآن الكريم بأسريجه</title>
+
+    <!-- تطبيق الثيم فوراً قبل أي رسم للصفحة، لمنع وميض التحول من الفاتح للغامق -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- مكان إدراج القائمة الجانبية المرفوعة من sidebar.html -->
+<div id="sidebar-container"></div>
+
+<!-- شريط التنقل العلوي -->
+<nav class="navbar">
+    <div class="nav-right-side">
+        <button class="menu-toggle-btn" onclick="toggleSideMenu()" title="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a href="/home.html" class="logo">
+            <img src="/images/brand/logo.png" alt="شعار مركز تحفيظ القرآن الكريم بأسريجه" class="logo-img" width="144" height="130" fetchpriority="high">
+        </a>
+    </div>
+
+    <div class="user-nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري">
+            <i class="fa-solid fa-moon theme-icon" id="themeIcon"></i>
+        </button>
+        <a href="/account.html" class="user-badge" id="navUserInfo" title="عرض الملف الشخصي">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">مستخدم</span> (كود: <span id="userCode">----</span>)
+        </a>
+    </div>
+</nav>
+
+<!-- رأس صفحة التجويد -->
+<section class="section-container" id="tajweed">
+    <div class="section-header" style="text-align: center; margin-bottom: 8px;">
+        <h3 class="section-title" style="justify-content: center;"><i class="fa-solid fa-book-quran"></i> دورات وباقات التجويد والقراءات</h3>
+    </div>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 10px; text-align: center; max-width: 750px; margin-inline: auto;">
+        اختر مسارك التعليمي المفضل لإتقان التلاوة وأحكام التجويد بأحدث الوسائل التفاعلية، المحاضرات المصورة، والمتابعة المباشرة مع نخبة من الشيوخ المجازين.
+    </p>
+
+    <!-- أزرار تصنيف الدورات -->
+    <div class="catalog-filters">
+        <button class="filter-btn" onclick="filterCourses('my-subscriptions', this)">
+            <i class="fa-solid fa-graduation-cap"></i> اشتراكاتي
+        </button>
+        <button class="filter-btn active" onclick="filterCourses('all', this)">جميع الدورات</button>
+        <button class="filter-btn" onclick="filterCourses('foundation', this)">كورس تأسيسي</button>
+        <button class="filter-btn" onclick="filterCourses('tajweed', this)">كورس تجويد</button>
+        <button class="filter-btn" onclick="filterCourses('ijaza', this)">كورس إجازة</button>
+        <button class="filter-btn" onclick="filterCourses('qiraat', this)">كورس القراءات العشر</button>
+    </div>
+
+    <!-- شبكة الدورات والكورسات -->
+    <div class="tajweed-catalog-grid">
+
+        <!-- بطاقة 1: كورس تأسيسي -->
+        <div class="tajweed-card" data-category="foundation">
+            <div class="tajweed-card-banner">
+                <img src="/images/courses/course-foundation.jpg" alt="كورس تأسيسي" class="banner-bg-img" loading="lazy">
+                <div class="banner-overlay"></div>
+                <span class="card-top-badge" style="background: linear-gradient(135deg, #10b981, #059669);">كورس تأسيسي</span>
+                <span class="card-price-tag">190 ج.م</span>
+                <div class="banner-content">
+                    <div class="banner-title">كورس التأسيس الشامل</div>
+                    <div class="banner-subtitle">«نور البيان، ضبط التهجي، ومخارج الحروف»</div>
+                </div>
+            </div>
+            <div class="tajweed-card-body">
+                <h4 class="card-course-title">كورس التأسيس وإتقان القراءة والتهجي القرآني (نور البيان)</h4>
+                <p class="card-course-desc">
+                    مسار تأهيلي متكامل يبدأ من الصفر لضبط الحروف الهجائية، أصوات الحركات، السكون، التنوين والمدود، مع التدريب العملي المكثف على التهجي والقراءة الصحيحة من المصحف الشريف بطلاقة وبدون تعثر.
+                </p>
+                <div class="card-stats-row">
+                    <div class="card-stats-item"><i class="fa-solid fa-video"></i> 16 محاضرة</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-calendar-check"></i> مدة شهرين</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-microphone-lines"></i> تصحيح وتسميع صوتي</div>
+                </div>
+                <div class="card-pricing-row">
+                    <div class="card-price-label">قيمة الاشتراك:</div>
+                    <div class="card-price-amount">190 <span>جنيه مصري</span></div>
+                </div>
+                <div class="card-actions-grid">
+                    <a href="/tajweed-course.html?id=course-foundation" class="btn-card-details">
+                        <i class="fa-regular fa-eye"></i> تفاصيل الكورس
+                    </a>
+                    <a href="/checkout.html?course=course-foundation" class="btn-card-subscribe">
+                        <i class="fa-solid fa-bolt"></i> الاشتراك في الكورس !
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 2: كورس تجويد -->
+        <div class="tajweed-card" data-category="tajweed">
+            <div class="tajweed-card-banner">
+                <img src="/images/courses/course-tajweed.jpg" alt="كورس تجويد" class="banner-bg-img" loading="lazy">
+                <div class="banner-overlay"></div>
+                <span class="card-top-badge badge-featured">كورس تجويد وإتقان</span>
+                <span class="card-price-tag">350 ج.م</span>
+                <div class="banner-content">
+                    <div class="banner-title">كورس أحكام التجويد التطبيقي</div>
+                    <div class="banner-subtitle">«أحكام التلاوة، الصفات، والتطبيق العملي»</div>
+                </div>
+            </div>
+            <div class="tajweed-card-body">
+                <h4 class="card-course-title">كورس أحكام التجويد النظري والتطبيقي والإتقان العملي</h4>
+                <p class="card-course-desc">
+                    دراسة متكاملة لأحكام التجويد من مخارج الحروف وصفاتها، أحكام النون والميم الساكنتين، المدود وأقسامها، التفخيم والترقيق، والوقف والابتداء، مع تطبيقات عملية على الآيات وتصحيح صوتي مباشر مع الشيوخ.
+                </p>
+                <div class="card-stats-row">
+                    <div class="card-stats-item"><i class="fa-solid fa-video"></i> 24 محاضرة</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-calendar-check"></i> مدة 3 أشهر</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-certificate"></i> شهادة إتمام معتمدة</div>
+                </div>
+                <div class="card-pricing-row">
+                    <div class="card-price-label">قيمة الاشتراك:</div>
+                    <div class="card-price-amount">350 <span>جنيه مصري</span></div>
+                </div>
+                <div class="card-actions-grid">
+                    <a href="/tajweed-course.html?id=course-tajweed" class="btn-card-details">
+                        <i class="fa-regular fa-eye"></i> تفاصيل الكورس
+                    </a>
+                    <a href="/checkout.html?course=course-tajweed" class="btn-card-subscribe">
+                        <i class="fa-solid fa-bolt"></i> الاشتراك في الكورس !
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 3: كورس إجازة -->
+        <div class="tajweed-card" data-category="ijaza">
+            <div class="tajweed-card-banner">
+                <img src="/images/courses/course-ijaza.jpg" alt="كورس إجازة" class="banner-bg-img" loading="lazy">
+                <div class="banner-overlay"></div>
+                <span class="card-top-badge" style="background: linear-gradient(135deg, #b8860b, #d4af37); color: #0b1512; font-weight: 800;">إجازة بالسند المتصل</span>
+                <span class="card-price-tag">600 ج.م</span>
+                <div class="banner-content">
+                    <div class="banner-title">مسار الإجازة القرآنية بالسند</div>
+                    <div class="banner-subtitle">«عرض الختمة بالسند المتصل إلى النبي ﷺ»</div>
+                </div>
+            </div>
+            <div class="tajweed-card-body">
+                <h4 class="card-course-title">مسار الإجازة القرآنية بالسند المتصل إلى النبي ﷺ</h4>
+                <p class="card-course-desc">
+                    مسار إقرائي مخصص للمتقنين الراغبين في عرض ختمة كاملة برواية حفص عن عاصم (أو ورش) على شيخ مقرئ مسند، والتدقيق في لطائف الأداء ودقائق التجويد حتى نيل الإجازة بالسند المتصل إلى رسول الله ﷺ.
+                </p>
+                <div class="card-stats-row">
+                    <div class="card-stats-item"><i class="fa-solid fa-book-quran"></i> ختمة كاملة متصلة</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-users-viewfinder"></i> جلسات إفرادية</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-award"></i> إجازة بالسند المتصل</div>
+                </div>
+                <div class="card-pricing-row">
+                    <div class="card-price-label">قيمة الاشتراك:</div>
+                    <div class="card-price-amount">600 <span>جنيه مصري</span></div>
+                </div>
+                <div class="card-actions-grid">
+                    <a href="/tajweed-course.html?id=course-ijaza" class="btn-card-details">
+                        <i class="fa-regular fa-eye"></i> تفاصيل الكورس
+                    </a>
+                    <a href="/checkout.html?course=course-ijaza" class="btn-card-subscribe">
+                        <i class="fa-solid fa-bolt"></i> الاشتراك في الكورس !
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة 4: كورس للقراءات العشر -->
+        <div class="tajweed-card" data-category="qiraat">
+            <div class="tajweed-card-banner">
+                <img src="/images/courses/course-qiraat.jpg" alt="كورس للقراءات العشر" class="banner-bg-img" loading="lazy">
+                <div class="banner-overlay"></div>
+                <span class="card-top-badge" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #ffffff;">تخصص القراءات العشر</span>
+                <span class="card-price-tag">750 ج.م</span>
+                <div class="banner-content">
+                    <div class="banner-title">كورس القراءات العشر المتواترة</div>
+                    <div class="banner-subtitle">«أصول وفرش القراءات جمعاً وإفراداً»</div>
+                </div>
+            </div>
+            <div class="tajweed-card-body">
+                <h4 class="card-course-title">كورس القراءات العشر (الصغرى والكبرى) — جمعاً وإفراداً</h4>
+                <p class="card-course-desc">
+                    دراسة تخصصية متقدمة في القراءات العشر المتواترة من طريق الشاطبية والدرة وطيبة النشر، شرح الأصول والفرش، مع التدريب المنهجي على أصول الجمع والإفراد وعرض الروايات على نخبة من كبار المقرئين.
+                </p>
+                <div class="card-stats-row">
+                    <div class="card-stats-item"><i class="fa-solid fa-layer-group"></i> أصول وفرش القراءات</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-chalkboard-user"></i> جمع وإفراد متقن</div>
+                    <div class="card-stats-item"><i class="fa-solid fa-star-and-crescent"></i> أسانيد متصلة عالية</div>
+                </div>
+                <div class="card-pricing-row">
+                    <div class="card-price-label">قيمة الاشتراك:</div>
+                    <div class="card-price-amount">750 <span>جنيه مصري</span></div>
+                </div>
+                <div class="card-actions-grid">
+                    <a href="/tajweed-course.html?id=course-qiraat" class="btn-card-details">
+                        <i class="fa-regular fa-eye"></i> تفاصيل الكورس
+                    </a>
+                    <a href="/checkout.html?course=course-qiraat" class="btn-card-subscribe">
+                        <i class="fa-solid fa-bolt"></i> الاشتراك في الكورس !
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- قسم مميزات منصة التجويد -->
+<section class="section-container" style="margin-top: 40px; margin-bottom: 50px;">
+    <div class="section-header" style="text-align: center;">
+        <h3 class="section-title" style="justify-content: center;"><i class="fa-solid fa-star"></i> لماذا تشترك في دورات التجويد بمركز أسريجه؟</h3>
+    </div>
+    <div class="tajweed-features-grid">
+        <div class="tajweed-feature-card">
+            <div class="tajweed-feature-icon">
+                <i class="fa-solid fa-microphone-lines"></i>
+            </div>
+            <h4>تسميع وتصحيح صوتي</h4>
+            <p>تسجيل مقاطع التلاوة واستلام تصحيح الأخطاء من المعلم مباشرة.</p>
+        </div>
+
+        <div class="tajweed-feature-card">
+            <div class="tajweed-feature-icon">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+            <h4>اختبارات وواجبات دورية</h4>
+            <p>أسئلة تفاعلية بعد كل درس لتثبيت القواعد والأحكام التجويدية.</p>
+        </div>
+
+        <div class="tajweed-feature-card">
+            <div class="tajweed-feature-icon">
+                <i class="fa-solid fa-file-pdf"></i>
+            </div>
+            <h4>مذكرات وخرائط ذهنية</h4>
+            <p>ملفات PDF مصممة بعناية لتسهيل الحفظ والمراجعة السريعة.</p>
+        </div>
+
+        <div class="tajweed-feature-card">
+            <div class="tajweed-feature-icon">
+                <i class="fa-solid fa-certificate"></i>
+            </div>
+            <h4>شهادات معتمدة</h4>
+            <p>شهادة إتمام معتمدة من مركز تحفيظ القرآن الكريم بأسريجه.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // تصفية الكورسات والباقات
+    function filterCourses(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(function(b) {
+            b.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        var cards = document.querySelectorAll('.tajweed-card');
+        var countVisible = 0;
+
+        cards.forEach(function(card) {
+            if (category === 'all') {
+                card.style.display = 'flex';
+                countVisible++;
+            } else if (category === 'my-subscriptions') {
+                if (card.getAttribute('data-subscribed') === 'true') {
+                    card.style.display = 'flex';
+                    countVisible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            } else {
+                if (card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                    countVisible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+
+        // رسالة عند عدم وجود اشتراكات مفعلة
+        var noSubEl = document.getElementById('noSubscriptionsMsg');
+        if (category === 'my-subscriptions' && countVisible === 0) {
+            if (!noSubEl) {
+                noSubEl = document.createElement('div');
+                noSubEl.id = 'noSubscriptionsMsg';
+                noSubEl.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 40px 20px; background: var(--card-bg); border-radius: 16px; border: 1.5px dashed var(--card-border); color: var(--text-muted);';
+                noSubEl.innerHTML = '<i class="fa-solid fa-graduation-cap" style="font-size: 40px; color: var(--gold); display: block; margin-bottom: 12px;"></i><h4 style="color: var(--text-main); margin-bottom: 6px; font-weight: 800;">لا توجد اشتراكات مفعّلة لك حالياً</h4><p style="font-size: 14px; margin-bottom: 16px;">تصفح الباقات والدورات المتاحة واختر المسار الأنسب لك لإتقان التجويد.</p><button onclick="document.querySelectorAll(\'.filter-btn\')[1].click()" class="btn-card-subscribe" style="display: inline-block; padding: 8px 20px; font-size: 13px;"><i class="fa-solid fa-book-open"></i> استعراض جميع الدورات</button>';
+                document.querySelector('.tajweed-catalog-grid').appendChild(noSubEl);
+            }
+            noSubEl.style.display = 'block';
+        } else if (noSubEl) {
+            noSubEl.style.display = 'none';
+        }
+    }
+
+    // جلب وتحديث حالة اشتراكات الطالب في جميع الدورات
+    document.addEventListener('DOMContentLoaded', async function() {
+        var user = null;
+        try {
+            var raw = localStorage.getItem('user');
+            if (raw) user = JSON.parse(raw);
+        } catch(e) {}
+
+        var token = localStorage.getItem('token');
+        var headers = {};
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+
+        var q = new URLSearchParams();
+        if (user) {
+            if (user.phone) q.append('phone', user.phone);
+            if (user.userCode) q.append('userCode', user.userCode);
+            if (user.email) q.append('email', user.email);
+        var role = localStorage.getItem('role') || (user ? user.role : null);
+        var isAdmin = (role === 'ADMIN');
+
+        // إذا كان المستخدم مسؤول المنصة، يتم فتح جميع الكورسات له فوراً
+        if (isAdmin) {
+            document.querySelectorAll('.tajweed-card').forEach(function(card) {
+                card.setAttribute('data-subscribed', 'true');
+                var subLink = card.querySelector('a[href*="checkout.html"]');
+                if (subLink) {
+                    var badgeEl = document.createElement('div');
+                    badgeEl.className = 'badge-subscribed-label';
+                    badgeEl.style.cssText = 'background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #10b981; padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px;';
+                    badgeEl.innerHTML = '<i class="fa-solid fa-shield-halved"></i> مفتوح للإدارة';
+                    subLink.parentNode.replaceChild(badgeEl, subLink);
+                }
+                var detailsBtn = card.querySelector('.btn-card-details');
+                if (detailsBtn) {
+                    detailsBtn.style.background = '#059669';
+                    detailsBtn.style.color = '#ffffff';
+                    detailsBtn.style.borderColor = '#059669';
+                    detailsBtn.style.fontWeight = '700';
+                    detailsBtn.innerHTML = '<i class="fa-solid fa-play"></i> دخول المحاضرات';
+                }
+            });
+            return;
+        }
+
+        try {
+            var res = await fetch('/api/payment/my-subscriptions?' + q.toString(), { headers: headers });
+            var data = await res.json();
+
+            if (data && data.activeCourseKeys && Array.isArray(data.activeCourseKeys)) {
+                data.activeCourseKeys.forEach(function(courseKey) {
+                    // البحث عن البطاقة المرتبطة بهذه الدورة
+                    var subLink = document.querySelector('a[href*="checkout.html?course=' + courseKey + '"]');
+                    if (subLink) {
+                        // استبدال زر الاشتراك ببادج "أنت مشترك بالفعل"
+                        var badgeEl = document.createElement('div');
+                        badgeEl.className = 'badge-subscribed-label';
+                        badgeEl.style.cssText = 'background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #10b981; padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px;';
+                        badgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> اشتراكك مفعّل';
+                        subLink.parentNode.replaceChild(badgeEl, subLink);
+
+                        // تمييز زر الدخول للدورة ليصبح زراً رئيسياً مشجعاً وتصنيف البطاقة كمشترك فيها
+                        var parentCard = badgeEl.closest('.tajweed-card');
+                        if (parentCard) {
+                            parentCard.setAttribute('data-subscribed', 'true');
+                            var detailsBtn = parentCard.querySelector('.btn-card-details');
+                            if (detailsBtn) {
+                                detailsBtn.style.background = '#059669';
+                                detailsBtn.style.color = '#ffffff';
+                                detailsBtn.style.borderColor = '#059669';
+                                detailsBtn.style.fontWeight = '700';
+                                detailsBtn.innerHTML = '<i class="fa-solid fa-play"></i> دخول المحاضرات';
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (err) {
+            console.warn('Could not load user active subscriptions:', err);
+        }
+    });
+</script>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

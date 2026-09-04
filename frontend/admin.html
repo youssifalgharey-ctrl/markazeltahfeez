@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم والإدارة الشاملة | منصة مركز تحفيظ القرآن بأسريجه</title>
+    <link rel="icon" type="image/png" href="/images/brand/logo.png">
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #111827;
+            --bg-card-hover: #172033;
+            --bg-secondary: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-gold: rgba(245, 158, 11, 0.3);
+            --gold: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.2);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.2);
+            --rose: #f43f5e;
+            --blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط التنقل العلوي للإدارة */
+        .admin-nav {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .nav-brand img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 17px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-super-admin {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: #000;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-main);
+        }
+
+        .btn-nav:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold);
+        }
+
+        .btn-nav.btn-home {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-nav.btn-home:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        /* المحتوى الرئيسي للوحة التحكم */
+        .admin-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px;
+            flex: 1;
+        }
+
+        /* تبويبات لوحة التحكم */
+        .tabs-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 20px;
+            font-size: 14.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* بطاقات المؤشرات والإحصائيات */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold-glow);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .kpi-icon.users { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .kpi-icon.subs { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .kpi-icon.bookings { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .kpi-icon.revenue { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+        .kpi-title {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* شريط الأدوات والبحث */
+        .toolbar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+            gap: 10px;
+            flex: 1;
+            min-width: 260px;
+            max-width: 450px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            width: 100%;
+            font-size: 13.5px;
+        }
+
+        .toolbar-filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .select-filter {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            outline: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-refresh {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .btn-refresh:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* الجداول */
+        .table-responsive {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 13.5px;
+        }
+
+        thead {
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            padding: 14px 18px;
+            color: var(--text-muted);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            padding: 14px 18px;
+            vertical-align: middle;
+        }
+
+        /* الشارات والتنبيهات */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        .badge.admin { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge.user { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge.active { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge.expired { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+        /* أزرار العمليات */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .btn-act-activate { background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+        .btn-act-activate:hover { background: #10b981; color: #000; }
+
+        .btn-act-deactivate { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); }
+        .btn-act-deactivate:hover { background: #f59e0b; color: #000; }
+
+        .btn-act-delete { background: rgba(244, 63, 94, 0.15); color: #fb7185; border-color: rgba(244, 63, 94, 0.3); }
+        .btn-act-delete:hover { background: #f43f5e; color: #fff; }
+
+        .btn-act-receipt { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
+        .btn-act-receipt:hover { background: #3b82f6; color: #fff; }
+
+        .btn-act-role { background: rgba(168, 85, 247, 0.15); color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
+        .btn-act-role:hover { background: #a855f7; color: #fff; }
+
+        /* نافذة المعاينة المنبثقة (Modal) */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            animation: modalSlide 0.25s ease;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            color: var(--gold);
+        }
+
+        .btn-close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            max-height: 480px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            object-fit: contain;
+        }
+
+        /* أدوات النظام والباك إند */
+        .system-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+
+        .tool-card h4 {
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .tool-card p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .db-info-box {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            font-family: monospace;
+            font-size: 12.5px;
+            color: #38bdf8;
+            margin-bottom: 16px;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: var(--border-gold);
+            display: block;
+        }
+
+        /* تجاوب لوحة التحكم للشاشات والموبايل */
+        @media (max-width: 768px) {
+            .admin-nav {
+                padding: 12px 14px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .nav-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .admin-container {
+                padding: 14px 12px;
+            }
+
+            .tab-nav {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 6px;
+                gap: 6px;
+            }
+
+            .tab-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px 12px;
+            }
+
+            .stat-card .val {
+                font-size: 22px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .toolbar-filters {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .select-filter {
+                flex: 1;
+            }
+
+            .table-responsive {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                display: block;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            .system-tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي للوحة الإدارة -->
+    <header class="admin-nav">
+        <a href="/home.html" class="nav-brand">
+            <img src="/images/brand/logo.png" alt="شعار المركز">
+            <div class="brand-text">
+                <h1>لوحة التحكم والإدارة <span class="badge-super-admin">Super Admin</span></h1>
+                <p>مركز تحفيظ القرآن الكريم بأسريجه</p>
+            </div>
+        </a>
+
+        <div class="nav-actions">
+            <span id="currentAdminName" style="font-size: 13px; font-weight: 700; color: var(--gold); display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-user-shield"></i> مرحباً، المدير
+            </span>
+            <a href="/home.html" class="btn-nav btn-home" title="العودة للموقع">
+                <i class="fa-solid fa-house"></i> الواجهة الرئيسية
+            </a>
+            <button onclick="logout()" class="btn-nav" style="color: #fb7185; border-color: rgba(244, 63, 94, 0.3);">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
+            </button>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <!-- التبويبات -->
+        <nav class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('overview', this)">
+                <i class="fa-solid fa-chart-line"></i> نظرة عامة وإحصائيات
+            </button>
+            <button class="tab-btn" onclick="switchTab('users', this)">
+                <i class="fa-solid fa-users"></i> إدارة الطلاب والمستخدمين
+            </button>
+            <button class="tab-btn" onclick="switchTab('subscriptions', this)">
+                <i class="fa-solid fa-credit-card"></i> الاشتراكات والمدفوعات
+            </button>
+            <button class="tab-btn" onclick="switchTab('bookings', this)">
+                <i class="fa-solid fa-calendar-check"></i> حجوزات الجلسات والإجازات
+            </button>
+            <button class="tab-btn" onclick="switchTab('system', this)">
+                <i class="fa-solid fa-server"></i> أدوات الباك إند والنظام
+            </button>
+        </nav>
+
+        <!-- التبويب 1: نظرة عامة وإحصائيات -->
+        <section id="tab-overview" class="tab-content active">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon users"><i class="fa-solid fa-user-graduate"></i></div>
+                    <div class="kpi-title">إجمالي الطلاب المسجلين</div>
+                    <div class="kpi-value" id="kpiTotalUsers">0</div>
+                    <div class="kpi-sub">حسابات نشطة في المنصة</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon subs"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="kpi-title">الاشتراكات الفعالة</div>
+                    <div class="kpi-value" id="kpiActiveSubs">0</div>
+                    <div class="kpi-sub"><span id="kpiPendingSubs" style="color: var(--gold);">0</span> اشتراك قيد المراجعة</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon bookings"><i class="fa-solid fa-award"></i></div>
+                    <div class="kpi-title">حجوزات الجلسات المؤكدة</div>
+                    <div class="kpi-value" id="kpiConfirmedBookings">0</div>
+                    <div class="kpi-sub"><span id="kpiPendingBookings" style="color: var(--gold);">0</span> طلب بانتظار الموافقة</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon revenue"><i class="fa-solid fa-coins"></i></div>
+                    <div class="kpi-title">إجمالي الإيرادات المحصلة</div>
+                    <div class="kpi-value" id="kpiTotalRevenue">0 <span style="font-size: 15px;">ج.م</span></div>
+                    <div class="kpi-sub">من الاشتراكات وحجوزات الجلسات</div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <h3 style="font-size: 15px; color: var(--gold); display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-bolt"></i> نظرة سريعة على أحدث أنشطة المنصة
+                </h3>
+                <button class="btn-refresh" onclick="loadAllData()">
+                    <i class="fa-solid fa-rotate"></i> تحديث فوري لكافة البيانات
+                </button>
+            </div>
+        </section>
+
+        <!-- التبويب 2: إدارة الطلاب والمستخدمين -->
+        <section id="tab-users" class="tab-content">
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                    <input type="text" id="userSearchInput" placeholder="ابحث باسم الطالب، كود الطالب، أو الهاتف..." oninput="filterUsersTable()">
+                </div>
+                <div class="toolbar-filters">
+                    <select id="userRoleFilter" class="select-filter" onchange="filterUsersTable()">
+                        <option value="ALL">جميع الرتب</option>
+                        <option value="ADMIN">المسؤولين (ADMIN)</option>
+                        <option value="USER">الطلاب (USER)</option>
+                    </select>
+                    <button class="btn-refresh" onclick="loadUsers()">
+                        <i class="fa-solid fa-rotate"></i> تحديث
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>كود الطالب</th>
+                            <th>الاسم الكامل</th>
+                            <th>رقم الهاتف</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>الرتبة</th>
+                            <th>مسار الحفظ الحالي</th>
+                            <th>تاريخ التسجيل</th>
+                            <th style="text-align: center;">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="9" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل بيانات الطلاب...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- التبويب 3: الاشتراكات والمدفوعات -->
+        <section id="tab-subscriptions" class="tab-content">
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                    <input type="text" id="subSearchInput" placeholder="بحث باسم الطالب، الهاتف، أو اسم الدورة..." oninput="filterSubscriptionsTable()">
+                </div>
+                <div class="toolbar-filters">
+                    <select id="subStatusFilter" class="select-filter" onchange="filterSubscriptionsTable()">
+                        <option value="ALL">جميع الحالات</option>
+                        <option value="ACTIVATED">مفعّل</option>
+                        <option value="PENDING">قيد المراجعة</option>
+                        <option value="EXPIRED">منتهي الصلاحية</option>
+                    </select>
+                    <button class="btn-refresh" onclick="loadSubscriptions()">
+                        <i class="fa-solid fa-rotate"></i> تحديث
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>الطالب</th>
+                            <th>الهاتف</th>
+                            <th>الدورة التدريبية</th>
+                            <th>المبلغ</th>
+                            <th>طريقة الدفع</th>
+                            <th>تاريخ الاشتراك والانتهاء</th>
+                            <th>الحالة</th>
+                            <th style="text-align: center;">التحكم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subsTableBody">
+                        <tr><td colspan="9" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل الاشتراكات...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- التبويب 4: حجوزات الجلسات والإجازات -->
+        <section id="tab-bookings" class="tab-content">
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                    <input type="text" id="bookingSearchInput" placeholder="بحث باسم الطالب، الشيخ، أو كود الحجز..." oninput="filterBookingsTable()">
+                </div>
+                <div class="toolbar-filters">
+                    <select id="bookingStatusFilter" class="select-filter" onchange="filterBookingsTable()">
+                        <option value="ALL">جميع الحالات</option>
+                        <option value="APPROVED">مقبولة / مؤكدة</option>
+                        <option value="PENDING">قيد المراجعة</option>
+                        <option value="REJECTED">معتذر عنها</option>
+                    </select>
+                    <button class="btn-refresh" onclick="loadBookings()">
+                        <i class="fa-solid fa-rotate"></i> تحديث
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>كود الحجز</th>
+                            <th>الطالب</th>
+                            <th>الهاتف</th>
+                            <th>المسار والشيخ</th>
+                            <th>الموعد والتوقيت</th>
+                            <th>الرواية والحضور</th>
+                            <th>الرسوم</th>
+                            <th>الحالة</th>
+                            <th style="text-align: center;">إجراءات الإدارة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <tr><td colspan="9" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل طلبات الحجز...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- التبويب 5: أدوات النظام والباك إند -->
+        <section id="tab-system" class="tab-content">
+            <div class="system-tools-grid">
+                <!-- بطاقة قاعدة البيانات ومستندات الـ API -->
+                <div class="tool-card">
+                    <h4><i class="fa-solid fa-database"></i> إدارة قاعدة البيانات ومستكشف الـ API</h4>
+                    <p>تتيح لك الوصول المباشر لجداول قاعدة البيانات، استعراض السجلات، تنفيذ استعلامات SQL، واختبار وتجربة جميع نقاط الـ API تفاعلياً.</p>
+                    <div class="db-info-box">
+                        Engine: SQLite 3 (Python FastAPI)<br>
+                        DB File: data/authdb.sqlite3<br>
+                        API Docs: /docs (Swagger UI) & /redoc
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="openH2Console()" class="btn-nav" style="background: linear-gradient(135deg, #059669, #10b981); color: #fff; border: none; padding: 11px 20px; cursor: pointer; font-size: 13.5px; font-weight: 800; border-radius: 8px;">
+                            <i class="fa-solid fa-table"></i> كونسول ومستكشف قاعدة البيانات
+                        </button>
+                        <a href="/docs" target="_blank" class="btn-nav" style="background: #1e293b; border: 1px solid var(--border-color); color: #38bdf8; padding: 11px 20px; text-decoration: none; font-size: 13.5px; font-weight: 800; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-bolt"></i> مستندات الـ API (Swagger)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- بطاقة الحسابات الإدارية المجهزة -->
+                <div class="tool-card">
+                    <h4><i class="fa-solid fa-shield-halved"></i> حسابات الإدارة المجهزة تلقائياً (Super Admins)</h4>
+                    <p>الحسابات التالية تم إنشاؤها تلقائياً بصلاحيات كاملة للتحكم في المنصة بعد رفعها:</p>
+                    <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px; font-size: 13px; line-height: 1.8;">
+                        <strong style="color: var(--gold);">الحساب 1:</strong> كود: <code>0001</code> | markazeltafeez@gmail.com<br>
+                        <strong style="color: var(--gold);">الحساب 2:</strong> كود: <code>0002</code> | admin@asseriga-quran.com<br>
+                        <span style="color: var(--text-muted); font-size: 12px;">* يتاح تعديل كلمة المرور وتفاصيل الحساب من صفحة الملف الشخصي.</span>
+                    </div>
+                </div>
+
+                <!-- بطاقة الحالة الأمنية -->
+                <div class="tool-card">
+                    <h4><i class="fa-solid fa-lock"></i> حالة الحماية والأمان النشطة</h4>
+                    <ul style="list-style: none; font-size: 13.5px; line-height: 2;">
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i> فلتر حماية القوة الغاشمة (Rate Limiting: 10 req/min)</li>
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i> إبطال التوكنات القديمة فورياً (Token Versioning)</li>
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i> حماية انتحال الهوية (Strict IDOR Isolation)</li>
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i> الحماية من هجمات Clickjacking (SameOrigin)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- نافذة منبثقة لعرض صور الإيصالات -->
+    <div class="modal-backdrop" id="receiptModal" onclick="closeReceiptModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="receiptModalTitle"><i class="fa-solid fa-receipt"></i> صورة إيصال التحويل</h3>
+                <button class="btn-close-modal" onclick="closeReceiptModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <img id="receiptModalImg" src="" alt="صورة الإيصال">
+            </div>
+        </div>
+    </div>
+
+    <!-- جافاسكريبت إدارة لوحة التحكم -->
+    <script>
+        // دوال مساعدة للحماية من ثغرات XSS
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getAuthHeaders() {
+            var token = localStorage.getItem('token') || '';
+            return {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+        }
+
+        // فحص صلاحية الأدمن قبل عرض الصفحة
+        (function checkAdminSecurity() {
+            var token = localStorage.getItem('token');
+            var user = null;
+            try { user = JSON.parse(localStorage.getItem('user')); } catch (e) {}
+
+            if (!token || !user || user.role !== 'ADMIN') {
+                alert('عذراً، هذه اللوحة مخصصة لإدارة المنصة وحسابات المسؤولين فقط.');
+                window.location.href = '/index.html?redirect=admin.html';
+                return;
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var nameEl = document.getElementById('currentAdminName');
+                if (nameEl && user.fullName) {
+                    nameEl.innerHTML = '<i class="fa-solid fa-user-shield"></i> مرحباً، ' + escapeHtml(user.fullName);
+                }
+            });
+        })();
+
+        // إدارة التبويبات
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            var target = document.getElementById('tab-' + tabId);
+            if (target) target.classList.add('active');
+
+            if (tabId === 'users' && usersData.length === 0) loadUsers();
+            if (tabId === 'subscriptions' && subscriptionsData.length === 0) loadSubscriptions();
+            if (tabId === 'bookings' && bookingsData.length === 0) loadBookings();
+        }
+
+        // مخازن البيانات المؤقتة للفلترة السريعة
+        var usersData = [];
+        var subscriptionsData = [];
+        var bookingsData = [];
+
+        // تحميل نظرة عامة والإحصائيات
+        async function loadOverview() {
+            try {
+                var res = await fetch('/api/admin/overview', { headers: getAuthHeaders() });
+                if (res.status === 401 || res.status === 403) {
+                    window.location.href = '/index.html?redirect=admin.html';
+                    return;
+                }
+                var data = await res.json();
+                document.getElementById('kpiTotalUsers').textContent = data.totalUsers || 0;
+                document.getElementById('kpiActiveSubs').textContent = data.activeSubscriptions || 0;
+                document.getElementById('kpiPendingSubs').textContent = data.pendingSubscriptions || 0;
+                document.getElementById('kpiConfirmedBookings').textContent = data.confirmedBookings || 0;
+                document.getElementById('kpiPendingBookings').textContent = data.pendingBookings || 0;
+                document.getElementById('kpiTotalRevenue').innerHTML = (data.totalRevenue || 0) + ' <span style="font-size: 15px;">ج.م</span>';
+            } catch (err) {
+                console.error('Error loading overview:', err);
+            }
+        }
+
+        // تحميل قائمة الطلاب
+        async function loadUsers() {
+            try {
+                var res = await fetch('/api/admin/users', { headers: getAuthHeaders() });
+                usersData = await res.json();
+                renderUsersTable(usersData);
+            } catch (err) {
+                console.error('Error loading users:', err);
+                document.getElementById('usersTableBody').innerHTML = '<tr><td colspan="9" class="empty-state" style="color: #ef4444;">حدث خطأ أثناء تحميل بيانات الطلاب.</td></tr>';
+            }
+        }
+
+        function renderUsersTable(list) {
+            var tbody = document.getElementById('usersTableBody');
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fa-solid fa-users-slash"></i> لم يتم العثور على أي طلاب.</td></tr>';
+                return;
+            }
+
+            var html = '';
+            list.forEach(function(u, idx) {
+                var isAdmin = (u.role === 'ADMIN');
+                var roleBadge = isAdmin
+                    ? '<span class="badge admin"><i class="fa-solid fa-shield-halved"></i> مسؤول (ADMIN)</span>'
+                    : '<span class="badge user"><i class="fa-solid fa-user"></i> طالب (USER)</span>';
+
+                var dateFormatted = u.createdAt ? u.createdAt.replace('T', ' ').substring(0, 10) : '-';
+                var cleanPhone = u.phone ? u.phone.replace(/[^0-9]/g, '') : '';
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+
+                html += '<tr>';
+                html += '<td>' + (idx + 1) + '</td>';
+                html += '<td><strong style="color: var(--gold);">' + escapeHtml(u.userCode || '-') + '</strong></td>';
+                html += '<td><strong>' + escapeHtml(u.fullName) + '</strong></td>';
+                html += '<td>' + escapeHtml(u.phone) + ' <a href="https://wa.me/2' + cleanPhone + '" target="_blank" class="btn-action btn-act-activate" title="واتساب" style="padding: 2px 7px;"><i class="fa-brands fa-whatsapp"></i></a></td>';
+                html += '<td>' + escapeHtml(u.email || '-') + '</td>';
+                html += '<td>' + roleBadge + '</td>';
+                html += '<td>' + escapeHtml(u.currentSurah || 'مسار الحفظ') + '</td>';
+                html += '<td><span style="font-size: 12px; color: var(--text-muted);">' + dateFormatted + '</span></td>';
+                html += '<td style="text-align: center; white-space: nowrap;">';
+                
+                // زر تبديل الرتبة
+                if (u.userCode !== '0001' && u.email !== 'markazeltafeez@gmail.com') {
+                    html += '<button class="btn-action btn-act-role" onclick="toggleUserRole(' + u.id + ', \'' + (isAdmin ? 'USER' : 'ADMIN') + '\')">';
+                    html += '<i class="fa-solid fa-repeat"></i> ' + (isAdmin ? 'تخفيض لطالب' : 'ترقية لمسؤول');
+                    html += '</button>';
+                } else {
+                    html += '<span style="font-size: 11px; color: var(--text-muted);">حساب رئيسي</span>';
+                }
+
+                html += '</td>';
+                html += '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterUsersTable() {
+            var query = document.getElementById('userSearchInput').value.trim().toLowerCase();
+            var roleFilter = document.getElementById('userRoleFilter').value;
+
+            var filtered = usersData.filter(function(u) {
+                var matchRole = (roleFilter === 'ALL') || (u.role === roleFilter);
+                var matchQuery = !query ||
+                    (u.fullName && u.fullName.toLowerCase().includes(query)) ||
+                    (u.userCode && u.userCode.toLowerCase().includes(query)) ||
+                    (u.phone && u.phone.includes(query)) ||
+                    (u.email && u.email.toLowerCase().includes(query));
+                return matchRole && matchQuery;
+            });
+            renderUsersTable(filtered);
+        }
+
+        async function toggleUserRole(userId, newRole) {
+            if (!confirm('هل أنت متأكد من تغيير رتبة هذا المستخدم إلى ' + newRole + '؟')) return;
+            try {
+                var res = await fetch('/api/admin/users/' + userId + '/toggle-role', { method: 'POST', headers: getAuthHeaders() });
+                var data = await res.json();
+                if (data.success) {
+                    loadUsers();
+                } else {
+                    alert(data.message || 'تعذر تغيير الرتبة');
+                }
+            } catch (e) {
+                alert('حدث خطأ أثناء تعديل رتبة المستخدم.');
+            }
+        }
+
+        // تحميل وإدارة الاشتراكات
+        async function loadSubscriptions() {
+            try {
+                var res = await fetch('/api/payment/all-subscriptions', { headers: getAuthHeaders() });
+                subscriptionsData = await res.json();
+                renderSubscriptionsTable(subscriptionsData);
+            } catch (err) {
+                console.error('Error loading subscriptions:', err);
+                document.getElementById('subsTableBody').innerHTML = '<tr><td colspan="9" class="empty-state" style="color: #ef4444;">حدث خطأ أثناء تحميل الاشتراكات.</td></tr>';
+            }
+        }
+
+        function renderSubscriptionsTable(list) {
+            var tbody = document.getElementById('subsTableBody');
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fa-solid fa-inbox"></i> لا توجد أي اشتراكات مسجلة.</td></tr>';
+                return;
+            }
+
+            var html = '';
+            list.forEach(function(sub) {
+                var isAct = (sub.status === 'ACTIVATED');
+                var isExp = (sub.status === 'EXPIRED') || (sub.expiresAt && new Date(sub.expiresAt) < new Date());
+
+                var statusBadge = isExp
+                    ? '<span class="badge expired"><i class="fa-solid fa-ban"></i> منتهي</span>'
+                    : (isAct ? '<span class="badge active"><i class="fa-solid fa-circle-check"></i> مفعّل</span>'
+                             : '<span class="badge pending"><i class="fa-solid fa-clock"></i> قيد المراجعة</span>');
+
+                var cleanPhone = sub.studentPhone ? sub.studentPhone.replace(/[^0-9]/g, '') : '';
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+
+                var dateFormatted = sub.createdAt ? sub.createdAt.replace('T', ' ').substring(0, 10) : '-';
+                var expiryFormatted = sub.expiresAt ? sub.expiresAt.replace('T', ' ').substring(0, 10) : 'غير محدد';
+
+                html += '<tr>';
+                html += '<td><strong>#' + sub.id + '</strong></td>';
+                html += '<td><strong>' + escapeHtml(sub.studentName) + '</strong>' + (sub.userCode ? ' <small style="color: var(--text-muted);">(' + escapeHtml(sub.userCode) + ')</small>' : '') + '</td>';
+                html += '<td>' + escapeHtml(sub.studentPhone) + ' <a href="https://wa.me/2' + cleanPhone + '" target="_blank" class="btn-action btn-act-activate" style="padding: 2px 7px;"><i class="fa-brands fa-whatsapp"></i></a></td>';
+                html += '<td><span style="font-weight: 600;">' + escapeHtml(sub.courseTitle || sub.courseKey) + '</span></td>';
+                html += '<td><strong style="color: var(--emerald);">' + escapeHtml(sub.amount || '-') + '</strong></td>';
+                html += '<td>' + escapeHtml(sub.paymentMethod || '-') + '</td>';
+                html += '<td><span style="font-size: 12px; color: var(--text-muted);">' + dateFormatted + '<br><small style="color: var(--gold);">ينتهي: ' + expiryFormatted + '</small></span></td>';
+                html += '<td>' + statusBadge + '</td>';
+                html += '<td style="text-align: center; white-space: nowrap;">';
+
+                if (sub.receiptImage) {
+                    html += '<button class="btn-action btn-act-receipt" onclick="viewReceipt(\'' + sub.receiptImage + '\', \'إيصال اشتراك: ' + escapeHtml(sub.studentName) + '\')"><i class="fa-regular fa-image"></i> الإيصال</button> ';
+                }
+
+                if (!isAct || isExp) {
+                    html += '<button class="btn-action btn-act-activate" onclick="activateSub(' + sub.id + ')"><i class="fa-solid fa-bolt"></i> تفعيل</button> ';
+                } else {
+                    html += '<button class="btn-action btn-act-deactivate" onclick="deactivateSub(' + sub.id + ')"><i class="fa-solid fa-pause"></i> تعليق</button> ';
+                }
+
+                html += '<button class="btn-action btn-act-delete" onclick="deleteSub(' + sub.id + ')"><i class="fa-solid fa-trash"></i></button>';
+                html += '</td>';
+                html += '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterSubscriptionsTable() {
+            var query = document.getElementById('subSearchInput').value.trim().toLowerCase();
+            var statusFilter = document.getElementById('subStatusFilter').value;
+
+            var filtered = subscriptionsData.filter(function(s) {
+                var matchStatus = (statusFilter === 'ALL') || (s.status === statusFilter);
+                var matchQuery = !query ||
+                    (s.studentName && s.studentName.toLowerCase().includes(query)) ||
+                    (s.studentPhone && s.studentPhone.includes(query)) ||
+                    (s.courseTitle && s.courseTitle.toLowerCase().includes(query));
+                return matchStatus && matchQuery;
+            });
+            renderSubscriptionsTable(filtered);
+        }
+
+        async function activateSub(id) {
+            if (!confirm('تأكيد تفعيل اشتراك الطالب وفتح الكورس له؟')) return;
+            try {
+                var res = await fetch('/api/payment/admin/activate/' + id, { method: 'POST', headers: getAuthHeaders() });
+                var data = await res.json();
+                if (data.success) { loadSubscriptions(); loadOverview(); }
+            } catch (e) { alert('حدث خطأ أثناء التفعيل.'); }
+        }
+
+        async function deactivateSub(id) {
+            if (!confirm('إعادة الاشتراك لحالة قيد المراجعة؟')) return;
+            try {
+                var res = await fetch('/api/payment/admin/deactivate/' + id, { method: 'POST', headers: getAuthHeaders() });
+                var data = await res.json();
+                if (data.success) { loadSubscriptions(); loadOverview(); }
+            } catch (e) { alert('حدث خطأ.'); }
+        }
+
+        async function deleteSub(id) {
+            if (!confirm('حذف هذا السجل نهائياً؟')) return;
+            try {
+                var res = await fetch('/api/payment/admin/delete/' + id, { method: 'DELETE', headers: getAuthHeaders() });
+                var data = await res.json();
+                if (data.success) { loadSubscriptions(); loadOverview(); }
+            } catch (e) { alert('حدث خطأ أثناء الحذف.'); }
+        }
+
+        // تحميل وإدارة حجوزات الجلسات والإجازات
+        async function loadBookings() {
+            try {
+                var res = await fetch('/api/admin/bookings', { headers: getAuthHeaders() });
+                bookingsData = await res.json();
+                renderBookingsTable(bookingsData);
+            } catch (err) {
+                console.error('Error loading bookings:', err);
+                document.getElementById('bookingsTableBody').innerHTML = '<tr><td colspan="9" class="empty-state" style="color: #ef4444;">حدث خطأ أثناء تحميل الحجوزات.</td></tr>';
+            }
+        }
+
+        function renderBookingsTable(list) {
+            var tbody = document.getElementById('bookingsTableBody');
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fa-solid fa-calendar-xmark"></i> لا توجد أي حجوزات جلسات مسجلة.</td></tr>';
+                return;
+            }
+
+            var html = '';
+            list.forEach(function(b) {
+                var isAppr = (b.status === 'APPROVED' || b.status === 'CONFIRMED');
+                var isRej = (b.status === 'REJECTED');
+
+                var statusBadge = isAppr
+                    ? '<span class="badge active"><i class="fa-solid fa-circle-check"></i> مؤكدة</span>'
+                    : (isRej ? '<span class="badge expired"><i class="fa-solid fa-calendar-xmark"></i> معتذر عنها</span>'
+                             : '<span class="badge pending"><i class="fa-solid fa-clock"></i> قيد المراجعة</span>');
+
+                var cleanPhone = b.studentPhone ? b.studentPhone.replace(/[^0-9]/g, '') : '';
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+
+                html += '<tr>';
+                html += '<td><strong style="color: var(--gold);">' + escapeHtml(b.bookingReference) + '</strong></td>';
+                html += '<td><strong>' + escapeHtml(b.studentName) + '</strong></td>';
+                html += '<td>' + escapeHtml(b.studentPhone) + ' <a href="https://wa.me/2' + cleanPhone + '" target="_blank" class="btn-action btn-act-activate" style="padding: 2px 7px;"><i class="fa-brands fa-whatsapp"></i></a></td>';
+                html += '<td><span style="font-weight: 700; color: #38bdf8;">' + escapeHtml(b.trackName || 'ختمة كاملة') + '</span><br><small style="color: var(--text-muted);">' + escapeHtml(b.sheikhName) + '</small></td>';
+                html += '<td>' + escapeHtml(b.appointmentDate) + '<br><small style="color: var(--gold);">' + escapeHtml(b.appointmentTime) + '</small></td>';
+                html += '<td>' + escapeHtml(b.riwayah) + '<br><small>' + escapeHtml(b.sessionMode || 'أونلاين') + '</small></td>';
+                html += '<td><strong style="color: var(--emerald);">' + escapeHtml(b.amount || '100 ج.م') + '</strong></td>';
+                html += '<td>' + statusBadge + '</td>';
+                html += '<td style="text-align: center; white-space: nowrap;">';
+
+                if (b.receiptBase64) {
+                    html += '<button class="btn-action btn-act-receipt" onclick="viewReceipt(\'' + b.receiptBase64 + '\', \'إيصال جلسة: ' + escapeHtml(b.studentName) + '\')"><i class="fa-regular fa-image"></i> الإيصال</button> ';
+                }
+
+                if (!isAppr) {
+                    html += '<button class="btn-action btn-act-activate" onclick="updateBookingStatus(' + b.id + ', \'APPROVED\')"><i class="fa-solid fa-check"></i> موافقة</button> ';
+                }
+                if (!isRej) {
+                    html += '<button class="btn-action btn-act-deactivate" onclick="updateBookingStatus(' + b.id + ', \'REJECTED\')"><i class="fa-solid fa-xmark"></i> اعتذار</button> ';
+                }
+
+                html += '<button class="btn-action btn-act-delete" onclick="deleteBooking(' + b.id + ')"><i class="fa-solid fa-trash"></i></button>';
+                html += '</td>';
+                html += '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterBookingsTable() {
+            var query = document.getElementById('bookingSearchInput').value.trim().toLowerCase();
+            var statusFilter = document.getElementById('bookingStatusFilter').value;
+
+            var filtered = bookingsData.filter(function(b) {
+                var matchStatus = (statusFilter === 'ALL') || (b.status === statusFilter);
+                var matchQuery = !query ||
+                    (b.studentName && b.studentName.toLowerCase().includes(query)) ||
+                    (b.bookingReference && b.bookingReference.toLowerCase().includes(query)) ||
+                    (b.sheikhName && b.sheikhName.toLowerCase().includes(query)) ||
+                    (b.studentPhone && b.studentPhone.includes(query));
+                return matchStatus && matchQuery;
+            });
+            renderBookingsTable(filtered);
+        }
+
+        async function updateBookingStatus(id, newStatus) {
+            var actionText = (newStatus === 'APPROVED') ? 'الموافقة على هذا الموعد وتأكيده' : 'تسجيل الاعتذار عن هذا الموعد';
+            if (!confirm('هل أنت متأكد من ' + actionText + '؟')) return;
+
+            try {
+                var res = await fetch('/api/admin/bookings/' + id + '/status', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ status: newStatus })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    loadBookings();
+                    loadOverview();
+                }
+            } catch (e) {
+                alert('حدث خطأ أثناء تحديث حالة الجلسة.');
+            }
+        }
+
+        async function deleteBooking(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الحجز نهائياً؟')) return;
+            try {
+                var res = await fetch('/api/admin/bookings/' + id, { method: 'DELETE', headers: getAuthHeaders() });
+                var data = await res.json();
+                if (data.success) {
+                    loadBookings();
+                    loadOverview();
+                }
+            } catch (e) {
+                alert('حدث خطأ أثناء الحذف.');
+            }
+        }
+
+        // معاينة الإيصال في نافذة Modal
+        function viewReceipt(imgSrc, title) {
+            document.getElementById('receiptModalTitle').innerHTML = '<i class="fa-solid fa-receipt"></i> ' + escapeHtml(title);
+            document.getElementById('receiptModalImg').src = imgSrc;
+            document.getElementById('receiptModal').style.display = 'flex';
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').style.display = 'none';
+            document.getElementById('receiptModalImg').src = '';
+        }
+
+        function openH2Console() {
+            var token = localStorage.getItem('token') || '';
+            window.open('/h2-console?token=' + encodeURIComponent(token), '_blank');
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '/index.html';
+        }
+
+        function loadAllData() {
+            loadOverview();
+            loadUsers();
+            loadSubscriptions();
+            loadBookings();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllData();
+        });
+    </script>
+</body>
+</html>
