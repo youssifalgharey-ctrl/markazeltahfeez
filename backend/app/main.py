@@ -54,8 +54,11 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
 
-    logger.info("Starting background scheduler...")
-    start_scheduler()
+    try:
+        logger.info("Starting background scheduler...")
+        start_scheduler()
+    except Exception as e:
+        logger.warning("Background scheduler could not be started: %s", e)
 
     logger.info("Running initial startup subscription check...")
     try:
