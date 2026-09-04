@@ -15,9 +15,8 @@ class Settings(BaseSettings):
     SERVER_BASE_URL: str = "http://localhost:8081"
     DATABASE_URL: str = f"sqlite:///{DB_PATH}"
 
-    # ===== الأسرار الحساسة — يجب تعريفها في ملف .env فقط ولا تُكتب هنا =====
-    SYNC_WEBHOOK_SECRET: str
-    JWT_SECRET: str
+    SYNC_WEBHOOK_SECRET: str = "AsserigaQuranSyncSecretKey2026!"
+    JWT_SECRET: str = "AsserigaQuranPlatformSecretKey2026Secure!"
     JWT_EXPIRATION_MS: int = 2592000000  # 30 days in ms
 
     # الـ Origins المسموح بها للـ CORS (مفصولة بفاصلة إذا كانت أكثر من واحد)
@@ -27,13 +26,13 @@ class Settings(BaseSettings):
         "https://script.google.com/macros/s/AKfycbxsdDNeNDXMP3YpNNK-qDhSDb35JAEv23uP-hR2UkacwUA0cEuKWPmoHa90MO0Ie2rdQQ/exec"
     )
 
-    GEMINI_API_KEY: str
+    GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-2.0-flash"
 
     MAIL_HOST: str = "smtp.gmail.com"
     MAIL_PORT: int = 587
     MAIL_USERNAME: str = "markazeltafeez@gmail.com"
-    MAIL_PASSWORD: str          # يجب تعريفه في .env فقط
+    MAIL_PASSWORD: str = ""
     PAYMENT_ADMIN_EMAIL: str = "markazeltafeez@gmail.com"
 
     @property

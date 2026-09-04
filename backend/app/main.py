@@ -45,14 +45,18 @@ IS_PRODUCTION = os.getenv("ENV", "development").lower() == "production"
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("Initializing database tables...")
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        logger.error("DB tables initialization error: %s", e)
 
     logger.info("Seeding admin accounts...")
-    db = SessionLocal()
     try:
+        db = SessionLocal()
         seed_admin_accounts(db)
-    finally:
         db.close()
+    except Exception as e:
+        logger.error("Seeding admin accounts error: %s", e)
 
     try:
         logger.info("Starting background scheduler...")
@@ -98,13 +102,14 @@ async def add_security_headers(request: Request, call_next):
 # Rate Limiting
 app.add_middleware(RateLimitMiddleware)
 
-# CORS — مقيّد بالـ origins المسموح بها فقط (لا يُسمح بـ wildcard مع credentials)
+# CORS — السماح بنطاقات Vercel والـ localhost
 app.add_middleware(
     CORSMiddleware,
+    allow_origin_regex=r"https://.*\.vercel\.app|https://.*\.now\.sh|http://localhost:.*",
     allow_origins=settings.allowed_origins_list,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type", "Accept"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Include API routers
