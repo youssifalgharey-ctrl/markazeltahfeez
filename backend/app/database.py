@@ -3,26 +3,28 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import settings, DATA_DIR, PROJECT_DIR
 
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-
 # Resolve and normalize DB URL
 db_url = settings.DATABASE_URL
 
-# Fix SQLAlchemy compatibility for postgres:// provided by services like Render/Supabase/Heroku
+# Fix SQLAlchemy compatibility for postgres:// provided by services like Render/Supabase/Heroku/Neon
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 
 if db_url.startswith("sqlite:///"):
-    raw_path = db_url.replace("sqlite:///", "")
-    p = Path(raw_path)
-    if not p.is_absolute():
-        cleaned_rel = raw_path.replace("\\", "/").lstrip("./")
-        abs_p = (PROJECT_DIR / cleaned_rel).resolve()
-        abs_p.parent.mkdir(parents=True, exist_ok=True)
-        db_url = f"sqlite:///{abs_p.as_posix()}"
-    else:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        db_url = f"sqlite:///{p.as_posix()}"
+    try:
+        raw_path = db_url.replace("sqlite:///", "")
+        p = Path(raw_path)
+        if not p.is_absolute():
+            cleaned_rel = raw_path.replace("\\", "/").lstrip("./")
+            abs_p = (PROJECT_DIR / cleaned_rel).resolve()
+            abs_p.parent.mkdir(parents=True, exist_ok=True)
+            db_url = f"sqlite:///{abs_p.as_posix()}"
+        else:
+            p.parent.mkdir(parents=True, exist_ok=True)
+            db_url = f"sqlite:///{p.as_posix()}"
+    except OSError:
+        # Fallback to /tmp on serverless environments with read-only root filesystems
+        db_url = "sqlite:////tmp/authdb.sqlite3"
 
 # Engine options
 engine_kwargs = {}
