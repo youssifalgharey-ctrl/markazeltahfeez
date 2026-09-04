@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 # Base directories
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BACKEND_DIR.parent
-STATIC_DIR = PROJECT_DIR / "frontend"
+STATIC_DIR = PROJECT_DIR / "public" if (PROJECT_DIR / "public").exists() else PROJECT_DIR / "frontend"
 DATA_DIR = PROJECT_DIR / "data"
 DB_PATH = (DATA_DIR / "authdb.sqlite3").resolve().as_posix()
 
