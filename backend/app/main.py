@@ -1,4 +1,12 @@
+import sys
 import os
+from pathlib import Path
+
+# Ensure backend directory is in sys.path for serverless runtimes
+backend_dir = Path(__file__).resolve().parent.parent
+if str(backend_dir) not in sys.path:
+    sys.path.insert(0, str(backend_dir))
+
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
