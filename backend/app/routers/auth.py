@@ -137,17 +137,8 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     if not password_matches:
         raise HTTPException(status_code=400, detail="بيانات الدخول غير صحيحة!")
 
-    # ── فحص الجلسة النشطة: منع فتح الحساب على أكثر من جهاز في نفس الوقت ──
-    # مدة صلاحية الجلسة بدون نشاط (120 ثانية = دقيقتان)
-    SESSION_INACTIVITY_TIMEOUT = 120
-    if user.active_session_id and user.last_active_at:
-        seconds_since_last_active = (datetime.now() - user.last_active_at).total_seconds()
-        if seconds_since_last_active < SESSION_INACTIVITY_TIMEOUT:
-            raise HTTPException(
-                status_code=400,
-                detail="هذا الحساب مفتوح حالياً على جهاز آخر. يجب تسجيل الخروج من الجهاز الآخر أولاً لتتمكن من الدخول."
-            )
-
+    # ── جلسة واحدة نشطة: تسجيل الدخول الجديد يستبدل الجلسة السابقة ويلغي صلاحيتها فوراً ──
+    # لا يمكن فتح الحساب على جهازين في نفس الوقت؛ تسجيل الدخول يلغي تلقائياً جلسة الجهاز السابق دون حظر المستخدم
     new_session_id = uuid.uuid4().hex
     user.active_session_id = new_session_id
     user.last_active_at = datetime.now()

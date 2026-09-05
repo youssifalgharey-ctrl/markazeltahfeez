@@ -241,13 +241,19 @@ function updateSideNotificationBadge() {
     });
 }
 
-// نبضات الحفاظ على الجلسة النشطة طالما المستخدم فاتح الموقع
+// نبضات الحفاظ على الجلسة النشطة والتحقق من عدم تسجيل الدخول من جهاز آخر
 function sendSessionHeartbeat() {
     const token = localStorage.getItem('token');
     if (!token) return;
     fetch('/api/auth/heartbeat', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + token }
+    }).then(function (res) {
+        if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('currentUser');
+            window.location.replace('/index.html');
+        }
     }).catch(function () {});
 }
 

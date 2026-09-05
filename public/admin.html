@@ -1312,13 +1312,19 @@
             window.open('/h2-console?token=' + encodeURIComponent(token), '_blank');
         }
 
-        // نبضات الحفاظ على جلسة الأدمن
+        // نبضات الحفاظ على جلسة الأدمن والتحقق من عدم تسجيل الدخول من جهاز آخر
         function sendAdminHeartbeat() {
             var token = localStorage.getItem('token');
             if (!token) return;
             fetch('/api/auth/heartbeat', {
                 method: 'POST',
                 headers: { 'Authorization': 'Bearer ' + token }
+            }).then(function (res) {
+                if (res.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('currentUser');
+                    window.location.replace('/index.html');
+                }
             }).catch(function () {});
         }
         sendAdminHeartbeat();
