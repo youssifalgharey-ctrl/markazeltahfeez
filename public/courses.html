@@ -16,6 +16,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- التحميل المسبق لصور الكورسات الأساسية لظهور فوري بدون تأخير -->
+    <link rel="preload" as="image" href="/images/courses/course-foundation.webp" type="image/webp">
+    <link rel="preload" as="image" href="/images/courses/course-tajweed.webp" type="image/webp">
 </head>
 <body>
 
@@ -72,7 +76,7 @@
         <!-- بطاقة 1: كورس تأسيسي -->
         <div class="tajweed-card" data-category="foundation">
             <div class="tajweed-card-banner">
-                <img src="/images/courses/course-foundation.jpg" alt="كورس تأسيسي" class="banner-bg-img" loading="lazy">
+                <img src="/images/courses/course-foundation.webp" alt="كورس تأسيسي" class="banner-bg-img" width="480" height="195" fetchpriority="high" decoding="async">
                 <div class="banner-overlay"></div>
                 <span class="card-top-badge" style="background: linear-gradient(135deg, #10b981, #059669);">كورس تأسيسي</span>
                 <span class="card-price-tag">190 ج.م</span>
@@ -109,7 +113,7 @@
         <!-- بطاقة 2: كورس تجويد -->
         <div class="tajweed-card" data-category="tajweed">
             <div class="tajweed-card-banner">
-                <img src="/images/courses/course-tajweed.jpg" alt="كورس تجويد" class="banner-bg-img" loading="lazy">
+                <img src="/images/courses/course-tajweed.webp" alt="كورس تجويد" class="banner-bg-img" width="480" height="195" fetchpriority="high" decoding="async">
                 <div class="banner-overlay"></div>
                 <span class="card-top-badge badge-featured">كورس تجويد وإتقان</span>
                 <span class="card-price-tag">350 ج.م</span>
@@ -146,7 +150,7 @@
         <!-- بطاقة 3: كورس إجازة -->
         <div class="tajweed-card" data-category="ijaza">
             <div class="tajweed-card-banner">
-                <img src="/images/courses/course-ijaza.jpg" alt="كورس إجازة" class="banner-bg-img" loading="lazy">
+                <img src="/images/courses/course-ijaza.webp" alt="كورس إجازة" class="banner-bg-img" width="480" height="195" loading="lazy" decoding="async">
                 <div class="banner-overlay"></div>
                 <span class="card-top-badge" style="background: linear-gradient(135deg, #b8860b, #d4af37); color: #0b1512; font-weight: 800;">إجازة بالسند المتصل</span>
                 <span class="card-price-tag">600 ج.م</span>
@@ -183,7 +187,7 @@
         <!-- بطاقة 4: كورس للقراءات العشر -->
         <div class="tajweed-card" data-category="qiraat">
             <div class="tajweed-card-banner">
-                <img src="/images/courses/course-qiraat.jpg" alt="كورس للقراءات العشر" class="banner-bg-img" loading="lazy">
+                <img src="/images/courses/course-qiraat.webp" alt="كورس للقراءات العشر" class="banner-bg-img" width="480" height="195" loading="lazy" decoding="async">
                 <div class="banner-overlay"></div>
                 <span class="card-top-badge" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #ffffff;">تخصص القراءات العشر</span>
                 <span class="card-price-tag">750 ج.م</span>

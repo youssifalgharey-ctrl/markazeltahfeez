@@ -143,9 +143,13 @@ async def add_security_headers(request: Request, call_next):
     if IS_PRODUCTION:
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
 
-    # تفعيل الكاش لملفات الفيديو والوسائط الثابتة للتحميل الفوري من كاش المتصفح
+    # تفعيل الكاش لملفات الصور والوسائط الثابتة للتحميل الفوري من كاش المتصفح
     path = request.url.path
-    if path.startswith("/video/") or path.endswith((".mp4", ".webm", ".webp")):
+    if (
+        path.startswith("/video/")
+        or path.startswith("/images/")
+        or path.endswith((".mp4", ".webm", ".webp", ".jpg", ".jpeg", ".png", ".svg", ".ico", ".woff2", ".ttf"))
+    ):
         response.headers["Cache-Control"] = "public, max-age=2592000, immutable"
 
     return response
