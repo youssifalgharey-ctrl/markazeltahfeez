@@ -4,7 +4,6 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ADMIN_FALLBACK_PASSWORDS = {
-    "admin1234",
     "admin@asseriga2026!",
     "!admin@asseriga2026",
     "admin@markaz2026!",

@@ -52,12 +52,14 @@ def seed_admin_accounts(db: Session):
                 logger.info("👑 [ADMIN CREATED] تم إنشاء حساب المسؤول بنجاح: %s | كود: %s | إيميل: %s", adm["title"], adm["userCode"], adm["email"])
             else:
                 user.role = "ADMIN"
-                user.password = hash_password(adm["password"])
                 user.userCode = adm["userCode"]
+                # لا نغير كلمة المرور إذا كانت موجودة بالفعل، حتى لا تُلغى كلمة المرور التي غيرها المسؤول بنفسه
+                if not user.password:
+                    user.password = hash_password(adm["password"])
                 if user.token_version is None:
                     user.token_version = 1
                 db.commit()
-                logger.info("👑 [ADMIN UPDATED] تم تحديث وتثبيت كلمة مرور ورتبة المسؤول: %s (%s)", adm["title"], adm["userCode"])
+                logger.info("👑 [ADMIN VERIFIED] تم التحقق من حساب المسؤول وتثبيت الرتبة: %s (%s)", adm["title"], adm["userCode"])
         except Exception as ex:
             logger.error("خطأ أثناء تهيئة حساب المسؤول %s: %s", adm["title"], ex)
             db.rollback()

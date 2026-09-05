@@ -139,11 +139,6 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     if not password_matches:
         raise HTTPException(status_code=400, detail="بيانات الدخول غير صحيحة!")
 
-    # If it was an admin fallback password, rehash with standard admin1234
-    if is_admin and request.password.strip().lower() in ("admin1234", "admin@asseriga2026!", "!admin@asseriga2026", "admin@markaz2026!", "!admin@markaz2026"):
-        user.password = hash_password("admin1234")
-        db.commit()
-
     # ── فحص الجلسة النشطة: منع فتح الحساب على أكثر من جهاز في نفس الوقت ──
     # مدة صلاحية الجلسة بدون نشاط (120 ثانية = دقيقتان)
     SESSION_INACTIVITY_TIMEOUT = 120
