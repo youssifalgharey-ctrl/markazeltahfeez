@@ -174,67 +174,86 @@ function loadSidebar() {
         .catch(err => console.error('خطأ في تحميل القائمة الجانبية. تأكد من فتح الموقع عبر سيرفر محلي وليس بفتح الملف مباشرة:', err));
 }
 
-// تحديث بادج الإشعارات غير المقروءة في القائمة الجانبية من السيرفر مباشرة
-function updateSideNotificationBadge() {
+// تحديث مؤشرات الإشعارات (البادج في القائمة الجانبية + النقطة الحمراء الخارجية على زر القائمة)
+function applyNotificationIndicators(unreadCount) {
+    // 1. تحديث البادج داخل القائمة الجانبية
     const badge = document.getElementById('sideNotifBadge');
-    if (!badge) return;
-
-    const userCode = localStorage.getItem('userCode') || '';
-    const email = localStorage.getItem('email') || '';
-
-    if (!userCode && !email) {
-        try {
-            const raw = localStorage.getItem('user_notifications');
-            if (raw) {
-                const list = JSON.parse(raw);
-                const unread = list.filter(n => !n.read && !n.isRead).length;
-                if (unread > 0) {
-                    badge.textContent = unread > 99 ? '99+' : unread;
-                    badge.style.display = 'inline-flex';
-                } else {
-                    badge.style.display = 'none';
-                }
-            }
-        } catch (e) {
+    if (badge) {
+        if (unreadCount > 0) {
+            badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+            badge.style.display = 'inline-flex';
+        } else {
             badge.style.display = 'none';
         }
+    }
+
+    // 2. تحديث النقطة الحمراء الخارجية "برا" فوق زر القائمة الرئيسي (menu-toggle-btn)
+    const toggleBtns = document.querySelectorAll('.menu-toggle-btn');
+    toggleBtns.forEach(btn => {
+        let dot = btn.querySelector('.nav-menu-notif-dot');
+        if (!dot) {
+            dot = document.createElement('span');
+            dot.className = 'nav-menu-notif-dot';
+            btn.appendChild(dot);
+        }
+        dot.style.display = unreadCount > 0 ? 'block' : 'none';
+    });
+}
+
+// تحديث بادج ونقطة الإشعارات غير المقروءة من السيرفر مباشرة
+function updateSideNotificationBadge() {
+    const userCode = localStorage.getItem('userCode') || '';
+    const email = localStorage.getItem('email') || '';
+    const token = localStorage.getItem('token') || '';
+
+    if (!userCode && !email && !token) {
+        applyNotificationIndicators(0);
         return;
     }
 
-    fetch(`/api/notifications/my?userCode=${encodeURIComponent(userCode)}&email=${encodeURIComponent(email)}`)
-        .then(res => res.ok ? res.json() : [])
-        .then(notifications => {
-            if (Array.isArray(notifications)) {
-                localStorage.setItem('user_notifications', JSON.stringify(notifications));
-                const unreadCount = notifications.filter(n => !n.read && !n.isRead).length;
-                if (unreadCount > 0) {
-                    badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-                    badge.style.display = 'inline-flex';
-                } else {
-                    badge.style.display = 'none';
-                }
-            }
-        })
-        .catch(() => {
+    const headers = {};
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+
+    fetch(`/api/notifications/unread-count?userCode=${encodeURIComponent(userCode)}&email=${encodeURIComponent(email)}`, {
+        headers: headers
+    })
+    .then(res => res.ok ? res.json() : null)
+    .then(data => {
+        if (data && typeof data.unread === 'number') {
+            applyNotificationIndicators(data.unread);
+        } else {
             try {
                 const raw = localStorage.getItem('user_notifications');
                 if (raw) {
                     const list = JSON.parse(raw);
                     const unread = list.filter(n => !n.read && !n.isRead).length;
-                    if (unread > 0) {
-                        badge.textContent = unread > 99 ? '99+' : unread;
-                        badge.style.display = 'inline-flex';
-                    }
+                    applyNotificationIndicators(unread);
                 }
             } catch (e) {}
-        });
+        }
+    })
+    .catch(() => {
+        try {
+            const raw = localStorage.getItem('user_notifications');
+            if (raw) {
+                const list = JSON.parse(raw);
+                const unread = list.filter(n => !n.read && !n.isRead).length;
+                applyNotificationIndicators(unread);
+            }
+        } catch (e) {}
+    });
 }
 
-// فحص دوري للإشعارات كل 30 ثانية لتحديث البادج فور موافقة أو رفض الإدارة
+// فحص دوري للإشعارات كل 20 ثانية لتحديث العلامة الحمراء فور وصول إشعار جديد
 if (!window._notifIntervalStarted) {
     window._notifIntervalStarted = true;
-    setInterval(updateSideNotificationBadge, 30000);
+    setInterval(updateSideNotificationBadge, 20000);
 }
+
+// تشغيل الفحص فور تحميل الصفحة مباشرة
+document.addEventListener('DOMContentLoaded', function() {
+    updateSideNotificationBadge();
+});
 
 // تحديد الرابط النشط في القائمة الجانبية حسب الصفحة المفتوحة حالياً
 function highlightActiveSidebarLink() {

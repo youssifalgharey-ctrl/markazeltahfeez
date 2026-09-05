@@ -586,13 +586,17 @@
         if (countAll) countAll.textContent = totalCount;
         if (countUnread) countUnread.textContent = unreadCount;
 
-        const sideBadge = document.getElementById('sideNotifBadge');
-        if (sideBadge) {
-            if (unreadCount > 0) {
-                sideBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-                sideBadge.style.display = 'inline-flex';
-            } else {
-                sideBadge.style.display = 'none';
+        if (typeof applyNotificationIndicators === 'function') {
+            applyNotificationIndicators(unreadCount);
+        } else {
+            const sideBadge = document.getElementById('sideNotifBadge');
+            if (sideBadge) {
+                if (unreadCount > 0) {
+                    sideBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                    sideBadge.style.display = 'inline-flex';
+                } else {
+                    sideBadge.style.display = 'none';
+                }
             }
         }
     }
