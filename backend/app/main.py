@@ -51,32 +51,15 @@ IS_PRODUCTION = os.getenv("ENV", "development").lower() == "production"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    logger.info("Initializing database tables...")
-    try:
-        Base.metadata.create_all(bind=engine)
-    except Exception as e:
-        logger.error("DB tables initialization error: %s", e)
-
-    logger.info("Seeding admin accounts...")
-    try:
-        db = SessionLocal()
-        seed_admin_accounts(db)
-        db.close()
-    except Exception as e:
-        logger.error("Seeding admin accounts error: %s", e)
-
-    try:
-        logger.info("Starting background scheduler...")
-        start_scheduler()
-    except Exception as e:
-        logger.warning("Background scheduler could not be started: %s", e)
-
-    logger.info("Running initial startup subscription check...")
-    try:
-        check_expiring_and_expired_subscriptions()
-    except Exception as e:
-        logger.error("Startup subscription check error: %s", e)
+    # تشغيل تهيئة الجداول والمهام فقط إذا طُلب ذلك أو في البيئة المحلية لتسريع استجابة السيرفر
+    if not IS_PRODUCTION or os.getenv("INIT_DB", "false").lower() == "true":
+        try:
+            Base.metadata.create_all(bind=engine)
+            db = SessionLocal()
+            seed_admin_accounts(db)
+            db.close()
+        except Exception as e:
+            logger.error("DB init error: %s", e)
 
     yield
 
