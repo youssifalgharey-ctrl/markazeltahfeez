@@ -3,7 +3,7 @@ from typing import Optional, Dict, Any
 import jwt
 from app.config import settings
 
-def create_access_token(subject: str, token_version: int = 1) -> str:
+def create_access_token(subject: str, token_version: int = 1, session_id: Optional[str] = None) -> str:
     now = datetime.now(timezone.utc)
     expire = now + timedelta(milliseconds=settings.JWT_EXPIRATION_MS)
     payload = {
@@ -12,6 +12,8 @@ def create_access_token(subject: str, token_version: int = 1) -> str:
         "iat": int(now.timestamp()),
         "exp": int(expire.timestamp())
     }
+    if session_id:
+        payload["sid"] = session_id
     return jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
 
 def decode_access_token(token: str) -> Optional[Dict[str, Any]]:

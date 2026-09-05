@@ -35,6 +35,20 @@ def get_current_user_optional(
     if token_version != current_version:
         return None
 
+    token_sid = payload.get("sid")
+    if token_sid and user.active_session_id and token_sid != user.active_session_id:
+        return None
+
+    # Update last_active_at to keep the session alive during active browsing
+    from datetime import datetime
+    now = datetime.now()
+    if not user.last_active_at or (now - user.last_active_at).total_seconds() > 10:
+        user.last_active_at = now
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
+
     return user
 
 def get_current_user(

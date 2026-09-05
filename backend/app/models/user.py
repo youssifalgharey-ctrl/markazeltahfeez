@@ -16,6 +16,8 @@ class User(Base):
     inviteCode = Column(String, nullable=True)
     role = Column(String, nullable=False, default="USER")
     token_version = Column(BigInteger, default=1, nullable=False)
+    active_session_id = Column(String, nullable=True)
+    last_active_at = Column(DateTime, nullable=True)
     address = Column(String, nullable=True)
     currentSurah = Column(String, nullable=True)
     profileImage = Column(Text, nullable=True)

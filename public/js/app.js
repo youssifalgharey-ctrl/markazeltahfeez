@@ -241,6 +241,22 @@ function updateSideNotificationBadge() {
     });
 }
 
+// نبضات الحفاظ على الجلسة النشطة طالما المستخدم فاتح الموقع
+function sendSessionHeartbeat() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    fetch('/api/auth/heartbeat', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).catch(function () {});
+}
+
+if (!window._heartbeatStarted) {
+    window._heartbeatStarted = true;
+    sendSessionHeartbeat();
+    setInterval(sendSessionHeartbeat, 30000);
+}
+
 // فحص دوري للإشعارات كل 20 ثانية لتحديث العلامة الحمراء فور وصول إشعار جديد
 if (!window._notifIntervalStarted) {
     window._notifIntervalStarted = true;
@@ -265,9 +281,20 @@ function highlightActiveSidebarLink() {
     });
 }
 
-function logout() {
+async function logout() {
+    const token = localStorage.getItem('token');
+    if (token) {
+        try {
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+        } catch (e) {
+            console.warn('تعذر الاتصال بالسيرفر لتسجيل الخروج:', e);
+        }
+    }
     localStorage.clear();
-    window.location.href = '/index.html';
+    window.location.href = '/index.html?logout=true';
 }
 
 function openContactModal(event) {

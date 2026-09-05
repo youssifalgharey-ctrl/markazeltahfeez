@@ -749,9 +749,30 @@
         }
     }
 
-    function forceLogout() {
+    // نبضات الحفاظ على الجلسة
+    function sendAccountHeartbeat() {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        fetch('/api/auth/heartbeat', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token }
+        }).catch(function () {});
+    }
+    sendAccountHeartbeat();
+    setInterval(sendAccountHeartbeat, 30000);
+
+    async function forceLogout() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+            } catch (e) {}
+        }
         localStorage.clear();
-        window.location.href = '/index.html';
+        window.location.href = '/index.html?logout=true';
     }
 
     // إعادة المحاولة تلقائياً بعد تجديد الجلسة

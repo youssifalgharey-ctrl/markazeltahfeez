@@ -1312,9 +1312,30 @@
             window.open('/h2-console?token=' + encodeURIComponent(token), '_blank');
         }
 
-        function logout() {
+        // نبضات الحفاظ على جلسة الأدمن
+        function sendAdminHeartbeat() {
+            var token = localStorage.getItem('token');
+            if (!token) return;
+            fetch('/api/auth/heartbeat', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token }
+            }).catch(function () {});
+        }
+        sendAdminHeartbeat();
+        setInterval(sendAdminHeartbeat, 30000);
+
+        async function logout() {
+            var token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    await fetch('/api/auth/logout', {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                } catch (e) {}
+            }
             localStorage.clear();
-            window.location.href = '/index.html';
+            window.location.href = '/index.html?logout=true';
         }
 
         function loadAllData() {

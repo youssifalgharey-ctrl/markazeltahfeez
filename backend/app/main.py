@@ -57,6 +57,20 @@ async def lifespan(app: FastAPI):
     if not IS_PRODUCTION or os.getenv("INIT_DB", "false").lower() == "true":
         try:
             Base.metadata.create_all(bind=engine)
+            try:
+                from sqlalchemy import text
+                with engine.connect() as conn:
+                    res = conn.execute(text("PRAGMA table_info(APP_USER)"))
+                    existing_cols = [row[1] for row in res.fetchall()]
+                    if existing_cols:
+                        if "active_session_id" not in existing_cols:
+                            conn.execute(text("ALTER TABLE APP_USER ADD COLUMN active_session_id VARCHAR"))
+                        if "last_active_at" not in existing_cols:
+                            conn.execute(text("ALTER TABLE APP_USER ADD COLUMN last_active_at TIMESTAMP"))
+                        conn.commit()
+            except Exception as mig_err:
+                logger.warning("Auto-migration check notice: %s", mig_err)
+
             db = SessionLocal()
             seed_admin_accounts(db)
             db.close()

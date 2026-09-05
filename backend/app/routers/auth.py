@@ -1,8 +1,9 @@
 import random
 import re
+import uuid
 from datetime import datetime
 from typing import Optional, Dict, Any
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.config import settings
@@ -18,7 +19,7 @@ from app.schemas.auth import (
     ChangePasswordRequest,
 )
 from app.security.passwords import hash_password, verify_password
-from app.security.jwt_handler import create_access_token
+from app.security.jwt_handler import create_access_token, decode_access_token
 from app.security.deps import get_current_user
 from app.services.google_sheets import sync_user_to_sheet
 from app.services.email_service import send_password_reset_email
@@ -143,8 +144,26 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
         user.password = hash_password("admin1234")
         db.commit()
 
+    # ── فحص الجلسة النشطة: منع فتح الحساب على أكثر من جهاز في نفس الوقت ──
+    # مدة صلاحية الجلسة بدون نشاط (120 ثانية = دقيقتان)
+    SESSION_INACTIVITY_TIMEOUT = 120
+    if user.active_session_id and user.last_active_at:
+        seconds_since_last_active = (datetime.now() - user.last_active_at).total_seconds()
+        if seconds_since_last_active < SESSION_INACTIVITY_TIMEOUT:
+            raise HTTPException(
+                status_code=400,
+                detail="هذا الحساب مفتوح حالياً على جهاز آخر. يجب تسجيل الخروج من الجهاز الآخر أولاً لتتمكن من الدخول."
+            )
+
+    new_session_id = uuid.uuid4().hex
+    user.active_session_id = new_session_id
+    user.last_active_at = datetime.now()
+    user.token_version = (user.token_version or 1) + 1
+    db.commit()
+    db.refresh(user)
+
     lookup_key = user.email or user.phone or user.userCode
-    token = create_access_token(lookup_key, user.token_version)
+    token = create_access_token(lookup_key, user.token_version, session_id=new_session_id)
 
     return AuthResponse(
         token=token,
@@ -155,6 +174,43 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
         role=user.role,
         profileImage=user.profileImage,
     )
+
+@router.post("/logout")
+def logout_endpoint(
+    authorization: Optional[str] = Header(None),
+    db: Session = Depends(get_db)
+):
+    """تحرير الجلسة النشطة فوراً حتى يتمكن أي جهاز آخر من تسجيل الدخول"""
+    if authorization and authorization.startswith("Bearer "):
+        token = authorization[7:].strip()
+        payload = decode_access_token(token)
+        if payload:
+            username = payload.get("sub")
+            if username:
+                user = (
+                    db.query(User).filter(User.email == username).first()
+                    or db.query(User).filter(User.phone == username).first()
+                    or db.query(User).filter(User.userCode == username).first()
+                )
+                if user:
+                    user.active_session_id = None
+                    user.last_active_at = None
+                    user.token_version = (user.token_version or 1) + 1
+                    db.commit()
+    return {"success": True, "message": "تم تسجيل الخروج بنجاح وتحرير الحساب"}
+
+@router.post("/heartbeat")
+def heartbeat_endpoint(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """إرسال نبضات النشاط من المتصفح للحفاظ على حجز الجلسة طالما التبويب مفتوح"""
+    current_user.last_active_at = datetime.now()
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+    return {"status": "alive"}
 
 @router.post("/forgot-password")
 def forgot_password(body: Dict[str, str], db: Session = Depends(get_db)):
