@@ -191,7 +191,6 @@ def delete_user(id: int, db: Session = Depends(get_db)):
         from app.models.subscription import CourseSubscription
         from app.models.booking import IjazaBooking
         from app.models.notification import UserNotification
-        from app.models.exam_result import ExamResult
         from app.models.quiz import QuizScore
         from sqlalchemy import or_
 
@@ -199,19 +198,16 @@ def delete_user(id: int, db: Session = Depends(get_db)):
             conds_sub = []
             conds_book = []
             conds_notif = []
-            conds_exam = []
             conds_quiz = []
             if user_code:
                 conds_sub.append(CourseSubscription.userCode == user_code)
                 conds_book.append(IjazaBooking.userCode == user_code)
                 conds_notif.append(UserNotification.userCode == user_code)
-                conds_exam.append(ExamResult.user_code == user_code)
                 conds_quiz.append(QuizScore.user_code == user_code)
             if user_email:
                 conds_sub.append(CourseSubscription.studentEmail == user_email)
                 conds_book.append(IjazaBooking.studentEmail == user_email)
                 conds_notif.append(UserNotification.studentEmail == user_email)
-                conds_exam.append(ExamResult.studentEmail == user_email)
                 conds_quiz.append(QuizScore.student_email == user_email)
 
             if conds_sub:
@@ -220,8 +216,6 @@ def delete_user(id: int, db: Session = Depends(get_db)):
                 db.query(IjazaBooking).filter(or_(*conds_book)).delete(synchronize_session=False)
             if conds_notif:
                 db.query(UserNotification).filter(or_(*conds_notif)).delete(synchronize_session=False)
-            if conds_exam:
-                db.query(ExamResult).filter(or_(*conds_exam)).delete(synchronize_session=False)
             if conds_quiz:
                 db.query(QuizScore).filter(or_(*conds_quiz)).delete(synchronize_session=False)
 
