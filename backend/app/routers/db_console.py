@@ -253,10 +253,17 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
 
                     if (canDelete) {{
                         var idVal = row[idCol];
-                        var isSuperAdmin = (currentLoadedTable.toUpperCase() === 'APP_USER' && (row['userCode'] === '0001' || row['email'] === 'markazeltafeez@gmail.com'));
+                        var isSuperAdmin = (currentLoadedTable.toUpperCase() === 'APP_USER' && (
+                            row['role'] === 'ADMIN' ||
+                            row['userCode'] === '0001' ||
+                            row['userCode'] === '0002' ||
+                            row['email'] === 'markazeltafeez@gmail.com' ||
+                            row['email'] === 'youssifalgharey@gmail.com' ||
+                            row['email'] === 'admin@asseriga-quran.com'
+                        ));
 
                         if (isSuperAdmin) {{
-                            html += '<td style="text-align:center;"><span style="font-size:11px; color:var(--gold);"><i class="fa-solid fa-crown"></i> إدارة عامة</span></td>';
+                            html += '<td style="text-align:center;"><span style="font-size:11.5px; color:var(--gold); font-weight:bold;"><i class="fa-solid fa-crown"></i> إدارة رئيسية</span></td>';
                         }} else if (idVal !== undefined && idVal !== null) {{
                             html += '<td style="text-align:center;">';
                             html += '<button class="btn-del" onclick="deleteTableRow(\\'' + currentLoadedTable + '\\', \\'' + idCol + '\\', \\'' + idVal + '\\')">';
@@ -361,8 +368,8 @@ def delete_db_row(
     if table.upper() == "APP_USER":
         user_row = db.query(User).filter(getattr(User, id_col) == id_val).first()
         if user_row:
-            if user_row.userCode == "0001" or (user_row.email and user_row.email.lower() == "markazeltafeez@gmail.com"):
-                raise HTTPException(status_code=400, detail="لا يمكن حذف حساب الإدارة العامة الرئيسي.")
+            if user_row.role == "ADMIN" or user_row.userCode in ("0001", "0002") or (user_row.email and user_row.email.lower() in ("markazeltafeez@gmail.com", "youssifalgharey@gmail.com", "admin@asseriga-quran.com")):
+                raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حسابات الإدارة والمشرفين (Admin) من السيستم نهائياً.")
             from app.routers.admin import delete_user
             return delete_user(user_row.id, db)
         else:
@@ -398,8 +405,8 @@ def execute_sql(
     if first_word == "DELETE":
         if "WHERE" not in query.upper():
             raise HTTPException(status_code=400, detail="أمان البيانات: يجب تحديد شرط WHERE عند استخدام أمر DELETE لمنع مسح الجدول بأكمله.")
-        if "APP_USER" in query.upper() and ("0001" in query or "markazeltafeez@gmail.com" in query):
-            raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حساب الإدارة العامة الرئيسي عبر الاستعلام.")
+        if "APP_USER" in query.upper() and any(k in query.lower() for k in ("0001", "0002", "markazeltafeez@gmail.com", "youssifalgharey@gmail.com", "admin@asseriga-quran.com")):
+            raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حسابات الإدارة عبر الاستعلام.")
 
     try:
         with engine.connect() as conn:

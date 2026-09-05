@@ -90,8 +90,8 @@ def toggle_user_role(id: int, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    if user.userCode == "0001" or (user.email and user.email.lower() == "markazeltafeez@gmail.com"):
-        return {"success": False, "message": "لا يمكن تغيير رتبة حساب الإدارة العامة الرئيسي."}
+    if user.userCode in ("0001", "0002") or (user.email and user.email.lower() in ("markazeltafeez@gmail.com", "youssifalgharey@gmail.com", "admin@asseriga-quran.com")):
+        return {"success": False, "message": "لا يمكن تغيير رتبة حسابات الإدارة والمشرفين الرئيسية."}
 
     new_role = "USER" if user.role == "ADMIN" else "ADMIN"
     user.role = new_role
@@ -181,8 +181,8 @@ def delete_user(id: int, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="المستخدم غير موجود")
 
-    if user.userCode == "0001" or (user.email and user.email.lower() == "markazeltafeez@gmail.com"):
-        raise HTTPException(status_code=400, detail="لا يمكن حذف حساب الإدارة العامة الرئيسي.")
+    if user.role == "ADMIN" or user.userCode in ("0001", "0002") or (user.email and user.email.lower() in ("markazeltafeez@gmail.com", "youssifalgharey@gmail.com", "admin@asseriga-quran.com")):
+        raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حسابات الإدارة والمشرفين (Admin) من السيستم.")
 
     user_code = user.userCode
     user_email = user.email
