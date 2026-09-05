@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import threading
 import httpx
 from app.config import settings
 from app.models.user import User
@@ -16,6 +17,12 @@ async def _post_sheet(payload: dict):
     except Exception as e:
         logger.error("Failed to sync user to Google Sheets: %s", e)
 
+def _send_sync_thread(payload: dict):
+    try:
+        asyncio.run(_post_sheet(payload))
+    except Exception as e:
+        logger.error("Background sync error: %s", e)
+
 def sync_user_to_sheet(user: User, registration_type: str = "توليد تلقائي"):
     payload = {
         "id": user.userCode or "",
@@ -27,9 +34,6 @@ def sync_user_to_sheet(user: User, registration_type: str = "توليد تلقا
         "registrationType": registration_type or "توليد تلقائي",
         "createdAt": user.createdAt.isoformat() if user.createdAt else "",
     }
-    # Run in background
-    try:
-        loop = asyncio.get_running_loop()
-        loop.create_task(_post_sheet(payload))
-    except RuntimeError:
-        asyncio.run(_post_sheet(payload))
+    # إرسال البيانات في خيط منفصل تماماً (Non-blocking) لضمان ظهور الكود للمستخدم فوراً بدون أي تأخير
+    threading.Thread(target=_send_sync_thread, args=(payload,), daemon=True).start()
+

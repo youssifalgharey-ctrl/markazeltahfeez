@@ -116,13 +116,18 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     raw_ident = request.email.strip() if request.email else ""
     clean_ident = normalize_arabic_digits(raw_ident)
 
-    user = None
+    if not raw_ident:
+        raise HTTPException(status_code=400, detail="بيانات الدخول غير صحيحة!")
+
+    from sqlalchemy import or_
+    filters = []
     if clean_ident:
-        user = db.query(User).filter(User.userCode == clean_ident).first()
-    if not user and raw_ident:
-        user = db.query(User).filter(User.email == raw_ident).first()
-    if not user and clean_ident:
-        user = db.query(User).filter(User.phone == clean_ident).first()
+        filters.append(User.userCode == clean_ident)
+        filters.append(User.phone == clean_ident)
+    if raw_ident:
+        filters.append(User.email == raw_ident)
+
+    user = db.query(User).filter(or_(*filters)).first()
 
     if not user:
         raise HTTPException(status_code=400, detail="بيانات الدخول غير صحيحة!")

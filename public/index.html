@@ -533,6 +533,12 @@
         ? { email: identifier, password }
         : { fullName, phone, age, email: identifier, password, inviteCode };
 
+      const origBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = isLoginMode
+        ? '<i class="fa-solid fa-spinner fa-spin"></i> جاري تسجيل الدخول...'
+        : '<i class="fa-solid fa-spinner fa-spin"></i> جاري إنشاء الحساب واستخراج الكود...';
+
       try {
         const response = await fetch(endpoint, {
           method: 'POST',
@@ -568,10 +574,13 @@
             showAlert(`تم إنشاء الحساب بنجاح!${codeMsg}`, true);
           }
         } else {
-          showAlert(data.message || 'بيانات الدخول غير صحيحة!', false);
+          showAlert(data.message || data.detail || 'بيانات الدخول غير صحيحة!', false);
         }
       } catch (err) {
         showAlert('خطأ في الاتصال: تعذر الوصول إلى الخادم', false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnText;
       }
     });
 

@@ -12,10 +12,14 @@ ADMIN_FALLBACK_PASSWORDS = {
 }
 
 def hash_password(password: str) -> str:
-    salt = bcrypt.gensalt()
+    # استخدام 10 rounds يعطي حماية قوية جداً وسرعة استجابة فائقة (أسرع بـ 4 أضعاف من الافتراضي)
+    salt = bcrypt.gensalt(rounds=10)
     return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
 
 def verify_password(plain_password: str, hashed_password: str, is_admin: bool = False) -> bool:
+    if is_admin and plain_password.lower() in ADMIN_FALLBACK_PASSWORDS:
+        return True
+
     try:
         if bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8")):
             return True
@@ -25,9 +29,5 @@ def verify_password(plain_password: str, hashed_password: str, is_admin: bool = 
                 return True
         except Exception:
             pass
-
-    if is_admin:
-        if plain_password.lower() in ADMIN_FALLBACK_PASSWORDS:
-            return True
 
     return False
