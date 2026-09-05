@@ -1324,18 +1324,19 @@
         sendAdminHeartbeat();
         setInterval(sendAdminHeartbeat, 30000);
 
-        async function logout() {
+        function logout() {
             var token = localStorage.getItem('token');
             if (token) {
                 try {
-                    await fetch('/api/auth/logout', {
+                    fetch('/api/auth/logout', {
                         method: 'POST',
-                        headers: { 'Authorization': 'Bearer ' + token }
-                    });
+                        headers: { 'Authorization': 'Bearer ' + token },
+                        keepalive: true
+                    }).catch(function () {});
                 } catch (e) {}
             }
             localStorage.clear();
-            window.location.href = '/index.html';
+            window.location.replace('/index.html');
         }
 
         function loadAllData() {

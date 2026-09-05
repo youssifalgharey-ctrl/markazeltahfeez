@@ -281,20 +281,19 @@ function highlightActiveSidebarLink() {
     });
 }
 
-async function logout() {
+function logout() {
     const token = localStorage.getItem('token');
     if (token) {
         try {
-            await fetch('/api/auth/logout', {
+            fetch('/api/auth/logout', {
                 method: 'POST',
-                headers: { 'Authorization': 'Bearer ' + token }
-            });
-        } catch (e) {
-            console.warn('تعذر الاتصال بالسيرفر لتسجيل الخروج:', e);
-        }
+                headers: { 'Authorization': 'Bearer ' + token },
+                keepalive: true
+            }).catch(function () {});
+        } catch (e) {}
     }
     localStorage.clear();
-    window.location.href = '/index.html';
+    window.location.replace('/index.html');
 }
 
 function openContactModal(event) {

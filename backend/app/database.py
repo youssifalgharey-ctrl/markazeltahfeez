@@ -35,10 +35,12 @@ if db_url.startswith("sqlite:///"):
             # Fallback to /tmp on serverless environments with read-only root filesystems
             db_url = "sqlite:////tmp/authdb.sqlite3"
 
+from sqlalchemy import event
+
 # Engine options
 engine_kwargs = {}
 if db_url.startswith("sqlite"):
-    engine_kwargs["connect_args"] = {"check_same_thread": False}
+    engine_kwargs["connect_args"] = {"check_same_thread": False, "timeout": 15}
 else:
     # PostgreSQL connection pool settings for concurrent users
     engine_kwargs["pool_size"] = 20
@@ -51,6 +53,17 @@ engine = create_engine(
     echo=False,
     **engine_kwargs
 )
+
+if db_url.startswith("sqlite"):
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        try:
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA journal_mode=WAL")
+            cursor.execute("PRAGMA synchronous=NORMAL")
+            cursor.close()
+        except Exception:
+            pass
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

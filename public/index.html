@@ -575,7 +575,7 @@
             localStorage.removeItem('user_notifications');
 
             const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
-            window.location.href = redirectUrl ? redirectUrl : '/home.html';
+            window.location.replace(redirectUrl ? redirectUrl : '/home.html');
             return;
           } else {
             // حفظ الهاتف والبريد اللي كتبهم المستخدم فوراً (معروفين عندنا من الفورم نفسه)

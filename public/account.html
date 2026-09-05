@@ -761,18 +761,19 @@
     sendAccountHeartbeat();
     setInterval(sendAccountHeartbeat, 30000);
 
-    async function forceLogout() {
+    function forceLogout() {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                await fetch('/api/auth/logout', {
+                fetch('/api/auth/logout', {
                     method: 'POST',
-                    headers: { 'Authorization': 'Bearer ' + token }
-                });
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    keepalive: true
+                }).catch(function () {});
             } catch (e) {}
         }
         localStorage.clear();
-        window.location.href = '/index.html';
+        window.location.replace('/index.html');
     }
 
     // إعادة المحاولة تلقائياً بعد تجديد الجلسة
@@ -1076,7 +1077,9 @@
         const surah = document.getElementById('surahInput').value.trim();
 
         const saveBtn = document.querySelector('.btn-save');
+        const origText = saveBtn.innerHTML;
         saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
 
         try {
             const profile = await apiRequest('/api/auth/profile', {
@@ -1101,15 +1104,23 @@
                 localStorage.setItem('token', profile.token);
             }
 
+            saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم الحفظ بنجاح!';
+            saveBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
             const confirmMsg = document.getElementById('saveConfirm');
-            confirmMsg.style.display = 'block';
+            if (confirmMsg) confirmMsg.style.display = 'block';
+
             setTimeout(function () {
-                confirmMsg.style.display = 'none';
-            }, 2500);
+                if (confirmMsg) confirmMsg.style.display = 'none';
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = origText;
+                saveBtn.style.background = '';
+            }, 1800);
         } catch (err) {
-            alert(err.message);
-        } finally {
             saveBtn.disabled = false;
+            saveBtn.innerHTML = origText;
+            saveBtn.style.background = '';
+            alert(err.message);
         }
     }
 
@@ -1182,7 +1193,9 @@
         if (hasError) return;
 
         const saveBtn = document.getElementById('passwordSaveBtn');
+        const origBtnText = saveBtn.innerHTML;
         saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
 
         try {
             const result = await apiRequest('/api/auth/profile/password', {
@@ -1208,6 +1221,7 @@
             passwordMessage.textContent = err.message;
         } finally {
             saveBtn.disabled = false;
+            saveBtn.innerHTML = origBtnText;
         }
     }
 

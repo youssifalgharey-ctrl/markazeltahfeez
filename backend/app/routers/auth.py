@@ -78,11 +78,6 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         createdAt=datetime.now(),
     )
     db.add(user)
-    db.commit()
-    db.refresh(user)
-
-    # Sync to Google Sheets
-    sync_user_to_sheet(user, reg_type)
 
     # Welcome notification
     welcome_notif = UserNotification(
@@ -103,6 +98,9 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     )
     db.add(welcome_notif)
     db.commit()
+
+    # Sync to Google Sheets (Non-blocking background thread)
+    sync_user_to_sheet(user, reg_type)
 
     return AuthResponse(
         fullName=user.fullName,
@@ -155,7 +153,6 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     user.last_active_at = datetime.now()
     user.token_version = (user.token_version or 1) + 1
     db.commit()
-    db.refresh(user)
 
     lookup_key = user.email or user.phone or user.userCode
     token = create_access_token(lookup_key, user.token_version, session_id=new_session_id)
@@ -303,7 +300,6 @@ def update_profile(
     current_user.currentSurah = request.currentSurah.strip() if request.currentSurah else None
 
     db.commit()
-    db.refresh(current_user)
 
     # ── إصلاح UX: لو تغيّرت بيانات التحقق (إيميل/هاتف)، أرجع توكن جديد للمستخدم ──
     new_token: Optional[str] = None
@@ -344,7 +340,6 @@ def update_avatar(
 
     current_user.profileImage = request.image
     db.commit()
-    db.refresh(current_user)
     return ProfileResponse(
         fullName=current_user.fullName,
         phone=current_user.phone,
@@ -364,7 +359,6 @@ def delete_avatar(
 ):
     current_user.profileImage = None
     db.commit()
-    db.refresh(current_user)
     return ProfileResponse(
         fullName=current_user.fullName,
         phone=current_user.phone,
