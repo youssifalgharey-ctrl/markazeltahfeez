@@ -53,29 +53,51 @@ IS_PRODUCTION = os.getenv("ENV", "development").lower() == "production"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # تشغيل تهيئة الجداول والمهام فقط إذا طُلب ذلك أو في البيئة المحلية لتسريع استجابة السيرفر
-    if not IS_PRODUCTION or os.getenv("INIT_DB", "false").lower() == "true":
-        try:
-            Base.metadata.create_all(bind=engine)
-            try:
-                from sqlalchemy import text
-                with engine.connect() as conn:
-                    res = conn.execute(text("PRAGMA table_info(APP_USER)"))
-                    existing_cols = [row[1] for row in res.fetchall()]
-                    if existing_cols:
-                        if "active_session_id" not in existing_cols:
-                            conn.execute(text("ALTER TABLE APP_USER ADD COLUMN active_session_id VARCHAR"))
-                        if "last_active_at" not in existing_cols:
-                            conn.execute(text("ALTER TABLE APP_USER ADD COLUMN last_active_at TIMESTAMP"))
-                        conn.commit()
-            except Exception as mig_err:
-                logger.warning("Auto-migration check notice: %s", mig_err)
+    try:
+        # 1. إنشاء الجداول تلقائياً إن لم تكن موجودة
+        Base.metadata.create_all(bind=engine)
 
-            db = SessionLocal()
+        # 2. فحص وإضافة أي أعمدة جديدة لجدول APP_USER بما يتوافق مع PostgreSQL و SQLite
+        try:
+            from sqlalchemy import inspect, text
+            inspector = inspect(engine)
+            target_table = None
+            for t in inspector.get_table_names():
+                if t.lower() == "app_user":
+                    target_table = t
+                    break
+
+            if target_table:
+                cols = [c["name"].lower() for c in inspector.get_columns(target_table)]
+                with engine.begin() as conn:
+                    if "active_session_id" not in cols:
+                        try:
+                            conn.execute(text(f'ALTER TABLE "{target_table}" ADD COLUMN active_session_id VARCHAR(255)'))
+                        except Exception:
+                            try:
+                                conn.execute(text(f'ALTER TABLE {target_table} ADD COLUMN active_session_id VARCHAR(255)'))
+                            except Exception as col_err:
+                                logger.warning("Could not add active_session_id: %s", col_err)
+
+                    if "last_active_at" not in cols:
+                        try:
+                            conn.execute(text(f'ALTER TABLE "{target_table}" ADD COLUMN last_active_at TIMESTAMP'))
+                        except Exception:
+                            try:
+                                conn.execute(text(f'ALTER TABLE {target_table} ADD COLUMN last_active_at TIMESTAMP'))
+                            except Exception as col_err:
+                                logger.warning("Could not add last_active_at: %s", col_err)
+        except Exception as mig_err:
+            logger.warning("Auto-migration check notice: %s", mig_err)
+
+        # 3. التأكد من وجود حسابات الأدمن الأساسية
+        db = SessionLocal()
+        try:
             seed_admin_accounts(db)
+        finally:
             db.close()
-        except Exception as e:
-            logger.error("DB init error: %s", e)
+    except Exception as e:
+        logger.error("DB init and migration error: %s", e)
 
     yield
 

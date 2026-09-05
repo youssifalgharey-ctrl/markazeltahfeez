@@ -558,9 +558,14 @@
           body: JSON.stringify(payload)
         });
 
-        const data = await response.json();
+        let data = null;
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          console.error('Response parse error:', parseErr);
+        }
 
-        if (response.ok) {
+        if (response.ok && data) {
           if (isLoginMode) {
             // حفظ بيانات المستخدم والتوكن في التخزين المحلي فوراً
             if (data.token) localStorage.setItem('token', data.token);
@@ -588,9 +593,10 @@
             showAlert(`تم إنشاء الحساب بنجاح!${codeMsg}`, true);
           }
         } else {
-          showAlert(data.message || data.detail || 'بيانات الدخول غير صحيحة!', false);
+          showAlert((data && (data.message || data.detail)) || `حدث خطأ أثناء معالجة الطلب (${response.status})`, false);
         }
       } catch (err) {
+        console.error('Fetch error:', err);
         showAlert('خطأ في الاتصال: تعذر الوصول إلى الخادم', false);
       } finally {
         submitBtn.disabled = false;

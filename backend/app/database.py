@@ -10,21 +10,30 @@ db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 
+import os
+
+# Check if running in serverless environment (Vercel, AWS Lambda)
+IS_SERVERLESS = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
+
 if db_url.startswith("sqlite:///"):
-    try:
-        raw_path = db_url.replace("sqlite:///", "")
-        p = Path(raw_path)
-        if not p.is_absolute():
-            cleaned_rel = raw_path.replace("\\", "/").lstrip("./")
-            abs_p = (PROJECT_DIR / cleaned_rel).resolve()
-            abs_p.parent.mkdir(parents=True, exist_ok=True)
-            db_url = f"sqlite:///{abs_p.as_posix()}"
-        else:
-            p.parent.mkdir(parents=True, exist_ok=True)
-            db_url = f"sqlite:///{p.as_posix()}"
-    except OSError:
-        # Fallback to /tmp on serverless environments with read-only root filesystems
+    if IS_SERVERLESS:
+        # Vercel and AWS Lambda filesystems are strictly read-only except /tmp
         db_url = "sqlite:////tmp/authdb.sqlite3"
+    else:
+        try:
+            raw_path = db_url.replace("sqlite:///", "")
+            p = Path(raw_path)
+            if not p.is_absolute():
+                cleaned_rel = raw_path.replace("\\", "/").lstrip("./")
+                abs_p = (PROJECT_DIR / cleaned_rel).resolve()
+                abs_p.parent.mkdir(parents=True, exist_ok=True)
+                db_url = f"sqlite:///{abs_p.as_posix()}"
+            else:
+                p.parent.mkdir(parents=True, exist_ok=True)
+                db_url = f"sqlite:///{p.as_posix()}"
+        except OSError:
+            # Fallback to /tmp on serverless environments with read-only root filesystems
+            db_url = "sqlite:////tmp/authdb.sqlite3"
 
 # Engine options
 engine_kwargs = {}
