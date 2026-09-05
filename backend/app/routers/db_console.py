@@ -126,7 +126,27 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
         table {{ width: 100%; border-collapse: collapse; font-size: 12.5px; }}
         th {{ background: #070b13; border-bottom: 2px solid var(--border); padding: 10px; text-align: right; color: var(--muted); }}
         td {{ padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: monospace; }}
-        tr:hover td {{ background: rgba(255,255,255,0.02); }}
+        .btn-del {{
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: inherit;
+        }}
+        .btn-del:hover {{
+            background: #ef4444;
+            color: #fff;
+            border-color: #ef4444;
+            transform: scale(1.04);
+        }}
     </style>
 </head>
 <body>
@@ -169,15 +189,24 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
 
     <script>
         var token = "{token or ''}";
+        var currentLoadedTable = 'APP_USER';
 
         function loadTableData(tableName) {{
+            currentLoadedTable = tableName;
             document.getElementById('sqlInput').value = 'SELECT * FROM "' + tableName + '" LIMIT 50;';
             runQuery();
+        }}
+
+        function detectTableFromSql(sql) {{
+            var match = sql.match(/FROM\\s+["`']?([A-Za-z0-9_]+)["`']?/i);
+            return match ? match[1] : currentLoadedTable;
         }}
 
         async function runQuery() {{
             var sql = document.getElementById('sqlInput').value.trim();
             if (!sql) return;
+
+            currentLoadedTable = detectTableFromSql(sql);
 
             var statusEl = document.getElementById('statusMsg');
             var outEl = document.getElementById('tableOutput');
@@ -199,14 +228,21 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
                     return;
                 }}
 
-                statusEl.innerHTML = '<span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> تم جلب ' + data.rows.length + ' سجل بنجاح</span>';
+                statusEl.innerHTML = '<span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> تم تنفيذ الاستعلام بنجاح (' + data.rows.length + ' سجل)</span>';
 
                 if (data.rows.length === 0) {{
                     outEl.innerHTML = '<p style="color:#64748b; padding:20px; text-align:center;">الجدول فارغ لا يحتوي على سجلات مطابقة.</p>';
                     return;
                 }}
 
+                // التحقق من وجود عمود للمعرف للتمكين من الحذف
+                var idCol = data.columns.includes('id') ? 'id' : (data.columns.includes('userCode') ? 'userCode' : (data.columns.includes('user_code') ? 'user_code' : data.columns[0]));
+                var canDelete = Boolean(currentLoadedTable && idCol);
+
                 var html = '<table><thead><tr>';
+                if (canDelete) {{
+                    html += '<th style="width:130px; text-align:center; color:#f87171;"><i class="fa-solid fa-trash-can"></i> إجراءات / مسح</th>';
+                }}
                 data.columns.forEach(function(col) {{
                     html += '<th>' + col + '</th>';
                 }});
@@ -214,6 +250,24 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
 
                 data.rows.forEach(function(row) {{
                     html += '<tr>';
+
+                    if (canDelete) {{
+                        var idVal = row[idCol];
+                        var isSuperAdmin = (currentLoadedTable.toUpperCase() === 'APP_USER' && (row['userCode'] === '0001' || row['email'] === 'markazeltafeez@gmail.com'));
+
+                        if (isSuperAdmin) {{
+                            html += '<td style="text-align:center;"><span style="font-size:11px; color:var(--gold);"><i class="fa-solid fa-crown"></i> إدارة عامة</span></td>';
+                        }} else if (idVal !== undefined && idVal !== null) {{
+                            html += '<td style="text-align:center;">';
+                            html += '<button class="btn-del" onclick="deleteTableRow(\\'' + currentLoadedTable + '\\', \\'' + idCol + '\\', \\'' + idVal + '\\')">';
+                            html += '<i class="fa-solid fa-trash-can"></i> مسح من السيستم';
+                            html += '</button>';
+                            html += '</td>';
+                        }} else {{
+                            html += '<td style="text-align:center; color:var(--muted);">-</td>';
+                        }}
+                    }}
+
                     data.columns.forEach(function(col) {{
                         var val = row[col];
                         if (val === null || val === undefined) val = '<span style="color:#475569;">NULL</span>';
@@ -230,6 +284,48 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
             }}
         }}
 
+        async function deleteTableRow(tableName, idCol, idVal) {{
+            var entityName = 'هذا السجل';
+            if (tableName.toUpperCase() === 'APP_USER') entityName = 'هذا المستخدم وكافة سجلاته واشتراكاته';
+            else if (tableName.toUpperCase() === 'MEMORIZATION_ENTRY') entityName = 'سجل تقدم وتسميع الطالب هذا';
+            else if (tableName.toUpperCase() === 'COURSE_SUBSCRIPTION') entityName = 'هذا الاشتراك الدراسي';
+            else if (tableName.toUpperCase() === 'IJAZA_BOOKING') entityName = 'هذا الحجز للجلسة القرآنية';
+
+            var conf = confirm('⚠️ تأكيد الحذف النهائي:\\nهل أنت متأكد من رغبتك في مسح ' + entityName + ' (المعرف: ' + idVal + ') من السيستم نهائياً؟');
+            if (!conf) return;
+
+            var statusEl = document.getElementById('statusMsg');
+            statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري مسح السجل (' + idVal + ') من ' + tableName + '...';
+
+            try {{
+                var resp = await fetch('/api/admin/db/delete-row', {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }},
+                    body: JSON.stringify({{
+                        table: tableName,
+                        id_col: idCol,
+                        id_val: idVal
+                    }})
+                }});
+                var data = await resp.json();
+                if (!resp.ok) {{
+                    alert(data.detail || 'تعذر الحذف');
+                    statusEl.innerHTML = '<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> ' + (data.detail || 'تعذر الحذف') + '</span>';
+                    return;
+                }}
+
+                statusEl.innerHTML = '<span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> ' + (data.message || 'تم مسح السجل من السيستم بنجاح!') + '</span>';
+                // إعادة تحميل بيانات الجدول فوراً لتحديث العرض
+                runQuery();
+            }} catch (err) {{
+                alert('فشل الاتصال أثناء محاولة الحذف: ' + err.message);
+                statusEl.innerHTML = '<span style="color:#ef4444;">فشل الاتصال: ' + err.message + '</span>';
+            }}
+        }}
+
         // Run initial query
         document.addEventListener('DOMContentLoaded', function() {{
             runQuery();
@@ -238,6 +334,52 @@ a{display:inline-block;background:#059669;color:#fff;text-decoration:none;paddin
 </body>
 </html>"""
     return HTMLResponse(content=html_content)
+
+@router.post("/api/admin/db/delete-row")
+def delete_db_row(
+    body: Dict[str, Any] = Body(...),
+    admin_user: User = Depends(require_admin),
+    db: Session = Depends(get_db)
+):
+    table = body.get("table", "").strip()
+    id_col = body.get("id_col", "id").strip()
+    id_val = body.get("id_val")
+
+    if not table or id_val is None:
+        raise HTTPException(status_code=400, detail="اسم الجدول وقيمة المعرف مطلوبة")
+
+    inspector = inspect(engine)
+    valid_tables = inspector.get_table_names()
+    if table not in valid_tables:
+        raise HTTPException(status_code=400, detail="جدول غير صالح")
+
+    cols = [c["name"] for c in inspector.get_columns(table)]
+    if id_col not in cols:
+        raise HTTPException(status_code=400, detail="عمود المعرف غير موجود في هذا الجدول")
+
+    # إذا كان الحذف من جدول APP_USER نقوم بتطبيق حذف المستخدم الشامل مع كاسكيد العلاقات
+    if table.upper() == "APP_USER":
+        user_row = db.query(User).filter(getattr(User, id_col) == id_val).first()
+        if user_row:
+            if user_row.userCode == "0001" or (user_row.email and user_row.email.lower() == "markazeltafeez@gmail.com"):
+                raise HTTPException(status_code=400, detail="لا يمكن حذف حساب الإدارة العامة الرئيسي.")
+            from app.routers.admin import delete_user
+            return delete_user(user_row.id, db)
+        else:
+            raise HTTPException(status_code=404, detail="المستخدم غير موجود أو تم حذفه مسبقاً")
+
+    # لباقي الجداول (مثل MEMORIZATION_ENTRY، COURSE_SUBSCRIPTION، إلخ)
+    try:
+        with engine.begin() as conn:
+            stmt = text(f'DELETE FROM "{table}" WHERE "{id_col}" = :val')
+            result = conn.execute(stmt, {"val": id_val})
+            if result.rowcount == 0:
+                raise HTTPException(status_code=404, detail="السجل غير موجود أو تم حذفه مسبقاً")
+            return {"success": True, "message": f"تم مسح السجل رقم ({id_val}) من جدول {table} بنجاح"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"حدث خطأ أثناء الحذف: {str(e)}")
 
 @router.post("/api/admin/sql")
 def execute_sql(
@@ -249,16 +391,26 @@ def execute_sql(
     if not query:
         raise HTTPException(status_code=400, detail="الاستعلام فارغ")
 
-    # Safety: allow only read-only SELECT queries or explain
     first_word = query.split()[0].upper() if query.split() else ""
-    if first_word not in ("SELECT", "PRAGMA", "EXPLAIN"):
-        raise HTTPException(status_code=400, detail="يُسمح فقط باستعلامات القراءة (SELECT) لأمان قاعدة البيانات")
+    if first_word not in ("SELECT", "PRAGMA", "EXPLAIN", "DELETE"):
+        raise HTTPException(status_code=400, detail="يُسمح فقط باستعلامات القراءة (SELECT) أو الحذف (DELETE ... WHERE)")
+
+    if first_word == "DELETE":
+        if "WHERE" not in query.upper():
+            raise HTTPException(status_code=400, detail="أمان البيانات: يجب تحديد شرط WHERE عند استخدام أمر DELETE لمنع مسح الجدول بأكمله.")
+        if "APP_USER" in query.upper() and ("0001" in query or "markazeltafeez@gmail.com" in query):
+            raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حساب الإدارة العامة الرئيسي عبر الاستعلام.")
 
     try:
         with engine.connect() as conn:
-            result = conn.execute(text(query))
-            columns = list(result.keys()) if result.returns_rows else []
-            rows = [dict(row._mapping) for row in result.fetchmany(100)]
-            return {"columns": columns, "rows": rows}
+            if first_word == "DELETE":
+                with engine.begin() as tx_conn:
+                    res = tx_conn.execute(text(query))
+                    return {"columns": ["message", "deleted_rows"], "rows": [{"message": "تم تنفيذ الحذف بنجاح", "deleted_rows": res.rowcount}]}
+            else:
+                result = conn.execute(text(query))
+                columns = list(result.keys()) if result.returns_rows else []
+                rows = [dict(row._mapping) for row in result.fetchmany(100)]
+                return {"columns": columns, "rows": rows}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

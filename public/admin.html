@@ -1009,10 +1009,13 @@
                 html += '<td><span style="font-size: 12px; color: var(--text-muted);">' + dateFormatted + '</span></td>';
                 html += '<td style="text-align: center; white-space: nowrap;">';
                 
-                // زر تبديل الرتبة
+                // زر تبديل الرتبة وزر الحذف
                 if (u.userCode !== '0001' && u.email !== 'markazeltafeez@gmail.com') {
                     html += '<button class="btn-action btn-act-role" onclick="toggleUserRole(' + u.id + ', \'' + (isAdmin ? 'USER' : 'ADMIN') + '\')">';
                     html += '<i class="fa-solid fa-repeat"></i> ' + (isAdmin ? 'تخفيض لطالب' : 'ترقية لمسؤول');
+                    html += '</button> ';
+                    html += '<button class="btn-action btn-act-delete" onclick="deleteUser(' + u.id + ', \'' + escapeHtml(u.fullName) + '\')" title="مسح المستخدم نهائياً من السيستم">';
+                    html += '<i class="fa-solid fa-trash-can"></i> حذف';
                     html += '</button>';
                 } else {
                     html += '<span style="font-size: 11px; color: var(--text-muted);">حساب رئيسي</span>';
@@ -1052,6 +1055,25 @@
                 }
             } catch (e) {
                 alert('حدث خطأ أثناء تعديل رتبة المستخدم.');
+            }
+        }
+
+        async function deleteUser(userId, userName) {
+            if (!confirm('⚠️ تحذير نهائي:\nهل أنت متأكد من رغبتك في حذف المستخدم "' + userName + '" نهائياً من السيستم؟\nسيتم مسح حسابه وسجلات تقدمه وتسميعه واشتراكاته.')) return;
+            try {
+                var res = await fetch('/api/admin/users/' + userId, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+                var data = await res.json();
+                if (data.success) {
+                    loadUsers();
+                    loadOverview();
+                } else {
+                    alert(data.message || data.detail || 'تعذر حذف المستخدم.');
+                }
+            } catch (e) {
+                alert('حدث خطأ أثناء حذف المستخدم.');
             }
         }
 
