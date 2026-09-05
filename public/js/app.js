@@ -294,7 +294,7 @@ async function logout() {
         }
     }
     localStorage.clear();
-    window.location.href = '/index.html?logout=true';
+    window.location.href = '/index.html';
 }
 
 function openContactModal(event) {

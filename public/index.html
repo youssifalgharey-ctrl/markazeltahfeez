@@ -378,11 +378,6 @@
     const alertBox = document.getElementById('alertBox');
     const authForm = document.getElementById('authForm');
 
-    const isLogout = new URLSearchParams(window.location.search).get('logout');
-    if (isLogout) {
-      showAlert('تم تسجيل الخروج بنجاح وتحرير الحساب.', true);
-    }
-
     // إزالة علامة الخطأ عند بدء الكتابة في رقم الهاتف
     phoneInput.addEventListener('input', () => {
       phoneInput.classList.remove('input-error');
