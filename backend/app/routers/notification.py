@@ -19,6 +19,17 @@ def is_owner(notif: UserNotification, user: User) -> bool:
     match_email = bool(user.email and notif.studentEmail and user.email.lower() == notif.studentEmail.lower())
     return match_code or match_email
 
+def get_user_notification_filter(user_code: Optional[str], email: Optional[str]):
+    """بناء فلتر استعلام دقيق خاص بالمستخدم فقط لمنع تداخل إشعارات الحسابات المختلفة"""
+    clauses = []
+    if user_code and str(user_code).strip():
+        clauses.append(UserNotification.userCode == str(user_code).strip())
+    if email and str(email).strip():
+        clauses.append(UserNotification.studentEmail == str(email).strip())
+    if not clauses:
+        return None
+    return or_(*clauses)
+
 @router.get("/unread-count")
 def get_unread_count(
     userCode: Optional[str] = None,
@@ -29,15 +40,12 @@ def get_unread_count(
     clean_code = current_user.userCode if current_user else (userCode.strip() if userCode else None)
     clean_email = current_user.email if current_user else (email.strip() if email else None)
 
-    if not clean_code and not clean_email:
+    user_filter = get_user_notification_filter(clean_code, clean_email)
+    if user_filter is None:
         return {"unread": 0}
 
     count = db.query(UserNotification).filter(
-        or_(
-            UserNotification.userCode == clean_code,
-            UserNotification.studentEmail == clean_email,
-            (UserNotification.userCode.is_(None) & UserNotification.studentEmail.is_(None))
-        ),
+        user_filter,
         UserNotification.isRead == False
     ).count()
 
@@ -53,17 +61,11 @@ def get_my_notifications(
     clean_code = current_user.userCode if current_user else (userCode.strip() if userCode else None)
     clean_email = current_user.email if current_user else (email.strip() if email else None)
 
-    if not clean_code and not clean_email:
+    user_filter = get_user_notification_filter(clean_code, clean_email)
+    if user_filter is None:
         return []
 
-    query = db.query(UserNotification).filter(
-        or_(
-            UserNotification.userCode == clean_code,
-            UserNotification.studentEmail == clean_email,
-            (UserNotification.userCode.is_(None) & UserNotification.studentEmail.is_(None))
-        )
-    ).order_by(UserNotification.createdAt.desc())
-
+    query = db.query(UserNotification).filter(user_filter).order_by(UserNotification.createdAt.desc())
     notifications = query.all()
 
     if not notifications:
@@ -130,13 +132,11 @@ def mark_all_read(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    query = db.query(UserNotification).filter(
-        or_(
-            UserNotification.userCode == current_user.userCode,
-            UserNotification.studentEmail == current_user.email,
-            (UserNotification.userCode.is_(None) & UserNotification.studentEmail.is_(None))
-        )
-    )
+    user_filter = get_user_notification_filter(current_user.userCode, current_user.email)
+    if user_filter is None:
+        return {"success": True, "message": "تم تحديد جميع الإشعارات كمقروءة"}
+
+    query = db.query(UserNotification).filter(user_filter)
     for notif in query.all():
         if not notif.isRead:
             notif.isRead = True

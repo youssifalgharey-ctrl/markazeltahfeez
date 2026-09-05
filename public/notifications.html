@@ -470,6 +470,20 @@
             userNotificationsList = raw ? JSON.parse(raw) : [];
         }
 
+        // التأكد التام من تطابق الإشعارات مع كود أو بريد المستخدم الحالي فقط
+        const myCode = (localStorage.getItem('userCode') || '').trim();
+        const myEmail = (localStorage.getItem('email') || '').trim().toLowerCase();
+        if (myCode || myEmail) {
+            userNotificationsList = userNotificationsList.filter(n => {
+                const nCode = (n.userCode || '').trim();
+                const nEmail = (n.studentEmail || '').trim().toLowerCase();
+                if (!nCode && !nEmail) return false;
+                const matchCode = Boolean(myCode && nCode && nCode === myCode);
+                const matchEmail = Boolean(myEmail && nEmail && nEmail === myEmail);
+                return matchCode || matchEmail;
+            });
+        }
+
         renderNotifications();
         if (typeof updateSideNotificationBadge === 'function') {
             updateSideNotificationBadge();

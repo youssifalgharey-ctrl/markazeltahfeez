@@ -174,9 +174,9 @@ function loadSidebar() {
         .catch(err => console.error('خطأ في تحميل القائمة الجانبية. تأكد من فتح الموقع عبر سيرفر محلي وليس بفتح الملف مباشرة:', err));
 }
 
-// تحديث مؤشرات الإشعارات (البادج في القائمة الجانبية + النقطة الحمراء الخارجية على زر القائمة)
+// تحديث مؤشرات الإشعارات (البادج داخل القائمة الجانبية فقط دون إظهار علامة على زر القائمة نفسه)
 function applyNotificationIndicators(unreadCount) {
-    // 1. تحديث البادج داخل القائمة الجانبية
+    // 1. تحديث البادج داخل القائمة الجانبية على أيقونة الإشعارات
     const badge = document.getElementById('sideNotifBadge');
     if (badge) {
         if (unreadCount > 0) {
@@ -187,16 +187,13 @@ function applyNotificationIndicators(unreadCount) {
         }
     }
 
-    // 2. تحديث النقطة الحمراء الخارجية "برا" فوق زر القائمة الرئيسي (menu-toggle-btn)
+    // 2. إزالة أي علامة حمراء على زر القائمة الجانبية الرئيسي لمنع التشويش البصري
     const toggleBtns = document.querySelectorAll('.menu-toggle-btn');
     toggleBtns.forEach(btn => {
-        let dot = btn.querySelector('.nav-menu-notif-dot');
-        if (!dot) {
-            dot = document.createElement('span');
-            dot.className = 'nav-menu-notif-dot';
-            btn.appendChild(dot);
+        const dot = btn.querySelector('.nav-menu-notif-dot');
+        if (dot) {
+            dot.remove();
         }
-        dot.style.display = unreadCount > 0 ? 'block' : 'none';
     });
 }
 

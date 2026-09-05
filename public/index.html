@@ -559,6 +559,8 @@
             if (data.role) localStorage.setItem('role', data.role);
             if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
             localStorage.setItem('user', JSON.stringify(data));
+            // مسح كاش إشعارات أي حساب سابق لتفادي التداخل بين الحسابات
+            localStorage.removeItem('user_notifications');
 
             const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
             window.location.href = redirectUrl ? redirectUrl : '/home.html';

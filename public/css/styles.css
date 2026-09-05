@@ -289,22 +289,7 @@ body {
 }
 
 .nav-menu-notif-dot {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 11px;
-    height: 11px;
-    background-color: #ef4444;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
-    animation: notifBadgePulse 1.8s infinite;
-    pointer-events: none;
-    z-index: 10;
-}
-
-[data-theme="dark"] .nav-menu-notif-dot {
-    border-color: #0f172a;
+    display: none !important;
 }
 
 @keyframes notifBadgePulse {
