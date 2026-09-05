@@ -493,17 +493,23 @@
 
       const password = passwordInput.value.trim();
       const fullName = fullNameInput.value.trim();
-      const phone = phoneInput.value.trim();
-      const age = ageInput.value.trim() ? parseInt(ageInput.value.trim()) : null;
+      // دالة لتحويل الأرقام العربية إلى إنجليزية
+      function toEnglishDigits(str) {
+        if (!str) return '';
+        return String(str).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+      }
+
+      let phone = toEnglishDigits(phoneInput.value.trim());
+      const age = ageInput.value.trim() ? parseInt(toEnglishDigits(ageInput.value.trim())) : null;
       const inviteCode = inviteCodeInput.value.trim();
 
       // التحقق في وضع الاشتراك فقط
       if (!isLoginMode) {
-        // التحقق من أن رقم الهاتف مكون من 11 رقماً بالضبط
-        const phoneRegex = /^[0-9]{11}$/;
+        // التحقق من أن رقم الهاتف مصري صحيح (يبدأ بـ 01 ومكون من 11 رقماً)
+        const phoneRegex = /^(\+?2)?01[0125][0-9]{8}$/;
         if (!phoneRegex.test(phone)) {
           phoneInput.classList.add('input-error');
-          showAlert('رقم الهاتف غير صحيح!', false);
+          showAlert('رقم الهاتف غير صحيح! يجب أن يبدأ بـ 01 (مثل: 010 أو 011 أو 012 أو 015) ومكون من 11 رقماً.', false);
           return;
         } else {
           phoneInput.classList.remove('input-error');
@@ -528,10 +534,11 @@
         }
       }
 
+      const cleanEmail = identifier ? identifier : null;
       const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
       const payload = isLoginMode
         ? { email: identifier, password }
-        : { fullName, phone, age, email: identifier, password, inviteCode };
+        : { fullName, phone, age, email: cleanEmail, password, inviteCode: inviteCode || null };
 
       const origBtnText = submitBtn.innerHTML;
       submitBtn.disabled = true;
@@ -587,6 +594,21 @@
     });
 
     function showAlert(msg, isSuccess) {
+      if (typeof msg === 'object' && msg !== null) {
+        if (Array.isArray(msg) && msg.length > 0) {
+          msg = msg.map(item => item.msg || item.message || JSON.stringify(item)).join(' - ');
+        } else if (msg.detail) {
+          msg = Array.isArray(msg.detail) ? msg.detail.map(d => d.msg || d.message || JSON.stringify(d)).join(' - ') : msg.detail;
+        } else if (msg.message) {
+          msg = msg.message;
+        } else {
+          msg = JSON.stringify(msg);
+        }
+      }
+      msg = String(msg || 'حدث خطأ، يرجى المحاولة لاحقاً')
+        .replace(/^Value error,\s*/i, '')
+        .replace(/Value error,\s*/gi, '');
+
       alertBox.textContent = msg;
       alertBox.className = 'alert-box ' + (isSuccess ? 'alert-success' : 'alert-error');
       alertBox.style.display = 'block';

@@ -8,10 +8,12 @@ if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
 import logging
+import re
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings, STATIC_DIR
@@ -76,6 +78,22 @@ app = FastAPI(
     redoc_url=None if IS_PRODUCTION else "/redoc",
     openapi_url=None if IS_PRODUCTION else "/openapi.json",
 )
+
+# ── معالجة أخطاء التحقق (Validation Errors) وإرجاع نصوص عربية واضحة بدلاً من كائنات [object Object] ──
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    errors = exc.errors()
+    messages = []
+    for err in errors:
+        msg = err.get("msg", "")
+        # إزالة بادئة "Value error, " التي يضيفها Pydantic تلقائياً
+        clean_msg = re.sub(r"^Value error,\s*", "", str(msg), flags=re.IGNORECASE)
+        messages.append(clean_msg)
+    joined_msg = " - ".join(messages) if messages else "بيانات غير صالحة، يرجى مراجعة المدخلات"
+    return JSONResponse(
+        status_code=400,
+        content={"detail": joined_msg, "message": joined_msg}
+    )
 
 # ── Security Headers Middleware ──────────────────────────────────────
 @app.middleware("http")
