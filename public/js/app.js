@@ -519,12 +519,4 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.includes('top-students.html')) {
         loadLeaderboardData();
     }
-
-    // تحميل المساعد الذكي العائم تلقائياً لكافة صفحات المنصة
-    if (!document.getElementById('aiChatWidgetRoot') && !document.querySelector('script[src*="ai-chat.js"]')) {
-        const aiScript = document.createElement('script');
-        aiScript.src = '/js/ai-chat.js';
-        aiScript.defer = true;
-        document.body.appendChild(aiScript);
-    }
 });

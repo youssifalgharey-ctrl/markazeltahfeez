@@ -35,6 +35,11 @@
     function initChatWidget() {
         if (document.getElementById('aiChatWidgetRoot')) return;
 
+        // تفعيل المساعد الذكي فقط وحصرياً في الصفحة الرئيسية (home.html)
+        const path = window.location.pathname.toLowerCase();
+        const isHomePage = path.includes('home.html') || path.endsWith('/home');
+        if (!isHomePage) return;
+
         ensureStylesLoaded();
 
         const root = document.createElement('div');
