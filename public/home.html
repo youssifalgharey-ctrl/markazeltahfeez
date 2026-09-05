@@ -15,6 +15,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- تحميل مسبق لصورة الغلاف الفورية لخلفية الهيرو للرسم الفوري بدون وميض -->
+    <link rel="preload" as="image" href="/video/hero-poster.webp" type="image/webp">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/ai-chat.css">
 
@@ -108,7 +110,7 @@
 
 <!-- الواجهة الرئيسية -->
 <section class="hero">
-    <video class="hero-video-bg" id="heroVideo" autoplay loop muted playsinline preload="auto">
+    <video class="hero-video-bg" id="heroVideo" autoplay loop muted playsinline preload="auto" poster="/video/hero-poster.webp">
         <source src="/video/hero-bg.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>

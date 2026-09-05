@@ -88,6 +88,12 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
     if IS_PRODUCTION:
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+
+    # تفعيل الكاش لملفات الفيديو والوسائط الثابتة للتحميل الفوري من كاش المتصفح
+    path = request.url.path
+    if path.startswith("/video/") or path.endswith((".mp4", ".webm", ".webp")):
+        response.headers["Cache-Control"] = "public, max-age=2592000, immutable"
+
     return response
 
 # Rate Limiting
