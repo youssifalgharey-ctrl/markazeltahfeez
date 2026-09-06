@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from sqlalchemy import Column, Integer, String, Text, DateTime, Date, Boolean, Index
+from sqlalchemy import Column, Integer, Float, String, Text, DateTime, Date, Boolean, Index
 from app.database import Base
 
 class ExamResult(Base):
@@ -13,8 +13,8 @@ class ExamResult(Base):
     studentName = Column(String, nullable=False)
     examName = Column(String, nullable=False)
     examDate = Column(Date, nullable=True)
-    score = Column(Integer, nullable=False)
-    maxScore = Column(Integer, nullable=False)
+    score = Column(Float, nullable=False)
+    maxScore = Column(Float, nullable=False)
     passed = Column(Boolean, nullable=True)
     notes = Column(Text, nullable=True)
     createdAt = Column(DateTime, default=datetime.now)

@@ -7,16 +7,16 @@ class ExamResultRequest(BaseModel):
     studentName: str = Field(..., min_length=1)
     examName: str = Field(..., min_length=1)
     examDate: Optional[date] = None
-    score: int
-    maxScore: int
+    score: float
+    maxScore: float
     passed: Optional[bool] = None
     notes: Optional[str] = None
 
 class ExamResultItemResponse(BaseModel):
     examName: str
     examDate: Optional[date] = None
-    score: int
-    maxScore: int
+    score: float
+    maxScore: float
     passed: bool
     notes: Optional[str] = None
 
