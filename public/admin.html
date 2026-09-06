@@ -1160,11 +1160,25 @@
             return days + ' يوم';
         }
 
+        function parseUtcDate(isoString) {
+            if (!isoString) return null;
+            try {
+                var s = String(isoString).trim();
+                if (!s.endsWith('Z') && !/[+-]\d{2}(:\d{2})?$/.test(s)) {
+                    s += 'Z';
+                }
+                var d = new Date(s);
+                return isNaN(d.getTime()) ? null : d;
+            } catch (e) {
+                return null;
+            }
+        }
+
         function formatClockTimeArabic(isoString) {
             if (!isoString) return '';
             try {
-                var d = new Date(isoString);
-                if (isNaN(d.getTime())) return '';
+                var d = parseUtcDate(isoString);
+                if (!d) return '';
                 var hours = d.getHours();
                 var mins = d.getMinutes();
                 var period = hours >= 12 ? 'م' : 'ص';
@@ -1233,8 +1247,8 @@
                     var secAgo = (u.secondsAgo !== null && u.secondsAgo !== undefined) ? u.secondsAgo : null;
                     if (secAgo === null && effectiveDate) {
                         try {
-                            var d = new Date(effectiveDate);
-                            if (!isNaN(d.getTime())) {
+                            var d = parseUtcDate(effectiveDate);
+                            if (d) {
                                 secAgo = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
                             }
                         } catch (e) {}
@@ -1254,7 +1268,18 @@
                     '</div>';
                 }
 
-                var dateFormatted = u.createdAt ? u.createdAt.replace('T', ' ').substring(0, 10) : '-';
+                var dateFormatted = '-';
+                if (u.createdAt) {
+                    var cd = parseUtcDate(u.createdAt);
+                    if (cd) {
+                        var cYear = cd.getFullYear();
+                        var cMonth = String(cd.getMonth() + 1).padStart(2, '0');
+                        var cDay = String(cd.getDate()).padStart(2, '0');
+                        dateFormatted = cYear + '-' + cMonth + '-' + cDay;
+                    } else {
+                        dateFormatted = u.createdAt.replace('T', ' ').substring(0, 10);
+                    }
+                }
                 var cleanPhone = u.phone ? u.phone.replace(/[^0-9]/g, '') : '';
                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
 

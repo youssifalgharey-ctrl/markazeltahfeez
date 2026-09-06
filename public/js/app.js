@@ -241,18 +241,29 @@ function updateSideNotificationBadge() {
     });
 }
 
-// نبضات الحفاظ على الجلسة النشطة والتحقق من عدم تسجيل الدخول من جهاز آخر
+// نبضات الحفاظ على الجلسة النشطة وتحديث وقت الظهور سواء بتوكن أو كود الطالب
 function sendSessionHeartbeat() {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    const userCode = localStorage.getItem('userCode');
+    const phone = localStorage.getItem('phone');
+    if (!token && !userCode && !phone) return;
+
+    var headers = { 'Content-Type': 'application/json' };
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+    }
     fetch('/api/auth/heartbeat', {
         method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + token }
+        headers: headers,
+        body: JSON.stringify({ userCode: userCode || null, phone: phone || null })
     }).then(function (res) {
-        if (res.status === 401) {
+        if (res.status === 401 && token) {
             localStorage.removeItem('token');
             localStorage.removeItem('currentUser');
-            window.location.replace('/index.html');
+            var path = window.location.pathname || '';
+            if (!path.endsWith('index.html') && path !== '/') {
+                window.location.replace('/index.html');
+            }
         }
     }).catch(function () {});
 }

@@ -1,5 +1,5 @@
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, Query, Body
 from sqlalchemy.orm import Session
@@ -14,6 +14,13 @@ router = APIRouter(prefix="/api/admin", tags=["admin"], dependencies=[Depends(re
 
 ONLINE_THRESHOLD_SECONDS = 180  # 3 minutes
 
+def to_iso_utc(dt: Optional[datetime]) -> Optional[str]:
+    if not dt:
+        return None
+    if dt.tzinfo is None:
+        return dt.isoformat() + "Z"
+    return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
 def parse_amount(amount_str: Optional[str]) -> int:
     if not amount_str:
         return 0
@@ -22,7 +29,7 @@ def parse_amount(amount_str: Optional[str]) -> int:
 
 @router.get("/overview")
 def get_overview_stats(db: Session = Depends(get_db)):
-    now = datetime.now()
+    now = datetime.utcnow()
     online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
 
     total_users = db.query(User).count()
@@ -60,7 +67,7 @@ def get_overview_stats(db: Session = Depends(get_db)):
 
 @router.get("/online-users")
 def get_online_users(db: Session = Depends(get_db)):
-    now = datetime.now()
+    now = datetime.utcnow()
     online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
     users = (
         db.query(User)
@@ -81,9 +88,9 @@ def get_online_users(db: Session = Depends(get_db)):
             "role": u.role,
             "currentSurah": u.currentSurah,
             "profileImage": u.profileImage,
-            "lastActiveAt": u.last_active_at.isoformat(),
+            "lastActiveAt": to_iso_utc(u.last_active_at),
             "secondsAgo": int((now - u.last_active_at).total_seconds()),
-            "sessionStartedAt": session_start.isoformat() if session_start else None,
+            "sessionStartedAt": to_iso_utc(session_start),
             "onlineDurationSeconds": online_duration,
         })
     return res
@@ -97,7 +104,7 @@ def get_all_users(
     users = db.query(User).all()
     q = search.strip().lower() if search and search.strip() else None
 
-    now = datetime.now()
+    now = datetime.utcnow()
     online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
 
     result = []
@@ -137,11 +144,11 @@ def get_all_users(
             "role": u.role,
             "currentSurah": u.currentSurah,
             "profileImage": u.profileImage,
-            "createdAt": u.createdAt.isoformat() if u.createdAt else None,
+            "createdAt": to_iso_utc(u.createdAt),
             "isOnline": is_online,
-            "lastActiveAt": effective_last_active.isoformat() if effective_last_active else None,
+            "lastActiveAt": to_iso_utc(effective_last_active),
             "secondsAgo": seconds_ago,
-            "sessionStartedAt": session_start.isoformat() if session_start else (u.session_started_at.isoformat() if u.session_started_at else None),
+            "sessionStartedAt": to_iso_utc(session_start) if session_start else (to_iso_utc(u.session_started_at) if u.session_started_at else None),
             "onlineDurationSeconds": online_duration,
         })
 

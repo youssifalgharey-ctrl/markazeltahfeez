@@ -3,7 +3,8 @@ import re
 import uuid
 from datetime import datetime
 from typing import Optional, Dict, Any
-from fastapi import APIRouter, Depends, HTTPException, status, Query, Header
+from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Header, Body
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.config import settings
@@ -20,11 +21,15 @@ from app.schemas.auth import (
 )
 from app.security.passwords import hash_password, verify_password
 from app.security.jwt_handler import create_access_token, decode_access_token
-from app.security.deps import get_current_user
+from app.security.deps import get_current_user, get_current_user_optional
 from app.services.google_sheets import sync_user_to_sheet
 from app.services.email_service import send_password_reset_email
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
+
+class HeartbeatPayload(BaseModel):
+    userCode: Optional[str] = None
+    phone: Optional[str] = None
 
 def normalize_arabic_digits(text: str) -> str:
     if not text:
@@ -42,19 +47,22 @@ def generate_unique_code(db: Session) -> str:
 
 @router.post("/register", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
 def register(request: RegisterRequest, db: Session = Depends(get_db)):
-    phone = request.phone.strip()
+    phone = normalize_arabic_digits(request.phone)
     if db.query(User).filter(User.phone == phone).first():
-        raise HTTPException(status_code=400, detail="رقم الهاتف مسجل بالفعل!")
+        raise HTTPException(status_code=400, detail="رقم الهاتف مسجل مسبقاً!")
 
     email = request.email.strip() if request.email and request.email.strip() else None
     if email and db.query(User).filter(User.email == email).first():
-        raise HTTPException(status_code=400, detail="البريد الإلكتروني مسجل بالفعل!")
+        raise HTTPException(status_code=400, detail="البريد الإلكتروني مسجل مسبقاً!")
 
     if request.inviteCode and request.inviteCode.strip():
-        assigned_code = request.inviteCode.strip()
-        if db.query(User).filter(User.userCode == assigned_code).first():
-            raise HTTPException(status_code=400, detail="هذا الكود مستخدم بالفعل من قبل شخص آخر!")
-        reg_type = "كود مسبق (يدوي)"
+        inv_code = normalize_arabic_digits(request.inviteCode.strip())
+        if not db.query(User).filter(User.userCode == inv_code).first():
+            assigned_code = inv_code
+            reg_type = "كود دعوة مخصص"
+        else:
+            assigned_code = generate_unique_code(db)
+            reg_type = "توليد تلقائي (كود الدعوة مستخدم)"
     else:
         assigned_code = generate_unique_code(db)
         reg_type = "توليد تلقائي"
@@ -64,6 +72,9 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         and settings.PAYMENT_ADMIN_EMAIL
         and email.lower() == settings.PAYMENT_ADMIN_EMAIL.lower()
     )
+
+    now = datetime.utcnow()
+    new_session_id = uuid.uuid4().hex
 
     user = User(
         fullName=request.fullName.strip(),
@@ -75,9 +86,10 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         inviteCode=request.inviteCode.strip() if request.inviteCode else None,
         role="ADMIN" if is_admin else "USER",
         token_version=1,
-        createdAt=datetime.now(),
-        last_active_at=datetime.now(),
-        session_started_at=datetime.now(),
+        active_session_id=new_session_id,
+        createdAt=now,
+        last_active_at=now,
+        session_started_at=now,
     )
     db.add(user)
 
@@ -96,7 +108,7 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         link="/courses.html",
         linkText="ابدأ رحلتك واستكشف البرامج",
         isRead=False,
-        createdAt=datetime.now(),
+        createdAt=now,
     )
     db.add(welcome_notif)
     db.commit()
@@ -104,11 +116,16 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     # Sync to Google Sheets (Non-blocking background thread)
     sync_user_to_sheet(user, reg_type)
 
+    lookup_key = user.email or user.phone or user.userCode
+    token = create_access_token(lookup_key, user.token_version, session_id=new_session_id)
+
     return AuthResponse(
+        token=token,
         fullName=user.fullName,
         phone=user.phone,
         email=user.email,
         userCode=user.userCode,
+        role=user.role,
         message=f"الكود الخاص بك هو: {user.userCode}",
     )
 
@@ -141,7 +158,7 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
 
     # ── جلسة واحدة نشطة: تسجيل الدخول الجديد يستبدل الجلسة السابقة ويلغي صلاحيتها فوراً ──
     # لا يمكن فتح الحساب على جهازين في نفس الوقت؛ تسجيل الدخول يلغي تلقائياً جلسة الجهاز السابق دون حظر المستخدم
-    now = datetime.now()
+    now = datetime.utcnow()
     new_session_id = uuid.uuid4().hex
     user.active_session_id = new_session_id
     user.last_active_at = now
@@ -181,7 +198,7 @@ def logout_endpoint(
                 )
                 if user:
                     user.active_session_id = None
-                    user.last_active_at = datetime.now()
+                    user.last_active_at = datetime.utcnow()
                     user.session_started_at = None
                     user.token_version = (user.token_version or 1) + 1
                     db.commit()
@@ -189,19 +206,38 @@ def logout_endpoint(
 
 @router.post("/heartbeat")
 def heartbeat_endpoint(
-    current_user: User = Depends(get_current_user),
+    payload: Optional[HeartbeatPayload] = Body(None),
+    current_user: Optional[User] = Depends(get_current_user_optional),
     db: Session = Depends(get_db)
 ):
-    """إرسال نبضات النشاط من المتصفح للحفاظ على حجز الجلسة طالما التبويب مفتوح"""
-    now = datetime.now()
-    if not current_user.session_started_at or not current_user.last_active_at or (now - current_user.last_active_at).total_seconds() > 180:
-        current_user.session_started_at = now
-    current_user.last_active_at = now
-    try:
-        db.commit()
-    except Exception:
-        db.rollback()
-    return {"status": "alive"}
+    """إرسال نبضات النشاط من المتصفح للحفاظ على حجز الجلسة وتحديث وقت الظهور سواء بتوكن أو كود الطالب"""
+    now = datetime.utcnow()
+    user = current_user
+    if not user and payload:
+        ident_code = (payload.userCode or "").strip()
+        ident_phone = (payload.phone or "").strip()
+        if ident_code or ident_phone:
+            from sqlalchemy import or_
+            filters = []
+            if ident_code:
+                filters.append(User.userCode == ident_code)
+            if ident_phone:
+                filters.append(User.phone == ident_phone)
+            user = db.query(User).filter(or_(*filters)).first()
+
+    if user:
+        if not user.session_started_at or not user.last_active_at or (now - user.last_active_at).total_seconds() > 180:
+            user.session_started_at = now
+        user.last_active_at = now
+        if not user.active_session_id:
+            user.active_session_id = f"sess_{uuid.uuid4().hex[:8]}"
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
+        return {"status": "alive", "userCode": user.userCode}
+
+    return {"status": "ignored"}
 
 @router.post("/forgot-password")
 def forgot_password(body: Dict[str, str], db: Session = Depends(get_db)):

@@ -41,7 +41,7 @@ def get_current_user_optional(
 
     # Update last_active_at to keep the session alive during active browsing
     from datetime import datetime, timedelta
-    now = datetime.now()
+    now = datetime.utcnow()
     online_cutoff = now - timedelta(seconds=180)
     needs_commit = False
 

@@ -578,9 +578,17 @@
             window.location.replace(redirectUrl ? redirectUrl : '/home.html');
             return;
           } else {
-            // حفظ الهاتف والبريد اللي كتبهم المستخدم فوراً (معروفين عندنا من الفورم نفسه)
-            if (phone) localStorage.setItem('phone', phone);
-            if (identifier) localStorage.setItem('email', identifier);
+            // حفظ الهاتف والبريد والتوكن وكود الطالب فوراً لبدء الجلسة وتحديث وقت الظهور
+            if (data.token) localStorage.setItem('token', data.token);
+            if (data.fullName) localStorage.setItem('fullName', data.fullName);
+            if (data.userCode) localStorage.setItem('userCode', data.userCode);
+            if (data.phone) localStorage.setItem('phone', data.phone);
+            else if (phone) localStorage.setItem('phone', phone);
+            if (data.email) localStorage.setItem('email', data.email);
+            else if (identifier) localStorage.setItem('email', identifier);
+            if (data.role) localStorage.setItem('role', data.role);
+            localStorage.setItem('user', JSON.stringify(data));
+            if (typeof sendSessionHeartbeat === 'function') sendSessionHeartbeat();
 
             // تفريغ الحقول وإبقاء رسالة النجاح والكود
             authForm.reset();
@@ -715,5 +723,6 @@
         </div>
     </div>
 </div>
+<script src="/js/app.js"></script>
 </body>
 </html>
