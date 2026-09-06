@@ -68,8 +68,11 @@ def get_online_users(db: Session = Depends(get_db)):
         .order_by(User.last_active_at.desc())
         .all()
     )
-    return [
-        {
+    res = []
+    for u in users:
+        session_start = u.session_started_at or u.last_active_at or now
+        online_duration = max(0, int((now - session_start).total_seconds())) if session_start else 0
+        res.append({
             "id": u.id,
             "fullName": u.fullName,
             "userCode": u.userCode,
@@ -80,9 +83,10 @@ def get_online_users(db: Session = Depends(get_db)):
             "profileImage": u.profileImage,
             "lastActiveAt": u.last_active_at.isoformat(),
             "secondsAgo": int((now - u.last_active_at).total_seconds()),
-        }
-        for u in users
-    ]
+            "sessionStartedAt": session_start.isoformat() if session_start else None,
+            "onlineDurationSeconds": online_duration,
+        })
+    return res
 
 @router.get("/users")
 def get_all_users(
@@ -116,6 +120,12 @@ def get_all_users(
 
         seconds_ago = int((now - u.last_active_at).total_seconds()) if u.last_active_at else None
 
+        session_start = u.session_started_at if is_online else None
+        if is_online and not session_start:
+            session_start = u.last_active_at or now
+
+        online_duration = max(0, int((now - session_start).total_seconds())) if (is_online and session_start) else None
+
         result.append({
             "id": u.id,
             "fullName": u.fullName,
@@ -130,6 +140,8 @@ def get_all_users(
             "isOnline": is_online,
             "lastActiveAt": u.last_active_at.isoformat() if u.last_active_at else None,
             "secondsAgo": seconds_ago,
+            "sessionStartedAt": session_start.isoformat() if session_start else (u.session_started_at.isoformat() if u.session_started_at else None),
+            "onlineDurationSeconds": online_duration,
         })
 
     def sort_key(x):

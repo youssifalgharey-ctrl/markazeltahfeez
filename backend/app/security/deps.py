@@ -40,10 +40,20 @@ def get_current_user_optional(
         return None
 
     # Update last_active_at to keep the session alive during active browsing
-    from datetime import datetime
+    from datetime import datetime, timedelta
     now = datetime.now()
+    online_cutoff = now - timedelta(seconds=180)
+    needs_commit = False
+
+    if not user.session_started_at or (user.last_active_at and user.last_active_at < online_cutoff):
+        user.session_started_at = user.last_active_at or now
+        needs_commit = True
+
     if not user.last_active_at or (now - user.last_active_at).total_seconds() > 10:
         user.last_active_at = now
+        needs_commit = True
+
+    if needs_commit:
         try:
             db.commit()
         except Exception:

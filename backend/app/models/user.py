@@ -18,6 +18,7 @@ class User(Base):
     token_version = Column(BigInteger, default=1, nullable=False)
     active_session_id = Column(String, nullable=True)
     last_active_at = Column(DateTime, nullable=True)
+    session_started_at = Column(DateTime, nullable=True)
     address = Column(String, nullable=True)
     currentSurah = Column(String, nullable=True)
     profileImage = Column(Text, nullable=True)

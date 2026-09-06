@@ -139,9 +139,11 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
 
     # ── جلسة واحدة نشطة: تسجيل الدخول الجديد يستبدل الجلسة السابقة ويلغي صلاحيتها فوراً ──
     # لا يمكن فتح الحساب على جهازين في نفس الوقت؛ تسجيل الدخول يلغي تلقائياً جلسة الجهاز السابق دون حظر المستخدم
+    now = datetime.now()
     new_session_id = uuid.uuid4().hex
     user.active_session_id = new_session_id
-    user.last_active_at = datetime.now()
+    user.last_active_at = now
+    user.session_started_at = now
     user.token_version = (user.token_version or 1) + 1
     db.commit()
 
@@ -177,7 +179,8 @@ def logout_endpoint(
                 )
                 if user:
                     user.active_session_id = None
-                    user.last_active_at = None
+                    user.last_active_at = datetime.now()
+                    user.session_started_at = None
                     user.token_version = (user.token_version or 1) + 1
                     db.commit()
     return {"success": True, "message": "تم تسجيل الخروج بنجاح وتحرير الحساب"}
@@ -188,7 +191,10 @@ def heartbeat_endpoint(
     db: Session = Depends(get_db)
 ):
     """إرسال نبضات النشاط من المتصفح للحفاظ على حجز الجلسة طالما التبويب مفتوح"""
-    current_user.last_active_at = datetime.now()
+    now = datetime.now()
+    if not current_user.session_started_at or not current_user.last_active_at or (now - current_user.last_active_at).total_seconds() > 180:
+        current_user.session_started_at = now
+    current_user.last_active_at = now
     try:
         db.commit()
     except Exception:

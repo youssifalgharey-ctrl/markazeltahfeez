@@ -294,6 +294,54 @@
         .badge.online { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
         .badge.offline { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); }
 
+        .user-status-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .status-time-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+
+        .status-time-meta.online-meta {
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        .status-time-meta.online-meta strong {
+            color: #6ee7b7;
+            font-weight: 700;
+        }
+
+        .status-time-meta.offline-meta {
+            color: var(--text-muted);
+            font-size: 11px;
+            padding: 1px 4px;
+        }
+
+        .status-time-meta .time-exact {
+            color: #cbd5e1;
+            font-size: 10.5px;
+            font-weight: 500;
+            opacity: 0.9;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        .status-time-meta.offline-meta .time-exact {
+            color: #94a3b8;
+        }
+
         .kpi-title {
             font-size: 13.5px;
             color: var(--text-muted);
@@ -1059,6 +1107,7 @@
         }
 
         function formatLastSeen(seconds) {
+            if (seconds === null || seconds === undefined || isNaN(seconds)) return 'غير معروف';
             if (seconds < 60) return 'منذ ثوانٍ';
             var mins = Math.floor(seconds / 60);
             if (mins < 60) return 'منذ ' + mins + ' دقيقة';
@@ -1066,6 +1115,67 @@
             if (hours < 24) return 'منذ ' + hours + ' ساعة';
             var days = Math.floor(hours / 24);
             return 'منذ ' + days + ' يوم';
+        }
+
+        function formatDurationArabic(seconds) {
+            if (seconds === null || seconds === undefined || isNaN(seconds) || seconds < 0) return 'الآن';
+            if (seconds < 60) return 'أقل من دقيقة';
+            var totalMins = Math.floor(seconds / 60);
+            if (totalMins < 60) {
+                if (totalMins === 1) return 'دقيقة واحدة';
+                if (totalMins === 2) return 'دقيقتين';
+                if (totalMins >= 3 && totalMins <= 10) return totalMins + ' دقائق';
+                return totalMins + ' دقيقة';
+            }
+            var hours = Math.floor(totalMins / 60);
+            var remMins = totalMins % 60;
+            if (hours < 24) {
+                var hoursStr = '';
+                if (hours === 1) hoursStr = 'ساعة';
+                else if (hours === 2) hoursStr = 'ساعتين';
+                else if (hours >= 3 && hours <= 10) hoursStr = hours + ' ساعات';
+                else hoursStr = hours + ' ساعة';
+
+                if (remMins === 0) return hoursStr;
+                var minsStr = '';
+                if (remMins === 1) minsStr = 'دقيقة';
+                else if (remMins === 2) minsStr = 'دقيقتين';
+                else if (remMins >= 3 && remMins <= 10) minsStr = remMins + ' دقائق';
+                else minsStr = remMins + ' دقيقة';
+                return hoursStr + ' و' + minsStr;
+            }
+            var days = Math.floor(hours / 24);
+            if (days === 1) return 'يوم';
+            if (days === 2) return 'يومين';
+            if (days >= 3 && days <= 10) return days + ' أيام';
+            return days + ' يوم';
+        }
+
+        function formatClockTimeArabic(isoString) {
+            if (!isoString) return '';
+            try {
+                var d = new Date(isoString);
+                if (isNaN(d.getTime())) return '';
+                var hours = d.getHours();
+                var mins = d.getMinutes();
+                var period = hours >= 12 ? 'م' : 'ص';
+                var h12 = hours % 12 || 12;
+                var padMins = mins < 10 ? '0' + mins : mins;
+
+                var now = new Date();
+                var isToday = d.toDateString() === now.toDateString();
+                var timeStr = h12 + ':' + padMins + ' ' + period;
+
+                if (isToday) {
+                    return timeStr;
+                } else {
+                    var day = d.getDate();
+                    var month = d.getMonth() + 1;
+                    return day + '/' + month + ' ' + timeStr;
+                }
+            } catch (e) {
+                return '';
+            }
         }
 
         function showOnlineUsersTab() {
@@ -1092,11 +1202,36 @@
                     ? '<span class="badge admin"><i class="fa-solid fa-shield-halved"></i> مسؤول (ADMIN)</span>'
                     : '<span class="badge user"><i class="fa-solid fa-user"></i> طالب (USER)</span>';
 
-                var statusBadge = u.isOnline
-                    ? '<span class="badge online"><span class="pulse-dot"></span> متصل الآن</span>'
-                    : (u.secondsAgo !== null && u.secondsAgo !== undefined
-                        ? '<span class="badge offline" title="آخر نشاط: ' + escapeHtml(u.lastActiveAt) + '"><i class="fa-regular fa-clock"></i> ' + formatLastSeen(u.secondsAgo) + '</span>'
-                        : '<span class="badge offline"><i class="fa-solid fa-circle-xmark"></i> غير متصل</span>');
+                var statusBadge = '';
+                if (u.isOnline) {
+                    var durText = formatDurationArabic(u.onlineDurationSeconds);
+                    var startTime = formatClockTimeArabic(u.sessionStartedAt);
+                    var lastSeen = (u.secondsAgo !== null && u.secondsAgo !== undefined) ? formatLastSeen(u.secondsAgo) : '';
+                    var tooltip = 'فاتح المنصة من: ' + (startTime || '-') + (lastSeen ? ' | آخر تفاعل: ' + lastSeen : '');
+
+                    statusBadge = '<div class="user-status-cell" title="' + escapeHtml(tooltip) + '">' +
+                        '<span class="badge online"><span class="pulse-dot"></span> متصل الآن</span>' +
+                        '<div class="status-time-meta online-meta">' +
+                            '<i class="fa-regular fa-clock"></i> ' +
+                            '<span>فاتح منذ <strong>' + durText + '</strong></span>' +
+                            (startTime ? '<span class="time-exact">(' + startTime + ')</span>' : '') +
+                        '</div>' +
+                    '</div>';
+                } else {
+                    var lastSeenTime = formatClockTimeArabic(u.lastActiveAt);
+                    var hasLastSeen = (u.secondsAgo !== null && u.secondsAgo !== undefined);
+
+                    statusBadge = '<div class="user-status-cell">' +
+                        '<span class="badge offline"><i class="fa-solid fa-circle-xmark"></i> غير متصل</span>' +
+                        (hasLastSeen ? (
+                            '<div class="status-time-meta offline-meta" title="آخر نشاط: ' + escapeHtml(u.lastActiveAt || '') + '">' +
+                                '<i class="fa-regular fa-clock"></i> ' +
+                                '<span>آخر ظهور ' + formatLastSeen(u.secondsAgo) + '</span>' +
+                                (lastSeenTime ? '<span class="time-exact">(' + lastSeenTime + ')</span>' : '') +
+                            '</div>'
+                        ) : '') +
+                    '</div>';
+                }
 
                 var dateFormatted = u.createdAt ? u.createdAt.replace('T', ' ').substring(0, 10) : '-';
                 var cleanPhone = u.phone ? u.phone.replace(/[^0-9]/g, '') : '';
