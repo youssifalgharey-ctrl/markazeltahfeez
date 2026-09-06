@@ -55,3 +55,17 @@ def sync_batch(
         )
     return exam_service.batch_create_or_update(requests, db)
 
+@router.delete("/{code}")
+def delete_result(
+    code: str,
+    exam_name: Optional[str] = None,
+    x_sync_secret: Optional[str] = Header(None, alias="X-Sync-Secret"),
+    db: Session = Depends(get_db),
+):
+    if not x_sync_secret or x_sync_secret != settings.SYNC_WEBHOOK_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"error": "Unauthorized", "message": "رمز التحقق السري لمزامنة النتائج غير صحيح أو مفقود"}
+        )
+    return exam_service.delete_result(code, exam_name, db)
+

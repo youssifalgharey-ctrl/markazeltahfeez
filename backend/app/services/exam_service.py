@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.models.exam_result import ExamResult
@@ -106,3 +106,12 @@ def batch_create_or_update(requests: List[ExamResultRequest], db: Session) -> di
 
     db.commit()
     return {"success": True, "count": saved}
+
+def delete_result(code: str, exam_name: Optional[str], db: Session) -> dict:
+    clean_code = code.strip()
+    q = db.query(ExamResult).filter(func.lower(ExamResult.result_code) == clean_code.lower())
+    if exam_name:
+        q = q.filter(func.lower(ExamResult.examName) == exam_name.strip().lower())
+    count = q.delete(synchronize_session=False)
+    db.commit()
+    return {"success": True, "deleted": count}
