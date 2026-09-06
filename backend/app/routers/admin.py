@@ -118,11 +118,12 @@ def get_all_users(
             if not (match_name or match_phone or match_code or match_email):
                 continue
 
-        seconds_ago = int((now - u.last_active_at).total_seconds()) if u.last_active_at else None
+        effective_last_active = u.last_active_at or u.createdAt
+        seconds_ago = int((now - effective_last_active).total_seconds()) if effective_last_active else None
 
         session_start = u.session_started_at if is_online else None
         if is_online and not session_start:
-            session_start = u.last_active_at or now
+            session_start = effective_last_active or now
 
         online_duration = max(0, int((now - session_start).total_seconds())) if (is_online and session_start) else None
 
@@ -138,7 +139,7 @@ def get_all_users(
             "profileImage": u.profileImage,
             "createdAt": u.createdAt.isoformat() if u.createdAt else None,
             "isOnline": is_online,
-            "lastActiveAt": u.last_active_at.isoformat() if u.last_active_at else None,
+            "lastActiveAt": effective_last_active.isoformat() if effective_last_active else None,
             "secondsAgo": seconds_ago,
             "sessionStartedAt": session_start.isoformat() if session_start else (u.session_started_at.isoformat() if u.session_started_at else None),
             "onlineDurationSeconds": online_duration,

@@ -76,6 +76,8 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         role="ADMIN" if is_admin else "USER",
         token_version=1,
         createdAt=datetime.now(),
+        last_active_at=datetime.now(),
+        session_started_at=datetime.now(),
     )
     db.add(user)
 

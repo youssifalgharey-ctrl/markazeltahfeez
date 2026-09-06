@@ -96,6 +96,15 @@ async def lifespan(app: FastAPI):
                                 conn.execute(text(f'ALTER TABLE {target_table} ADD COLUMN session_started_at TIMESTAMP'))
                             except Exception as col_err:
                                 logger.warning("Could not add session_started_at: %s", col_err)
+
+                    # تعبئة last_active_at للطلاب السابقين الذين لم يُسجل لهم آخر نشاط ليعتمد على تاريخ التسجيل
+                    try:
+                        conn.execute(text(f'UPDATE "{target_table}" SET last_active_at = "createdAt" WHERE last_active_at IS NULL AND "createdAt" IS NOT NULL'))
+                    except Exception:
+                        try:
+                            conn.execute(text(f'UPDATE {target_table} SET last_active_at = createdAt WHERE last_active_at IS NULL AND createdAt IS NOT NULL'))
+                        except Exception:
+                            pass
         except Exception as mig_err:
             logger.warning("Auto-migration check notice: %s", mig_err)
 

@@ -1107,13 +1107,22 @@
         }
 
         function formatLastSeen(seconds) {
-            if (seconds === null || seconds === undefined || isNaN(seconds)) return 'غير معروف';
+            if (seconds === null || seconds === undefined || isNaN(seconds) || seconds < 0) return 'منذ قليل';
             if (seconds < 60) return 'منذ ثوانٍ';
             var mins = Math.floor(seconds / 60);
+            if (mins === 1) return 'منذ دقيقة';
+            if (mins === 2) return 'منذ دقيقتين';
+            if (mins >= 3 && mins <= 10) return 'منذ ' + mins + ' دقائق';
             if (mins < 60) return 'منذ ' + mins + ' دقيقة';
             var hours = Math.floor(mins / 60);
+            if (hours === 1) return 'منذ ساعة';
+            if (hours === 2) return 'منذ ساعتين';
+            if (hours >= 3 && hours <= 10) return 'منذ ' + hours + ' ساعات';
             if (hours < 24) return 'منذ ' + hours + ' ساعة';
             var days = Math.floor(hours / 24);
+            if (days === 1) return 'منذ يوم';
+            if (days === 2) return 'منذ يومين';
+            if (days >= 3 && days <= 10) return 'منذ ' + days + ' أيام';
             return 'منذ ' + days + ' يوم';
         }
 
@@ -1218,15 +1227,27 @@
                         '</div>' +
                     '</div>';
                 } else {
-                    var lastSeenTime = formatClockTimeArabic(u.lastActiveAt);
-                    var hasLastSeen = (u.secondsAgo !== null && u.secondsAgo !== undefined);
+                    var effectiveDate = u.lastActiveAt || u.createdAt;
+                    var lastSeenTime = formatClockTimeArabic(effectiveDate);
+
+                    var secAgo = (u.secondsAgo !== null && u.secondsAgo !== undefined) ? u.secondsAgo : null;
+                    if (secAgo === null && effectiveDate) {
+                        try {
+                            var d = new Date(effectiveDate);
+                            if (!isNaN(d.getTime())) {
+                                secAgo = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
+                            }
+                        } catch (e) {}
+                    }
+
+                    var hasLastSeen = (secAgo !== null && secAgo !== undefined);
 
                     statusBadge = '<div class="user-status-cell">' +
                         '<span class="badge offline"><i class="fa-solid fa-circle-xmark"></i> غير متصل</span>' +
                         (hasLastSeen ? (
-                            '<div class="status-time-meta offline-meta" title="آخر نشاط: ' + escapeHtml(u.lastActiveAt || '') + '">' +
+                            '<div class="status-time-meta offline-meta" title="آخر نشاط: ' + escapeHtml(effectiveDate || '') + '">' +
                                 '<i class="fa-regular fa-clock"></i> ' +
-                                '<span>آخر ظهور ' + formatLastSeen(u.secondsAgo) + '</span>' +
+                                '<span>آخر ظهور ' + formatLastSeen(secAgo) + '</span>' +
                                 (lastSeenTime ? '<span class="time-exact">(' + lastSeenTime + ')</span>' : '') +
                             '</div>'
                         ) : '') +
