@@ -64,11 +64,45 @@ def create_or_update(request: ExamResultRequest, db: Session) -> ExamResultItemR
     entry.studentName = request.studentName.strip()
     entry.examName = exam
     entry.examDate = request.examDate
-    entry.score = request.score
-    entry.maxScore = request.maxScore
+    entry.score = float(request.score)
+    entry.maxScore = float(request.maxScore)
     entry.passed = request.passed
     entry.notes = request.notes
 
     db.commit()
     db.refresh(entry)
     return to_item_response(entry)
+
+def batch_create_or_update(requests: List[ExamResultRequest], db: Session) -> dict:
+    saved = 0
+    for req in requests:
+        code = req.resultCode.strip()
+        exam = req.examName.strip()
+
+        entry = (
+            db.query(ExamResult)
+            .filter(
+                func.lower(ExamResult.result_code) == code.lower(),
+                func.lower(ExamResult.examName) == exam.lower(),
+            )
+            .first()
+        )
+
+        if not entry:
+            entry = ExamResult()
+            db.add(entry)
+
+        entry.result_code = code
+        entry.studentName = req.studentName.strip()
+        entry.examName = exam
+        entry.examDate = req.examDate
+        entry.score = float(req.score)
+        entry.maxScore = float(req.maxScore)
+        entry.passed = req.passed if req.passed is not None else (
+            entry.maxScore > 0 and (entry.score / entry.maxScore) >= PASS_THRESHOLD
+        )
+        entry.notes = req.notes
+        saved += 1
+
+    db.commit()
+    return {"success": True, "count": saved}

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Header, status
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -41,3 +41,17 @@ def sync_from_sheet(
             detail={"error": "Unauthorized", "message": "رمز التحقق السري لمزامنة النتائج غير صحيح أو مفقود"}
         )
     return exam_service.create_or_update(request, db)
+
+@router.post("/batch")
+def sync_batch(
+    requests: List[ExamResultRequest],
+    x_sync_secret: Optional[str] = Header(None, alias="X-Sync-Secret"),
+    db: Session = Depends(get_db),
+):
+    if not x_sync_secret or x_sync_secret != settings.SYNC_WEBHOOK_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"error": "Unauthorized", "message": "رمز التحقق السري لمزامنة النتائج غير صحيح أو مفقود"}
+        )
+    return exam_service.batch_create_or_update(requests, db)
+
