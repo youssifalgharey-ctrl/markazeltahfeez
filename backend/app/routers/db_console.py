@@ -399,25 +399,26 @@ def execute_sql(
         raise HTTPException(status_code=400, detail="الاستعلام فارغ")
 
     first_word = query.split()[0].upper() if query.split() else ""
-    if first_word not in ("SELECT", "PRAGMA", "EXPLAIN", "DELETE"):
-        raise HTTPException(status_code=400, detail="يُسمح فقط باستعلامات القراءة (SELECT) أو الحذف (DELETE ... WHERE)")
+    if first_word not in ("SELECT", "PRAGMA", "EXPLAIN", "DELETE", "ALTER", "UPDATE", "INSERT"):
+        raise HTTPException(status_code=400, detail="يُسمح فقط باستعلامات القراءة أو التعديل المصرح بها")
 
-    if first_word == "DELETE":
+    if first_word in ("DELETE", "UPDATE"):
         if "WHERE" not in query.upper():
-            raise HTTPException(status_code=400, detail="أمان البيانات: يجب تحديد شرط WHERE عند استخدام أمر DELETE لمنع مسح الجدول بأكمله.")
+            raise HTTPException(status_code=400, detail="أمان البيانات: يجب تحديد شرط WHERE عند استخدام أمر DELETE أو UPDATE لمنع التأثير على الجدول بأكمله.")
         if "APP_USER" in query.upper() and any(k in query.lower() for k in ("0001", "0002", "markazeltafeez@gmail.com", "youssifalgharey@gmail.com", "admin@asseriga-quran.com")):
-            raise HTTPException(status_code=400, detail="محظور: لا يمكن حذف حسابات الإدارة عبر الاستعلام.")
+            raise HTTPException(status_code=400, detail="محظور: لا يمكن تعديل أو حذف حسابات الإدارة الأساسية عبر الاستعلام.")
 
     try:
         with engine.connect() as conn:
-            if first_word == "DELETE":
+            if first_word in ("DELETE", "ALTER", "UPDATE", "INSERT"):
                 with engine.begin() as tx_conn:
                     res = tx_conn.execute(text(query))
-                    return {"columns": ["message", "deleted_rows"], "rows": [{"message": "تم تنفيذ الحذف بنجاح", "deleted_rows": res.rowcount}]}
+                    affected = res.rowcount if hasattr(res, 'rowcount') else 0
+                    return {"columns": ["message", "affected_rows"], "rows": [{"message": "تم تنفيذ الأمر بنجاح", "affected_rows": affected}]}
             else:
                 result = conn.execute(text(query))
                 columns = list(result.keys()) if result.returns_rows else []
-                rows = [dict(row._mapping) for row in result.fetchmany(100)]
+                rows = [dict(row._mapping) for row in result.fetchmany(500)]
                 return {"columns": columns, "rows": rows}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
