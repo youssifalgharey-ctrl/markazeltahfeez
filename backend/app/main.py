@@ -87,8 +87,12 @@ async def lifespan(app: FastAPI):
                                 conn.execute(text(f'ALTER TABLE {target_table} ADD COLUMN last_active_at TIMESTAMP'))
                             except Exception as col_err:
                                 logger.warning("Could not add last_active_at: %s", col_err)
+        except Exception as mig_err:
+            logger.warning("Auto-migration check notice: %s", mig_err)
+
         # 3. التأكد من نوع أعمدة الدرجات لدعم الكسور العشرية (مثل 27.5 و 31.5) في PostgreSQL
         try:
+            from sqlalchemy import text
             with engine.begin() as conn:
                 conn.execute(text('ALTER TABLE "EXAM_RESULT" ALTER COLUMN score TYPE DOUBLE PRECISION'))
                 conn.execute(text('ALTER TABLE "EXAM_RESULT" ALTER COLUMN "maxScore" TYPE DOUBLE PRECISION'))
