@@ -1,3 +1,4 @@
+import re
 from typing import List, Optional
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -9,6 +10,21 @@ from app.schemas.exam import (
 )
 
 PASS_THRESHOLD = 0.5
+
+def normalize_arabic(text: str) -> str:
+    if not text:
+        return ""
+    # remove diacritics / tashkeel
+    text = re.sub(r"[\u064B-\u065F\u0670]", "", text)
+    # normalize alef
+    text = re.sub(r"[إأآاٱ]", "ا", text)
+    # normalize teh marbuta / heh
+    text = re.sub(r"ة", "ه", text)
+    # normalize yaa / alef maksura
+    text = re.sub(r"[ىي]", "ي", text)
+    # normalize spaces
+    text = re.sub(r"\s+", " ", text).strip().lower()
+    return text
 
 def to_item_response(entry: ExamResult) -> ExamResultItemResponse:
     if entry.passed is not None:
@@ -32,7 +48,7 @@ def lookup(result_code: str, db: Session) -> ExamResultLookupResponse:
     entries = (
         db.query(ExamResult)
         .filter(func.lower(ExamResult.result_code) == clean_code.lower())
-        .order_by(ExamResult.examDate.desc())
+        .order_by(ExamResult.examDate.desc(), ExamResult.id.desc())
         .all()
     )
 
@@ -46,28 +62,39 @@ def lookup(result_code: str, db: Session) -> ExamResultLookupResponse:
 def create_or_update(request: ExamResultRequest, db: Session) -> ExamResultItemResponse:
     code = request.resultCode.strip()
     exam = request.examName.strip()
+    norm_exam = normalize_arabic(exam)
+    clean_student_name = request.studentName.strip()
 
-    entry = (
+    # Find existing entries for this student
+    existing_entries = (
         db.query(ExamResult)
-        .filter(
-            func.lower(ExamResult.result_code) == code.lower(),
-            func.lower(ExamResult.examName) == exam.lower(),
-        )
-        .first()
+        .filter(func.lower(ExamResult.result_code) == code.lower())
+        .all()
     )
+
+    entry = None
+    for e in existing_entries:
+        if e.examName.lower() == exam.lower() or normalize_arabic(e.examName) == norm_exam:
+            entry = e
+            break
 
     if not entry:
         entry = ExamResult()
         db.add(entry)
 
     entry.result_code = code
-    entry.studentName = request.studentName.strip()
+    entry.studentName = clean_student_name
     entry.examName = exam
     entry.examDate = request.examDate
     entry.score = float(request.score)
     entry.maxScore = float(request.maxScore)
     entry.passed = request.passed
     entry.notes = request.notes
+
+    # Keep studentName uniform across all results for this code
+    for other in existing_entries:
+        if other != entry:
+            other.studentName = clean_student_name
 
     db.commit()
     db.refresh(entry)
@@ -78,22 +105,27 @@ def batch_create_or_update(requests: List[ExamResultRequest], db: Session) -> di
     for req in requests:
         code = req.resultCode.strip()
         exam = req.examName.strip()
+        norm_exam = normalize_arabic(exam)
+        clean_student_name = req.studentName.strip()
 
-        entry = (
+        existing_entries = (
             db.query(ExamResult)
-            .filter(
-                func.lower(ExamResult.result_code) == code.lower(),
-                func.lower(ExamResult.examName) == exam.lower(),
-            )
-            .first()
+            .filter(func.lower(ExamResult.result_code) == code.lower())
+            .all()
         )
+
+        entry = None
+        for e in existing_entries:
+            if e.examName.lower() == exam.lower() or normalize_arabic(e.examName) == norm_exam:
+                entry = e
+                break
 
         if not entry:
             entry = ExamResult()
             db.add(entry)
 
         entry.result_code = code
-        entry.studentName = req.studentName.strip()
+        entry.studentName = clean_student_name
         entry.examName = exam
         entry.examDate = req.examDate
         entry.score = float(req.score)
@@ -102,6 +134,12 @@ def batch_create_or_update(requests: List[ExamResultRequest], db: Session) -> di
             entry.maxScore > 0 and (entry.score / entry.maxScore) >= PASS_THRESHOLD
         )
         entry.notes = req.notes
+
+        # Keep studentName uniform across all results for this code
+        for other in existing_entries:
+            if other != entry:
+                other.studentName = clean_student_name
+
         saved += 1
 
     db.commit()
@@ -111,7 +149,17 @@ def delete_result(code: str, exam_name: Optional[str], db: Session) -> dict:
     clean_code = code.strip()
     q = db.query(ExamResult).filter(func.lower(ExamResult.result_code) == clean_code.lower())
     if exam_name:
-        q = q.filter(func.lower(ExamResult.examName) == exam_name.strip().lower())
+        clean_exam = exam_name.strip()
+        norm_exam = normalize_arabic(clean_exam)
+        entries = q.all()
+        deleted = 0
+        for e in entries:
+            if e.examName.lower() == clean_exam.lower() or normalize_arabic(e.examName) == norm_exam:
+                db.delete(e)
+                deleted += 1
+        db.commit()
+        return {"success": True, "deleted": deleted}
     count = q.delete(synchronize_session=False)
     db.commit()
     return {"success": True, "deleted": count}
+
