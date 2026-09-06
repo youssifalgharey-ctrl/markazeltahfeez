@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, Query, Body
 from sqlalchemy.orm import Session
@@ -12,6 +12,8 @@ from app.security.deps import require_admin
 
 router = APIRouter(prefix="/api/admin", tags=["admin"], dependencies=[Depends(require_admin)])
 
+ONLINE_THRESHOLD_SECONDS = 180  # 3 minutes
+
 def parse_amount(amount_str: Optional[str]) -> int:
     if not amount_str:
         return 0
@@ -20,7 +22,16 @@ def parse_amount(amount_str: Optional[str]) -> int:
 
 @router.get("/overview")
 def get_overview_stats(db: Session = Depends(get_db)):
+    now = datetime.now()
+    online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
+
     total_users = db.query(User).count()
+    online_users = (
+        db.query(User)
+        .filter(User.active_session_id.isnot(None), User.last_active_at >= online_cutoff)
+        .count()
+    )
+
     all_subs = db.query(CourseSubscription).all()
     all_bookings = db.query(IjazaBooking).all()
 
@@ -35,6 +46,7 @@ def get_overview_stats(db: Session = Depends(get_db)):
 
     return {
         "totalUsers": total_users,
+        "onlineUsers": online_users,
         "totalSubscriptions": len(all_subs),
         "activeSubscriptions": active_subs,
         "pendingSubscriptions": pending_subs,
@@ -46,6 +58,32 @@ def get_overview_stats(db: Session = Depends(get_db)):
         "totalRevenue": subscription_revenue + booking_revenue,
     }
 
+@router.get("/online-users")
+def get_online_users(db: Session = Depends(get_db)):
+    now = datetime.now()
+    online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
+    users = (
+        db.query(User)
+        .filter(User.active_session_id.isnot(None), User.last_active_at >= online_cutoff)
+        .order_by(User.last_active_at.desc())
+        .all()
+    )
+    return [
+        {
+            "id": u.id,
+            "fullName": u.fullName,
+            "userCode": u.userCode,
+            "phone": u.phone,
+            "email": u.email,
+            "role": u.role,
+            "currentSurah": u.currentSurah,
+            "profileImage": u.profileImage,
+            "lastActiveAt": u.last_active_at.isoformat(),
+            "secondsAgo": int((now - u.last_active_at).total_seconds()),
+        }
+        for u in users
+    ]
+
 @router.get("/users")
 def get_all_users(
     search: Optional[str] = Query(None),
@@ -55,10 +93,18 @@ def get_all_users(
     users = db.query(User).all()
     q = search.strip().lower() if search and search.strip() else None
 
+    now = datetime.now()
+    online_cutoff = now - timedelta(seconds=ONLINE_THRESHOLD_SECONDS)
+
     result = []
     for u in users:
-        if role and role.upper() != "ALL" and u.role != role.upper():
-            continue
+        is_online = bool(u.active_session_id and u.last_active_at and u.last_active_at >= online_cutoff)
+
+        if role:
+            if role.upper() == "ONLINE" and not is_online:
+                continue
+            elif role.upper() not in ("ALL", "ONLINE") and u.role != role.upper():
+                continue
 
         if q:
             match_name = bool(u.fullName and q in u.fullName.lower())
@@ -67,6 +113,8 @@ def get_all_users(
             match_email = bool(u.email and q in u.email.lower())
             if not (match_name or match_phone or match_code or match_email):
                 continue
+
+        seconds_ago = int((now - u.last_active_at).total_seconds()) if u.last_active_at else None
 
         result.append({
             "id": u.id,
@@ -79,9 +127,22 @@ def get_all_users(
             "currentSurah": u.currentSurah,
             "profileImage": u.profileImage,
             "createdAt": u.createdAt.isoformat() if u.createdAt else None,
+            "isOnline": is_online,
+            "lastActiveAt": u.last_active_at.isoformat() if u.last_active_at else None,
+            "secondsAgo": seconds_ago,
         })
 
-    result.sort(key=lambda x: x["createdAt"] or "", reverse=True)
+    def sort_key(x):
+        online_rank = 0 if x["isOnline"] else 1
+        created = x["createdAt"] or ""
+        created_ts = 0
+        try:
+            created_ts = int(datetime.fromisoformat(created).timestamp()) if created else 0
+        except Exception:
+            pass
+        return (online_rank, -created_ts)
+
+    result.sort(key=sort_key)
     return result
 
 @router.post("/users/{id}/toggle-role")
