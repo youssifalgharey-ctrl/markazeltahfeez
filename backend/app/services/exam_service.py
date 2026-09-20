@@ -29,11 +29,25 @@ def normalize_arabic(text: str) -> str:
 def get_code_variants(code: str) -> list[str]:
     clean = code.strip().lower()
     variants = {clean}
-    if clean.isdigit():
-        stripped = clean.lstrip('0')
-        if stripped:
-            variants.add(stripped)
-        variants.add(clean.zfill(4))
+    if clean.startswith("ex-") or clean.startswith("ex_"):
+        num_part = clean[3:].strip()
+        if num_part:
+            variants.add(num_part)
+    elif clean.startswith("ex"):
+        num_part = clean[2:].strip()
+        if num_part:
+            variants.add(num_part)
+
+    num_variants = set()
+    for v in list(variants):
+        if v.isdigit():
+            stripped = v.lstrip('0')
+            if stripped:
+                num_variants.add(stripped)
+            num_variants.add(v.zfill(4))
+            num_variants.add(f"ex-{v}")
+            num_variants.add(f"ex-{v.zfill(4)}")
+    variants.update(num_variants)
     return [v for v in variants if v]
 
 def is_same_exam(existing_name: str, incoming_name: str) -> bool:

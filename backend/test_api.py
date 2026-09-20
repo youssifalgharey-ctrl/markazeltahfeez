@@ -169,10 +169,40 @@ def test_full_flow():
         print(f"POST /api/results (admin): status={exam_create.status_code}, body={exam_create.json()}")
         assert exam_create.status_code == 200
 
-        exam_lookup = client.get("/api/results/EX-9988")
-        print(f"GET /api/results/EX-9988: status={exam_lookup.status_code}, body={exam_lookup.json()}")
-        assert exam_lookup.status_code == 200
-        assert exam_lookup.json()["studentName"] == "طالب تجريبي"
+        # 1. Unauthenticated lookup must be rejected with 401
+        exam_lookup_unauth = client.get("/api/results/EX-9988")
+        print(f"GET /api/results/EX-9988 (unauth): status={exam_lookup_unauth.status_code}")
+        assert exam_lookup_unauth.status_code == 401, "Expected 401 for unauthenticated exam lookup"
+
+        # 2. Student trying to lookup someone else's code must be rejected with 403
+        exam_lookup_other = client.get("/api/results/EX-9988", headers={"Authorization": f"Bearer {student_token}"})
+        print(f"GET /api/results/EX-9988 (student -> other code): status={exam_lookup_other.status_code}")
+        assert exam_lookup_other.status_code == 403, "Expected 403 when student queries someone else's code"
+
+        # 3. Admin can lookup any code (e.g. EX-9988)
+        exam_lookup_admin = client.get("/api/results/EX-9988", headers={"Authorization": f"Bearer {admin_token}"})
+        print(f"GET /api/results/EX-9988 (admin): status={exam_lookup_admin.status_code}, body={exam_lookup_admin.json()}")
+        assert exam_lookup_admin.status_code == 200
+        assert exam_lookup_admin.json()["studentName"] == "طالب تجريبي"
+
+        # 4. Student querying their own code
+        if student_code:
+            # Create a result for the student's own code
+            client.post("/api/results", json={
+                "resultCode": student_code,
+                "studentName": "الطالب المسجل",
+                "examName": "اختبار التجويد الفصلي",
+                "examDate": "2026-09-02",
+                "score": 48,
+                "maxScore": 50,
+                "notes": "ممتاز جداً"
+            }, headers={"Authorization": f"Bearer {admin_token}"})
+
+            # Student querying their own code succeeds
+            exam_lookup_own = client.get(f"/api/results/{student_code}", headers={"Authorization": f"Bearer {student_token}"})
+            print(f"GET /api/results/{student_code} (student -> own code): status={exam_lookup_own.status_code}")
+            assert exam_lookup_own.status_code == 200
+            assert exam_lookup_own.json()["studentName"] == "الطالب المسجل"
 
         print("\n--- 12. Testing Payment & Leaderboard Admin Protections ---")
         # Payment all-subscriptions
