@@ -428,9 +428,6 @@
         <h4>الاستعلام عن النتيجة</h4>
         <p>أدخل كود النتيجة اللي اداهولك الشيخ بعد الامتحان لعرض درجتك.</p>
 
-        <!-- تنبيه الصلاحيات وحالة الحساب -->
-        <div id="userRoleNotice" style="margin-bottom: 16px; font-size: 13.5px; line-height: 1.6; border-radius: 8px; padding: 10px 14px; text-align: center; display: none;"></div>
-
         <div class="form-group">
             <label for="resultCodeInput">كود النتيجة</label>
             <input type="text" id="resultCodeInput" placeholder="مثال: EX-1234" autocomplete="off" onkeydown="if(event.key==='Enter'){checkResult();}">
@@ -592,47 +589,20 @@
     }
 
     function initResultPage() {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
         const role = localStorage.getItem('role') || '';
         const userCode = (localStorage.getItem('userCode') || '').trim();
         const isAdmin = (role === 'ADMIN' || userCode === '0001' || userCode === '0002');
-        const noticeEl = document.getElementById('userRoleNotice');
         const input = document.getElementById('resultCodeInput');
         const searchAgainBtn = document.querySelector('.btn-search-again');
 
-        if (!noticeEl) return;
+        if (!isAdmin && userCode && input && !input.value) {
+            input.value = userCode;
+        }
 
-        if (!token) {
-            noticeEl.style.display = 'block';
-            noticeEl.style.background = 'rgba(231, 76, 60, 0.12)';
-            noticeEl.style.border = '1px solid rgba(231, 76, 60, 0.3)';
-            noticeEl.style.color = '#ff8a75';
-            noticeEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يجب <a href="/index.html" style="color:#ffffff; font-weight:bold; text-decoration:underline;">تسجيل الدخول أولاً</a> للاستعلام عن نتيجتك وحماية خصوصية درجات الطلاب.';
-        } else if (isAdmin) {
-            noticeEl.style.display = 'block';
-            noticeEl.style.background = 'rgba(217, 119, 6, 0.12)';
-            noticeEl.style.border = '1px solid rgba(217, 119, 6, 0.3)';
-            noticeEl.style.color = '#fbbf24';
-            noticeEl.innerHTML = '<i class="fa-solid fa-shield-halved"></i> <strong>وضع المسؤول (حساب الإدارة ' + (userCode || '0001') + '):</strong> يمكنك الاستعلام عن نتيجة أي طالب بإدخال كوده.';
-            if (searchAgainBtn) {
-                searchAgainBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> استعلام عن كود طالب آخر';
-            }
-        } else {
-            noticeEl.style.display = 'block';
-            noticeEl.style.background = 'rgba(16, 185, 129, 0.1)';
-            noticeEl.style.border = '1px solid rgba(16, 185, 129, 0.25)';
-            noticeEl.style.color = '#34d399';
-            if (userCode) {
-                noticeEl.innerHTML = '<i class="fa-solid fa-user-check"></i> نتيجتك الشخصية مرتبطة بكود حسابك (<strong style="color:#fff;">' + userCode + '</strong>).';
-                if (!input.value) {
-                    input.value = userCode;
-                }
-            } else {
-                noticeEl.innerHTML = '<i class="fa-solid fa-circle-info"></i> يمكنك الاستعلام عن نتيجتك الخاصة بحسابك فقط.';
-            }
-            if (searchAgainBtn) {
-                searchAgainBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> إعادة الاستعلام';
-            }
+        if (searchAgainBtn) {
+            searchAgainBtn.innerHTML = isAdmin
+                ? '<i class="fa-solid fa-rotate-right"></i> استعلام عن كود طالب آخر'
+                : '<i class="fa-solid fa-rotate-right"></i> إعادة الاستعلام';
         }
     }
 
